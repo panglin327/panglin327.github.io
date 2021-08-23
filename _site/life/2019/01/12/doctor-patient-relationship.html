@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         在流感爆发的季节里,看中国的医患关系 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;这两天北京流感肆虐，据不完全统计朋友圈不少朋友纷纷中招，不幸的是我也在其中，和流感抗争了3天3夜之后，终于有所好转。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/life/2019/01/12/doctor-patient-relationship.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="在流感爆发的季节里,看中国的医患关系">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>在流感爆发的季节里,看中国的医患关系</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/01/12
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-12 markdown-body">
+
+            <p>这两天北京流感肆虐，据不完全统计朋友圈不少朋友纷纷中招，不幸的是我也在其中，和流感抗争了3天3夜之后，终于有所好转。</p>
+
+<p>不过生病也有生病的好处，你会对生命的敬畏会又多了那么一点，会对自己的健康关注得更多一点，可能也会让你重新审视自己的生活方式，年纪越大感悟越深。希望各位读者大人，早点注意自己的健康，生命有时候真的很脆弱，意外和明天你永远不知道那个更先到来。</p>
+
+<p>我在医院看病的时候遇到这样一个小故事，我把它分享给大家，然后我们从这个角度来看看所谓的医患关系。因为这个季节的流感很高发，于是很多医院干脆搞了一个独立的发热门诊，在发热门诊有很多人在排队看病，有一对小夫妻就排在我的前面，因此可以清晰的听到他们和医生交流的内容。</p>
+
+<p>女方反馈，周一的时候感觉有点不舒服，测量温度在37.5，没太在意；周三的时候开始流鼻涕，温度在38，去看了医生，没开药；周四的时候温度上升到38.2，到这个三甲医院做了甲流检查；周五拿到甲流的检测结果，确认为甲流，最最重要的是，女方目前是已怀孕五周！</p>
+
+<p>女方应该是注册在这家医院生产，因此先直接挂号到了妇产科，妇产科的大夫接待了这对夫妻之后，直接告诉他们，妇产科不能接收他们这样的病人，让直接去发热门诊挂号，两句话就把他们打发了。</p>
+
+<p>在发热门诊排队刚好就排在了我的前面，男方排队让女方去休息，在排了半小时队之后到了他们，主治大夫确认女方得了甲流之后，要求女方详细的上报了家庭住址，工作单位等信息，我才了解到，在北京得了甲流是需要登记备案的，可能是因为甲流的传染性比较高吧。</p>
+
+<p>在女方告知自己目前是怀孕5周的状态下，服用治疗药物是否会有问题。面对这个问题，大夫在说话的时候非常谨慎，他打开准备开的治疗甲流的药物的电子说明书，并对患者转述说明书的内容里，有关孕妇的相关部分，但是药品说明书的没有关于孕妇的相关数据说明，只有哺乳动物临床试验的相关数据，对于孕妇只能权衡利弊使用。</p>
+
+<p>这时候，大夫就将问题抛给患者，你只能看自己的身体状况来权衡是否使用，同时他不能保证完全没有问题，在患者再次向医生反复确认，希望大夫能根据在以往接触的患者中类似患者是如何处理的来评估具体的用药风险。但是大夫只是简单的说孕早期用药是需要非常谨慎，同时建议他们可以去找产科来评估，他这边评估不了。</p>
+
+<p>听到这块男方着急了，你们这都是什么态度呀，我们刚从妇产科过来，妇产科说他们不收两句话打发我们来发热门诊，到了发热门诊这边却说让我们去妇产科，你们是医生，肯定在这个领域中比我们专业，如果涉及到这个科室，如果需要你们是否可以会诊一下、商量一下？你们是医生，在看病这方面至少比我们专业，结果现在都害怕担责任，相互推诿让我们患者怎么办？</p>
+
+<p>主治大夫听到这里也有点发楞，说你先别着急别发火，因为孕妇用药本来就是一个慎之又慎的情况，更何况你爱人还在怀孕的早期，如果是晚期还相对好处理。男方说，是不是甲流都必须吃这一种药，有没有其它的替代药品，主治大夫说，现在只有这一个药品，其它更不合适；男方继续问，那你们可以告诉我们一个百分比吗？比如说百分之多少对胎儿有影响百分之多少对胎儿没有影响，主治大夫说，这个百分比还真没有，并且概率问题很难讲，哪怕是很小的概率，落到一个家庭上那就是百分之百了。</p>
+
+<p>男方说，我就不信您看病这么多年，就遇到我们这一个怀孕得甲流的情况，那其它人都是怎么处理的，主治大夫说，以前看的孕妇确实也不太多；最后主治大夫妥协了一下，要不您等一下，我打电话找我们主任再确认一下，看这种情况应该怎么处理？男方说，可以。</p>
+
+<p>刚好电话就在排队的隔壁，主治大夫把患者的情况和主任沟通了一下之后，主任明确的告诉主治大夫，这种情况他们不能直接确定是否能用药，必须要去妇幼保健医院让那里的专业大夫来确认是否能够服用。主治大夫把这个情况给患者沟通了之后，说要不我帮你们把号（挂的门诊号）退了，这个情况我们确实不能直接下结论。</p>
+
+<p>纠结了一会，男方说这样吧，您还是先把那个药给我们开了，我们先把药拿上，不然就算医院确认可以用药了我们还需要再来一次，如果您怕担责任，可以在里面写清楚，这个是我们自愿拿走的药物，后期是否服用也是我们自己来承担风险，和医院无关。主治大夫犹豫了一下，写了一个条子让女方在上面签了字，最后推荐他们去妇幼保健医院或者协和医院的妇产科。</p>
+
+<p>大家可能有所不知，所有药物的临床试验验证数据里面都不可能有孕妇的直接数据，因为药物临床试验是不可能有孕妇参加的。上市药品对孕妇的影响的相关数据都依据在哺乳动物身上进行试验对胎儿是否有影响的相关数据来参考。另孕妇在怀孕的初期是非常关键的一个时期，此时是胎儿成形时期，用药是需要特别注意的。</p>
+
+<p>这个事情就这样结束了，作为第三者我们来解读一下这个事情</p>
+
+<p>妇产科，妇产科肯定有他自己的理由，比如他们真的不懂流感这块。但是我有一个疑问对于这种跨科室的合作，医院都是怎么处理的呢？</p>
+
+<p>发热门诊主治大夫，这个大夫其实挺尽心的，一方面仔细的阅读了好几遍药品的说明书，态度和蔼的和患者做了大量的解释工作，最后还主动打电话咨询了科室的主任；另一方面他也确实不能回答患者的好多问题，比如这个药到底孕妇能不能吃，有多大的概率会影响到胎儿，没有解决患者的最终问题；但我们也能看出主治大夫确实尽力了。</p>
+
+<p>患者，患者当然最委屈了，花了大量的时间，跑了好几个科室问题仍然没有解决，甚至还需要跑第二个医院或者第三个医院还不一定可以得到结果。但看夫妻双方也是受过高等教育的，虽然比较生气，但交流还是不失礼貌。</p>
+
+<p>经过上面的解读感觉好像谁都没有错，但就是问题却没有解决，这难道不是问题的重点吗？</p>
+
+<p>中国的医患关系很紧张有着非常多的原因，到目前为止，在就医的环节，不论是医生还是患者都难谈真正的被尊重。这些年跑了北京很多三甲医院，普遍都是人满为患，就医环境极为恶劣，在各种异味中等待几个小时，还要防止中间不时插队的患者，好不容易等待了几个小时，进去之后专家两三分钟就给打发出来了，你就会有一种错觉，这有没有认真看待我的病情？</p>
+
+<p>但其实又非常理解他们，稍微有点名气的医生，基本上患者都是排长队，有的患者从大老远的外地跑到医院就医，没有挂上号，大夫又单独给他们办理加号，还是很多复诊的患者也临时加上，往往本来一个大夫一个上午只能看20多个患者，往往加号到40多个。有的专家年纪都六七十岁了，为了给患者看病，连上厕所的时间都没有，有时候中午也不吃饭坚持把早上预约的患者看完，真的很辛苦。</p>
+
+<p>我经常在想，对于医生这种救死扶伤很高大上的职业，为什么现在却需要面临如此恶劣的就医环境？培养一个医生需要耗费大量的时间和金钱，为什么医生不能通过自己的医术获得相对应的收入？而患者作为医生的衣食父母，为什么不能真正得到的自己合法利益和正当需求的尊重？不需要被当成上帝至少不要当成了待宰的羔羊吧。</p>
+
+<p>对于这种医生和患者的双重困境，在随着中国老龄化社会的加快到来，会越演越烈！真的希望国家可以在多个层面来具体解决，让医生和患者得到应用的尊重。</p>
+
+<p>推荐大家看一个豆瓣高分纪录片《人间世》，相信看完它，大家会对医生这个职业有更多的了解。</p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+           <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/life/2019/01/12/doctor-patient-relationship.html';
+        this.page.identifier = '/life/2019/01/12/doctor-patient-relationship.html';
+        this.page.title = '在流感爆发的季节里,看中国的医患关系';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/life/2019/01/12/doctor-patient-relationship.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+           </div>
+
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

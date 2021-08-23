@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第47天： Web 开发 RESTful - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 太阳雪&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/10/30/python_web_restful-047.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第47天： Web 开发 RESTful">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第47天： Web 开发 RESTful</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/30
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 太阳雪</p>
+
+<p>现在单页 Web 项目很流行，使用各种 Js 框架，通过 Ajax 和服务器的 Api 进行交互，实现类似原生 app 效果，很酷，对 Flask 来说小菜一碟，是时候了解下 Flask-RESTful 了</p>
+
+<!--more-->
+
+<p>开始前先了解下 RESTful，阮一峰老师有这样的解释:</p>
+
+<blockquote>
+  <p>网络应用程序，分为前端和后端两个部分。当前的发展趋势，就是前端设备层出不穷（手机、平板、桌面电脑、其他专用设备……）。
+因此，必须有一种统一的机制，方便不同的前端设备与后端进行通信。这导致API构架的流行，甚至出现”API First”的设计思想。RESTful API是目前比较成熟的一套互联网应用程序的API设计理论</p>
+</blockquote>
+
+<p>也就是说 RESTful 一个框架和互联网应用的设计原则，遵循这个设计原则，可以让应用脱离前台展现的束缚，支持不同的前端设备。</p>
+
+<h2 id="安装">安装</h2>
+
+<p>Flask 的 RESTful 模块是 flask-restful ，使用 pip 安装:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>flask-restful
+</code></pre></div></div>
+
+<p>如果安装顺利，可以在 Python Shell 环境下导入</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">Api</span>
+<span class="o">&gt;&gt;&gt;</span>
+</code></pre></div></div>
+
+<h2 id="小试牛刀">小试牛刀</h2>
+
+<p>安装好后，简单试试。
+flask-restful 像之前的 bootstrop-flask 以及 flask-sqlalchamy 模块一样，使用前需要对 Flask 应用进行初始化，然后会得到当前应用的 api 对象，用 api 对象进行资源绑定和路由设置：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">Api</span><span class="p">,</span> <span class="n">Resource</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>  <span class="c1"># 初始化得到 api 对象
+</span></code></pre></div></div>
+
+<p>上面代码中从 flask_restful 中引入的 Resource 类是用来定义资源的，具体资源必须是 Resource 的子类，下面定义一个 HelloRESTful 资源:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">HelloRESTful</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'greet'</span><span class="p">:</span> <span class="s">'Hello Flask RESTful!'</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>接着，给资源绑定 URI：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">HelloRESTful</span><span class="p">,</span> <span class="s">'/'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>   <span class="c1"># 别忘了启动应用的代码
+</span>    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>在终端或者命令行下运行 <code class="highlighter-rouge">python app.py</code> 启动应用</p>
+
+<p>访问 <code class="highlighter-rouge">localhost:5000</code> 或者 <code class="highlighter-rouge">127.0.0.1:5000</code> 查看效果，将会看到 JSON 格式的数据输出:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"greet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello Flask RESTful!"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>也可以用 curl 工具在终端或者命令行下发送请求:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> curl http://localhost:5000 <span class="nt">-s</span>
+<span class="o">{</span>
+    <span class="s2">"greet"</span>: <span class="s2">"Hello Flask RESTful!"</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>curl 的参数 -s 是开启安静模式的意思</p>
+</blockquote>
+
+<h2 id="资源">资源</h2>
+
+<p>从上面代码中可以看到，资源是 Resource 类的子类，以请求方法( GET、POST 等)名称的<strong>小写形式</strong>定义的方法，能对对应方法的请求作出相应，例如上面资源类中定义的 <code class="highlighter-rouge">get</code> 方法可以对 <code class="highlighter-rouge">GET</code> 请求作出相应，还可以定义 <code class="highlighter-rouge">put</code>、<code class="highlighter-rouge">post</code>、<code class="highlighter-rouge">delete</code> 等，称之为视图方法。</p>
+
+<p>例如创建一个 todo 字样，支持获取代办事项和新增代办事项：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 初始化待办列表
+</span><span class="n">todos</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'todo_1'</span><span class="p">:</span> <span class="s">"读《程序员的自我修养》"</span><span class="p">,</span>
+  <span class="s">'todo_2'</span><span class="p">:</span> <span class="s">"买点吃的"</span><span class="p">,</span>
+  <span class="s">'todo_3'</span><span class="p">:</span> <span class="s">"去看星星"</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">Todo</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="c1"># 根据 todo_id 获取代办事项
+</span>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">todo_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="n">todo_id</span><span class="p">:</span> <span class="n">todos</span><span class="p">[</span><span class="n">todo_id</span><span class="p">]</span> <span class="p">}</span>
+
+    <span class="c1"># 新增一个待办事项
+</span>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">todo_id</span><span class="p">):</span>
+        <span class="n">todos</span><span class="p">[</span><span class="n">todo_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="s">'data'</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">todo_id</span><span class="p">:</span> <span class="n">todos</span><span class="p">[</span><span class="n">todo_id</span><span class="p">]}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>通过 GET 方式，提供 todo_id, 从 todos 列表中获取待办事项内容</li>
+  <li>通过 PUT 方式，提供 todo_id, 从请求体中获取到内容，作为待办事项内容</li>
+  <li>两种方法都返回 todo_id 所对应的待办事项内容</li>
+</ul>
+
+<p>为 Todo 资源指定 URI:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Todo</span><span class="p">,</span> <span class="s">'/todo/&lt;string:todo_id&gt;/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>启动项目，用 curl 工具测试:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 读取 key 为 todo_1 的待办事项</span>
+ curl http://localhost:5000/todo/todo_1/
+<span class="o">{</span>
+    <span class="s2">"todo_1"</span>: <span class="s2">"</span><span class="se">\u</span><span class="s2">8bfb</span><span class="se">\u</span><span class="s2">300a</span><span class="se">\u</span><span class="s2">7a0b</span><span class="se">\u</span><span class="s2">5e8f</span><span class="se">\u</span><span class="s2">5458</span><span class="se">\u</span><span class="s2">7684</span><span class="se">\u</span><span class="s2">81ea</span><span class="se">\u</span><span class="s2">6211</span><span class="se">\u</span><span class="s2">4fee</span><span class="se">\u</span><span class="s2">517b</span><span class="se">\u</span><span class="s2">300b"</span>
+<span class="o">}</span>
+
+<span class="c"># 创建一个 key 为 todo_4 的代办事项</span>
+ curl http://localhost:5000/todo/todo_4/ <span class="nt">-d</span> <span class="s2">"data=学习 Flask"</span> <span class="nt">-X</span> PUT
+<span class="o">{</span>
+    <span class="s2">"todo_4"</span>: <span class="s2">"</span><span class="se">\u</span><span class="s2">5b66</span><span class="se">\u</span><span class="s2">4e60 Flask"</span>
+<span class="o">}</span>
+
+
+<span class="c"># 读取刚添加的待办事项 todo_4</span>
+ curl http://localhost:5000/todo/todo_4/
+<span class="o">{</span>
+    <span class="s2">"todo_4"</span>: <span class="s2">"</span><span class="se">\u</span><span class="s2">5b66</span><span class="se">\u</span><span class="s2">4e60 Flask"</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Flask-RESTful 支持多种视图方法的返回值:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Todo1</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 直接返回
+</span>        <span class="k">return</span> <span class="p">{</span> <span class="s">'task'</span><span class="p">:</span> <span class="s">'Hello world'</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Todo2</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 返回内容及状态码
+</span>        <span class="k">return</span> <span class="p">{</span><span class="s">'task'</span><span class="p">:</span> <span class="s">'Hello world'</span><span class="p">},</span> <span class="mi">201</span>
+
+<span class="k">class</span> <span class="nc">Todo3</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 返回内容，状态码以及 Header
+</span>        <span class="k">return</span> <span class="p">{</span><span class="s">'task'</span><span class="p">:</span> <span class="s">'Hello world'</span><span class="p">},</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s">'Etag'</span><span class="p">:</span> <span class="s">'some-opaque-string'</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>为三个资源指定 URI：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Todo1</span><span class="p">,</span> <span class="s">'/todo_1/'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Todo1</span><span class="p">,</span> <span class="s">'/todo_2/'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Todo1</span><span class="p">,</span> <span class="s">'/todo_3/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>启动项目后，用 curl 工具来测试:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> curl http://localhost:5000/todo_1/
+<span class="o">{</span>
+    <span class="s2">"task"</span>: <span class="s2">"Hello world"</span>
+<span class="o">}</span>
+
+<span class="c"># -请求 todo_2 并显示出 HTTP 标头，HTTP 状态码为 201</span>
+ curl http://localhost:5000/todo_2/ <span class="nt">-i</span>
+HTTP/1.0 201 CREATED
+Content-Type: application/json
+Content-Length: 30
+Server: Werkzeug/0.16.0 Python/3.7.5rc1
+Date: Thu, 31 Oct 2019 14:12:54 GMT
+
+<span class="o">{</span>
+    <span class="s2">"task"</span>: <span class="s2">"Hello world"</span>
+<span class="o">}</span>
+
+<span class="c"># -请求 todo_3 并显示出 HTTP 标头，HTTP 状态码为 200 ，标头中还有 Etag</span>
+ curl http://localhost:5000/todo_3/ <span class="nt">-i</span>
+HTTP/1.0 200 OK
+Content-Type: application/json
+Content-Length: 30
+Etag: some-opaque-string
+Server: Werkzeug/0.16.0 Python/3.7.5rc1
+Date: Thu, 31 Oct 2019 14:14:57 GMT
+
+<span class="o">{</span>
+    <span class="s2">"task"</span>: <span class="s2">"Hello world"</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h2 id="路由">路由</h2>
+
+<p>从上面可以看到，通过 api.add_resource 方法来为资源设置路由</p>
+
+<p>第一个参数是资源类，第二个参数是路由，和之前介绍的 <code class="highlighter-rouge">@app.route</code> 注解参数一样</p>
+
+<p>可以为一个资源制定多个理由，例如:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Todo</span><span class="p">,</span> <span class="s">'/todo/'</span><span class="p">,</span> <span class="s">'/mytodo/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">http://localhost:5000/todo/</code> 和 <code class="highlighter-rouge">http://localhost:5000/mytodo/</code> 都将指向 Todo</p>
+
+<p>既然路由，就应该有 <code class="highlighter-rouge">endpoint</code>，通过命名参数 <code class="highlighter-rouge">endpoint</code> 指定:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Todo</span><span class="p">,</span> <span class="s">'/todo/'</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="s">'todo_ep'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>设置路由的 <code class="highlighter-rouge">endpoint</code> 为 <code class="highlighter-rouge">todo_ep</code>，如果不指定，<code class="highlighter-rouge">endpoint</code> 就是资源类名的小写形式</p>
+
+<p><code class="highlighter-rouge">endpoint</code> 是 Flask 中对具体路由的内部的具体定义，一般作为 <code class="highlighter-rouge">url_for</code> 方法的第一个参数，即通过 <code class="highlighter-rouge">endpoint</code> 获得该路由的 URL，在列出 RESTful 资源 URL 时非常有用。</p>
+
+<h2 id="请求解析">请求解析</h2>
+
+<p>RESTful 服务器对请求数据有很强的依赖，就请求数据的获取及校验是很繁琐的事情，还好 Flask-RESTful 提供了非常好的请求解析工具 <code class="highlighter-rouge">reqparse</code>，不仅可以获取请求数据，还可以对数据进行校验并返回合适的错误消息。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">reqparse</span>  <span class="c1"># 引入 reqparse 模块
+# ...
+</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">reqparse</span><span class="p">.</span><span class="n">RequestParser</span><span class="p">()</span>  <span class="c1"># 定义全局的解析实体
+# 定义参数 id，类型必须是整数
+</span><span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'id'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'必须提供参数 id'</span><span class="p">)</span>
+<span class="c1"># 定义参数 name，且为必填
+</span><span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'name'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># ...
+</span>
+<span class="k">class</span> <span class="nc">Reqparser</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>  <span class="c1"># 获取解析器中定义的参数 并校验
+</span>        <span class="k">return</span> <span class="n">args</span>
+
+<span class="n">api</span><span class="p">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">Reqparser</span><span class="p">,</span> <span class="s">'/reqparser/'</span><span class="p">)</span>  <span class="c1"># 指定路由
+</span></code></pre></div></div>
+
+<p>看下效果:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 提供一个非整数参数 id</span>
+ curl http://localhost:5000/reqparser/ <span class="nt">-d</span> <span class="s2">"id=noint"</span> <span class="nt">-X</span> GET
+<span class="o">{</span>
+    <span class="s2">"message"</span>: <span class="o">{</span>
+        <span class="s2">"id"</span>: <span class="s2">"</span><span class="se">\u</span><span class="s2">53c2</span><span class="se">\u</span><span class="s2">6570 id </span><span class="se">\u</span><span class="s2">5fc5</span><span class="se">\u</span><span class="s2">987b</span><span class="se">\u</span><span class="s2">662f</span><span class="se">\u</span><span class="s2">6574</span><span class="se">\u</span><span class="s2">6570"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c"># 不提供参数 name</span>
+curl http://localhost:5000/reqparser/
+<span class="o">{</span>
+    <span class="s2">"message"</span>: <span class="o">{</span>
+        <span class="s2">"name"</span>: <span class="s2">"Missing required parameter in the JSON body or the post body or the query string"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>当参数校验失败，自动返回 400 状态码，以及错误信息，通过命名参数 help 设置错误信息，不提供会有默认信息，如比选参数 name 的错误信息。</li>
+  <li>默认情况下有多个参数错误，会以定义参数的顺序，逐个显示错误，定义解析器时将 bundle_errors 设置为 True，则可显示多个错误，如 <code class="highlighter-rouge">parser = reqparse.RequestParser(bundle_errors=True)</code>，或者设置应用配置，如 <code class="highlighter-rouge">app.config['BUNDLE_ERRORS'] = True</code></li>
+  <li>默认情况下参数都是从请求表单中获取，定义参数时命名参数 location 可以指定从 form、headers、args（即 querystring）还是从 cookies 等中获取，如 <code class="highlighter-rouge">parser.add_argument('id', type=int, help='必须提供参数 id', location='args')</code></li>
+</ul>
+
+<p>请求解析器支持继承，可以定义最高级别的解析器，逐渐细化，最后应用的具体资源上：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">reqparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">reqparse</span><span class="p">.</span><span class="n">RequestParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">parser_copy</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># 继承
+</span><span class="n">parser_copy</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'bar'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># parser_copy 将有两个参数
+</span>
+<span class="c1"># 改变继承来的参数 foo 必填且的获取位置为 querystring
+</span><span class="n">parser_copy</span><span class="p">.</span><span class="n">replace_argument</span><span class="p">(</span><span class="s">'foo'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">'args'</span><span class="p">)</span>
+
+<span class="c1"># 删除继承来的参数 foo
+</span><span class="n">parser_copy</span><span class="p">.</span><span class="n">remove_argument</span><span class="p">(</span><span class="s">'foo'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="格式化输出">格式化输出</h2>
+
+<p>请求解析处理用收到的信息，对于输入的信息也可以处理，通过 Flask-RESTful 提供的类 fields 和注解 marshal_with 来实现：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">marshal_with</span>
+
+<span class="n">resource_fields</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'name'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">String</span><span class="p">,</span>
+    <span class="s">'address'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">String</span><span class="p">,</span>
+    <span class="s">'date_updated'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">dt_format</span><span class="o">=</span><span class="s">'rfc822'</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">TodoFormat</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">marshal_with</span><span class="p">(</span><span class="n">resource_fields</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="s">'resource'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">db_get_todo</span><span class="p">()</span>  <span class="c1"># 某个获得待办事项的方法
+</span></code></pre></div></div>
+
+<ul>
+  <li>定义一个字段格式化模板，属性用 fields 的类型方法定义</li>
+  <li>在响应方法上加上 <code class="highlighter-rouge">marshal_with</code> 注解，指定格式化模板，和封装属性名</li>
+</ul>
+
+<p>格式化模板属性名，需要在响应函数返回的对象属性中匹配，如果需要会要对字段重命名，可以这样:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># name 将被重命名为 private_name
+</span>    <span class="s">'name'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">String</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="s">'private_name'</span><span class="p">),</span>
+    <span class="s">'address'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">String</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>返回值中没有可以定义默认值:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># 为 name 设置默认值
+</span>    <span class="s">'name'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">'Anonymous User'</span><span class="p">),</span>
+    <span class="s">'address'</span><span class="p">:</span> <span class="n">fields</span><span class="p">.</span><span class="n">String</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本节课程简单介绍了 Flask 如何玩 RESTful，通过对 RESTful 的说明，讲解了 Flask-RESTful 模块的用法，并简单讲解了资源、路由，以及请求解析和格式化输出等技术</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-047">Python-100-days-day047</a></p>
+</blockquote>
+
+<p>参考</p>
+
+<ul>
+  <li><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">http://www.ruanyifeng.com/blog/2014/05/restful_api.html</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2011/09/restful.html">http://www.ruanyifeng.com/blog/2011/09/restful.html</a></li>
+  <li><a href="https://flask-restful.readthedocs.io/en/latest/">https://flask-restful.readthedocs.io/en/latest/</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2019/09/curl-reference.html">http://www.ruanyifeng.com/blog/2019/09/curl-reference.html</a></li>
+</ul>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/10/30/python_web_restful-047.html';
+        this.page.identifier = '/python/2019/10/30/python_web_restful-047.html';
+        this.page.title = '第47天： Web 开发 RESTful';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/10/30/python_web_restful-047.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

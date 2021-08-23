@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第36天：Python calendar 模块 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;blockquote&gt;
+  &lt;p&gt;by 程序员野客&lt;/p&gt;
+&lt;/blockquote&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/10/20/python-calendar-036.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第36天：Python calendar 模块">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第36天：Python calendar 模块</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/20
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container need" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <blockquote>
+  <p>by 程序员野客</p>
+</blockquote>
+
+<p>calendar 是与日历相关的模块，该模块定义了很多类型，主要包括：Calendar、TextCalendar、HTMLCalendar，其中 Calendar 是 TextCalendar 和 HTMLCalendar 的基类，这些类有着十分丰富的日历处理方法。</p>
+
+<!--more-->
+
+<h2 id="1-calendar-模块">1 calendar 模块</h2>
+
+<p>对于简单的文本日历，我们使用 calendar 模块直接调用的方法或属性即可，下面来具体看一下。</p>
+
+<h3 id="setfirstweekdayfirstweekday">setfirstweekday(firstweekday)</h3>
+
+<p>设置每一周的开始（0 表示星期一，6 表示星期天），calendar 提供了 MONDAY、TUESDAY、WEDNESDAY、THURSDAY、FRIDAY、SATURDAY 和 SUNDAY 几个常量方便使用。例如，设置每周的第一天为星期天，示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+calendar.setfirstweekday(calendar.SUNDAY)
+</code></pre></div></div>
+
+<h3 id="firstweekday">firstweekday()</h3>
+
+<p>返回当前设置的每星期的第一天的数值，默认为星期一。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.firstweekday())
+</code></pre></div></div>
+
+<h3 id="isleapyear">isleap(year)</h3>
+
+<p>如果 year 是闰年则返回 True，否则返回 False。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.isleap(9102))
+</code></pre></div></div>
+
+<h3 id="leapdaysy1-y2">leapdays(y1, y2)</h3>
+
+<p>返回在范围 y1 至 y2 （包含 y1 和 y2 ）之间的闰年的年数，其中 y1 和 y2 是年份。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.leapdays(1945,2019))
+</code></pre></div></div>
+
+<h3 id="weekdayyear-month-day">weekday(year, month, day)</h3>
+
+<p>返回一周中的某一天 （ 0 ~ 6 代表周一至周日）。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.weekday(2019,10,1))
+</code></pre></div></div>
+
+<h3 id="monthrangeyear-month">monthrange(year, month)</h3>
+
+<p>返回指定年、月份第一天是星期几和这个月的天数。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.monthrange(2019, 10))
+</code></pre></div></div>
+
+<h3 id="monthcalendaryear-month">monthcalendar(year, month)</h3>
+
+<p>返回表示一个月的日历的矩阵，每一行代表一周，此月份外的日子由零表示，每周默认从周一开始，可使用 setfirstweekday() 改变默认值。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.monthcalendar(2019,10))
+</code></pre></div></div>
+
+<h3 id="prmonththeyear-themonth-w0-l0">prmonth(theyear, themonth, w=0, l=0)</h3>
+
+<p>打印由 month() 返回的一个月的日历，每日宽度间隔为 w 字符，l 是每星期的行数。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.prmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="prcalyear-w0-l0-c6-m3">prcal(year, w=0, l=0, c=6, m=3)</h3>
+
+<p>打印由 calendar() 返回的整年的日历。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.prcal(2019))
+</code></pre></div></div>
+
+<h3 id="day_name">day_name</h3>
+
+<p>在当前的语言环境下表示星期几的列表。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.day_name[0])
+</code></pre></div></div>
+
+<h3 id="day_abbr">day_abbr</h3>
+
+<p>在当前语言环境下表示星期几缩写的列表。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.day_abbr[0])
+</code></pre></div></div>
+
+<h3 id="month_name">month_name</h3>
+
+<p>在当前语言环境下表示一年中月份的列表，一月的月号为 1，它的长度为 13 且 month_name[0] 是空字符串。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.month_name[1])
+</code></pre></div></div>
+
+<h3 id="month_abbr">month_abbr</h3>
+
+<p>在当前语言环境下表示月份简写的列表。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.month_abbr[1])
+</code></pre></div></div>
+
+<h2 id="2-calendar-类">2 Calendar 类</h2>
+
+<p>Calendar 对象提供了一些可被用于准备日历数据格式化的方法，这个类本身不执行任何格式化操作，这部分任务应由子类来完成，下面具体看一下。</p>
+
+<h3 id="iterweekdays">iterweekdays()</h3>
+
+<p>返回一个迭代器，迭代器的内容为一星期的数字。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.iterweekdays()))
+</code></pre></div></div>
+
+<h3 id="itermonthdatesyear-month">itermonthdates(year, month)</h3>
+
+<p>返回一个迭代器，迭代器的内容为 year 年 month 月（1-12）的日期。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.itermonthdates(2019,10)))
+</code></pre></div></div>
+
+<h3 id="itermonthdays2year-month">itermonthdays2(year, month)</h3>
+
+<p>返回一个迭代器，迭代器的内容与 itermonthdates() 类似为 year 年 month 月的日期，但不受 datetime.date 范围的限制，迭代器中的元素为一个由日期和代表星期几的数字组成的的元组。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.itermonthdays2(2019,10)))
+</code></pre></div></div>
+
+<h3 id="itermonthdays3year-month">itermonthdays3(year, month)</h3>
+
+<p>返回一个迭代器，迭代器的内容与 itermonthdates() 类似为 year 年 month 月的日期，不受 datetime.date 范围的限制，迭代器的元素为一个由年、月、日组成的元组。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.itermonthdays3(2019,10)))
+</code></pre></div></div>
+
+<h2 id="3-textcalendar-类">3 TextCalendar 类</h2>
+
+<p>TextCalendar 对象提供了一些生成纯文本日历的方法，下面具体看一下。</p>
+
+<h3 id="formatmonththeyear-themonth-w0-l0">formatmonth(theyear, themonth, w=0, l=0)</h3>
+
+<p>返回一个多行字符串来表示指定年月的日历，w 为日期的宽度，始终保持日期居中，l 指定了每星期占用的行数；以上这些还依赖于构造器或者 setfirstweekday() 方法指定的周的第一天是哪一天。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.formatmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="prmonththeyear-themonth-w0-l0-1">prmonth(theyear, themonth, w=0, l=0)</h3>
+
+<p>与 formatmonth() 方法一样，返回一个月的日历。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.prmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="formatyeartheyear-w2-l1-c6-m3">formatyear(theyear, w=2, l=1, c=6, m=3)</h3>
+
+<p>返回一个多行字符串，这个字符串为一个 m 列日历，可选参数 w、l、c 分别表示日期列数、周的行数、月之间的间隔；以上这些还依赖于构造器或者 setfirstweekday() 指定哪一天为一周的第一天。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.formatyear(2019))
+</code></pre></div></div>
+
+<h3 id="pryeartheyear-w0-l0-c6-m3">pryear(theyear, w=0, l=0, c=6, m=3)</h3>
+
+<p>与 formatyear() 方法一样，返回一整年的日历。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.pryear(2019))
+</code></pre></div></div>
+
+<h2 id="4-htmlcalendar-类">4 HTMLCalendar 类</h2>
+
+<p>HTMLCalendar 对象提供了一些生成 HTML 日历的方法，下面具体看一下。</p>
+
+<h3 id="formatmonththeyear-themonth-withyeartrue">formatmonth(theyear, themonth, withyear=True)</h3>
+
+<p>返回一个 HTML 表格作为指定年月的日历，withyear 为 True，则年份将会包含在表头，否则只显示月份。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import HTMLCalendar
+hc = HTMLCalendar()
+print(hc.formatmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="formatyeartheyear-width3">formatyear(theyear, width=3)</h3>
+
+<p>返回一个 HTML 表格作为指定年份的日历，width 用于规定每一行显示月份的数量。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import HTMLCalendar
+hc = HTMLCalendar()
+print(hc.formatyear(2019))
+</code></pre></div></div>
+
+<h3 id="formatyearpagetheyear-width3-csscalendarcss-encodingnone">formatyearpage(theyear, width=3, css=’calendar.css’, encoding=None)</h3>
+
+<p>返回一个完整的 HTML 页面作为指定年份的日历，width 用于规定每一行显示的月份数量，css 为层叠样式表的名字，如果不使用任何层叠样式表，可以使用 None，encoding 为输出页面的编码 (默认为系统的默认编码)。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import HTMLCalendar
+hc = HTMLCalendar()
+print(hc.formatyearpage(2019))
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了和演示了日历模块 calendar 一些基本概念和使用，对 Python 工程师使用 calendar 提供了支撑。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-036">Python-100-days-day036</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p><a href="https://docs.python.org/zh-cn/3/library/calendar.html">https://docs.python.org/zh-cn/3/library/calendar.html</a></p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/10/20/python-calendar-036.html';
+        this.page.identifier = '/python/2019/10/20/python-calendar-036.html';
+        this.page.title = '第36天：Python calendar 模块';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/10/20/python-calendar-036.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

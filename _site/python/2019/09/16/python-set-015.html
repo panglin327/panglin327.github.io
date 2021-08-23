@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第15天：python set - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;blockquote&gt;
+  &lt;p&gt;by 潮汐&lt;/p&gt;
+&lt;/blockquote&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/09/16/python-set-015.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第15天：python set">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第15天：python set</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/09/16
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <blockquote>
+  <p>by 潮汐</p>
+</blockquote>
+
+<p>Python 也包含有 集合 类型。集合是由不重复元素组成的无序的集。它的基本用法包括成员检测和消除重复元素。集合对象也支持像 联合，交集，差集，对称差分等数学运算。</p>
+
+<p><strong>集合结构如下：</strong></p>
+
+<!--more-->
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set1 = {'hello', 'hello', 'word', 'word'}
+set1
+#　输出结果实现自动去重
+{'hello', 'word'}
+
+</code></pre></div></div>
+
+<h2 id="1集合创建">1、集合创建</h2>
+
+<p>可以使用大括号 { } 或者 set() 函数创建集合，</p>
+
+<p><strong>创建格式：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parame = {value01,value02,...}
+或者
+set(value)
+</code></pre></div></div>
+
+<p>==注意：创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字典。==</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 创建空集合
+&gt;&gt;&gt; empty_set = set()
+&gt;&gt;&gt; type(empty_set)
+  &lt;class 'set'&gt;
+
+# 创建空字典
+&gt;&gt;&gt; empty_dict = {}
+&gt;&gt;&gt; type(empty_dict)
+  &lt;class 'dict'&gt;
+</code></pre></div></div>
+
+<h2 id="2集合的基本操作">2、集合的基本操作</h2>
+
+<h3 id="21-添加元素">2.1 添加元素</h3>
+
+<p><strong>语法格式：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.add(x)
+</code></pre></div></div>
+
+<p>将元素 x 添加到集合 s 中，如果元素已存在，则不进行任何操作。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s = set(('hello','world'))
+print(s)
+
+# 向集合 s 中添加元素
+s.add('!')
+print('添加元素后的集合是：%s' % s)
+
+# 输出结果是：
+添加元素后的集合是：{'world', '!', 'hello'}
+</code></pre></div></div>
+
+<p>除了 add() 方法可以添加元素外，还有一个方法，也可以添加元素，并且参数可以是列表，元组，字典等，语法格式如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.update( x )
+
+</code></pre></div></div>
+
+<p>参数 x 可以是一个，也可以是多个，多个参数之间用逗号相隔</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#　1）添加列表
+s.update([1,3],[2,4])
+print('添加元素后的集合是：%s' % s)
+
+# 2）添加元组
+
+s.update(('h', 'j'))
+print('添加元素后的集合是：%s' % s)
+</code></pre></div></div>
+
+<h3 id="22-移除元素">2.2 移除元素</h3>
+
+<p><strong>语法格式如下：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.remove( x )
+</code></pre></div></div>
+
+<p>将元素 x 从集合 s 中移除，如果元素不存在，则会发生错误。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 将元素 2 从集合中移除
+s.remove(2)
+print('移除元素 2 后的集合是：%s' % s)
+
+# 如果移除集合中不存在的元素会报异常
+# 移除集合中不存在的集合
+s.remove('hi')
+print('移除元素后的集合是：%s' % s)
+
+#　异常信息
+Traceback (most recent call last):
+  File "test.py", line 20, in &lt;module&gt;
+  s.remove('hi')
+  KeyError: 'hi'
+</code></pre></div></div>
+
+<p>此外还有一个方法也是移除集合中的元素，且如果元素不存在，不会发生错误。格式如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.discard( x )
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt;thisset = set(("Google", "Runoob", "Taobao"))
+&gt;&gt;&gt; thisset.discard("Facebook")  # 不存在不会发生错误
+&gt;&gt;&gt; print(thisset)
+{'Taobao', 'Google', 'Runoob'}
+</code></pre></div></div>
+
+<p>我们也可以设置随机删除集合中的一个元素，语法格式如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.pop()
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 随机删除集合中的一个元素
+print(s)
+
+s.pop()
+
+print('移除元素后的集合是：%s' % s)
+
+输出结果：
+{1, 3, 4, 'world', '!', 'hello', 'h', 'j'}
+移除元素后的集合是：{3, 4, 'world', '!', 'hello', 'h', 'j'}
+</code></pre></div></div>
+
+<p><strong>注意</strong>：在交互模式，pop 是删除集合的第一个元素（排序后的集合的第一个元素）。</p>
+
+<h3 id="23-计算集合元素个数">2.3 计算集合元素个数</h3>
+
+<p><strong>语法格式如下：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>len(s)
+</code></pre></div></div>
+
+<p>计算集合 s 元素个数。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print('集合 s 的长度是：%s' % len(s))
+
+# 输出结果
+集合 s 的长度是：7
+</code></pre></div></div>
+
+<h3 id="24-清空集合">2.4 清空集合</h3>
+
+<p><strong>语法格式如下：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.clear()
+</code></pre></div></div>
+
+<p>清空集合 s</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s.clear()
+print('集合清空后的结果是：%s' % s)
+
+# 输出结果：
+集合清空后的结果是：set()
+</code></pre></div></div>
+
+<h3 id="25-判断元素是否存在">2.5 判断元素是否存在</h3>
+
+<p><strong>语法格式如下：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x in s
+</code></pre></div></div>
+
+<p>判断元素 x 是否在集合 s 中，存在返回 True，不存在返回 False。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 判断元素是否存在
+s = {'hello',  'word'}
+# 判断元素 hello 是否在集合 s 中
+
+print(hello' in s)
+
+# 输出结果：True
+</code></pre></div></div>
+
+<h3 id="26-集合运算">2.6 集合运算</h3>
+
+<p>集合之间的运算符分别是‘-’、‘|’、‘&amp;’、‘^’ ; 下面以两个集合之间的运算为例进行讲解：</p>
+<ul>
+  <li>‘-’：代表前者中包含后者中不包含的元素</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>‘</td>
+          <td>’：代表两者中全部元素聚在一起去重后的结果</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>‘&amp;’：两者中都包含的元素</li>
+  <li>‘^’：不同时包含于两个集合中的元素</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a = set('afqwbracadaagfgbrafg')
+&gt;&gt;&gt; b = set('rfgfgfalacazamddg')
+&gt;&gt;&gt; a                                  
+{'r', 'q', 'd', 'b', 'w', 'g', 'f', 'c', 'a'}
+&gt;&gt;&gt; b
+{'r', 'd', 'g', 'f', 'l', 'z', 'c', 'm', 'a'}
+# 集合a中包含而集合b中不包含的元素
+&gt;&gt;&gt; a - b                              
+{'b', 'w', 'q'}
+ # 集合a或b中包含的所有元素
+&gt;&gt;&gt; a | b                             
+{'d', 'g', 'l', 'c', 'r', 'q', 'b', 'w', 'f', 'z', 'm', 'a'}
+# 集合a和b中都包含了的元素
+&gt;&gt;&gt; a &amp; b                              
+{'r', 'd', 'g', 'f', 'c', 'a'}
+# 不同时包含于a和b的元素
+&gt;&gt;&gt; a ^ b                              
+{'l', 'q', 'b', 'w', 'z', 'm'}
+</code></pre></div></div>
+
+<h2 id="3集合推导式">3、集合推导式</h2>
+
+<p>和列表一样，集合也支持推导式</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 判断元素是否存在
+&gt;&gt;&gt; a = {x for x in 'abracadabra' if x not in 'abc'}
+&gt;&gt;&gt; a
+{'r', 'd'}
+
+</code></pre></div></div>
+
+<h2 id="4集合内置方法">4、集合内置方法</h2>
+
+<h3 id="41-difference">4.1 difference()</h3>
+
+<p>difference() 方法用于返回集合的差集，即返回的集合元素包含在第一个集合中，但不包含在第二个集合(方法的参数)中，返回一个新的集合。
+** difference() 方法语法：**</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set.difference(set)
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<p>两个集合的差集返回一个集合，元素包含在集合 x ，但不在集合 y ：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 求两个集合的差集，元素在 x 中不在 y 中
+x = {"apple", "banana", "cherry"}
+y = {"google", "microsoft", "apple"}
+
+z = x.difference(y)
+
+print('两个集合的差集是：%s' % z)
+
+# 输出结果为：
+{'cherry', 'banana'}
+</code></pre></div></div>
+
+<h2 id="42--difference_update">4.2  difference_update()</h2>
+
+<ul>
+  <li>difference_update() 方法用于移除两个集合中都存在的元素。</li>
+  <li>difference_update() 方法与 difference() 方法的区别在于 difference() 方法返回一个移除相同元素的新集合，而 difference_update() 方法是直接在原来的集合中移除元素，没有返回值。</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = {"apple", "banana", "cherry"}
+y = {"google", "microsoft", "apple"}
+
+x.difference_update(y)
+
+print(x)
+结果为：
+{'banana', 'cherry'}
+
+
+x1 = {1,2,3,4}
+y1 = {1,2,3}
+
+x1.difference_update(y1)
+
+print(x1)
+
+# 结果为：
+{4}
+</code></pre></div></div>
+
+<h3 id="43-intersection">4.3 intersection()</h3>
+
+<p>intersection() 方法用于返回两个或更多集合中都包含的元素，即交集，返回一个新的集合。</p>
+
+<p><strong>intersection() 方法语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set.intersection(set1, set2 ... etc)
+
+**参数：**
+set1 -- 必需，要查找相同元素的集合
+set2 -- 可选，其他要查找相同元素的集合，可以多个，多个使用逗号 , 隔开
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 返回两个或者多个集合的交集
+x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "apple"}
+
+z = x.intersection(y)
+
+print(z)
+
+#　返回三个集合的交集
+x = {"a", "b", "c"}
+y = {"c", "d", "e"}
+z = {"f", "g", "c"}
+
+result = x.intersection(y, z)
+print('三个集合的差集是：%s' % result)
+
+# 输出结果：
+
+{'apple'}
+两个集合的差集是：{'c'}
+</code></pre></div></div>
+
+<h3 id="44-intersection_update">4.4 intersection_update()</h3>
+
+<ul>
+  <li>intersection_update() 方法用于获取两个或更多集合中都重叠的元素，即计算交集。</li>
+  <li>intersection_update() 方法不同于 intersection() 方法，因为 intersection() 方法是返回一个新的集合，而 intersection_update() 方法是在原始的集合上移除不重叠的元素。</li>
+</ul>
+
+<p><strong>intersection_update() 方法语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set.intersection_update(set1, set2 ... etc)
+
+**参数**
+set1 -- 必需，要查找相同元素的集合
+set2 -- 可选，其他要查找相同元素的集合，可以使用多个多个，多个使用逗号‘,’ 隔开
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 返回一个无返回值的集合交集
+x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "apple"}
+
+x.intersection_update(y)
+
+print(x)
+
+x = {"a", "b", "c"}
+y = {"c", "d", "e"}
+z = {"f", "g", "c"}
+
+x.intersection_update(y, z)
+
+print(x)
+
+#　输出结果：
+{'apple'}
+{'c'}
+</code></pre></div></div>
+
+<h3 id="45-union">4.5 union()</h3>
+
+<p>union() 方法返回两个集合的并集，即包含了所有集合的元素，重复的元素只会出现一次，返回值返回一个新的集合</p>
+
+<p><strong>语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>union() 方法语法：
+
+set.union(set1, set2...)
+参数
+set1 -- 必需，合并的目标集合
+set2 -- 可选，其他要合并的集合，可以多个，多个使用逗号 , 隔开。
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 合并两个集合，重复元素只会出现一次：
+
+x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "apple"}
+ 
+z = x.union(y) 
+ 
+print(z)
+输出结果为：
+
+{'cherry', 'runoob', 'google', 'banana', 'apple'}
+
+
+# 合并多个集合：
+
+实例 1
+x = {"a", "b", "c"}
+y = {"f", "d", "a"}
+z = {"c", "d", "e"}
+ 
+result = x.union(y, z) 
+ 
+print(result)
+输出结果为：
+
+{'c', 'd', 'f', 'e', 'b', 'a'}
+</code></pre></div></div>
+
+<h3 id="46-isdisjoint">4.6 isdisjoint()</h3>
+
+<p>isdisjoint() 方法用于判断两个集合是否包含相同的元素，==如果没有返回 True，否则返回 False。==</p>
+
+<p><strong>语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isdisjoint() 方法语法：
+
+set.isdisjoint(set)
+</code></pre></div></div>
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "apple"}
+#　判断集合 y 中是否包含集合 x 中的元素，如果没有返回 True, 有则返回 False
+z = x.isdisjoint(y)
+# 结果返回 False,说明集合 y 中有和 x 中相同的元素
+print(z)
+
+
+x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "baidu"}
+#　判断集合 y 中是否包含集合 x 中的元素，如果没有返回 True, 有则返回 False
+z = x.isdisjoint(y)
+# 结果返回 True,说明集合 y 中没有和 x 中相同的元素
+print(z)
+
+
+输出结果：
+False
+True
+</code></pre></div></div>
+
+<h3 id="47-issubset">4.7 issubset()</h3>
+
+<p>issubset() 方法用于判断集合的所有元素是否都包含在指定集合中，如果是则返回 True，否则返回 False。</p>
+
+<p><strong>语法:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>issubset() 方法语法：
+
+set.issubset(set)
+
+**参数**
+set -- 必需，要比查找的集合
+返回值
+返回布尔值，如果都包含返回 True，否则返回 False。
+</code></pre></div></div>
+
+<p><strong>实例:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 判断集合 x 的所有元素是否都包含在集合 y 中：
+x = {"a", "b", "c"}
+y = {"f", "e", "d", "c", "b", "a"}
+ 
+z = x.issubset(y) 
+ 
+print(z)
+
+输出结果
+# 说明 集合 x 中的元素都包含在 y 中
+True
+</code></pre></div></div>
+
+<p>注意： 必须是集合中的元素都包含在内，否则结果为 False</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#　集合 y 中只有元素 b 和 c ，执行结果为 False 
+x = {"a", "b", "c"}
+y = {"f", "e", "d", "c", "b","y"}
+
+z = x.issubset(y)
+
+print(z)
+
+结果输出；
+False
+</code></pre></div></div>
+
+<h3 id="48-issuperset">4.8 issuperset()</h3>
+
+<p>issuperset() 方法用于判断指定集合的所有元素是否都包含在原始的集合中，如果是则返回 True，否则返回 False。</p>
+
+<p><strong>语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set.issuperset(set)
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 判断集合 y 的所有元素是否都包含在集合 x 中：
+x = {"f", "e", "d", "c", "b", "a"}
+y = {"a", "b", "c"}
+ 
+z = x.issuperset(y) 
+ 
+print(z)
+输出结果为：
+
+True
+
+
+# 如果没有全部包含返回 False：
+
+实例 1
+x = {"f", "e", "d", "c", "b"}
+y = {"a", "b", "c"}
+ 
+z = x.issuperset(y) 
+ 
+print(z)
+输出结果为：
+
+False
+</code></pre></div></div>
+
+<h3 id="49-symmetric_difference">4.9 symmetric_difference()</h3>
+
+<p>symmetric_difference() 方法返回两个集合中不重复的元素集合，即会移除两个集合中都存在的元素，结果返回一个新的集合。</p>
+
+<p><strong>语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set.symmetric_difference(set)
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 返回两个集合组成的新集合，但会移除两个集合的重复元素：
+x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "apple"}
+
+z = x.symmetric_difference(y)
+
+print(z)
+
+输出结果：
+{'banana', 'google', 'cherry', 'runoob'}
+</code></pre></div></div>
+
+<h3 id="410-symmetric_difference_update">4.10 symmetric_difference_update()</h3>
+
+<p>symmetric_difference_update() 方法移除当前集合中在另外一个指定集合相同的元素，并将另外一个指定集合中不同的元素插入到当前集合中。</p>
+
+<p><strong>语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set.symmetric_difference_update(set)
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 在原始集合 x 中移除与 y 集合中的重复元素，并将不重复的元素插入到集合 x 中： 
+x = {"apple", "banana", "cherry"}
+y = {"google", "runoob", "apple"}
+
+x.symmetric_difference_update(y)
+
+print(x)
+
+输出结果：
+{'runoob', 'cherry', 'banana', 'google'}
+</code></pre></div></div>
+
+<p><strong>后记</strong>：其他几个方法是对集合的增删改查，如：add() clear() copy() update() pop() remove() discard() 等方法，这些方法在对集合的基本操作章节有详解，大家到时候按需使用。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了 Python 数据结构之集合的操作与使用，对 Python 工程师使用集合的一些基本知识与实践操作提供了支撑。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-015">Python-100-days-day015</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p>http://www.pythondoc.com/pythontutorial3
+https://www.runoob.com/python3/python3-set.html</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/09/16/python-set-015.html';
+        this.page.identifier = '/python/2019/09/16/python-set-015.html';
+        this.page.title = '第15天：python set';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/09/16/python-set-015.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

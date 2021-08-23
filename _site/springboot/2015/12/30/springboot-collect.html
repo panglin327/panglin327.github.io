@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Spring Boot 学习资料汇总 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;收集 Spring Boot 相关的学习资料，&lt;a href=&quot;http://www.ityouknow.com/springcloud/2016/12/30/springcloud-collect.html&quot;&gt;Spring Cloud点这里&lt;/a&gt;&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/springboot/2015/12/30/springboot-collect.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Spring Boot 学习资料汇总">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Spring Boot 学习资料汇总</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2015/12/30
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>收集 Spring Boot 相关的学习资料，<a href="http://www.ityouknow.com/springcloud/2016/12/30/springcloud-collect.html">Spring Cloud点这里</a></p>
+
+<p><strong>重点推荐：<a href="http://springboot.fun/">Spring Boot 中文索引</a></strong></p>
+
+<h2 id="推荐博客">推荐博客</h2>
+
+<ul>
+  <li><a href="http://www.ityouknow.com/spring-boot.html">纯洁的微笑-Spring Boot系列文章</a></li>
+  <li><a href="http://412887952-qq-com.iteye.com/category/356333">林祥纤-从零开始学Spring Boot</a></li>
+  <li><a href="http://www.mkyong.com/tutorials/spring-boot-tutorials/">Mkyong-Spring Boot教程（国外）</a></li>
+  <li><a href="https://www.baeldung.com/spring-boot">baeldung-Spring Boot教程（国外）</a></li>
+  <li><a href="http://blog.csdn.net/liaokailin/article/category/5765237">liaokailin的专栏-Spring Boot实战</a></li>
+  <li><a href="http://blog.csdn.net/column/details/spring-boot.html">catoop的专栏-Spring Boot 学习</a></li>
+  <li><a href="http://blog.csdn.net/column/details/15397.html">方志朋-SpringBoot 非官方教程</a></li>
+  <li><a href="http://tengj.top/categories/Spring-Boot%E5%B9%B2%E8%B4%A7%E7%B3%BB%E5%88%97/">嘟嘟-Spring-Boot干货系列</a></li>
+  <li><a href="https://blog.52itstyle.com/category/springBoot/">小柒-SpringBoot开发案例</a></li>
+  <li><a href="http://blog.csdn.net/column/details/13987.html">江南一点雨-关于Spring Boot</a></li>
+  <li><a href="https://www.tianmaying.com/tutorials/tag/Springboot">天码营-Spring Boot</a></li>
+  <li><a href="http://cxytiandi.com/blog/detail/17437">猿天地-Spring Boot</a></li>
+  <li><a href="http://www.cnblogs.com/GoodHelper/tag/spring%20boot/default.html">刘冬的博客-Spring Boot</a></li>
+  <li><a href="https://blog.battcn.com/categories/SpringBoot/">唐亚峰 Battcn-Spring Boot</a></li>
+  <li><a href="https://sylvanassun.github.io/categories/%E5%90%8E%E7%AB%AF/Java/Spring-Boot/">sylvanassun-Spring Boot</a></li>
+  <li><a href="https://www.dalaoyang.cn/tag/springboot/">dalaoyang-Spring Boot</a></li>
+</ul>
+
+<h2 id="开源">开源</h2>
+
+<ul>
+  <li><a href="https://github.com/ityouknow/spring-boot-examples">纯洁的微笑 Spring Boot 示例</a></li>
+  <li><a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples">Spring Boot 官方示例</a></li>
+  <li><a href="https://github.com/cloudfavorites/favorites-web">Spring Boot开源软件 云收藏</a></li>
+  <li><a href="https://github.com/ZHENFENG13/My-Blog">Docker+SpringBoot+Mybatis+thymeleaf等技术实现的Java博客系统</a></li>
+  <li><a href="https://github.com/wuyouzhuguli/FEBS">Spring boot &amp; Shiro 权限管理系统</a></li>
+  <li><a href="https://gitee.com/52itstyle/spring-boot-pay">Spring Boot实现支付服务：支付宝，微信…</a></li>
+  <li><a href="https://gitee.com/JiaGou-XiaoGe/webappchat">Spring Boot后台商城 h5 小程序</a></li>
+  <li><a href="https://gitee.com/alexyang/spring-boot-filemanager">基于Spring Boot响应式文件浏览管理器</a></li>
+  <li><a href="https://github.com/Raysmond/SpringBlog">Spring Boot开源博客</a></li>
+  <li><a href="https://gitee.com/52itstyle/spring-boot-mail">邮件发送服务多种实现，队列，线程定时任务</a></li>
+  <li><a href="https://github.com/ChinaSilence/any-video">Spring Boot视频展示项目</a></li>
+  <li><a href="https://github.com/timebusker/spring-boot">Spring Boot项目实践总结</a></li>
+  <li><a href="https://github.com/lenve/VBlog">Vue+SpringBoot实现的多用户博客管理平台</a></li>
+  <li><a href="https://github.com/lenve/vhr">Vue+SpringBoot实现的人力资源管理系统</a></li>
+  <li><a href="https://github.com/hs-web/hsweb-framework">hsweb企业后台管理系统基础框架</a></li>
+  <li><a href="https://github.com/kingschan1204/istock">一个基于spring boot 实现的股票指数💹爬虫</a></li>
+  <li><a href="https://gitee.com/kekingcn/file-online-preview">KKFileView-SpringBoot实现在线预览</a></li>
+  <li><a href="https://gitee.com/kailing/boot-websocket-log">boot-websocket-log-SpringBoot实现日志WEB输出</a></li>
+  <li><a href="https://gitee.com/lcg0124/bootdo">SpringBoot+MyBatis+A pacheShiro+Ehcahe基础平台</a></li>
+  <li><a href="https://github.com/leelance/spring-boot-all">leelance Spring Boot各种示例</a></li>
+  <li><a href="https://github.com/lihengming/spring-boot-api-project-seed">一个基于Spring Boot &amp; MyBatis的种子项目，用于快速构建中小型API、RESTful API项目</a></li>
+  <li><a href="https://github.com/szerhusenBC/jwt-spring-security-demo">JWT (Json Web Token) with Spring Security and Spring Boot 2</a></li>
+  <li><a href="https://github.com/vito16/shop">基于Spring-boot和bootstrap搭建的商城系统</a></li>
+  <li><a href="https://github.com/microservices-demo/microservices-demo">Deployment scripts &amp; config for Sock Shop</a></li>
+  <li><a href="https://gitee.com/yadong.zhang/DBlog">Spring Boot 开源博客-DBlog</a></li>
+  <li><a href="https://github.com/ChinaLHR/JavaQuarkBBS">Spring Boot 实现的简易社区</a></li>
+  <li><a href="https://gitee.com/tomsun28/bootshiro">springboot+shiro+jwt 开源项目</a></li>
+  <li><a href="https://github.com/stylefeng/Guns">Guns-基于SpringBoot的后台管理系统</a></li>
+  <li><a href="https://github.com/ruibaby/halo">halo-基于SpringBoot的博客系统</a></li>
+  <li><a href="https://github.com/zhudyos/duic">zhudyos/duic Distributed configuration center（分布式配置中心）:new:</a></li>
+  <li><a href="https://github.com/linlinjava/litemall">Spring Boot后端 + Vue管理员前端 + 微信小程序用户前端</a></li>
+  <li><a href="https://github.com/macrozheng/mall">mall-SpringBoot+MyBatis 电商系统</a></li>
+  <li><a href="https://github.com/Senssic/sc-whorl">基于Spring Boot2.0微服务脚手架</a></li>
+</ul>
+
+<h2 id="网站">网站</h2>
+
+<ul>
+  <li><a href="http://favorites.ren/lookAround">云收藏</a></li>
+  <li><a href="http://projects.spring.io/spring-boot/">Spring boot 官网</a></li>
+  <li><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/">Spring Boot 参考指南- 英文版</a></li>
+  <li><a href="http://study.163.com/courses-search?keyword=Spring%20Boot">网易云课堂Spring Boot视频</a></li>
+  <li><a href="https://www.imooc.com/search/?words=spring%20boot">慕课网Spring Boot视频</a></li>
+  <li><a href="https://github.com/oopsguy/microservices-from-design-to-deployment-chinese">开源书籍-微服务：从设计到部署</a></li>
+</ul>
+
+<p><strong>欢迎大家推荐更多的资料</strong></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/springboot/2015/12/30/springboot-collect.html';
+        this.page.identifier = '/springboot/2015/12/30/springboot-collect.html';
+        this.page.title = 'Spring Boot 学习资料汇总';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/springboot/2015/12/30/springboot-collect.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

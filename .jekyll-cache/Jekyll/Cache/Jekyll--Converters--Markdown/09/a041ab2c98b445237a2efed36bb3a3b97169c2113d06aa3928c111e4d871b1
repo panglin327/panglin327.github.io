@@ -1,0 +1,288 @@
+I"�~<blockquote>
+  <p>by 小小摸虾</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">enum</code> 是一组绑定到唯一常数值的符号名称，并且具备可迭代性和可比较性的特性。我们可以使用 <code class="highlighter-rouge">enum</code> 创建具有良好定义的标识符，而不是直接使用魔法字符串或整数，也便于开发工程师的代码维护。</p>
+
+<!--more-->
+
+<h2 id="创建枚举">创建枚举</h2>
+
+<p>我们可以使用 <code class="highlighter-rouge">class</code> 语法创建一个枚举类型，方便我们进行读写，另外，根据函数 <code class="highlighter-rouge">API</code> 的描述定义，我们可以创建一个 <code class="highlighter-rouge">enum</code> 的子类，如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">HttpStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">FORBIDDEN</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">SERVICE_UNAVAILABLE</span> <span class="o">=</span> <span class="mi">500</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意： 枚举属性值可以是任何东西: <code class="highlighter-rouge">int</code>, <code class="highlighter-rouge">str</code> 等。如果确切的值不重要，您可以使用 <code class="highlighter-rouge">auto</code> 实例，并为您选择适当的值。如果您将 <code class="highlighter-rouge">auto</code> 与其他值混合，则必须小心。
+<strong>枚举类型中，不可以设置相同名称的 name，可以有相同的 value</strong>。</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">enum</code> 自带属性 <code class="highlighter-rouge">name</code> 和 <code class="highlighter-rouge">value</code>，日常工作中使用最多的也是这两个属性，我们打印看看结果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'Member: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">))</span>               <span class="c1"># Member: HttpStatus.OK
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Member name: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">.</span><span class="n">name</span><span class="p">))</span>     <span class="c1"># Member name: OK
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Member value: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">.</span><span class="n">value</span><span class="p">))</span>   <span class="c1"># Member value: 200
+</span><span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">))</span>                              <span class="c1"># &lt;enum 'HttpStatus'&gt;
+</span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">))</span>                              <span class="c1"># &lt;HttpStatus.OK: 200&gt;
+</span><span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">,</span> <span class="n">HttpStatus</span><span class="p">))</span>            <span class="c1"># True
+</span></code></pre></div></div>
+
+<h2 id="枚举迭代">枚举迭代</h2>
+
+<p>枚举支持迭代和遍历顺序。举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+<span class="c1"># 创建
+</span><span class="k">class</span> <span class="nc">HttpStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">FORBIDDEN</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">SERVICE_UNAVAILABLE</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">.</span><span class="n">value</span>
+
+<span class="c1"># 迭代
+</span><span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">HttpStatus</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{} : {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="p">.</span><span class="n">value</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>打印结果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">OK</span> <span class="p">:</span> <span class="mi">200</span>
+<span class="n">BAD_REQUEST</span> <span class="p">:</span> <span class="mi">400</span>
+<span class="n">FORBIDDEN</span> <span class="p">:</span> <span class="mi">403</span>
+<span class="n">NOT_FOUND</span> <span class="p">:</span> <span class="mi">404</span>
+<span class="n">REQUEST_TIMEOUT</span> <span class="p">:</span> <span class="mi">408</span>
+<span class="n">SERVICE_UNAVAILABLE</span> <span class="p">:</span> <span class="mi">500</span>
+<span class="n">OTHER</span> <span class="p">:</span> <span class="o">&lt;</span><span class="nb">object</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x000002863E1D7B10</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>可以看出，遍历的每一个 <code class="highlighter-rouge">status</code> 是一个独立的枚举成员，拥有 <code class="highlighter-rouge">name</code> 和 <code class="highlighter-rouge">value</code> 属性。</p>
+
+<p>另外，我们也可以使用如下形式来进行枚举遍历：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">__members__</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{} : {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">member</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="枚举成员与属性访问">枚举成员与属性访问</h2>
+
+<ul>
+  <li>通过枚举 <code class="highlighter-rouge">value</code> 进行访问，访问需要使用元组<code class="highlighter-rouge">()</code>的形式</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>      <span class="c1"># HttpStatus.OK
+</span></code></pre></div></div>
+
+<ul>
+  <li>通过枚举 <code class="highlighter-rouge">name</code> 进行访问，访问需要使用列表<code class="highlighter-rouge">[]</code>的形式</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">[</span><span class="s">'OK'</span><span class="p">])</span>     <span class="c1"># HttpStatus.OK
+</span></code></pre></div></div>
+
+<ul>
+  <li>将属性赋予另一个 <code class="highlighter-rouge">enum</code> 成员</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">number</span> <span class="o">=</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span>
+<span class="k">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>               <span class="c1"># HttpStatus.OK
+</span></code></pre></div></div>
+
+<h2 id="枚举值唯一">枚举值唯一</h2>
+
+<p>上面我们创建的枚举类中，<code class="highlighter-rouge">value</code> 值是可以重复的，如果我们不想枚举类中的值重复可以是用装饰器 <code class="highlighter-rouge">@unique</code>，举例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">unique</span>
+
+<span class="c1"># 创建
+</span><span class="o">@</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">HttpStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">FORBIDDEN</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">SERVICE_UNAVAILABLE</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="mi">200</span>
+</code></pre></div></div>
+
+<p>我们运行后，报如下异常：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ValueError: duplicate values found in &lt;enum 'HttpStatus'&gt;: OTHER -&gt; OK
+</code></pre></div></div>
+
+<p>我们查看源代码，发现加入此装饰器的枚举类型，<code class="highlighter-rouge">unique</code> 方法会将其 <code class="highlighter-rouge">__members__.items()</code> 进行遍历，追加到 <code class="highlighter-rouge">duplicates</code> 列表中，如果发现列表不为空，则抛出如上异常信息。</p>
+
+<h2 id="枚举自动赋值">枚举自动赋值</h2>
+
+<p>此功能用于我们在使用枚举时，只在意枚举的标识符的含义而不在意值的情况下，但是如果需要与字符串或整数混合使用就要额外注意。下面贴上官方的示例：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">auto</span><span class="p">,</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">TestEnum</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">test_auto_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="n">red</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">blue</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">green</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Color</span><span class="p">),</span> <span class="p">[</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">test_auto_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">_generate_next_value_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span>
+    
+            <span class="n">red</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">blue</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">green</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Color</span><span class="p">),</span> <span class="p">[</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="s">'red'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="s">'green'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>可以发现，使用 <code class="highlighter-rouge">auto()</code> 得到的是整数自增型，如果我们需要别的方式，只需要在我们的枚举类中，重写 <code class="highlighter-rouge">_generate_next_value_</code> 方法。</p>
+
+<h2 id="枚举比较">枚举比较</h2>
+
+<p>枚举对象可以进行比较，但是不能进行值比较，如果需要进行值比较则需要枚举对象继承 <code class="highlighter-rouge">IntEnum</code> 对象，举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">IntEnum</span>
+
+<span class="k">class</span> <span class="nc">TestEnum</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Season</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+        <span class="n">SPRING</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">SUMMER</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">AUTUMN</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">WINTER</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="k">def</span> <span class="nf">test_comparisons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">season</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Season</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">season</span><span class="p">.</span><span class="n">SPRING</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">class</span> <span class="nc">Part</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="n">SPRING</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">CLIP</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">BARREL</span> <span class="o">=</span> <span class="mi">3</span>
+            
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">Part</span><span class="p">.</span><span class="n">SPRING</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">Part</span><span class="p">.</span><span class="n">SPRING</span><span class="p">,</span> <span class="n">season</span><span class="p">.</span><span class="n">SPRING</span><span class="p">)</span>
+
+<span class="n">TestEnum</span><span class="p">().</span><span class="n">test_comparisons</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>上面的测试例子当中，我们创建了两个继承类型不一样的枚举类，可以看到继承了 <code class="highlighter-rouge">IntEnum</code> 的 <code class="highlighter-rouge">Season</code> 可以进行值的比较，而继承了 <code class="highlighter-rouge">Enum</code> 的 <code class="highlighter-rouge">Part</code> 则不能进行值比较，并且 <code class="highlighter-rouge">IntEnum</code> 类型与 <code class="highlighter-rouge">Enum</code> 类型也不能进行比较，即使属性和值一样。</p>
+
+<h2 id="枚举方法">枚举方法</h2>
+
+<p>枚举中可以定义枚举类自身特有的方法，也可以复写一些已经在基类中定义好的方法，比如: <code class="highlighter-rouge">__init__</code>, <code class="highlighter-rouge">__str__</code>,<code class="highlighter-rouge">__repr__</code>,<code class="highlighter-rouge">__hash__</code>,<code class="highlighter-rouge">__format__</code> 等。举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">Mood</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">FUNKY</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">)</span>
+    <span class="n">HAPPY</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">"world"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">nice</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">num</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">nice</span> <span class="o">=</span> <span class="n">nice</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'my custom str! {0}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="o">@</span><span class="nb">classmethod</span>
+    <span class="k">def</span> <span class="nf">favorite_mood</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">.</span><span class="n">HAPPY</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">testValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">nice</span> <span class="o">+</span> <span class="s">':'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>上面我们定义了一个枚举类，其中 <code class="highlighter-rouge">value</code> 是一个枚举类型，我们可以定义 <code class="highlighter-rouge">__init__</code> 方法去对应元组中的值，我们也复写了 <code class="highlighter-rouge">__str__</code> 方法。</p>
+
+<p>打印方法看看效果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">favorite_mood</span><span class="p">())</span>     <span class="c1"># my custom str! (3, 'world')
+</span><span class="k">print</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">HAPPY</span><span class="p">.</span><span class="n">describe</span><span class="p">())</span>    <span class="c1"># ('HAPPY', (3, 'world'))
+</span><span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">FUNKY</span><span class="p">))</span>          <span class="c1"># my custom str! (1, 'hello')
+</span><span class="k">print</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">FUNKY</span><span class="p">.</span><span class="n">testValue</span><span class="p">)</span>     <span class="c1"># hello:1
+</span></code></pre></div></div>
+
+<p>从输出结果看，我们自定义和复写的方法都已经成功的应用到了 <code class="highlighter-rouge">Mood</code> 类中。</p>
+
+<h2 id="枚举继承">枚举继承</h2>
+
+<p>不同于 <code class="highlighter-rouge">java</code> 中的枚举类, <code class="highlighter-rouge">python</code> 中的枚举类是可以被继承的，但是被继承的枚举类规定其不能定义任何成员，但可以定义抽象方法。举例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EnumExtend</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_extending</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Shade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Shade</span><span class="p">):</span>
+            <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">green</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">blue</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="nb">TypeError</span><span class="p">):</span>
+            <span class="k">class</span> <span class="nc">MoreColor</span><span class="p">(</span><span class="n">Color</span><span class="p">):</span>
+                <span class="n">cyan</span> <span class="o">=</span> <span class="mi">4</span>
+                <span class="n">magenta</span> <span class="o">=</span> <span class="mi">5</span>
+                <span class="n">yellow</span> <span class="o">=</span> <span class="mi">6</span>
+
+    <span class="k">def</span> <span class="nf">test_extending2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Shade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span>
+
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Shade</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s">'%s nice!'</span> <span class="o">%</span> <span class="bp">self</span><span class="p">.</span><span class="n">value</span>
+
+        <span class="k">class</span> <span class="nc">MoreColor</span><span class="p">(</span><span class="n">Color</span><span class="p">):</span>
+            <span class="n">cyan</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">magenta</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">yellow</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">MoreColor</span><span class="p">.</span><span class="n">magenta</span><span class="p">.</span><span class="n">shade</span><span class="p">(),</span> <span class="s">'magenta'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">MoreColor</span><span class="p">.</span><span class="n">magenta</span><span class="p">.</span><span class="nb">hex</span><span class="p">(),</span> <span class="s">'5 nice!'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>测试用例可以完美运行，我们可以发现：第一个方法中，抛出了 <code class="highlighter-rouge">TypeError</code> 的异常；第二个测试方法中，<code class="highlighter-rouge">MoreColor</code> 继承了 <code class="highlighter-rouge">Color</code>， <code class="highlighter-rouge">Color</code> 继承了 <code class="highlighter-rouge">Shade</code>, 并且我们可以通过子类调用父类中的方法。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节主要介绍了 <code class="highlighter-rouge">enum</code> 模块的基础知识，包含枚举的创建、枚举成员和属性的访问、枚举方法的创建、枚举的继承等。其中新版中的 <code class="highlighter-rouge">_ignore_</code>、<code class="highlighter-rouge">_order_</code>、<code class="highlighter-rouge">_missing_</code> 等可以学习官网的例子，另外 <code class="highlighter-rouge">enum</code> 的子类 <code class="highlighter-rouge">IntEnum</code>、<code class="highlighter-rouge">IntFlag</code>等也是我们比较常用的枚举基类，本文中简单的介绍了 <code class="highlighter-rouge">IntEnum</code>， 而 <code class="highlighter-rouge">IntFlag</code> 相比与 <code class="highlighter-rouge">IntEnum</code> 多了 <code class="highlighter-rouge">&amp;, |, ^, ~</code> 的操作，其他的子类大家感兴趣也可以了解。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-033">Python-100-days-day036</a></p>
+</blockquote>
+
+:ET

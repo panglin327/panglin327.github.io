@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         爬虫究竟是合法还是违法的？ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="爬虫岗位必看，避免同事变狱友！">
+
+    <link rel="canonical" href="http://localhost:4000/it/2019/10/09/pythonlaw.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="爬虫究竟是合法还是违法的？">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>爬虫究竟是合法还是违法的？</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/09
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>据说互联网上 50%以上的流量都是爬虫创造的，也许你看到很多热门数据都是爬虫所创造的，所以可以说无爬虫就无互联网的繁荣。</p>
+
+<p>前天写了一篇文章<a href="http://www.ityouknow.com/it/2019/10/07/beizhua.html">《 只因写了一段爬虫，公司200多人被抓！》</a>，讲述程序员因写爬虫而被刑侦的事件。文章传播很广，评论中讨论最热是：<strong>爬虫究竟是合法还是违法的？</strong></p>
+
+<p><strong>这个话题涉及到我们很多程序员的日常工作，所以有必要和大家细聊一下。</strong></p>
+
+<h2 id="01技术无罪">01.技术无罪？</h2>
+
+<p>很多朋友给我留言：<strong>技术是无罪的</strong>，技术本身确实是没有对错的，但使用技术的人是有对错的，公司或者程序员如果明知使用其技术是非法的，那么公司或者人就需要为之付出代价。</p>
+
+<p>在今年国家颁布<strong>《中华人民共和国网络安全法》</strong>之后，很多以前处于灰色地带的业务都不能做了。</p>
+
+<p>君不见之前曾经非常火的各种社工库网站，现在绝大部分都已经消失匿迹了吗？因为最新的安全法强调：<strong>贩卖个人信息超过50条属于“情节严重”，需要追求其法律责任。</strong></p>
+
+<p>很多草根站长都纷纷主动关闭了网站；还有很多涉及版权信息的网站，比如书籍、影视剧、课程等后期也会面临越来越严格的审查，这就是目前大的形势。</p>
+
+<p>2014年12月20日，人人影视字幕站发布微博称，人人影视正式关闭，并表示或将继续为正版商提供翻译服务，也可能转变为讨论社区的形式。</p>
+
+<p>2019年6月，吾爱破解因版权问题关站整改…
+…..</p>
+
+<p>随着中国经济的不断往前走，知识产权问题会越来越重视，非法爬虫是现在一个重要的打击部分，</p>
+
+<p>如果有程序员走在灰色的边缘尽早收手，不要因为一点小的收益导致触犯法律，从而得不偿失。</p>
+
+<p><strong>技术是无罪的，但是用到了错的地方代价也是非常巨大的。</strong></p>
+
+<h2 id="02爬虫岗位人人自危">02.爬虫岗位人人自危</h2>
+
+<p>我在拉钩上搜索： 爬虫工程师，显示有 217 条相关招聘信息，薪资从10-60k 都有，说明市场上对爬虫的需求是很大的。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/pythonlaw01.jpg" alt="" /></p>
+
+<p>前天文章发出去之后有很多程序员给我留言：</p>
+
+<ul>
+  <li>我们领导安排我爬取公司内部的信息，这算不算犯罪呢？</li>
+  <li>爬取网上公开的信息，这算不算犯罪呢？</li>
+  <li>写了一段代码上传到 Github，被人用了犯法吗？</li>
+</ul>
+
+<p>简单回答一下这些问题：</p>
+
+<ul>
+  <li>
+    <p>1.爬取公司内部信息有公司授权当然不算犯罪的，但是公司内部不用接口而用爬虫不知道是为什么？</p>
+  </li>
+  <li>
+    <p>2.<strong>爬取网上公开信息不犯法，但如果大量开启爬虫导致对方服务器崩溃也是违法的，</strong>这属于暴力攻击的范畴了。</p>
+  </li>
+  <li>
+    <p>3.写了一段代码上传到 Github 上面，有人利用你的代码做了其它非法的事情，绝大多数都没有问题的，但如果你写的软件涉及到入侵、暴力破解、病毒等就不好说了。</p>
+  </li>
+</ul>
+
+<p>还有朋友认为这事责任在企业不在程序员，日常工作中项目初期设计和最后上线需要通过公司的法务批准，所有代码必须有其他程序员同事评审通过才能提交。</p>
+
+<p>这位朋友说的挺对的，按道理每个公司都应该有法务和风控在前面，后面才是产品设计和程序员开发的事情，但如果一家公司为了利益，老板可以直接让这两个部门闭嘴，后面程序员可以不干吗？</p>
+
+<p>更甚至很多公司其实就没有这两个部门或者说形同虚设。那么做为程序员自己也需要操一份心，凡是涉及到入侵类的程序都不能干，因为有一个东西叫做：<strong>单位犯罪</strong>。</p>
+
+<p><strong>单位犯罪</strong>，是指公司、企业、事业单位、机关、团体为单位谋取利益，经单位决策机构或者负责人决定实施的，法律规定应当负刑事责任的危害社会的行为。</p>
+
+<p>我国刑法对单位犯罪原则上采取<strong>双罚制度</strong>，即单位犯罪的，对单位判处罚金，并<strong>对其直接负责的主管人员和其他直接责任人员判处刑罚。</strong></p>
+
+<h2 id="03什么样的爬虫是非法的">03.什么样的爬虫是非法的？</h2>
+
+<p><strong>爬虫不能涉及个人隐私！</strong></p>
+
+<p>如果爬虫程序采集到<strong>公民的姓名、身份证件号码、通信通讯联系方式、住址、账号密码、财产状况、行踪轨迹等个人信息</strong>，并将之用于非法途径的，则肯定构成非法获取公民个人信息的违法行为。</p>
+
+<p>也就是说你爬虫爬取信息没有问题，但不能涉及到个人的隐私问题，如果涉及了并且通过非法途径收益了，那肯定是违法行为。</p>
+
+<p>另外，还有下列<strong>三种情况</strong>，爬虫有可能违法，严重的甚至构成犯罪：</p>
+
+<ul>
+  <li>
+    <p>1.<strong>爬虫程序规避网站经营者设置的反爬虫措施或者破解服务器防抓取措施，非法获取相关信息</strong>，情节严重的，有可能构成“非法获取计算机信息系统数据罪”。</p>
+  </li>
+  <li>
+    <p>2.<strong>爬虫程序干扰被访问的网站或系统正常运营</strong>，后果严重的，触犯刑法，构成“破坏计算机信息系统罪”</p>
+  </li>
+  <li>
+    <p>3.<strong>爬虫采集的信息属于公民个人信息的</strong>，有可能构成非法获取公民个人信息的违法行为，情节严重的，有可能构成“侵犯公民个人信息罪”。</p>
+  </li>
+</ul>
+
+<p>现在网上有很多付费的课程，比如极客时间、Gitchat、慕课网、知识星球等等，这些付费内部信息如果被非法爬取手法出售获利，一种违法行为。</p>
+
+<p>之前我就遇到一个网友，把各个知识星球的内容都抓下来，合到一起自己去卖，自作聪明觉得发现了一个大的商机，其实自己不知道这个行为其实很危险，风险和收益明显不对等。</p>
+
+<p>我这两天看的时候，他的一个公众号都被封了，后来又转移了一个小号继续搞，迟早又是被封的命运，真的很不值当。最可怜是那些买他服务的用户，因为他宣传时承诺永久，肯定永久不了。</p>
+
+<h2 id="04什么样的爬虫是合法的">04.什么样的爬虫是合法的？</h2>
+
+<p><strong>1、 遵守 Robots 协议</strong></p>
+
+<p>Robots 协议也叫 robots.txt（统一小写）是一种存放于网站根目录下的 ASCII 编码的文本文件，它通常告诉网络搜索引擎的漫游器（又称网络蜘蛛），此网站中的哪些内容是不应被搜索引擎的漫游器获取的，哪些是可以被漫游器获取的。</p>
+
+<p>Robots 协议就是告诉爬虫，哪些信息是可以爬取，哪些信息不能被爬取，严格按照 Robots 协议 爬取网站相关信息一般不会出现太大问题。</p>
+
+<p><strong>2、不能造成对方服务器瘫痪</strong></p>
+
+<p>但不是说只要遵守 Robots 协议的爬虫就没有问题，还涉及到两个因素，第一不能大规模爬虫导致对方服务器瘫痪，这等于网络攻击。</p>
+
+<p>2019年05月28日国家网信办发布的《数据安全管理办法（征求意见稿）》中，拟通过行政法规的形式，对爬虫的使用进行限制：</p>
+
+<p>网络运营者采取自动化手段访问收集网站数据，不得妨碍网站正常运行；此类行为严重影响网站运行，如自动化访问收集流量超过网站日均流量三分之一，网站要求停止自动化访问收集时，应当停止。</p>
+
+<p><strong>3、不能非法获利</strong></p>
+
+<p>恶意利用爬虫技术抓取数据，攫取不正当竞争的优势，甚至是牟取不法利益的，则可能触犯法律。实践中，非法使用爬虫技术抓取数据而产生的纠纷其实数量并不少，大多是以不正当竞争为由提请诉讼。</p>
+
+<p>举个例子，如果你把大众点评上的所有公开信息都抓取了下来，自己复制了一个一模一样的网站，并且还通过这个网站获取了大量的利润，这样也是有问题的。</p>
+
+<p>一般情况下，爬虫都是为了企业获利的，因此需要爬虫开发者的道德自持和企业经营者的良知才是避免触碰法律底线的根本所在。</p>
+
+<h2 id="05最后">05.最后</h2>
+
+<p>最近看了很多关于程序员出事的事件，东南亚程序员被打，多个大数据公司被查等等。做为一名普通的程序员，希望大家也可以多关注此类事件，从而提醒自己。</p>
+
+<p>有风险的行业谨慎进入，比如现金贷、不合规的P2P、赌博类游戏、黑五类产品的行业。如果公司安排入侵某个网站数据，或者有同事/朋友邀请泄露公司信息的都需要保持警惕，有时候一个很小的动作都有可能导致出问题。</p>
+
+<p><strong>我们绝大多数公司和个人使用的爬虫都是没有问题的，不必人人自危，只要把握住不要爬取个人信息，不要利用爬虫非法获利，不要爬取网站的付费内容，基本上不会有问题。</strong></p>
+
+<p>程序员是世界上最单纯的一批人，也是一批高智商低情商的人，工作是工作但也需要适当保持谨慎，对于一些游走在法律边缘的事情请保持距离。</p>
+
+<p><strong>敬畏法律，遵纪守法，从我做起。</strong></p>
+
+<p><em>参考：
+https://www.zhihu.com/question/291554395</em></p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2019/10/09/pythonlaw.html';
+        this.page.identifier = '/it/2019/10/09/pythonlaw.html';
+        this.page.title = '爬虫究竟是合法还是违法的？';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2019/10/09/pythonlaw.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

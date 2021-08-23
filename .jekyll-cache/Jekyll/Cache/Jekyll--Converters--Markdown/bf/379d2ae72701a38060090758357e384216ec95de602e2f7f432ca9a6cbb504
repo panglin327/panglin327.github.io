@@ -1,0 +1,232 @@
+I"dR<blockquote>
+  <p>by 小小摸虾</p>
+</blockquote>
+
+<p>函数式编程现在逐渐被广大开发群体接受，越来越多的开发者门开始使用这种优雅的开发模式，而我们使用函数式编程最主要的是需要清楚：</p>
+<ol>
+  <li>什么是高阶函数（<strong>Higher-order Functions</strong>）？</li>
+  <li>Python 中高阶函数有哪些？要怎么用？</li>
+</ol>
+
+<!--more-->
+
+<h2 id="高阶函数概念">高阶函数概念</h2>
+
+<p>在函数式编程中，我们可以将函数当作变量一样自由使用。一个函数接收另一个函数作为参数，这种函数称之为高阶函数。</p>
+
+<p>举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">high_func</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>上面的例子中， <code class="highlighter-rouge">high_func</code>  就是一个高阶函数。其中第一个参数  <code class="highlighter-rouge">f</code>  是一个函数，第二个参数  <code class="highlighter-rouge">arr</code>  是一个数组，返回的值是数组中的所有的值在经过  <code class="highlighter-rouge">f</code>  函数计算后得到的一个列表。例如：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+
+<span class="k">def</span> <span class="nf">high_func</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="c1"># 使用python自带数学函数
+</span><span class="k">print</span><span class="p">(</span><span class="n">high_func</span><span class="p">(</span><span class="n">factorial</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))))</span>
+<span class="c1"># print out: [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880]
+</span>
+<span class="c1"># 使用自定义函数
+</span><span class="k">print</span><span class="p">(</span><span class="n">high_func</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))))</span>
+<span class="c1"># print out: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</span></code></pre></div></div>
+
+<h2 id="python-常用高阶函数">Python 常用高阶函数</h2>
+
+<p>如同 java、scala 等语言，我们很多常用的高阶函数基本都一致。在开发中我们经常使用的最基本的高阶函数其实就几个，而我们也可以基于这些函数去进行适当的扩展，那么下面开始介绍几种常用的高阶函数。</p>
+
+<h3 id="map">map</h3>
+
+<blockquote>
+  <p>Make an iterator that computes the function using arguments from each of the iterables.  Stops when the shortest iterable is exhausted.</p>
+</blockquote>
+
+<p>根据提供的函数对指定序列做映射, 并返回映射后的序列，定义：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="nb">map</span> <span class="nb">object</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">function</code>  # 序列中的每个元素需要执行的操作, 可以是匿名函数</li>
+  <li><code class="highlighter-rouge">*iterables</code>  # 一个或多个序列</li>
+</ul>
+
+<p>正如前面所举的例子  <code class="highlighter-rouge">high_func</code> 函数， <code class="highlighter-rouge">map</code>  函数是  <code class="highlighter-rouge">high_func</code> 函数高阶版，可以传入一个函数和多个序列。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="c1"># 使用python自带数学函数
+</span><span class="n">facMap</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">factorial</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">facMap</span><span class="p">))</span>
+<span class="c1"># print out: [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880]
+</span>
+<span class="c1"># 使用自定义函数
+</span><span class="n">squareMap</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">squareMap</span><span class="p">))</span>
+<span class="c1"># print out: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</span></code></pre></div></div>
+
+<p>可以看到输出了同样的结果，只是与  <code class="highlighter-rouge">python2.X</code>  不同的是，  <code class="highlighter-rouge">python3.X</code>  中返回  <code class="highlighter-rouge">map</code> 类
+，而前者直接返回一个列表。</p>
+
+<p>我们使用匿名函数，也可以传入多个序列，如下</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 使用匿名函数
+</span><span class="n">lamMap</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">lamMap</span><span class="p">))</span>
+<span class="c1"># print out: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+</span>
+<span class="c1"># 传入多个序列
+</span><span class="n">mutiMap</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mutiMap</span><span class="p">))</span>
+<span class="c1"># print out: [11, 13, 15, 17]
+</span></code></pre></div></div>
+
+<h3 id="reduce">reduce</h3>
+
+<blockquote>
+  <p><em>Apply a function of two arguments cumulatively to the items of a sequence,from left to right, so as to reduce the sequence to a single value</em>.</p>
+</blockquote>
+
+<p>大致上来讲， <code class="highlighter-rouge">reduce</code>  函数需要传入一个有两个参数的函数，然后用这个函数从左至右顺序遍历序列并生成结果，定义如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">sequence</span><span class="p">[,</span> <span class="n">initial</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">value</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">function</code>  # 函数, 序列中的每个元素需要执行的操作, 可以是匿名函数</li>
+  <li><code class="highlighter-rouge">sequence</code>  # 需要执行操作的序列</li>
+  <li><code class="highlighter-rouge">initial</code>   # 可选，初始参数</li>
+</ul>
+
+<p>最后返回函数的计算结果, 和初始参数类型相同</p>
+
+<p>简单举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 注意，现在 reduce() 函数已经放入到functools包中。
+</span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># print out 15
+</span></code></pre></div></div>
+
+<p>我们可以看到，序列  <code class="highlighter-rouge">[1, 2, 3, 4, 5]</code>  通过匿名函数进行了累加。</p>
+
+<p>设定初始值：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 设定初始参数：
+</span><span class="n">s</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="s">'1'</span><span class="p">,</span> <span class="s">'2'</span><span class="p">,</span> <span class="s">'3'</span><span class="p">,</span> <span class="s">'4'</span><span class="p">,</span> <span class="s">'5'</span><span class="p">],</span> <span class="s">"数字 = "</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="c1"># print out： 数字 = 12345
+</span></code></pre></div></div>
+
+<p>需要注意的是：序列数据类型需要和初始参数一致。</p>
+
+<h3 id="filter">filter</h3>
+
+<blockquote>
+  <p>Return an iterator yielding those items of iterable for which function(item) is true. If function is None, return the items that are true.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">filter()</code>  函数用来过滤序列中不符合条件的值，返回一个迭代器，该迭代器生成那些函数(项)为 true 的 iterable 项。如果函数为 None，则返回为 true 的项。定义如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">filter</span><span class="p">(</span><span class="n">function</span> <span class="ow">or</span> <span class="bp">None</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="nb">filter</span> <span class="nb">object</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">function or None</code>  # 过滤操作执行的函数</li>
+  <li><code class="highlighter-rouge">iterable</code>  # 需要过滤的序列</li>
+</ul>
+
+<p>举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">boy</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="bp">False</span>
+
+<span class="c1"># 自定义函数
+</span><span class="n">filterList</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">boy</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">filterList</span><span class="p">))</span>
+<span class="c1"># print out: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+</span>
+<span class="c1"># 自定义函数
+</span><span class="n">filterList2</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">filterList2</span><span class="p">))</span>
+<span class="c1"># print out: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+</span></code></pre></div></div>
+
+<p>上面我们可以看到，列表中不能被  <code class="highlighter-rouge">2</code>  整除的数据都被排除了。</p>
+
+<h3 id="sorted">sorted</h3>
+
+<blockquote>
+  <p>Return a new list containing all items from the iterable in ascending order.</p>
+</blockquote>
+
+<blockquote>
+  <p>A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">sorted</code>  函数默认将序列升序排列后返回一个新的 list，还可以自定义键函数来进行排序，也可以设置  <code class="highlighter-rouge">reverse</code>  参数确定是升序还是降序，如果  <code class="highlighter-rouge">reverse = True</code>  则为降序。函数定义如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">_T</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span>
+           <span class="n">key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">_T</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">...,</span>
+           <span class="n">reverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="p">...)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_T</span><span class="p">]:</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">iterable</code>  # 序列</li>
+  <li><code class="highlighter-rouge">key</code>  # 可以用来计算的排序函数。</li>
+  <li><code class="highlighter-rouge">reverse</code>  # 排序规则，reverse = True 降序，reverse = False 升序(默认）。</li>
+</ul>
+
+<p>举个简单例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list01</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">list02</span> <span class="o">=</span> <span class="p">[</span><span class="s">'apple'</span><span class="p">,</span> <span class="s">'pig'</span><span class="p">,</span> <span class="s">'monkey'</span><span class="p">,</span> <span class="s">'money'</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">list01</span><span class="p">))</span>
+<span class="c1"># print out: [-11, -7, -1, 2, 3, 5, 6, 8]
+</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">list01</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">abs</span><span class="p">))</span>
+<span class="c1"># print out: [-1, 2, 3, 5, 6, -7, 8, -11]
+</span>
+<span class="c1"># 默认升序
+</span><span class="k">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">list02</span><span class="p">))</span>
+<span class="c1"># print out: ['apple', 'money', 'monkey', 'pig']
+</span>
+<span class="c1"># 降序
+</span><span class="k">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">list02</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+<span class="c1"># print out: ['pig', 'monkey', 'money', 'apple']
+</span>
+<span class="c1"># 匿名函数排序
+</span><span class="k">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">list02</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+<span class="c1"># print out: ['monkey', 'apple', 'money', 'pig']
+</span></code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+<p>以上我们简单的介绍了几个常用的高阶函数的使用，当然还有很多的高阶函数我们可以去研究，比如  <code class="highlighter-rouge">zip</code>  函数等，希望此节的介绍对大家有所帮助。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-018">Python-100-days-day018</a></p>
+</blockquote>
+
+:ET

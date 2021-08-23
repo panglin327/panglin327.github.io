@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第83天：NumPy 字符串操作 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 闲欢&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/09/Python-NumPy-string-func-083.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第83天：NumPy 字符串操作">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第83天：NumPy 字符串操作</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/09
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 闲欢</p>
+
+<p>本文向大家介绍一下 NumPy 的常见字符串函数。
+<!--more--></p>
+
+<h2 id="numpy-字符串函数">NumPy 字符串函数</h2>
+
+<p>以下函数用于对 dtype 为 numpy.string_ 或 numpy.unicode_ 的数组执行向量化字符串操作。 它们基于 Python 内置库中的标准字符串函数。</p>
+
+<p>这些函数在字符数组类（numpy.char）中定义：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>add()</td>
+      <td>对两个数组的逐个字符串元素进行连接</td>
+    </tr>
+    <tr>
+      <td>multiply()</td>
+      <td>返回按元素多重连接后的字符串</td>
+    </tr>
+    <tr>
+      <td>center()</td>
+      <td>居中字符串</td>
+    </tr>
+    <tr>
+      <td>capitalize()</td>
+      <td>将字符串第一个字母转换为大写</td>
+    </tr>
+    <tr>
+      <td>title()</td>
+      <td>将字符串的每个单词的第一个字母转换为大写</td>
+    </tr>
+    <tr>
+      <td>lower()</td>
+      <td>数组元素转换为小写</td>
+    </tr>
+    <tr>
+      <td>upper()</td>
+      <td>数组元素转换为大写</td>
+    </tr>
+    <tr>
+      <td>split()</td>
+      <td>指定分隔符对字符串进行分割，并返回数组列表</td>
+    </tr>
+    <tr>
+      <td>splitlines()</td>
+      <td>返回元素中的行列表，以换行符分割</td>
+    </tr>
+    <tr>
+      <td>expandtabs()</td>
+      <td>将字符串里面的 <code class="highlighter-rouge">\t</code> 转换成 N 个 <code class="highlighter-rouge">tab</code></td>
+    </tr>
+    <tr>
+      <td>strip()</td>
+      <td>移除元素开头或者结尾处的特定字符</td>
+    </tr>
+    <tr>
+      <td>lstrip()</td>
+      <td>去除字符串左边的空格</td>
+    </tr>
+    <tr>
+      <td>rstrip()</td>
+      <td>去除字符串右边的空格</td>
+    </tr>
+    <tr>
+      <td>join()</td>
+      <td>通过指定分隔符来连接数组中的元素</td>
+    </tr>
+    <tr>
+      <td>partition()</td>
+      <td>通过制定字符来分隔字符串</td>
+    </tr>
+    <tr>
+      <td>replace()</td>
+      <td>使用新字符串替换字符串中的所有子字符串</td>
+    </tr>
+    <tr>
+      <td>decode()</td>
+      <td>数组元素依次调用 str.decode</td>
+    </tr>
+    <tr>
+      <td>encode()</td>
+      <td>数组元素依次调用 str.encode</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="函数的实例说明">函数的实例说明</h2>
+
+<h3 id="numpycharadd">numpy.char.add()</h3>
+
+<blockquote>
+  <p>numpy.char.add() 函数依次对两个数组的对应元素进行字符串连接。</p>
+</blockquote>
+
+<p>这里需要注意的是只能连接两个数组，并且两个数组的元素个数必须相同。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 连接两个字符串：
+print(np.char.add(['hello'], [' world']))
+
+# 连接多个字符串
+print(np.char.add(['hello', 'hi'], [' world', ' Tracy']))
+
+返回：
+['hello world']
+['hello world' 'hi Tracy']
+</code></pre></div></div>
+
+<h3 id="numpycharmultiply">numpy.char.multiply()</h3>
+
+<blockquote>
+  <p>将字符串或数组进行重复多重连接。</p>
+</blockquote>
+
+<p>如果参数是数组的话，这个函数会对数组的每个元素分别进行多重连接。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 多重连接
+print(np.char.multiply('hello ', 3))
+print(np.char.multiply(['hello', 'hi'], 3))
+
+返回：
+hello hello hello 
+['hellohellohello' 'hihihi']
+</code></pre></div></div>
+
+<h3 id="numpycharcenter">numpy.char.center()</h3>
+
+<blockquote>
+  <p>用于将字符串居中，并使用指定字符在左侧和右侧进行填充。三个参数分别是：字符串或数组，拼接后总字符串字符数，填充的字符。</p>
+</blockquote>
+
+<p>这个函数感觉用在打日志的时候特别好。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+print(np.char.center('hello', 20, fillchar='*'))
+print(np.char.center(['hello', 'hi'], 19, fillchar='*'))
+
+返回：
+*******hello********
+['*******hello*******' '*********hi********']
+</code></pre></div></div>
+
+<h3 id="numpycharcapitalize">numpy.char.capitalize()</h3>
+
+<blockquote>
+  <p>将字符串的第一个字母转换为大写。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+print(np.char.capitalize('hello'))
+
+返回：
+Hello
+</code></pre></div></div>
+
+<h3 id="numpychartitle">numpy.char.title()</h3>
+
+<blockquote>
+  <p>将字符串的每个单词的第一个字母转换为大写。</p>
+</blockquote>
+
+<p>这个函数是上面函数的升级版吧。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+print(np.char.title('i love china'))
+
+返回：
+I Love China
+</code></pre></div></div>
+
+<h3 id="numpycharlower">numpy.char.lower()</h3>
+
+<blockquote>
+  <p>将字符串或数组的每个元素转换为小写。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 操作字符串
+print(np.char.lower('GOOGLE'))
+
+# 操作数组
+print(np.char.lower(['I', 'LOVE', 'CHINA']))
+
+返回：
+google
+['i' 'love' 'china']
+</code></pre></div></div>
+
+<h3 id="numpycharupper">numpy.char.upper()</h3>
+
+<blockquote>
+  <p>将字符串或数组的每个元素转换为大写。</p>
+</blockquote>
+
+<p>和上一个函数作用相反。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 操作字符串
+print(np.char.upper('google'))
+
+# 操作数组
+print(np.char.upper(['', 'love', 'china']))
+
+返回：
+GOOGLE
+['' 'LOVE' 'CHINA']
+</code></pre></div></div>
+
+<h3 id="numpycharsplit">numpy.char.split()</h3>
+
+<blockquote>
+  <p>通过指定分隔符对字符串进行分割，并返回数组。分隔符默认为空格。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 分隔符默认为空格
+print(np.char.split('do you love china?'))
+# 分隔符为 ,
+print(np.char.split('yes,i do', sep=','))
+
+返回：
+['do', 'you', 'love', 'china?']
+['yes', 'i do']
+</code></pre></div></div>
+
+<h3 id="numpycharsplitlines">numpy.char.splitlines()</h3>
+
+<blockquote>
+  <p>用换行符作为分隔符来分割字符串，并返回数组。</p>
+</blockquote>
+
+<p>这里的换行符可以是<code class="highlighter-rouge">\r</code>，<code class="highlighter-rouge">\n</code>，<code class="highlighter-rouge">\r\n</code>。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 换行符 \r
+print(np.char.splitlines('I\rLove China'))
+# 换行符 \n
+print(np.char.splitlines('I\nLove China'))
+# 换行符 \r\n
+print(np.char.splitlines('I\r\nLove China'))
+
+返回：
+['I', 'Love China']
+['I', 'Love China']
+['I', 'Love China']
+</code></pre></div></div>
+
+<h3 id="numpycharexpandtabs">numpy.char.expandtabs()</h3>
+
+<blockquote>
+  <p>将字符串里面的 <code class="highlighter-rouge">\t</code> 转换成 N 个 <code class="highlighter-rouge">tab</code>。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 将 \t 转成3个tab
+print(np.char.expandtabs('i\tlove\tchina', 3))
+
+返回：
+i  love  china
+</code></pre></div></div>
+
+<h3 id="numpycharstrip">numpy.char.strip()</h3>
+
+<blockquote>
+  <p>移除开头或结尾处的特定字符。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 移除字符串头尾的 a 字符
+print(np.char.strip('it love china', 'i'))
+
+# 移除数组元素头尾的 a 字符
+print(np.char.strip(['it', 'love', 'china'], 'i'))
+
+返回：
+t love china
+['t' 'love' 'china']
+</code></pre></div></div>
+
+<h3 id="numpycharlstrip">numpy.char.lstrip()</h3>
+
+<blockquote>
+  <p>去除字符串左边的空格。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 去除左边的空格
+print(np.char.lstrip('    china    '))
+
+返回：
+china    
+</code></pre></div></div>
+
+<h3 id="numpycharrstrip">numpy.char.rstrip()</h3>
+
+<blockquote>
+  <p>去除字符串右边的空格。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 去除右边的空格
+print(np.char.rstrip('    china    '))
+
+返回：
+    china
+</code></pre></div></div>
+
+<h3 id="numpycharjoin">numpy.char.join()</h3>
+
+<blockquote>
+  <p>通过指定分隔符来连接数组中的元素或字符串。</p>
+</blockquote>
+
+<p>可以指定多个分隔符分隔数组中对应的元素。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 操作字符串
+print(np.char.join(':', 'china'))
+
+# 操作数组
+print(np.char.join(':', ['china', 'american']))
+
+# 指定多个分隔符操作数组元素
+print(np.char.join([':', '-'], ['china', 'american']))
+
+返回：
+c:h:i:n:a
+['c:h:i:n:a' 'a:m:e:r:i:c:a:n']
+['c:h:i:n:a' 'a-m-e-r-i-c-a-n']
+</code></pre></div></div>
+
+<h3 id="numpycharjoin-1">numpy.char.join()</h3>
+
+<blockquote>
+  <p>通过指定字符来分隔数组中的元素或字符串。</p>
+</blockquote>
+
+<p>通过指定的字符将字符串分割成指定字符前面的字符，指定的字符串和指定字符后面的字符三个部分。</p>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 操作字符串
+print(np.char.partition('china', 'i'))
+
+# 操作数组
+print(np.char.partition(['china', 'like'], 'i'))
+
+返回：
+['ch' 'i' 'na']
+[['ch' 'i' 'na']
+ ['l' 'i' 'ke']]
+</code></pre></div></div>
+
+<h3 id="numpycharreplace">numpy.char.replace()</h3>
+
+<blockquote>
+  <p>使用新字符串替换字符串中的所有子字符串。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 替换字符串
+print(np.char.replace('i love china', 'ov', 'ik'))
+
+返回：
+i like china
+</code></pre></div></div>
+
+<h3 id="numpycharencode">numpy.char.encode()</h3>
+
+<blockquote>
+  <p>对数组中的每个元素进行编码操作。默认编码是 utf-8，可以使用标准 Python 库中的编解码器。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+# 编码
+print(np.char.encode('中国', 'utf-8'))
+
+返回：
+b'\xe4\xb8\xad\xe5\x9b\xbd'
+</code></pre></div></div>
+
+<h3 id="numpychardecode">numpy.char.decode()</h3>
+
+<blockquote>
+  <p>对数组中的每个元素进行解码操作。</p>
+</blockquote>
+
+<p>实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.char.encode('中国', 'utf-8')
+print(a)
+# 解码
+print(np.char.decode(a, 'utf-8'))
+
+返回：
+b'\xe4\xb8\xad\xe5\x9b\xbd'
+中国
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本文向大家介绍了 NumPy 的字符串函数，这些函数都可以用 python 的原生字符串的方法来完成，但是使用起来没有这么简洁方便。大家可以在不同的场景下根据需求使用本文的这些操作，让代码更简洁，可读性更好。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>https://numpy.org/devdocs/reference/routines.char.html</p>
+
+<blockquote>
+  <p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/09/Python-NumPy-string-func-083.html';
+        this.page.identifier = '/python/2019/12/09/Python-NumPy-string-func-083.html';
+        this.page.title = '第83天：NumPy 字符串操作';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/09/Python-NumPy-string-func-083.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,264 @@
+I"�Y<p>by 太阳雪</p>
+
+<p>上一次课程，我们了解了 OAuth 认证是怎么回事，以及了解了四种认证方式，今天我们将以 Github 为例，了解一下如何用 Flask 第三方应用</p>
+
+<!--more-->
+
+<p>在之前的介绍 JWT 的时候，了解过 Authlib 库，Authlib 是集 JWT、OAuth1.0、OAuth2.0 于一身的终极 Python 认证框架，支持多种 Web 框架，例如 Django、requests、httpx，以及今天实践用的 Flask，还对 Django 和 Flask 做了专门的集成，让开发更简单</p>
+
+<blockquote>
+  <p>Github OAuth 应用时支持 OAuth2.0 协议的，用授权码的模式颁发 <code class="highlighter-rouge">access_token</code>，即 授权码模式（authorization code）</p>
+</blockquote>
+
+<h2 id="注册-github-第三方应用">注册 github 第三方应用</h2>
+
+<p>首先需要去 github 上注册我们的应用，<a href="https://github.com/settings/applications/new">注册地址: https://github.com/settings/applications/new</a></p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_web_oauth_01.png" alt="github 应用申请注册" /></p>
+
+<ul>
+  <li>Homepage URL 应用的主地址，这里可以填写 Flask 本地的默认地址</li>
+  <li>Authorization callback URL: 认证完成后跳转的地址，可以根据项目具体情况填写</li>
+</ul>
+
+<blockquote>
+  <p>从申请配置上可以看到，github 支持任意的域名，不需要做额外的认证和证明，这也是选择 github 做演示的原因，如果要用 微信 作为认证，需要申请开通开发者资质，比较麻烦，不过开发方式和都是类似的</p>
+</blockquote>
+
+<p>申请成功后，可以看到自己创建的应用配置页面:</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_web_oauth_02.png" alt="github 应用注册成功" /></p>
+
+<p>从上图红色框的位置，可以得到 <code class="highlighter-rouge">client id</code>, 和 <code class="highlighter-rouge">client secret</code>，<strong>必须妥善保管</strong></p>
+
+<h2 id="创建第三方应用">创建第三方应用</h2>
+
+<p>注册成功第三方应用，就可以来开发客户端了</p>
+
+<h3 id="安装-authlib">安装 Authlib</h3>
+
+<p>使用 pip 安装</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>Authlib
+</code></pre></div></div>
+
+<p>如果一切正常，可以导入 Authlib 模板，例如，引入 jwt :</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">authlib.integrations.flask_client</span> <span class="kn">import</span> <span class="n">OAuth</span>
+<span class="o">&gt;&gt;&gt;</span>
+</code></pre></div></div>
+
+<h3 id="创建-web-应用">创建 Web 应用</h3>
+
+<p>创建一个 Flask 应用:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">authlib.integrations.flask_client</span> <span class="kn">import</span> <span class="n">OAuth</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">app</span><span class="p">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="s">'!secret'</span>
+
+<span class="n">oauth</span> <span class="o">=</span> <span class="n">OAuth</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>引入可能用到的 Flask 框架模块和方法</li>
+  <li>引入 Authlib 的 Flask 客户端模块</li>
+  <li>创建 Flask 应用 app</li>
+  <li>设置 应用的 <code class="highlighter-rouge">secret_key</code>, 用于做跳转认证页的校验，是必须的，如果缺失，引导认证页会失败</li>
+  <li>用 Flask 应用实例化 OAuth</li>
+</ul>
+
+<h3 id="认证服务器配置">认证服务器配置</h3>
+
+<p>客户端需要做的是引导用户到认证页面，并且能能向认证服务器请求 access_token, OAuth 实例可以从应用的配置中读取</p>
+
+<p>为了简便，将配置一同写入代码中，实际项目中建议使用单独的配置文件（后面 Flask 项目工程中会详细说明）:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">"GITHUB_CLIENT_ID"</span><span class="p">]</span> <span class="o">=</span> <span class="s">'55ffa..&lt;省略&gt;...9e1fb3a'</span>
+<span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">"GITHUB_CLIENT_SECRET"</span><span class="p">]</span> <span class="o">=</span> <span class="s">'692317a38d0..&lt;省略&gt;...d63f2d9f8c'</span>
+<span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">"GITHUB_AUTHORIZE_URL"</span><span class="p">]</span> <span class="o">=</span> <span class="s">'https://github.com/login/oauth/authorize'</span>
+<span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">"GITHUB_AUTHORIZE_PARAMS"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'scope'</span><span class="p">:</span> <span class="s">'user repo'</span>
+<span class="p">}</span>
+<span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">"GITHUB_ACCESS_TOKEN_URL"</span><span class="p">]</span> <span class="o">=</span> <span class="s">'https://github.com/login/oauth/access_token'</span>
+<span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">"GITHUB_API_BASE_URL"</span><span class="p">]</span> <span class="o">=</span> <span class="s">'https://api.github.com'</span>
+</code></pre></div></div>
+
+<ul>
+  <li>同一个客户端应用，连接多种认证服务器，配置时，用前缀来区分不同的认证服务器，前缀随意，只要同一个认证配置统一就行，例如这里用的前缀是 <code class="highlighter-rouge">GITHUB</code></li>
+  <li><code class="highlighter-rouge">_CLIENT_ID</code>、<code class="highlighter-rouge">_CLIENT_SECRET</code>：注册应用成功后，由认证服务器提供</li>
+  <li><code class="highlighter-rouge">_AUTHORIZE_URL</code>：用户认证页面 URL，会在认证服务器文档中找到</li>
+  <li><code class="highlighter-rouge">_AUTHORIZE_PARAMS</code>：认证时提供的额外参数，通常用于指定授权范围，具体范围和格式参考认证服务器文档</li>
+  <li><code class="highlighter-rouge">_ACCESS_TOKEN_URL</code>：获取 <code class="highlighter-rouge">access_token</code> 的 URL</li>
+  <li><code class="highlighter-rouge">_API_BASE_URL</code>：资源服务器 api 根路径，具体查看资源服务器 api 文档</li>
+</ul>
+
+<p>完成配置后，创建<code class="highlighter-rouge">认证服务器实例</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">github</span> <span class="o">=</span> <span class="n">oauth</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="s">'github'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">register</code> 方法会根据配置创建认证服务器实例，参数同配置中的前缀，大小写随意</li>
+  <li>返回<code class="highlighter-rouge">认证服务器的实例</code>，也可以用 <code class="highlighter-rouge">oauth.github</code> 方式来获取<code class="highlighter-rouge">认证服务器实例</code></li>
+</ul>
+
+<h3 id="设置-接入点endpoint">设置 接入点(endpoint)</h3>
+
+<h4 id="登录">登录</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/login'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">redirect_uri</span> <span class="o">=</span> <span class="n">url_for</span><span class="p">(</span><span class="s">'auth'</span><span class="p">,</span> <span class="n">_external</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">github</span><span class="p">.</span><span class="n">authorize_redirect</span><span class="p">(</span><span class="n">redirect_uri</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>用 <code class="highlighter-rouge">url_for</code> 函数得到 <code class="highlighter-rouge">auth</code> 视图函数的绝对访问路径，参数 <code class="highlighter-rouge">_external</code> 为 <code class="highlighter-rouge">True</code> 返回绝对路径</li>
+  <li><code class="highlighter-rouge">authorize_redirect</code> 方法接收一个 URL 作为参数，即获得授权后的回调地址。<strong>注意：跳转地址必须和注册时的完全一致</strong></li>
+  <li><code class="highlighter-rouge">authorize_redirect</code> 方法会合成带参数的认证页 URL，并跳转过去</li>
+</ul>
+
+<h4 id="认证回跳">认证回跳</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/auth/redirect'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">auth</span><span class="p">():</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">github</span><span class="p">.</span><span class="n">authorize_access_token</span><span class="p">()</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">github</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'user'</span><span class="p">).</span><span class="n">json</span><span class="p">()</span>
+    <span class="s">"""
+     可以在此保存 token 和 用户信息，例如存入数据库
+    """</span>
+    <span class="n">session</span><span class="p">[</span><span class="s">'user'</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>设置视图函数的接入点必须和注册时的回调保持一致，Flask 的接入点建议使用 <code class="highlighter-rouge">/</code> 结尾，能同时兼容不以 <code class="highlighter-rouge">/</code> 结尾请求，但是这里需要与注册时的保持一致，否则可能无法跳转到认证页</li>
+  <li><code class="highlighter-rouge">authorize_access_token</code> 方法用于从认证服务器获取 <code class="highlighter-rouge">access_token</code>，分装了交互细节</li>
+  <li><code class="highlighter-rouge">get</code> 方法用户获取用户的授权资源。参数为资源服务器 api 的名称，例如<code class="highlighter-rouge">user</code>、<code class="highlighter-rouge">user/repos</code></li>
+  <li>获得用户基本信息后，存入 <code class="highlighter-rouge">session</code>, 以便下次访问时获得</li>
+  <li>最后跳转到首页上</li>
+</ul>
+
+<blockquote>
+  <p>实际应用中，可以在第一次获取用户信息后，引导用户用手机号或者邮箱注册，以便之后登录</p>
+</blockquote>
+
+<h4 id="首页">首页</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">homepage</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'user'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'home.html'</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>作为演示，首页很简单，即从 <code class="highlighter-rouge">session</code> 中获得 <code class="highlighter-rouge">user</code> 对象，将其内容显示在页面上，如果 <code class="highlighter-rouge">user</code> 为空，则显示登录连接</li>
+  <li><code class="highlighter-rouge">home.html</code> 是模板，具体内容参考示例代码</li>
+</ul>
+
+<h4 id="登出">登出</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/logout'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="n">session</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'user'</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>登出是客户端自身的功能，和认证服务器没关系，只要 <code class="highlighter-rouge">access_token</code> 有效，客户端就可以从资源服务器上获取用户的信息或资源</li>
+  <li>登出仅将 <code class="highlighter-rouge">user</code> 从 <code class="highlighter-rouge">session</code> 中删掉，跳转到首页</li>
+</ul>
+
+<h3 id="刷新-access_token">刷新 access_token</h3>
+
+<blockquote>
+  <p>github OAuth app 的 <code class="highlighter-rouge">access_token</code> 是长期的，不需要更新，这里用 Authlib 文档中的例子作为演示</p>
+</blockquote>
+
+<p>OAuth2.0 协议中的 <code class="highlighter-rouge">access_token</code> 可以设置有效期，过期后需要用 <code class="highlighter-rouge">refresh_token</code> 重新获取</p>
+
+<p>Authlib 提供了基于<code class="highlighter-rouge">信号</code>(类似于事件) 自动更新 <code class="highlighter-rouge">access_token</code> 的方法，会在合适的时间点，触发信号，执行更新函数</p>
+
+<p>信号机制由 <code class="highlighter-rouge">blinker</code> 库，<code class="highlighter-rouge">blinker</code> 是一个简洁的，为 Python 对象之间提供广播式的信号机制的库，必须先安装:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>blinker
+</code></pre></div></div>
+
+<p>就不展开 <code class="highlighter-rouge">blinker</code> 了，只要知道它是自动更新 <code class="highlighter-rouge">access_token</code> 需要依赖的库就行</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">authlib.integrations.flask_client</span> <span class="kn">import</span> <span class="n">token_update</span>
+
+<span class="o">@</span><span class="n">token_update</span><span class="p">.</span><span class="n">connect_via</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">on_token_update</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">refresh_token</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">access_token</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">refresh_token</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">OAuth2Token</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">refresh_token</span><span class="o">=</span><span class="n">refresh_token</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">access_token</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">OAuth2Token</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">access_token</span><span class="o">=</span><span class="n">access_token</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="c1"># 更新 access_token
+</span>    <span class="n">item</span><span class="p">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="s">'access_token'</span><span class="p">]</span>
+    <span class="n">item</span><span class="p">.</span><span class="n">refresh_token</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'refresh_token'</span><span class="p">)</span>
+    <span class="n">item</span><span class="p">.</span><span class="n">expires_at</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="s">'expires_at'</span><span class="p">]</span>
+    <span class="n">item</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>先从 <code class="highlighter-rouge">flask_client</code> 包中引入 <code class="highlighter-rouge">token_update</code> 类</li>
+  <li>定义更新 <code class="highlighter-rouge">access_token</code> 的回调函数 <code class="highlighter-rouge">on_token_update</code>， 通过注解 <code class="highlighter-rouge">token_update.connect_via</code>，注册成监听 <code class="highlighter-rouge">access_token</code> 更新事件的回调函数</li>
+  <li>回调函数的参数
+    <ul>
+      <li><code class="highlighter-rouge">sender</code> 是发出更新了 <code class="highlighter-rouge">access_token</code> 的实体，即认证服务器实例</li>
+      <li><code class="highlighter-rouge">name</code> 就是注册认证服务器的名称，即 <code class="highlighter-rouge">oauth.register</code> 的第一个参数</li>
+      <li><code class="highlighter-rouge">token</code> 为获得的新 <code class="highlighter-rouge">access_token</code> 对象</li>
+      <li><code class="highlighter-rouge">refresh_token</code> 和 <code class="highlighter-rouge">access_token</code> 之前通过认证时获得的，<code class="highlighter-rouge">access_token</code> 是旧的</li>
+    </ul>
+  </li>
+  <li>回调函数逻辑部分，通过 <code class="highlighter-rouge">refresh_token</code> 或 <code class="highlighter-rouge">access_token</code> 从查找之前的 <code class="highlighter-rouge">token</code> 记录，找到后，将新的 <code class="highlighter-rouge">token</code> 信息更新到记录中，并且保存。</li>
+  <li><code class="highlighter-rouge">OAuth2Token</code> 可以理解成库表对象，用来和库表交互，维护 <code class="highlighter-rouge">token</code> 对象</li>
+</ul>
+
+<h3 id="小试牛刀">小试牛刀</h3>
+
+<p>启动 Flask 应用</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 app.py
+</code></pre></div></div>
+
+<p>访问 <code class="highlighter-rouge">http://localhost:5000</code>，如果一切正常，将看到页面上有个 <code class="highlighter-rouge">login</code> 连接，点击此连接，将跳转到认证页面，登录 Github（如果当前浏览器中没登录 Github 的话），将看到授权页面，类似于:</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_web_oauth_03.png" alt="授权页面" /></p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">http://127.0.0.1:5000</code> 也能访问，但是必须使用 <code class="highlighter-rouge">http://localhost:5000</code> 来访问，即保持和注册时的首页 URL 一致</p>
+</blockquote>
+
+<h2 id="总结">总结</h2>
+
+<p>本节课程演示了 Flask 基于 Authlib 完成简单认证客户端的示例，是对前面 OAuth 理论的一次实践，主要需要了解客户端的结构和认证流程：</p>
+
+<ul>
+  <li>在认证服务器上注册客户端，得到 <code class="highlighter-rouge">client_id</code> 和 <code class="highlighter-rouge">client_secret</code></li>
+  <li>设置登录、认证后回调的接入点（或叫做路由）</li>
+  <li>管理获得的认证信息，用认证信息获取用户授权的资源</li>
+  <li>设置刷新 <code class="highlighter-rouge">access_token</code> 的逻辑</li>
+</ul>
+
+<p>总体来说，认证客户端的实现不复杂，主要是概念比较绕，建议下载示例代码，实践一下，加深理解</p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+  <li><a href="https://pythonhosted.org/blinker/">blinker: https://pythonhosted.org/blinker/</a></li>
+  <li><a href="https://docs.authlib.org/en/latest/client/flask.html">Authlib Flask: https://docs.authlib.org/en/latest/client/flask.html</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2019/04/github-oauth.html">http://www.ruanyifeng.com/blog/2019/04/github-oauth.html</a></li>
+</ul>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-105">Python-100-days-day105</a></p>
+</blockquote>
+
+:ET

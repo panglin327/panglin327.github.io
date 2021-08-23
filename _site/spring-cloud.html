@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+        
+        spring-cloud - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="Spring Cloud 教程,Spring Cloud 示例,Spring Cloud 学习,Spring Cloud 资源,Spring Cloud">
+    <meta name="description"
+          content="本站是纯洁的微笑的技术分享博客。内容涵盖生活故事、Java后端技术、Spring Boot、Spring Cloud、微服务架构、大数据演进、高可用架构、中间件使用、系统监控等相关的研究与知识分享。">
+
+    <link rel="canonical" href="http://localhost:4000/spring-cloud">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/blog-page.css">
+    
+
+    <!-- CSS set in layout -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Spring Cloud 系列文章">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Spring Cloud 系列文章</h1>
+            <span class="meta-info">
+                
+                    <span class="mega-octicon octicon-cloud-upload"></span>&nbsp;&nbsp; <a href ="http://www.ityouknow.com/assets/images/keeppuresmile.jpg">关注公众号：<font color="#00FF00">纯洁的微笑</font>，回复"springcloud"进群交流。</a>
+                
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container">
+
+    <div class="row">
+
+    <div class="col-md-12">
+
+        <!-- Blog list -->
+        <ul id="posts-list">
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-01-26</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2019/01/26/spring-cloud-gateway-limit.html">springcloud(十七)：服务网关 Spring Cloud GateWay 熔断、限流、重试</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-01-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2019/01/19/spring-cloud-gateway-service.html">springcloud(十六)：服务网关 Spring Cloud GateWay 服务化和过滤器</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-12-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2018/12/12/spring-cloud-gateway-start.html">springcloud(十五)：服务网关 Spring Cloud GateWay 入门</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-08-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2018/08/06/spring-cloud-open-source.html">springcloud(十四)：Spring Cloud 开源软件都有哪些？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-07-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2018/07/20/spring-cloud-consul.html">springcloud(十三)：注册中心 Consul 使用详解</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-02-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2018/02/02/spring-cloud-sleuth-zipkin.html">springcloud(十二)：使用Spring Cloud Sleuth和Zipkin进行分布式链路跟踪</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-01-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2018/01/20/spring-cloud-zuul.html">springcloud(十一)：服务网关Zuul高级篇</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-11-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/11/20/dubbo-update-again.html">阿里Dubbo疯狂更新，关Spring Cloud什么事？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-11-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/11/02/framework-and-springcloud.html">从架构演进的角度聊聊Spring Cloud都做了些什么？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-10-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/10/19/micro-service-practice.html">中小型互联网公司微服务实践-经验和教训</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-09-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/09/11/can-use-springcloud.html">Spring Cloud在国内中小型公司能用起来吗？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-06-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/06/01/gateway-service-zuul.html">springcloud(十)：服务网关zuul初级篇</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-26</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/26/springcloud-config-eureka-bus.html">springcloud(九)：配置中心和消息总线（配置中心终结版）</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-25</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/25/springcloud-config-eureka.html">springcloud(八)：配置中心服务化和高可用</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/23/springcloud-config-svn-refresh.html">springcloud(七)：配置中心svn示例和refresh</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-22</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/22/springcloud-config-git.html">springcloud(六)：配置中心git示例</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/18/hystrix-dashboard-turbine.html">springcloud(五)：熔断监控Hystrix Dashboard和Turbine</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/16/springcloud-hystrix.html">springcloud(四)：熔断器Hystrix</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/12/eureka-provider-constomer.html">springcloud(三)：服务提供与调用</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/10/springcloud-eureka.html">springcloud(二)：注册中心Eureka</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2017/05/01/simple-springcloud.html">springcloud(一)：大话Spring Cloud</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-12-30</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springcloud/2016/12/30/springcloud-collect.html">Spring Cloud 学习资料汇总</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+
+        <!-- Pagination -->
+        
+
+
+        <!-- Comments -->
+       <div class="comment">
+         
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/spring-cloud';
+        this.page.identifier = '/spring-cloud';
+        this.page.title = 'Spring Cloud 系列文章';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/spring-cloud',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+       </div>
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function(){
+
+        // Enable bootstrap tooltip
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
+    });
+</script>
+
+
+
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

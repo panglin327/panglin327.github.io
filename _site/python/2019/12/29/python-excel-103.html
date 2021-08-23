@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第103天： Python 操作 Excel - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 極光&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/29/python-excel-103.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第103天： Python 操作 Excel">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第103天： Python 操作 Excel</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/29
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 極光</p>
+
+<p>之前看过一篇文章，说一个工作多年的老员工，处理数据时只会用复制粘贴到 Excel ，天天加班工作还完不成，后来公司就招了一个会 Python 的新人，结果分分钟就处理完成。所以工作中大家经常会使用 Excel 去处理以及展示数据，但是对于部分工作我们可以借助程序帮忙实现，达到高效解决问题的效果，今天就为大家介绍一下，使用 Python 如何操作 Excel 。</p>
+
+<!--more-->
+
+<h2 id="常用工具">常用工具</h2>
+
+<p>数据处理是 Python 的一大应用场景，而 Excel 又是当前最流行的数据处理软件。因此用 Python 进行数据处理时，很容易会和 Excel 打起交道。得益于前人的辛勤劳作，Python 处理 Excel 已有很多现成的轮子，比如 xlrd &amp; xlwt &amp; xlutils 、 XlsxWriter 、 OpenPyXL ，而在 Windows 平台上可以直接调用 Microsoft Excel 的开放接口，这些都是比较常用的工具，还有其他一些优秀的工具这里就不一一介绍，接下来我们通过一个表格展示各工具之间的特点：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>xlrd&amp;xlwt&amp;xlutils</th>
+      <th>XlsxWriter</th>
+      <th>OpenPyXL</th>
+      <th>Excel开放接口</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>读取</td>
+      <td>支持</td>
+      <td>不支持</td>
+      <td>支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>写入</td>
+      <td>支持</td>
+      <td>支持</td>
+      <td>支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>修改</td>
+      <td>支持</td>
+      <td>不支持</td>
+      <td>支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>xls</td>
+      <td>支持</td>
+      <td>不支持</td>
+      <td>不支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>xlsx</td>
+      <td>高版本支持</td>
+      <td>支持</td>
+      <td>支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>大文件</td>
+      <td>不支持</td>
+      <td>支持</td>
+      <td>支持</td>
+      <td>不支持</td>
+    </tr>
+    <tr>
+      <td>效率</td>
+      <td>快</td>
+      <td>快</td>
+      <td>快</td>
+      <td>超慢</td>
+    </tr>
+    <tr>
+      <td>功能</td>
+      <td>较弱</td>
+      <td>强大</td>
+      <td>一般</td>
+      <td>超强大</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>以上可以根据需求不同，选择合适的工具，现在为大家主要介绍下最常用的 xlrd &amp; xlwt &amp; xlutils 系列工具的使用。</p>
+
+<h2 id="xlrd--xlwt--xlutils-介绍">xlrd &amp; xlwt &amp; xlutils 介绍</h2>
+
+<p>xlrd&amp;xlwt&amp;xlutils 顾明思意是由以下三个库组成：</p>
+
+<ul>
+  <li>xlrd：用于读取 Excel 文件；</li>
+  <li>xlwt：用于写入 Excel 文件；</li>
+  <li>xlutils：用于操作 Excel 文件的实用工具，比如复制、分割、筛选等；</li>
+</ul>
+
+<h3 id="安装库">安装库</h3>
+
+<p>安装比较简单，直接用 pip 工具安装三个库即可，安装命令如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip3 <span class="nb">install </span>xlrd xlwt xlutils
+</code></pre></div></div>
+
+<p>安装完成提示 <code class="highlighter-rouge">Successfully installed xlrd-1.2.0 xlutils-2.0.0 xlwt-1.3.0</code> 即表示安装成功。</p>
+
+<h3 id="写入-excel">写入 Excel</h3>
+
+<p>接下来我们就从写入 Excel 开始，话不多说直接看代码如下：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># excel_w.py
+</span>
+<span class="c1"># 导入 xlwt 库
+</span><span class="kn">import</span> <span class="nn">xlwt</span>
+
+<span class="c1"># 创建 xls 文件对象
+</span><span class="n">wb</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">Workbook</span><span class="p">()</span>
+
+<span class="c1"># 新增两个表单页
+</span><span class="n">sh1</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="s">'成绩'</span><span class="p">)</span>
+<span class="n">sh2</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="s">'汇总'</span><span class="p">)</span>
+
+<span class="c1"># 然后按照位置来添加数据,第一个参数是行，第二个参数是列
+# 写入第一个sheet
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'姓名'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'成绩'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'张三'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">88</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'李四'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">)</span>
+
+<span class="c1"># 写入第二个sheet
+</span><span class="n">sh2</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'总分'</span><span class="p">)</span>
+<span class="n">sh2</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">187.5</span><span class="p">)</span>
+
+<span class="c1"># 最后保存文件即可
+</span><span class="n">wb</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'test_w.xls'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>然后执行命令 <code class="highlighter-rouge">python excel_w.py</code> 运行代码，结果会看到生成名为 <code class="highlighter-rouge">test_w.xls</code> 的 Excel 文件，打开文件查看如下图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_excel_01.png" alt="成绩" /></p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_excel_02.png" alt="汇总" /></p>
+
+<p>以上就是写入 Excel 的代码，是不是很简单，下面我们再来看下读取 Excel 该如何操作。</p>
+
+<h3 id="读取-excel">读取 Excel</h3>
+
+<p>读取 Excel 其实也不难，请看如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># excel_r.py
+</span>
+<span class="c1"># 导入 xlrd 库
+</span><span class="kn">import</span> <span class="nn">xlrd</span>
+
+<span class="c1"># 打开刚才我们写入的 test_w.xls 文件
+</span><span class="n">wb</span> <span class="o">=</span> <span class="n">xlrd</span><span class="p">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="s">"test_w.xls"</span><span class="p">)</span>
+
+<span class="c1"># 获取并打印 sheet 数量
+</span><span class="k">print</span><span class="p">(</span> <span class="s">"sheet 数量:"</span><span class="p">,</span> <span class="n">wb</span><span class="p">.</span><span class="n">nsheets</span><span class="p">)</span>
+
+<span class="c1"># 获取并打印 sheet 名称
+</span><span class="k">print</span><span class="p">(</span> <span class="s">"sheet 名称:"</span><span class="p">,</span> <span class="n">wb</span><span class="p">.</span><span class="n">sheet_names</span><span class="p">())</span>
+
+<span class="c1"># 根据 sheet 索引获取内容
+</span><span class="n">sh1</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">sheet_by_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># 或者
+# 也可根据 sheet 名称获取内容
+# sh = wb.sheet_by_name('成绩')
+</span>
+<span class="c1"># 获取并打印该 sheet 行数和列数
+</span><span class="k">print</span><span class="p">(</span> <span class="sa">u</span><span class="s">"sheet %s 共 %d 行 %d 列"</span> <span class="o">%</span> <span class="p">(</span><span class="n">sh1</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sh1</span><span class="p">.</span><span class="n">nrows</span><span class="p">,</span> <span class="n">sh1</span><span class="p">.</span><span class="n">ncols</span><span class="p">))</span>
+
+<span class="c1"># 获取并打印某个单元格的值
+</span><span class="k">print</span><span class="p">(</span> <span class="s">"第一行第二列的值为:"</span><span class="p">,</span> <span class="n">sh1</span><span class="p">.</span><span class="n">cell_value</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># 获取整行或整列的值
+</span><span class="n">rows</span> <span class="o">=</span> <span class="n">sh1</span><span class="p">.</span><span class="n">row_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># 获取第一行内容
+</span><span class="n">cols</span> <span class="o">=</span> <span class="n">sh1</span><span class="p">.</span><span class="n">col_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 获取第二列内容
+</span>
+<span class="c1"># 打印获取的行列值
+</span><span class="k">print</span><span class="p">(</span> <span class="s">"第一行的值为:"</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="s">"第二列的值为:"</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+
+<span class="c1"># 获取单元格内容的数据类型
+</span><span class="k">print</span><span class="p">(</span> <span class="s">"第二行第一列的值类型为:"</span><span class="p">,</span> <span class="n">sh1</span><span class="p">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">ctype</span><span class="p">)</span>
+
+<span class="c1"># 遍历所有表单内容
+</span><span class="k">for</span> <span class="n">sh</span> <span class="ow">in</span> <span class="n">wb</span><span class="p">.</span><span class="n">sheets</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sh</span><span class="p">.</span><span class="n">nrows</span><span class="p">):</span>
+        <span class="c1"># 输出指定行
+</span>        <span class="k">print</span><span class="p">(</span> <span class="n">sh</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>我已经把每行代码都加了注释，应该可以很容易理解，接下来执行命令 <code class="highlighter-rouge">python excel_r.py</code> ，输出如下结果：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python excel_r.py
+sheet 数量: 2
+sheet 名称: <span class="o">[</span><span class="s1">'成绩'</span>, <span class="s1">'汇总'</span><span class="o">]</span>
+sheet 成绩 共 3 行 2 列
+第一行第二列的值为: 成绩
+第一行的值为: <span class="o">[</span><span class="s1">'姓名'</span>, <span class="s1">'成绩'</span><span class="o">]</span>
+第二列的值为: <span class="o">[</span><span class="s1">'成绩'</span>, 88.0, 99.5]
+第二行第一列的值为: 1
+<span class="o">[</span>text:<span class="s1">'姓名'</span>, text:<span class="s1">'成绩'</span><span class="o">]</span>
+<span class="o">[</span>text:<span class="s1">'张三'</span>, number:88.0]
+<span class="o">[</span>text:<span class="s1">'李四'</span>, number:99.5]
+<span class="o">[</span>text:<span class="s1">'总分'</span><span class="o">]</span>
+<span class="o">[</span>number:187.5]
+
+</code></pre></div></div>
+
+<p>细心的朋友可能注意到，这里我们可以获取到单元格的类型，上面我们读取类型时获取的是数字1，那1表示什么类型，又都有什么类型呢？别急下面我们通过一个表格展示下：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>数值</th>
+      <th>类型</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>empty</td>
+      <td>空</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>string</td>
+      <td>字符串</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>number</td>
+      <td>数字</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>date</td>
+      <td>日期</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>boolean</td>
+      <td>布尔值</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>error</td>
+      <td>错误</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>通过上面表格，我们可以知道刚获取单元格类型返回的数字1对应的就是字符串类型。</p>
+
+<h3 id="修改-excel">修改 excel</h3>
+
+<p>上面说了写入和读取 Excel 内容，接下来我们就说下更新修改 Excel 该如何操作，修改时就需要用到 <code class="highlighter-rouge">xlutils</code> 中的方法了。直接上代码，来看下最简单的修改操作：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># excel_u.py
+</span>
+<span class="c1"># 导入相应模块
+</span><span class="kn">import</span> <span class="nn">xlrd</span>
+<span class="kn">from</span> <span class="nn">xlutils.copy</span> <span class="kn">import</span> <span class="n">copy</span>
+
+<span class="c1"># 打开 excel 文件
+</span><span class="n">readbook</span> <span class="o">=</span> <span class="n">xlrd</span><span class="p">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="s">"test_w.xls"</span><span class="p">)</span>
+
+<span class="c1"># 复制一份
+</span><span class="n">wb</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">readbook</span><span class="p">)</span>
+
+<span class="c1"># 选取第一个表单
+</span><span class="n">sh1</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">get_sheet</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 在第四行新增写入数据
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'王亮'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">59</span><span class="p">)</span>
+
+<span class="c1"># 选取第二个表单
+</span><span class="n">sh1</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">get_sheet</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 替换总成绩数据
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">246.5</span><span class="p">)</span>
+
+<span class="c1"># 保存
+</span><span class="n">wb</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'test_w1.xls'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>从上面代码可以看出，这里的修改 Excel 是通过 <code class="highlighter-rouge">xlutils</code> 库的 <code class="highlighter-rouge">copy</code> 方法将原来的 Excel 整个复制一份，然后再做修改操作，最后再保存。现在我们执行以下命令 <code class="highlighter-rouge">python excel_u.py</code> 看下修改结果如下：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_excel_03.png" alt="成绩" /></p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_excel_04.png" alt="汇总" /></p>
+
+<h3 id="格式转换操作">格式转换操作</h3>
+
+<p>在平时我们使用 Excel 时会对数据进行一下格式化，或者样式设置，在这里把上面介绍写入的代码简单修改下，使输出的格式稍微改变一下，代码如下：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># excel_w2.py
+</span>
+<span class="c1"># 导入 xlwt 库
+</span><span class="kn">import</span> <span class="nn">xlwt</span>
+
+<span class="c1"># 设置写出格式字体红色加粗
+</span><span class="n">styleBR</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">easyxf</span><span class="p">(</span><span class="s">'font: name Times New Roman, color-index red, bold on'</span><span class="p">)</span>
+
+<span class="c1"># 设置数字型格式为小数点后保留两位
+</span><span class="n">styleNum</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">easyxf</span><span class="p">(</span><span class="n">num_format_str</span><span class="o">=</span><span class="s">'#,##0.00'</span><span class="p">)</span>
+
+<span class="c1"># 设置日期型格式显示为YYYY-MM-DD
+</span><span class="n">styleDate</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">easyxf</span><span class="p">(</span><span class="n">num_format_str</span><span class="o">=</span><span class="s">'YYYY-MM-DD'</span><span class="p">)</span>
+
+<span class="c1"># 创建 xls 文件对象
+</span><span class="n">wb</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">Workbook</span><span class="p">()</span>
+
+<span class="c1"># 新增两个表单页
+</span><span class="n">sh1</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="s">'成绩'</span><span class="p">)</span>
+<span class="n">sh2</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="s">'汇总'</span><span class="p">)</span>
+
+<span class="c1"># 然后按照位置来添加数据,第一个参数是行，第二个参数是列
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'姓名'</span><span class="p">,</span> <span class="n">styleBR</span><span class="p">)</span>   <span class="c1"># 设置表头字体为红色加粗
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'日期'</span><span class="p">,</span> <span class="n">styleBR</span><span class="p">)</span>   <span class="c1"># 设置表头字体为红色加粗
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'成绩'</span><span class="p">,</span> <span class="n">styleBR</span><span class="p">)</span>   <span class="c1"># 设置表头字体为红色加粗
+</span>
+<span class="c1"># 插入数据
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'张三'</span><span class="p">,)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'2019-01-01'</span><span class="p">,</span> <span class="n">styleDate</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="n">styleNum</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'李四'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'2019-02-02'</span><span class="p">)</span>
+<span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">,</span> <span class="n">styleNum</span><span class="p">)</span>
+
+<span class="c1"># 设置单元格内容居中的格式
+</span><span class="n">alignment</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">Alignment</span><span class="p">()</span>
+<span class="n">alignment</span><span class="p">.</span><span class="n">horz</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">Alignment</span><span class="p">.</span><span class="n">HORZ_CENTER</span>
+<span class="n">style</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">XFStyle</span><span class="p">()</span>
+<span class="n">style</span><span class="p">.</span><span class="n">alignment</span> <span class="o">=</span> <span class="n">alignment</span>
+
+<span class="c1"># 合并A4,B4单元格，并将内容设置为居中
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write_merge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'总分'</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+
+<span class="c1"># 通过公式，计算C2+C3单元格的和
+</span><span class="n">sh1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">Formula</span><span class="p">(</span><span class="s">"C2+C3"</span><span class="p">))</span>
+
+<span class="c1"># 对 sheet2 写入数据
+</span><span class="n">sh2</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'总分'</span><span class="p">,</span> <span class="n">styleBR</span><span class="p">)</span>
+<span class="n">sh2</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">187.5</span><span class="p">)</span>
+
+<span class="c1"># 最后保存文件即可
+</span><span class="n">wb</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'test_w3.xls'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>然后我们执行命令 <code class="highlighter-rouge">python excel_w2.py</code> 运行以上代码，来输出文件 <code class="highlighter-rouge">test_w3.xls</code> ，我们来看看效果怎么样。</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_excel_05.png" alt="成绩" /></p>
+
+<p>可以看出，使用代码我们可以对字体，颜色、对齐、合并等平时 Excel 的操作进行设置，也可以格式化日期和数字类型的数据。当然了这里我们只是介绍了部分功能，不过这已经足够我们日常使用了，想了解更多功能操作可以参考文末官网。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文为大家介绍了 Python 中如何操作 Excel 的常用类库，并详细介绍了下 xlrd &amp; xlwt &amp; xlutils 系列工具的使用，总体来看操作并不复杂，不过它对 xlsx 支持比较差，对修改其实支持也不太好，而且功能并不多，不过在 xls 操作中还是占有重要地位的，之后会为大家介绍其他常用 Excel 操作工具。</p>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day</p>
+</blockquote>
+
+<h2 id="参考">参考</h2>
+
+<p>python-excel 官网：http://www.python-excel.org/</p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/29/python-excel-103.html';
+        this.page.identifier = '/python/2019/12/29/python-excel-103.html';
+        this.page.title = '第103天： Python 操作 Excel';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/29/python-excel-103.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

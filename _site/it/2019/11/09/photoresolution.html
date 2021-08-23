@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         我怎么就被一张照片出卖了 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="一张照片究竟隐藏了多少信息？">
+
+    <link rel="canonical" href="http://localhost:4000/it/2019/11/09/photoresolution.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="我怎么就被一张照片出卖了">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>我怎么就被一张照片出卖了</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/09
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>上篇文章<a href="http://www.ityouknow.com/it/2019/11/05/photoleak.html">《21岁日本女星惨遭猥亵，只因自拍瞳孔倒影暴露住址？》</a>发出去之后，发现大家对这个事情比较感兴趣，决定再和大家多聊聊这个领域。</p>
+
+<p>还有读者朋友们给我说，为什么我拿到的图片没有找到 GPS 信息，或者我找到了图片中的 GPS 信息之后，并不知道如何在地图中找到对应的地址。</p>
+
+<p>另外，除过上文<a href="http://www.ityouknow.com/it/2019/11/05/photoleak.html">《21岁日本女星惨遭猥亵，只因自拍瞳孔倒影暴露住址？》</a>的几种泄露方式外，其实还有很多其它方式也会泄露拍照人的地址信息，这篇文章继续给大家介绍。</p>
+
+<h2 id="1拿到照片中的gps信息">1.拿到照片中的GPS信息</h2>
+
+<p>以我在东莞参观时用手机拍摄的照片为例，为大家进行讲解。这是一张东莞某企业内部园区的一张照片，照片中有三个黑天鹅在游泳，仅仅只看照片你很难发现它在哪里。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution01.jpeg" alt="" /></p>
+
+<p>如果我把这张照片以<strong>原图</strong>分享到社交网站上面，就有人可以通过照片的相关信息，找到我拍摄这张照片的时间、地点以及其它属性。
+拿到这张照片之后，在 PC 上操作“右键-属性-详细信息”，就可以看到这张照片的很多内容，比如我就可以从这张照片中提取出以下信息：</p>
+
+<ul>
+  <li>照片使用的手机是：Mi Note 3</li>
+  <li>照片的拍摄时间是：2019/3/5 10:21:23 分（注意：这个时间是当地时间)</li>
+  <li>拍照地点的纬度是：22；52；52.07060000000638</li>
+  <li>拍照地点的经度是：113；53；1.3338000000221939</li>
+</ul>
+
+<p><strong>需要强调的是只有原图才有 GPS 等相关信息，现在很多软件默认会压缩图片抹去相关信息。</strong></p>
+
+<h2 id="2通过gps信息定位">2.通过GPS信息定位</h2>
+
+<p>这照片中最关键的信息其实就是 GPS 相关信息，因为我们需要通过 GPS 来定位拍摄人的地点。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution02.jpeg" alt="" /></p>
+
+<p>当然这个地址是不能直接用的，需要做一点转化，这也是很多读者说自己拿到GPS信息后，却不知道如何查询拍摄地址的原因。
+有了这个GPS还不够，还得转换一次。网上<strong>纬度经度转换</strong>转化工具很多，比如说这个在这个网站《经纬度格式转换工具》。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution03.jpeg" alt="" /></p>
+
+<p>纬度和经度都转换后，保存好两长串数字，例如我上面转化后的数字 22.881130722222224,113.88370383333334，中间用英文的逗号隔开，下面我们就可以通过这个数字来查询地址了。</p>
+
+<p>在谷歌地图中搜索地址 22.881130722222224,113.88370383333334，就可以找到照片的拍摄地点了，缩小一下就可以看出这里是华为东莞松山湖园区。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution04.jpeg" alt="" /></p>
+
+<p>当然这种方式比较麻烦了，有人帮大家开发了现成的工具，只需要上传照片即可获取到照片中的相关信息，并且用地图展示出照片的地址，避免人工多次转化定位。（公号内回复：<strong>地址</strong>，即可获取）</p>
+
+<h2 id="3图片中的关键信息">3.图片中的关键信息</h2>
+
+<p>我们可以依赖图片中的关键信息，来定位拍摄图片的位置。
+比如图中有电话号码，无论是手机号还是固定电话，都比较容易定位到具体的城市，甚至有时可以直接定位到具体地址，比如下图照片中的背景有店铺电话信息。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution05.jpeg" alt="" /></p>
+
+<p>放大之后可以看到这个电话是：075-256-6161</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution06.jpeg" alt="" /></p>
+
+<p>使用谷歌搜索可以检索到这家店的官网，再通过他们的官网信息可以查到，这家地址是：“京都市中京区蛸薬師通高倉西入泉正寺町334”。
+这种例子还有拍摄到的人物个人信息，社交账号，被拍的人三人左右的关系网，工作单位，学校等。或者图中有商铺名称（比如周黑鸭第236号分店）或者门牌号码（忠孝东路12号），根据门牌号码和街道可以知道位置。</p>
+
+<p>例如下面这张图片，图片的右侧有一个街道名称。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution07.jpeg" alt="" /></p>
+
+<p>街道名称：澳门跛腳梯，那定位就十分精准了。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution08.jpeg" alt="" /></p>
+
+<h2 id="4使用搜索引擎以图搜图">4.使用搜索引擎以图搜图</h2>
+
+<p>这是我在外旅行时拍的一张照片，从外景可以看出来应该不在国内，但具体在哪里如果不是当地人应该很难判断出来。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution09.jpeg" alt="" /></p>
+
+<p>但是当我使用谷歌图片搜索，以图搜图的方式去检索的时候，搜索引擎自动可以检测出来照片的地址在时代广场。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution10.jpeg" alt="" /></p>
+
+<p>百度搜索也有以图搜图的功能可以使用。</p>
+
+<h2 id="5用照片中的关键建筑来定位拍摄者">5.用照片中的关键建筑来定位拍摄者</h2>
+
+<p>我在知乎上看到了这样一个例子，可以根据建筑的位置来判定拍摄者的位置。比如我们看到了这么一张照片，没有GPS信息，那么如何定位拍摄者的地址呢？</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution11.jpeg" alt="" /></p>
+
+<p>首先根据照片中的建筑特点，将河岸两边的建筑标记为 A B C D E F G 。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution12.jpeg" alt="" /></p>
+
+<p>使用卫星地图确定各个建筑的各个方位，并标记出 A B C D E F G 都在地图的什么位置。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution13.jpeg" alt="" /></p>
+
+<p>在第一张平面图中，把他们一对一连起来画垂直线。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution14.jpeg" alt="" /></p>
+
+<p>根据卫星地图中的位置，按照上面图片中垂直线把他们连接起来，尽量精确，发现上面三条线都指向了一个白色的楼房。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution15.jpeg" alt="" /></p>
+
+<p>然后再放大卫星地图，就可以找到拍摄者是在哪个大楼拍摄的照片。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/photoresolution16.jpeg" alt="" /></p>
+
+<p>不知道大家看完这个案例什么感觉，真是世上无难事，只怕有心人，只要你愿意就可以从一张普通照片中挖掘出无限的信息，特别是即将到来的1亿像素时代。</p>
+
+<h2 id="6最后">6.最后</h2>
+
+<p>结合着上一篇<a href="http://www.ityouknow.com/it/2019/11/05/photoleak.html">《21岁日本女星惨遭猥亵，只因自拍瞳孔倒影暴露住址？》</a>文中的照片泄露地址事件，我们可以得知普通一张照片中充满了线索，如果平时不注意的话可能就会泄露隐私。</p>
+
+<p>历史上也有一些因为照片泄露地址的著名事件，网络安全钢铁侠之称的 McAfee 就因为逃亡过程中，不小心因为自拍泄露地址被警方抓获，王进喜照片泄密事件、美国美军因自拍泄露军事情报等。</p>
+
+<p>大家如果对这些历史事件感兴趣，可以在文章下面留言告诉我，我抽时间给大家家聊聊黑客大王是如何被照片泄露地址被警方抓获，以及王进喜照片泄密事件的真相。</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2019/11/09/photoresolution.html';
+        this.page.identifier = '/it/2019/11/09/photoresolution.html';
+        this.page.title = '我怎么就被一张照片出卖了';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2019/11/09/photoresolution.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

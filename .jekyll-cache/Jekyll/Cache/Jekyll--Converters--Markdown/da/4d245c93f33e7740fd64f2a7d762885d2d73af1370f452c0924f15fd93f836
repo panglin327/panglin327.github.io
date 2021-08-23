@@ -1,0 +1,144 @@
+I"�3<p>by 某某白米饭</p>
+
+<p>正则表达式是一个特殊的字符串序列、一种模式，用来判断字符串是否符合这种模式，如：判断邮件地址是否有 <code class="highlighter-rouge">@</code> 符号，判断手机号是否正确等待。</p>
+
+<h3 id="基本语法">基本语法</h3>
+
+<p>在正则表达式中，可以使用 <code class="highlighter-rouge">\d</code> 匹配数字，<code class="highlighter-rouge">\w</code> 匹配数字和子母，<code class="highlighter-rouge">.</code> 可以匹配除了换行符之外的任意字符，<code class="highlighter-rouge">\s</code> 匹配空白字符
+<!--more--></p>
+
+<p><code class="highlighter-rouge">1\d</code> 可以匹配 <code class="highlighter-rouge">12</code>、<code class="highlighter-rouge">13</code></p>
+
+<p><code class="highlighter-rouge">a\w</code> 可以匹配 <code class="highlighter-rouge">ab</code>、<code class="highlighter-rouge">ac</code></p>
+
+<p><code class="highlighter-rouge">.abc</code> 可以匹配 <code class="highlighter-rouge">aabc</code>、<code class="highlighter-rouge">~abc</code>、<code class="highlighter-rouge"> abc</code></p>
+
+<p>上面是单个字符匹配，要匹配长字符串在正则表达式中，用 <code class="highlighter-rouge">+</code> 表示匹配至少一个字符，用 <code class="highlighter-rouge">?</code> 表示匹配0或1个字符，用 <code class="highlighter-rouge">{n}</code> 表示匹配n个字符，用 <code class="highlighter-rouge">{n,m}</code> 表示匹配n-m个字符</p>
+
+<p><code class="highlighter-rouge">test.+</code> 可以匹配 <code class="highlighter-rouge">testPython</code>、<code class="highlighter-rouge">testPy</code>，无法匹配 <code class="highlighter-rouge">test</code></p>
+
+<p><code class="highlighter-rouge">test?</code> 可以匹配 <code class="highlighter-rouge">tes</code>、<code class="highlighter-rouge">test</code>，无法匹配 <code class="highlighter-rouge">testPython</code></p>
+
+<p><code class="highlighter-rouge">test.{6}</code> 可以匹配 <code class="highlighter-rouge">testPython</code>，无法匹配 <code class="highlighter-rouge">testPy</code></p>
+
+<p><code class="highlighter-rouge">test.{1,6}</code> 可以匹配 <code class="highlighter-rouge">testPython</code>、<code class="highlighter-rouge">testPy</code>，无法匹配 <code class="highlighter-rouge">test</code></p>
+
+<h3 id="复杂的正则">复杂的正则</h3>
+
+<p>正则表达式可以更加的复杂：<code class="highlighter-rouge">([A-Za-z0-9_\-\.]+)\@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,4})</code></p>
+
+<p>( )：表示分组</p>
+
+<p>[ ]：表示在[ ]内的任意一个字符</p>
+
+<p>([A-Za-z0-9<em>-.]+)：表示以大写字母 [A-Z]、小写字母 [a-z]、数字 [0-9]、下划线 [</em>]、减号 [-]、点号 [.] 中的至少一个字符 [+] ，在正则表达式中减号 [-] 和点号 [.] 是特殊字符需要使用 [] 转义</p>
+
+<p>\@：邮件中的@符号</p>
+
+<p>([A-Za-z0-9<em>-.]+)：表示以大写字母 [A-Z]、小写字母 [a-z]、数字 [0-9]、下划线 [</em>]、减号 [-]、点号 [.] 中的至少一个字符 [+]，如：qq，sina</p>
+
+<p>.([A-Za-z]{2,4})：表示以点号 [.] 连接2-4 [{2,4}] 个字符的大写字母 [A-Z] 和小写字母 [a-z]</p>
+
+<p><code class="highlighter-rouge">([A-Za-z0-9_\-\.]+)\@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,4})</code>可以匹配 <code class="highlighter-rouge">abc@qq.com</code>、 <code class="highlighter-rouge">ABCabc1234@qq.com</code>、 <code class="highlighter-rouge">abc_123-xyz@sina.cn</code></p>
+
+<h3 id="python中的正则表达式">Python中的正则表达式</h3>
+
+<h4 id="匹配">匹配</h4>
+
+<p>在Python中提供了包含了所有正则表达式功能的 <code class="highlighter-rouge">re</code> 模块，用 <code class="highlighter-rouge">re</code> 中的<code class="highlighter-rouge">match()</code>函数判断是否匹配成功，如果匹配成功则返回 <code class="highlighter-rouge">Match</code> 对象，否则返回 <code class="highlighter-rouge">None</code> ，在 Python 中字符串用 <code class="highlighter-rouge">\</code> 转义，使用 <code class="highlighter-rouge">r</code> 前缀可以不用考虑转义的问题</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s">'1\d'</span><span class="p">,</span> <span class="s">'13'</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="p">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s">'13'</span><span class="o">&gt;</span>   <span class="c1"># 匹配成功返回Match对象
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s">'1\d'</span><span class="p">,</span> <span class="s">'23'</span><span class="p">)</span> <span class="c1"># 匹配失败返回None
+</span><span class="o">&gt;&gt;&gt;</span> 
+</code></pre></div></div>
+
+<h4 id="分组">分组</h4>
+
+<p>在爬虫中一般需要提取出匹配成功的子字符串。用 ( ) 分组就可以提取出子字符串比如上面的邮件正则表达式，在Python中使用 <code class="highlighter-rouge">Match</code> 对象的 <code class="highlighter-rouge">group()</code> 函数提取出子字符串，<code class="highlighter-rouge">groups()</code> 函数返回所有子字符串的元组</p>
+
+<p><code class="highlighter-rouge">([A-Za-z0-9_\-\.]+)\@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,4})</code> 定义了3个组，可以提取出 @ 符之前的字符串和域名</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">email</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s">'([A-Za-z0-9_\-\.]+)\@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,4})'</span><span class="p">,</span> <span class="s">'abc@qq.com'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">email</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="s">'abc@qq.com'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">email</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="s">'abc'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">email</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="s">'qq'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">email</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="s">'com'</span>
+</code></pre></div></div>
+
+<p>在 <code class="highlighter-rouge">group()</code> 函数中<code class="highlighter-rouge">group(0)</code>永远是字符串本身，<code class="highlighter-rouge">group(1)</code>、<code class="highlighter-rouge">group(2)</code>、<code class="highlighter-rouge">group(3)</code> …表示第一、第二、第三…个子字符串。</p>
+
+<h4 id="替换">替换</h4>
+
+<p><code class="highlighter-rouge">re</code> 模块中提供了 <code class="highlighter-rouge">sub()</code> 函数替换子字符串的内容</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 删除字符串中的空格
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="s">'021- 1101101 10'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'\s'</span><span class="p">,</span><span class="s">''</span><span class="p">,</span><span class="n">test</span><span class="p">)</span>
+<span class="s">'021-110110110'</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">sub()</code> 函数中被替换的字符串也可以使用函数</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># 把数字加上100
+</span><span class="k">def</span> <span class="nf">num</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="s">'num'</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">test</span> <span class="o">=</span> <span class="s">'abc12defg980'</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'(?P&lt;num&gt;\d+)'</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="编译">编译</h4>
+
+<p>在使用 <code class="highlighter-rouge">re</code> 模块的时候，Python 帮我们做了两件事：</p>
+
+<ol>
+  <li>编译正则表达式，如果正则表示不合法会报错</li>
+  <li>用编译后的正则表示匹配字符串</li>
+</ol>
+
+<p><code class="highlighter-rouge">re</code> 模块中可以使用 <code class="highlighter-rouge">compile()</code> 函数预编译正则表示</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'test(.{1,6})'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">'testPy'</span><span class="p">).</span><span class="n">groups</span><span class="p">()</span>
+<span class="p">(</span><span class="s">'Py'</span><span class="p">,)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">'testPython'</span><span class="p">).</span><span class="n">groups</span><span class="p">()</span>
+<span class="p">(</span><span class="s">'Python'</span><span class="p">,)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">compile()</code> 函数构造出来的是一个 <code class="highlighter-rouge">Pattern</code> 对象。提供了一些属性读取正则表达的相关信息。</p>
+
+<ol>
+  <li>pattern：编译的正则表达式</li>
+  <li>groups：表达式中的分组数量</li>
+  <li>flags：编译时的匹配模式</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'test(.{1,6})'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">.</span><span class="n">pattern</span>
+<span class="s">'test(.{1,6})'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">.</span><span class="n">groups</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">.</span><span class="n">flags</span>
+<span class="mi">32</span>
+</code></pre></div></div>
+
+<h3 id="总结">总结</h3>
+
+<p>正则表达式非常的强大，这里只介绍了它的一小部分内容，让大家对正则表达式的概念和使用有一个清晰的了解。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-063">Python-100-days-day063</a></p>
+</blockquote>
+
+:ET

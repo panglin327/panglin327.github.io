@@ -1,0 +1,761 @@
+I"�
+<div id="container-open-source">
+    <section class="jumbotron geopattern" data-pattern-id="Open Source Projects">
+        <div class="container">
+            <div id="jumbotron-meta-info">
+                <h1>Open Source Projects</h1>
+                <span class="meta-info">
+                    I have <span class="repo-count badge">25</span> projects on Github
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="repo-list row">
+            <!-- Check here for github metadata -->
+            <!-- https://help.github.com/articles/repository-metadata-on-github-pages/ -->
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="spring-boot-examples">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/spring-boot-examples" target="_blank">spring-boot-examples</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">about learning Spring Boot via examples. Spring Boot 教程、技术栈示例代码，快速简单上手教程。 </p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="26106 stars">
+                                <span class="octicon octicon-star"></span> 26106
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="11422 forks">
+                                <span class="octicon octicon-git-branch"></span> 11422
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-23 12:51:58 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-23 12:51:58 UTC" title="2021-08-23 12:51:58 UTC">2021-08-23</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="spring-cloud-examples">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/spring-cloud-examples" target="_blank">spring-cloud-examples</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Cloud 学习案例，服务发现、服务治理、链路追踪、服务监控等</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="5733 stars">
+                                <span class="octicon octicon-star"></span> 5733
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="3037 forks">
+                                <span class="octicon octicon-git-branch"></span> 3037
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-23 02:49:35 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-23 02:49:35 UTC" title="2021-08-23 02:49:35 UTC">2021-08-23</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="awesome-spring-boot">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/awesome-spring-boot" target="_blank">awesome-spring-boot</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Boot Resources</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="3791 stars">
+                                <span class="octicon octicon-star"></span> 3791
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="889 forks">
+                                <span class="octicon octicon-git-branch"></span> 889
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-23 12:51:55 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-23 12:51:55 UTC" title="2021-08-23 12:51:55 UTC">2021-08-23</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="spring-boot-leaning">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/spring-boot-leaning" target="_blank">spring-boot-leaning</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Boot 2.X 最全课程代码</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="1983 stars">
+                                <span class="octicon octicon-star"></span> 1983
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="916 forks">
+                                <span class="octicon octicon-git-branch"></span> 916
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-20 14:08:22 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-20 14:08:22 UTC" title="2021-08-20 14:08:22 UTC">2021-08-20</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="awesome-spring-cloud">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/awesome-spring-cloud" target="_blank">awesome-spring-cloud</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Cloud 资源大全</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="1345 stars">
+                                <span class="octicon octicon-star"></span> 1345
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="465 forks">
+                                <span class="octicon octicon-git-branch"></span> 465
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-22 11:12:08 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-22 11:12:08 UTC" title="2021-08-22 11:12:08 UTC">2021-08-22</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="diagram">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/diagram" target="_blank">diagram</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">将画过的架构图、ppt、思维导图的文件收集在一起</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="463 stars">
+                                <span class="octicon octicon-star"></span> 463
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="296 forks">
+                                <span class="octicon octicon-git-branch"></span> 296
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-12 07:43:33 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-12 07:43:33 UTC" title="2021-08-12 07:43:33 UTC">2021-08-12</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="awesome-list">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/awesome-list" target="_blank">awesome-list</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">collect all  awesome about IT</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="439 stars">
+                                <span class="octicon octicon-star"></span> 439
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="157 forks">
+                                <span class="octicon octicon-git-branch"></span> 157
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-20 06:48:10 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-20 06:48:10 UTC" title="2021-08-20 06:48:10 UTC">2021-08-20</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="drools-examples">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/drools-examples" target="_blank">drools-examples</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">drools examples, spring boot drools examples</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="402 stars">
+                                <span class="octicon octicon-star"></span> 402
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="253 forks">
+                                <span class="octicon octicon-git-branch"></span> 253
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-12 07:19:00 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-12 07:19:00 UTC" title="2021-08-12 07:19:00 UTC">2021-08-12</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="book-100">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/book-100" target="_blank">book-100</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">最值得推荐的100本计算机书籍</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="319 stars">
+                                <span class="octicon octicon-star"></span> 319
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="49 forks">
+                                <span class="octicon octicon-git-branch"></span> 49
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-16 09:16:28 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-16 09:16:28 UTC" title="2021-08-16 09:16:28 UTC">2021-08-16</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="spring-boot-book">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/spring-boot-book" target="_blank">spring-boot-book</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Boot 开源电子书</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="181 stars">
+                                <span class="octicon octicon-star"></span> 181
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="63 forks">
+                                <span class="octicon octicon-git-branch"></span> 63
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-13 07:05:45 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-13 07:05:45 UTC" title="2021-08-13 07:05:45 UTC">2021-08-13</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="spring-examples">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/spring-examples" target="_blank">spring-examples</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Examples</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="174 stars">
+                                <span class="octicon octicon-star"></span> 174
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="132 forks">
+                                <span class="octicon octicon-git-branch"></span> 132
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-13 07:05:47 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-13 07:05:47 UTC" title="2021-08-13 07:05:47 UTC">2021-08-13</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="spring-data-jpa-reference-documentation">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/spring-data-jpa-reference-documentation" target="_blank">spring-data-jpa-reference-documentation</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Spring Data JPA 参考指南 中文版</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="158 stars">
+                                <span class="octicon octicon-star"></span> 158
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="58 forks">
+                                <span class="octicon octicon-git-branch"></span> 58
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-19 07:46:05 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-19 07:46:05 UTC" title="2021-06-19 07:46:05 UTC">2021-06-19</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="ityouknow.github.io">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/ityouknow.github.io" target="_blank">ityouknow.github.io</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">http://www.ityouknow.com/</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="127 stars">
+                                <span class="octicon octicon-star"></span> 127
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="1154 forks">
+                                <span class="octicon octicon-git-branch"></span> 1154
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-23 10:25:11 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-23 10:25:11 UTC" title="2021-08-23 10:25:11 UTC">2021-08-23</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="python-100-days">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/python-100-days" target="_blank">python-100-days</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text"> Python 100天学习计划，从小白到工程师</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="101 stars">
+                                <span class="octicon octicon-star"></span> 101
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="33 forks">
+                                <span class="octicon octicon-git-branch"></span> 33
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:12:03 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:12:03 UTC" title="2021-06-14 18:12:03 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="awesome-interviews">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/awesome-interviews" target="_blank">awesome-interviews</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Everything you need to know about interviews</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="71 stars">
+                                <span class="octicon octicon-star"></span> 71
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="48 forks">
+                                <span class="octicon octicon-git-branch"></span> 48
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-18 11:39:08 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-18 11:39:08 UTC" title="2021-08-18 11:39:08 UTC">2021-08-18</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="python-crawler">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/python-crawler" target="_blank">python-crawler</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Python Crawler</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="69 stars">
+                                <span class="octicon octicon-star"></span> 69
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="49 forks">
+                                <span class="octicon octicon-git-branch"></span> 49
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-13 07:05:53 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-13 07:05:53 UTC" title="2021-08-13 07:05:53 UTC">2021-08-13</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="collect-open-source">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/collect-open-source" target="_blank">collect-open-source</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Collection of all open source, fun, fun things</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="42 stars">
+                                <span class="octicon octicon-star"></span> 42
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="30 forks">
+                                <span class="octicon octicon-git-branch"></span> 30
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-16 02:47:11 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-16 02:47:11 UTC" title="2021-08-16 02:47:11 UTC">2021-08-16</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="reading-list">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/reading-list" target="_blank">reading-list</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">share my read book</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="16 stars">
+                                <span class="octicon octicon-star"></span> 16
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="6 forks">
+                                <span class="octicon octicon-git-branch"></span> 6
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:12:31 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:12:31 UTC" title="2021-06-14 18:12:31 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="blog-comments">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/blog-comments" target="_blank">blog-comments</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text"></p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="15 stars">
+                                <span class="octicon octicon-star"></span> 15
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="0 forks">
+                                <span class="octicon octicon-git-branch"></span> 0
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:10:47 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:10:47 UTC" title="2021-06-14 18:10:47 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="awesome-docker">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/awesome-docker" target="_blank">awesome-docker</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">Docker resources and projects</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="12 stars">
+                                <span class="octicon octicon-star"></span> 12
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="5 forks">
+                                <span class="octicon octicon-git-branch"></span> 5
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:10:05 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:10:05 UTC" title="2021-06-14 18:10:05 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="python-fun">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/python-fun" target="_blank">python-fun</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">收集一些有趣的 python 脚本 </p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="11 stars">
+                                <span class="octicon octicon-star"></span> 11
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="1 forks">
+                                <span class="octicon octicon-git-branch"></span> 1
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:12:19 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:12:19 UTC" title="2021-06-14 18:12:19 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="hadoop-ecosystem-examples">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/hadoop-ecosystem-examples" target="_blank">hadoop-ecosystem-examples</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">hadoop ecosystem examples</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="6 stars">
+                                <span class="octicon octicon-star"></span> 6
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="16 forks">
+                                <span class="octicon octicon-git-branch"></span> 16
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-13 07:05:50 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-13 07:05:50 UTC" title="2021-08-13 07:05:50 UTC">2021-08-13</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="wordpress-wechat">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/wordpress-wechat" target="_blank">wordpress-wechat</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text"></p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="2 stars">
+                                <span class="octicon octicon-star"></span> 2
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="0 forks">
+                                <span class="octicon octicon-git-branch"></span> 0
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-08-13 07:05:57 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-08-13 07:05:57 UTC" title="2021-08-13 07:05:57 UTC">2021-08-13</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="ityouknow">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/ityouknow" target="_blank">ityouknow</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text">my blog   http://www.ityouknow.com</p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="2 stars">
+                                <span class="octicon octicon-star"></span> 2
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="1 forks">
+                                <span class="octicon octicon-git-branch"></span> 1
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:11:37 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:11:37 UTC" title="2021-06-14 18:11:37 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 card text-center">
+                <div class="thumbnail">
+                    <div class="card-image geopattern" data-pattern-id="pyramid-selling">
+                        <div class="card-image-cell">
+                            <h3 class="card-title">
+                                <a href="https://github.com/ityouknow/pyramid-selling" target="_blank">pyramid-selling</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <div class="card-description">
+                            <p class="card-text"></p>
+                        </div>
+                        <div class="card-text">
+                            <span data-toggle="tooltip" class="meta-info" title="1 stars">
+                                <span class="octicon octicon-star"></span> 1
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="0 forks">
+                                <span class="octicon octicon-git-branch"></span> 0
+                            </span>
+                            <span data-toggle="tooltip" class="meta-info" title="Last updated：2021-06-14 18:11:53 UTC">
+                                <span class="octicon octicon-clock"></span>
+                                <time datetime="2021-06-14 18:11:53 UTC" title="2021-06-14 18:11:53 UTC">2021-06-14</time>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+</div>
+<script>
+    $(document).ready(function(){
+
+        // Enable bootstrap tooltip
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+
+:ET

@@ -1,0 +1,264 @@
+I"J<p>by 太阳雪</p>
+
+<p>前面学习了 Flask 框架的基本用法，以及模板引擎 Jinja2，按理说可以开始自己的 Web 之旅了，不过在启程之前，还有个重要的武器需要了解一下，就是著名的 Bootstrap 框架和 Flask 的结合，这将大大提高开发 Web 应用的效率。</p>
+
+<!--more-->
+
+<h2 id="简介">简介</h2>
+
+<p>Bootstrap 是 Twitter 公司的设计师 Mark Otto 和 Jacob Thornton 开发的 Web 项目开发框架，简洁、直观、强悍，使得 Web 开发更加快捷，一经推出后颇受欢迎，一直是 GitHub 上的热门开源项目，这么好的开发框架 Flask 一定少不了。</p>
+
+<p>期初在 Flask 的扩展包中有 flask-bootstrap, 不过后来更新很少，后来 greyli 基于 flask-bootstrap 开发了 bootstrap-flask 扩展模块，不经支持最新的 Bootstrap4， 还基于 Jinjia2 模板引擎的宏，做了更多的扩展。值得一提的是 greyli 是个中国帅小伙，能在文章后面的参考链接中找到他。</p>
+
+<h2 id="安装">安装</h2>
+
+<p>使用 pip 安装：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>bootstrap-flask
+</code></pre></div></div>
+
+<blockquote>
+  <p>如果之前安装过 <code class="highlighter-rouge">flask-bootstrap</code>, 需要将其卸载掉，不然两者会有冲突，如果您遇到错误提示: <code class="highlighter-rouge">jinja2.exceptions.UndefinedError: 'bootstrap' is undefined</code>，很大可能就是这个问题</p>
+</blockquote>
+
+<h2 id="小试牛刀">小试牛刀</h2>
+
+<h3 id="导入模块">导入模块</h3>
+
+<p>创建一个 <code class="highlighter-rouge">flaskbootstrap.py</code> 程序文件，引入模块 <code class="highlighter-rouge">flask_bootstrap</code>, 您没看错，引入的并不是 <code class="highlighter-rouge">bootstrap-flask</code>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask_bootstrap</span> <span class="kn">import</span> <span class="n">Bootstrap</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：我在做示例时，将代码文件名定义为 <code class="highlighter-rouge">flask_bootstrap.py</code>, 运行时提示 无法导入 Bootstrap 模块，这是因为文件名与模块 <code class="highlighter-rouge">flask_bootstrap</code> 冲突了</p>
+</blockquote>
+
+<p>然后对 Flask 应用初始化：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span> <span class="c1"># 创建一个 Flask 应用
+</span><span class="n">bootstrap</span> <span class="o">=</span> <span class="n">Bootstrap</span><span class="p">(</span><span class="n">app</span><span class="p">)</span> <span class="c1"># 为应用初始化 bootstrap
+</span></code></pre></div></div>
+
+<p>给应用加载 bootstrap 主要是给应用加上 Jinja2 的扩展，下面的工作就是写模板文件。</p>
+
+<h3 id="创建基础模板">创建基础模板</h3>
+
+<p><code class="highlighter-rouge">bootstrap-flask</code> 虽然基于 <code class="highlighter-rouge">flask-bootstrap</code>，但是却没有提供默认的模板文件，期望在后续版本中能有吧，不过自己写也不麻烦，我们在文件夹 templates 中创建一个 base.html，内容是：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 引入导航模块的宏 render_nav_item --&gt;</span>
+{% from 'bootstrap/nav.html' import render_nav_item %}
+<span class="c">&lt;!-- 下面是正常的 Bootstrap 页面代码，看起来很复杂，不过可以从官网上拷贝 --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"cn"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1, shrink-to-fit=no"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>{% block title %} Flask Bootstrap {% endblock %}<span class="nt">&lt;/title&gt;</span> <span class="c">&lt;!-- 定义标题块 --&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"icon"</span> <span class="na">href=</span><span class="s">"{{ url_for('static', filename='favicon.ico') }}"</span><span class="nt">&gt;</span>
+        {{ bootstrap.load_css() }}  <span class="c">&lt;!-- 动态加载 Bootstrap 样式 --&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;main</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"navbar navbar-expand-lg navbar-dark bg-dark"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"navbar-header"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"navbar-brand"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Python100<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"navbar-toggler"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">data-toggle=</span><span class="s">"collapse"</span> <span class="na">data-target=</span><span class="s">"#navbarSupportedContent"</span>
+                    <span class="na">aria-controls=</span><span class="s">"navbarSupportedContent"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span> <span class="na">aria-label=</span><span class="s">"Toggle navigation"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"navbar-toggler-icon"</span><span class="nt">&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;/button&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"collapse navbar-collapse"</span> <span class="na">id=</span><span class="s">"navbarSupportedContent"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"navbar-nav mr-auto"</span><span class="nt">&gt;</span>
+                    <span class="c">&lt;!-- 利用宏 render_nav_item 创建菜单 --&gt;</span>
+                    {{ render_nav_item('index', '首页', use_li=True) }}
+                <span class="nt">&lt;/ul&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/nav&gt;</span>
+        {% block content %}  <span class="c">&lt;!-- 定义内容块 --&gt;</span>
+        <span class="nt">&lt;h1&gt;</span> Hello Flask Bootstrap! <span class="nt">&lt;/h1&gt;</span>
+        {% endblock %}
+        <span class="nt">&lt;footer</span> <span class="na">class=</span><span class="s">"text-center"</span><span class="nt">&gt;</span>
+            {% block footer %} <span class="c">&lt;!-- 定义页脚块 --&gt;</span>
+                <span class="nt">&lt;small&gt;</span> <span class="ni">&amp;copy;</span> 2019 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://justdopython.com"</span> <span class="na">title=</span><span class="s">"python 100天"</span><span class="nt">&gt;</span>Python 技术<span class="nt">&lt;/a&gt;</span>
+                <span class="nt">&lt;/small&gt;</span>
+            {% endblock %}
+        <span class="nt">&lt;/footer&gt;</span>
+    <span class="nt">&lt;/main&gt;</span>
+
+    <span class="c">&lt;!-- 动态加载 Bootstrap js 脚本 --&gt;</span>
+    {{ bootstrap.load_js() }}
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>是不是感觉很头大，不过是代码多了些，结构很其实很简单，大部分代码是 Bootstrap 提供的基本框架代码，然后加入了一些 <code class="highlighter-rouge">bootstrap-flask</code> 的扩展。我们来分析一下：</p>
+
+<ul>
+  <li>首先引入导航元素宏 <code class="highlighter-rouge">render_nav_item</code>，因为在后面制作导航菜单时要用</li>
+  <li>然后是大段的 Bootstrap 框架代码</li>
+  <li>定义块，用来在继承 base.html 的子模板中做替换，其中有 标题、内容和页尾</li>
+  <li>动态加载 Bootstrap 样式和脚本，通过 <code class="highlighter-rouge">bootstrap.load_css()</code> 和 <code class="highlighter-rouge">bootstrap.load_js()</code></li>
+  <li>在导航菜单的位置，使用宏 <code class="highlighter-rouge">render_nav_item</code> 创建一个首页菜单</li>
+</ul>
+
+<p>这样就完成基础模板的定义，稍后会对 <code class="highlighter-rouge">render_nav_item</code>、<code class="highlighter-rouge">bootstrap.load_css()</code> 和 <code class="highlighter-rouge">bootstrap.load_js()</code> 做解释。</p>
+
+<h3 id="创建页面模板">创建页面模板</h3>
+
+<p>有了基础模板，就可以做具体的页面模板了，先做首页 index.html，代码如下:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% extends "base.html" %} <span class="c">&lt;!-- 继承基础模板 --&gt;</span>
+
+{% block content %} <span class="c">&lt;!-- 替换页面内容 --&gt;</span>
+<span class="nt">&lt;h1&gt;</span> Hello Flask Bootstrap <span class="nt">&lt;/h1&gt;</span>
+{% endblock %}
+</code></pre></div></div>
+
+<p>是不是简洁多了？下面在 <code class="highlighter-rouge">flaskbootstrap.py</code> 中加上首页的视图函数:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'index.html'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="启动">启动</h3>
+
+<p>如果一切顺利，访问 <code class="highlighter-rouge">localhost:5000</code> 就能看到如下效果:</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_web_flask_bootstrap_01.jpg" alt="首页效果" /></p>
+
+<p>调整浏览器页面大小，可以看到页面自适应效果，是不是很神奇。接下来详细说明一下 <code class="highlighter-rouge">bootstrap-flask</code> 模块</p>
+
+<h2 id="资源助手">资源助手</h2>
+
+<p>在小试牛刀中，能看到对 Bootstrap 样式和脚本引用的方法 <code class="highlighter-rouge">bootstrap.load_css()</code> 和 <code class="highlighter-rouge">bootstrap.load_js()</code>，默认情况下会自动从 Bootstrap 的 CDN 上引用最新版的 Bootstrap 资源，例如: <code class="highlighter-rouge">https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css</code>，这样就方便了开发者对 Bootstrap 资源的引用和升级。</p>
+
+<h3 id="使用本地资源">使用本地资源</h3>
+
+<p>如果想要从其他位置或者本地引用资源，只要在给应用初始化完 Bootstrap 之后，将应用的 <code class="highlighter-rouge">BOOTSTRAP_SERVE_LOCAL</code> 属性设置为 <code class="highlighter-rouge">True</code> 就好了:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span> <span class="c1"># 创建一个 Flask 应用
+</span><span class="n">bootstrap</span> <span class="o">=</span> <span class="n">Bootstrap</span><span class="p">(</span><span class="n">app</span><span class="p">)</span> <span class="c1"># 为应用初始化 bootstrap
+</span><span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="s">'BOOTSTRAP_SERVE_LOCAL'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># 设置为使用本地资源
+</span></code></pre></div></div>
+
+<p>本地资源放在 <code class="highlighter-rouge">static</code> 目录下(这个目录是 Flask 框架默认的静态资源目录)，Bootstrap 本地资源放置如下:</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_web_flask_bootstrap_02.jpg" alt="Bootstrap 资源" /></p>
+
+<h3 id="bootstrapload_css">bootstrap.load_css()</h3>
+
+<p>加载 Bootstrap 样式资源，
+参数:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">version</code>，指定 Bootstrap 样式版本号，默认值为 4.3.1，本地资源无效</li>
+</ul>
+
+<h3 id="bootstrapload_js">bootstrap.load_js()</h3>
+
+<p>加载 Bootstrap 脚本资源</p>
+
+<p>参数：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">version</code>，指定 Bootstrap 脚本版本号，默认为 4.3.1，本地资源无效</li>
+  <li><code class="highlighter-rouge">jquery_version</code>，指定 JQuery 版本号，默认为 3.3.1，本地资源无效</li>
+  <li><code class="highlighter-rouge">popper_version</code>，指定 Popper 版本号，默认为 1.14.0，本地资源无效</li>
+  <li><code class="highlighter-rouge">with_jquery</code>，是否加载 JQuery， 默认为 <code class="highlighter-rouge">True</code></li>
+  <li><code class="highlighter-rouge">with_popper</code>，是否加载 Popper, 默认为 <code class="highlighter-rouge">True</code></li>
+</ul>
+
+<h2 id="宏">宏</h2>
+
+<p><code class="highlighter-rouge">bootstrap-flask</code> 主要的改进是加入了很多方法是用的宏，让对页面效果的编辑像写逻辑代码一样，并在宏中还对所处环境信息进行了判断，比如菜单是否要激活，分页控件动态效果等等，下面介绍几个典型的宏</p>
+
+<h3 id="render_nav_item">render_nav_item()</h3>
+
+<p>生成一个导航菜单</p>
+
+<p>参数:</p>
+
+<ul>
+  <li>endpoint，路径点，可以直接写视图函数名</li>
+  <li>text，标题</li>
+</ul>
+
+<p>代码示例:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% from 'bootstrap/nav.html' import render_nav_item %}
+
+<span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"navbar navbar-expand-lg navbar-light bg-light"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"navbar-nav mr-auto"</span><span class="nt">&gt;</span>
+        {{ render_nav_item('index', 'Home') }}
+        {{ render_nav_item('explore', 'Explore') }}
+        {{ render_nav_item('about', 'About') }}
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/nav&gt;</span>
+</code></pre></div></div>
+
+<h3 id="render_breadcrumb_item">render_breadcrumb_item()</h3>
+
+<p>面包屑导航条
+参数:</p>
+
+<ul>
+  <li>endpoint，路径点，可以直接写视图函数名</li>
+  <li>text，标题</li>
+</ul>
+
+<p>代码示例:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% from 'bootstrap/nav.html' import render_breadcrumb_item %}
+
+<span class="nt">&lt;nav</span> <span class="na">aria-label=</span><span class="s">"breadcrumb"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">"breadcrumb"</span><span class="nt">&gt;</span>
+        {{ render_breadcrumb_item('home', 'Home') }}
+        {{ render_breadcrumb_item('users', 'Users') }}
+        {{ render_breadcrumb_item('posts', 'Posts') }}
+        {{ render_breadcrumb_item('comments', 'Comments') }}
+    <span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;/nav&gt;</span>
+</code></pre></div></div>
+
+<h3 id="render_static">render_static()</h3>
+
+<p>静态资源引用，例如引用 css 、js 或者 图标</p>
+
+<p>参数:</p>
+
+<ul>
+  <li>type 资源类型，可以是 css 或 js 或 icon</li>
+  <li>filename_or_url 资源路径，文件名 或者 参数 <code class="highlighter-rouge">local</code> 为 <code class="highlighter-rouge">False</code> 时的远程 url</li>
+  <li>local 是否本地资源，默认为 <code class="highlighter-rouge">True</code></li>
+</ul>
+
+<p>代码示例:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% from 'bootstrap/utils.html' import render_static %}
+
+{{ render_static('css', 'style.css') }}
+</code></pre></div></div>
+
+<h3 id="其他宏">其他宏</h3>
+
+<p>还有有些宏很有用，例如 表单(form)相关的，还有分页相关的，不过这些会涉及到其他 Flask 扩展模块，我们会在介绍 <strong>表单</strong> 和 <strong>数据库</strong> 的章节中做进一步学习，如果您有兴趣，可以浏览参考链接中的内容。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>这篇文章简单介绍了 Flask 框架中如何使用 Bootstrap 扩展，从一个简单的示例开始，讲解了基于 Jinja2 模板引擎的 <code class="highlighter-rouge">bootstrap-flask</code> 模块的使用，其中包括资源助手 <code class="highlighter-rouge">bootstrap.load_css()</code> 和 <code class="highlighter-rouge">bootstrap.load_css()</code> ，以及一些基本的宏的用法，在参考代码中有较为完整的例子，您可以作为参考。在后面的文章中将会陆续介绍 <strong>表单</strong> 和 <strong>数据库</strong> 的使用，敬请期待。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-044">Python-100-days-day044</a></p>
+</blockquote>
+
+<p>参考</p>
+
+<ul>
+  <li><a href="https://bootstrap-flask.readthedocs.io/en/latest/basic.html">bootstrap-flask 文档: https://bootstrap-flask.readthedocs.io/en/latest/basic.html</a></li>
+  <li><a href="https://github.com/greyli/bootstrap-flask">bootstrap-flask 源码: https://github.com/greyli/bootstrap-flask</a></li>
+  <li><a href="https://getbootstrap.com/">Bootstrap: https://getbootstrap.com/</a></li>
+  <li><a href="http://greyli.com/">bootstrap-flask 作者: http://greyli.com/</a></li>
+</ul>
+:ET

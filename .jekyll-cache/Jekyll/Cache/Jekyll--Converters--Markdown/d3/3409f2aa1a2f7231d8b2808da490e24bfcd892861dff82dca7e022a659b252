@@ -1,0 +1,102 @@
+I"9)<p>by 某某白米饭</p>
+
+<h2 id="paramiko-模块">paramiko 模块</h2>
+
+<p>paramiko 是一个用 Python 语言编写的、遵循 SSH2 协议、支持以加密和认证方式进行连接远程服务器的模块。改模块可以对远程服务器进行一些命令或文件操作。
+<!--more--></p>
+
+<h3 id="安装">安装</h3>
+
+<p>使用 pip3 安装 paramiko 模块</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pip3</span> <span class="n">install</span> <span class="n">paramiko</span>
+</code></pre></div></div>
+
+<h3 id="连接远程服务器">连接远程服务器</h3>
+
+<p>paramiko 模块连接远程服务器可以使用远程服务器的用户名、密码登录</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">paramiko</span>
+
+<span class="c1"># 创建一个SSHClient对象
+</span><span class="n">ssh</span> <span class="o">=</span> <span class="n">paramiko</span><span class="p">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="c1"># 将信任的主机加到 host_allow 列表
+</span><span class="n">ssh</span><span class="p">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="p">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="c1"># 连接服务器
+</span><span class="n">ssh</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"服务器IP地址"</span><span class="p">,</span> <span class="s">"服务器端口号"</span><span class="p">,</span> <span class="s">"用户名"</span><span class="p">,</span> <span class="s">"密码"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="使用命令">使用命令</h3>
+
+<p>在登录远程服务器后，利用 paramiko 模块可以使用 shell 命令操作远程服务器，比如：df 命令、pwd 命令、cat 命令等等…</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 打印磁盘情况
+# 执行df命令，结果放到 dfout 中，如果有错误将放到 dferr 中
+</span><span class="n">dfout</span><span class="p">,</span> <span class="n">dferr</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">'df'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dfout</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+
+<span class="c1"># 使用cd、cat命令查看文件内容
+# paramiko.txt文件为/root/data/paramiko.txt
+</span><span class="n">catin</span><span class="p">,</span> <span class="n">catout</span><span class="p">,</span><span class="n">caterr</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">'cd data;cat paramiko.txt'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">catin</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>在 exec_command 函数中，exec_command 执行的是单个会话，执行完成后会回到登录的缺省目录，多个命令需要 命令1;命令2;命令3 的写法</p>
+
+<h3 id="sftp上传和下载文件">sftp上传和下载文件</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">paramiko</span>
+
+<span class="n">transport</span> <span class="o">=</span> <span class="n">paramiko</span><span class="p">.</span><span class="n">Transport</span><span class="p">((</span><span class="s">"服务器IP地址"</span><span class="p">,</span><span class="n">服务器端口号</span><span class="p">))</span>
+<span class="n">transport</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">username</span> <span class="o">=</span> <span class="s">"用户名"</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="s">"密码"</span><span class="p">)</span>
+<span class="n">sftp</span> <span class="o">=</span> <span class="n">paramiko</span><span class="p">.</span><span class="n">SFTPClient</span><span class="p">.</span><span class="n">from_transport</span><span class="p">(</span><span class="n">transport</span><span class="p">)</span>
+<span class="c1"># 从远程服务器下载文件
+# 远程服务器文件路径为/data/paramiko.txt
+</span><span class="n">sftp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/data/paramiko.txt'</span><span class="p">,</span> <span class="s">'paramiko.txt'</span><span class="p">,</span> <span class="k">print</span><span class="p">(</span><span class="s">"下载完成！"</span><span class="p">))</span>
+<span class="c1"># 从本地上传文件到远程服务器
+</span><span class="n">sftp</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">'upload_paramiko.txt'</span><span class="p">,</span> <span class="s">'/data/upload_paramiko.txt'</span><span class="p">,</span> <span class="k">print</span><span class="p">(</span><span class="s">"上传完成！"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h3 id="服务器文件修改内容">服务器文件修改内容</h3>
+
+<p>sftp 对象可以在线修改远程服务器上文件的内容</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">paramiko</span>
+
+<span class="c1"># 登录远程服务器
+</span><span class="n">client</span> <span class="o">=</span> <span class="n">paramiko</span><span class="p">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="p">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"服务器IP地址"</span><span class="p">,,</span><span class="s">"服务器端口号"</span><span class="p">,</span><span class="s">"用户名"</span><span class="p">,</span> <span class="s">"密码"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sftp</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">open_sftp</span><span class="p">()</span>
+<span class="c1"># 远程服务器文件地址为/data/paramiko.txt
+</span><span class="n">remoteFile</span> <span class="o">=</span> <span class="n">sftp</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"/data/paramiko.txt"</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span>
+<span class="n">remoteFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="n">remoteFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"这里是追加的内容！"</span><span class="p">);</span>
+<span class="n">remoteFile</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">sftp</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="查询文件">查询文件</h3>
+
+<p>使用 sftp 对象获取远程服务器上的文件列表</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">paramiko</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">paramiko</span><span class="p">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="p">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"服务器IP地址"</span><span class="p">,,</span><span class="s">"服务器端口号"</span><span class="p">,</span><span class="s">"用户名"</span><span class="p">,</span> <span class="s">"密码"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sftp</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">open_sftp</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fileName</span> <span class="ow">in</span> <span class="n">sftp</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">"/root/data"</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">fileName</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">".txt"</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
+<span class="n">sftp</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="结语">结语</h3>
+
+<p>以上是 paramiko 模块的基本操作，学会以上内容后在多个远程服务器的情况下，可以快速、便捷的操作服务器内容</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-042">Python-100-days-day042</a></p>
+</blockquote>
+:ET

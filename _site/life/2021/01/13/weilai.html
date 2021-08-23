@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         蔚来，牛X! - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="中国制造！">
+
+    <link rel="canonical" href="http://localhost:4000/life/2021/01/13/weilai.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="蔚来，牛X!">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>蔚来，牛X!</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2021/01/13
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai01.jpg" alt="" /></p>
+
+<p><strong>2019年最惨的一家公司，2020年最牛X的一家公司。</strong></p>
+
+<h2 id="1新能源风口的猪">1、新能源风口的猪</h2>
+
+<p>大家知道我今年一直都在关注新能源汽车，不但试驾了特斯拉、蔚来、理想、小鹏、比亚迪和威马，也买了一点点新能源公司的股票。</p>
+
+<p>在我试驾的体验中，其实每家产品的特点都不太一样，比如特斯拉极客精神品牌力极强、蔚来主打高端化、理想解决电动车里程焦虑感。</p>
+
+<p>小鹏主打免费充电轿跑车型、比亚迪就厉害了，什么都能做，比亚迪汉很能打，但是最近比亚迪DMI<strong>（1200KM续航惊呆了）</strong>，简直刷新了我对它的认知！</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai02.jpg" alt="" /></p>
+
+<p>我感觉我必须要写一篇关于比亚迪的文章，详细的给大家介绍一下这家公司，汽车所有核心技术都自己搞，包括发动机！</p>
+
+<p>比亚迪我们找时间再详细和大家聊，今天还是先说一说蔚来，<strong>这家公司真的和别家汽车公司玩的都不一样。</strong></p>
+
+<h2 id="2全球第三">2、全球第三</h2>
+
+<p>就在12日收盘，蔚来股价又上涨6.42%（我没买，叹气…），市值一度冲破1000亿美元，在汽车界里面已超越大众汽车集团，<strong>上升到全球第三位。</strong></p>
+
+<p>大家知道大众一年卖多少车吗？1000万辆左右浮动，那么蔚来一年卖多少俩汽车呢，2020创出新高也才4万多俩。</p>
+
+<p><strong>为什么蔚来的估值能超过大众？</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai03.jpg" alt="" /></p>
+
+<p>这其中有泡沫吗？</p>
+
+<p>肯定有呀，蔚来从2019年的最低点到现在涨了快20倍，一个初创新能源汽车公司市值可以排到全球第三，中国第一！</p>
+
+<p>但凡是有前途的公司，哪个没有泡沫呢？资本市场持续看好的原因，并不只是炒作，也是真正看到了蔚来的发展空间。</p>
+
+<h2 id="3和别人不一样">3、和别人不一样</h2>
+
+<p>跟大家聊聊蔚来怎么和别的新能源汽车公司不一样！</p>
+
+<blockquote>
+  <p>1、造车的节奏就不一样。</p>
+</blockquote>
+
+<p>刚开始造车大家都老老实实打造产品，结果蔚来先造了一辆跑车，还获得了 FE 车手总冠军！</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai04.jpg" alt="" /></p>
+
+<p>这个套路可能是学特斯拉的吧，为了提高品牌的调性，大家如果去蔚来线下门店的时候，有可能还能看到这辆车，颜值很高很酷！</p>
+
+<blockquote>
+  <p>2、产品设计不一样。</p>
+</blockquote>
+
+<p>大家知道新能源汽车目前最贵的一部分就是电池，所以大家都把电池当做卖点之一，和汽车做成了一体！</p>
+
+<p>但是蔚来跟大家都不一样，走的是可以换电池的路子，所有汽车都可以在他们的电站换电池，半路抛锚了会安排车给送电池！</p>
+
+<blockquote>
+  <p>3、社区文化不一样。</p>
+</blockquote>
+
+<p>你以为蔚来卖的是一辆汽车，其实人家卖的是服务，蔚来对车主的服务做得非常好，搞了一个 NIO Day。</p>
+
+<p>甚至蔚来的很多门店一楼是卖车的，二楼就是专门用来给蔚来的车主做活动、喝咖啡的地方，用力打造一个高端的社群文化。</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai05.jpg" alt="" /></p>
+
+<p>如果你下载了蔚来的APP，你会感觉这个APP就是一个小型社群，蔚来搞了很多活动，什么瑜伽、小型表演之类的。</p>
+
+<p>再加上蔚来的积分制度，让蔚来的APP既是电商、又是社区，既有线下关系纽带，又有线上运营维护，感觉有点小米的影子在里面。</p>
+
+<blockquote>
+  <p>4、主打高端</p>
+</blockquote>
+
+<p>前一段时间 Model Y 降价，业界都沸腾了，觉得特斯拉是新能源汽车届的杀手，很多人都预测蔚来必然会收到冲击。</p>
+
+<p>没想到过了几天后，蔚来不但没有降价，还发布了新产品ET7，同样ET7的价格在50万左右（真贵呀）。</p>
+
+<h2 id="4产品确实也挺能打">4、产品确实也挺能打</h2>
+
+<p>说实话，蔚来的产品也出现过很多问题，因为起火还召回过ES8，这些年也出现了多多少少小问题。</p>
+
+<p>这是一个新汽车企业不能避免的问题，其它新能源汽车公司也多少都遇到了一些，但这不是重点。</p>
+
+<p>重点是新能源汽车对燃油机的改变是空前的，现在的燃油车就相当于手机以前的功能机，强烈不建议大家再买什么燃油车。</p>
+
+<p>（如果非要买燃油车，真的可以关注一下比亚迪的DMI，我相信这款车必定会销量暴涨。）</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai06.jpg" alt="" /></p>
+
+<p>这两年在街上碰到蔚来的概率越来越大，从众多车队里面开过来的时候，就会明显的感觉到，蔚来汽车的颜值要比周围车高很多。（这一点比亚迪真的应该学学）
+这里还不说驾驶体验的感觉，仅仅从外形设计上，他们的调性就一直不错，看看最近发布的 ET7就知道了 。</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/weilai/weilai07.jpg" alt="" /></p>
+
+<p>这个ET7真的太牛了，率先在新能源汽车领域内使用了半固态电池，这样会极大的提升电池密度。
+根据发布会的信息，ET7最高续航达1000KM，这样下来电动汽车的续航里程都要超过燃油车了。</p>
+
+<p>驾驶体验之前文章和大家聊过，这篇就不再探讨了。</p>
+
+<h2 id="5最后">5、最后</h2>
+
+<p>昨天晚上半夜刷比亚迪和蔚来的新闻到3点，突然让我对中国制造业充满了信心，现在他们出的这些产品都可以到全球去竞争！</p>
+
+<p>我们用市场换技术，换了几十年，市场是被换出去了，结果技术是一点都没用换回来，把华晨宝马都搞倒闭了。</p>
+
+<p>从10年前小米手机开始，中国的制造业慢慢以一种冲刺的速度在奔跑，大家电有美的、格力；手机有华为、小米、OV；再加上现在的新能源、太阳能等。</p>
+
+<p>这些公司的产品竞争力真的是越来越强！还有什么理由不看多中国，还有中国的这些明星公司！</p>
+
+<p>前段时间马斯克成为世界首富，我们的首富现在还在消费领域，不过不要紧，我相信中国未来的首富，必然有一天在制造业领域产生。</p>
+
+<h2 id="6后记">6、后记：</h2>
+
+<p>经过这段时间的折腾，我对很多互联网公司的印象越来越差了，反而意外的发现在我们的目光角落里面，制造业已经闪闪发光了！</p>
+
+<p>加油，中国，牛X，中国制造业！</p>
+
+<p><strong>这才是中国的未来！</strong></p>
+
+<blockquote>
+  <p>作者简介：纯洁的微笑，<a href="https://mp.weixin.qq.com/s/bPk_-DcGF_7lTDoR1pKqVg">一个有故事的程序员</a>（👈详细了解）。曾在互联网金融，第三方支付公司工作，现为一名自由职业者，和你一起用技术的角度去看这个世界。我的微信号puresmilea，欢迎大家找我聊天，记录你我的故事。</p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/life/2021/01/13/weilai.html';
+        this.page.identifier = '/life/2021/01/13/weilai.html';
+        this.page.title = '蔚来，牛X!';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/life/2021/01/13/weilai.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         mongodb集群监控和运维 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;这篇文件介绍如何动态的添加、下架mongod分片和副本集，以及如何监控和运维mongodb。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/mongodb/2017/09/06/mongodb-operation.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="mongodb集群监控和运维">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>mongodb集群监控和运维</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/09/06
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>这篇文件介绍如何动态的添加、下架mongod分片和副本集，以及如何监控和运维mongodb。</p>
+
+<h2 id="添加节点">添加节点</h2>
+
+<h3 id="副本集-改为仲裁节点">副本集 改为仲裁节点</h3>
+
+<p><a href="https://docs.mongodb.com/manual/tutorial/convert-secondary-into-arbiter/">convert-secondary-into-arbiter</a></p>
+
+<p>登录</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongo 192.168.0.35:27005
+<span class="c">#使用admin数据库</span>
+use admin
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#查看分区状态</span>
+rs.status<span class="o">()</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>移除副本集</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.remove<span class="o">(</span><span class="s2">"192.168.0.35:27005"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>查看配置</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.conf<span class="o">()</span>
+</code></pre></div></div>
+
+<p>删除shard5的数据目录，重启shard5</p>
+
+<p>重新添加仲裁节点</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.addArb<span class="o">(</span><span class="s2">"192.168.0.35:27005"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>查看配置</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.conf<span class="o">()</span>
+</code></pre></div></div>
+
+<h3 id="仲裁节点改成副本集">仲裁节点改成副本集</h3>
+
+<p><a href="https://docs.mongodb.com/manual/tutorial/expand-replica-set/">Add Members to a Replica Set</a></p>
+
+<p>移除仲裁节点</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.remove<span class="o">(</span><span class="s2">"192.168.0.35:27005"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>删除总裁节点的数据，并重启</p>
+
+<p>在 primary 添加副本节点</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.add<span class="o">(</span><span class="s2">"192.168.0.35:27005"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs.conf<span class="o">()</span>
+rs.status<span class="o">()</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>刚添加的副本集状态为：STARTUP2</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"stateStr"</span> : <span class="s2">"STARTUP2"</span>,
+</code></pre></div></div>
+
+<h2 id="集群中添加分片">集群中添加分片</h2>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongo 192.168.0.31:20000
+<span class="c">#使用admin数据库</span>
+use  admin
+<span class="c">#添加分片</span>
+sh.addShard<span class="o">(</span><span class="s2">"shard5/192.168.0.35:27005,192.168.0.31:27005,192.168.0.32:27005"</span><span class="o">)</span>
+<span class="c">#查看集群状态</span>
+sh.status<span class="o">()</span>
+</code></pre></div></div>
+
+<h2 id="监控">监控</h2>
+
+<h3 id="mongostat">mongostat</h3>
+
+<p>mongostat是mongdb自带的状态检测工具，在命令行下使用。它会间隔固定时间获取mongodb的当前运行状态，并输出。如果你发现数据库突然变慢或者有其他问题的话，你第一手的操作就考虑采用mongostat来查看mongo的状态。</p>
+
+<p>它的输出有以下几列：</p>
+
+<ul>
+  <li>inserts/s 每秒插入次数</li>
+  <li>query/s 每秒查询次数</li>
+  <li>update/s 每秒更新次数</li>
+  <li>delete/s 每秒删除次数</li>
+  <li>getmore/s 每秒执行getmore次数</li>
+  <li>command/s 每秒的命令数，比以上插入、查找、更新、删除的综合还多，还统计了别的命令</li>
+  <li>flushs/s 每秒执行fsync将数据写入硬盘的次数。</li>
+  <li>mapped/s 所有的被mmap的数据量，单位是MB，</li>
+  <li>vsize 虚拟内存使用量，单位MB</li>
+  <li>res 物理内存使用量，单位MB</li>
+  <li>faults/s 每秒访问失败数（只有Linux有），数据被交换出物理内存，放到swap。不要超过100，否则就是机器内存太小，造成频繁swap写入。此时要升级内存或者扩展</li>
+  <li>locked % 被锁的时间百分比，尽量控制在50%以下吧</li>
+  <li>idx miss % 索引不命中所占百分比。如果太高的话就要考虑索引是不是少了</li>
+  <li><code class="highlighter-rouge">q t|r|w</code> 当Mongodb接收到太多的命令而数据库被锁住无法执行完成，它会将命令加入队列。这一栏显示了总共、读、写3个队列的长度，都为0的话表示mongo毫无压力。高并发时，一般队列值会升高。</li>
+  <li>conn 当前连接数</li>
+  <li>time 时间戳</li>
+</ul>
+
+<p>示例：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongostat <span class="nt">-h</span> 192.168.0.31:27001
+<span class="c">##返回结果</span>
+insert query update delete getmore <span class="nb">command </span>dirty  used flushes vsize   res qrw arw net_in net_out conn    <span class="nb">set </span>repl                <span class="nb">time
+   </span>576    <span class="k">*</span>0     <span class="k">*</span>0     <span class="k">*</span>0     455  1370|0  2.7% 64.0%       0 15.8G 13.9G 0|1 0|0  1.82m   1.44m   77 shard1  PRI Aug 23 17:05:25.495
+   514    <span class="k">*</span>0     <span class="k">*</span>0     <span class="k">*</span>0     446  1336|0  2.7% 64.0%       0 15.8G 13.9G 0|1 0|0  1.71m   1.29m   77 shard1  PRI Aug 23 17:05:26.495
+   499    <span class="k">*</span>0     <span class="k">*</span>0     <span class="k">*</span>0     461  1310|0  2.7% 64.0%       0 15.8G 13.9G 0|0 1|0  1.68m   1.27m   77 shard1  PRI Aug 23 17:05:27.495
+   485    <span class="k">*</span>0     <span class="k">*</span>0     <span class="k">*</span>0     442  1285|0  2.7% 64.0%       0 15.8G 13.9G 0|0 0|1  1.64m   1.24m   77 shard1  PRI Aug 23 17:05:28.496
+   498    <span class="k">*</span>0     <span class="k">*</span>0     <span class="k">*</span>0     444  1317|0  2.7% 64.0%       0 15.8G 13.9G 0|0 0|0  1.68m   1.26m   77 shard1  PRI Aug 23 17:05:29.494
+   477    <span class="k">*</span>0     <span class="k">*</span>0     <span class="k">*</span>0     445  1272|0  2.7% 64.0%       0 15.8G 13.9G 0|0 0|0  1.61m   1.22m   77 shard1  PRI Aug 23 17:05:30.494
+</code></pre></div></div>
+
+<p>mongostat间隔时间刷新mongodb分片的各项操作。</p>
+
+<h2 id="mongotop">mongotop</h2>
+
+<p>mongotop用来跟踪MongoDB的实例， 提供每个集合的统计数据。默认情况下，mongotop每一秒刷新一次。
+mongotop用法：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mongotop <span class="nt">-h</span> 192.168.0.31:27001 10
+</code></pre></div></div>
+
+<p>后面的10是<sleeptime>参数 ，可以不使用，等待的时间长度，以秒为单位，mongotop等待调用之间。通过的默认mongotop返回数据的每一秒。</sleeptime></p>
+
+<p>mongotop –locks
+报告每个数据库的锁的使用中，使用mongotop - 锁，这将产生以下输出：</p>
+
+<p>结果字段介绍：
+ns：包含数据库命名空间，后者结合了数据库名称和集合。
+db：包含数据库的名称。名为 . 的数据库针对全局锁定，而非特定数据库。
+total：mongod花费的时间工作在这个命名空间提供总额。
+read：提供了大量的时间，这mongod花费在执行读操作，在此命名空间。
+write：提供这个命名空间进行写操作，这mongod花了大量的时间。</p>
+
+<h3 id="profiler">profiler</h3>
+
+<p>类似于MySQL的slow log, MongoDB可以监控所有慢的以及不慢的查询。</p>
+
+<p>Profiler默认是关闭的，你可以选择全部开启，或者有慢查询的时候开启。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> use <span class="nb">test
+</span>switched to db <span class="nb">test</span>
+<span class="o">&gt;</span> db.setProfilingLevel<span class="o">(</span>2<span class="o">)</span><span class="p">;</span>
+<span class="o">{</span><span class="s2">"was"</span> : 0 , <span class="s2">"slowms"</span> : 100, <span class="s2">"ok"</span> : 1<span class="o">}</span> // <span class="s2">"was"</span> is the old setting
+<span class="o">&gt;</span> db.getProfilingLevel<span class="o">()</span>
+</code></pre></div></div>
+
+<p>查看Profile日志</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> db.system.profile.find<span class="o">()</span>.sort<span class="o">({</span><span class="nv">$natural</span>:-1<span class="o">})</span>
+<span class="o">{</span><span class="s2">"ts"</span> : <span class="s2">"Thu Jan 29 2009 15:19:32 GMT-0500 (EST)"</span> , <span class="s2">"info"</span> :
+<span class="s2">"query test.</span><span class="nv">$cmd</span><span class="s2"> ntoreturn:1 reslen:66 nscanned:0 query: { profile: 2 } nreturned:1 bytes:50"</span> ,
+<span class="s2">"millis"</span> : 0<span class="o">}</span> ...
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#查看系统中的慢查询数量</span>
+db.system.profile.count<span class="o">()</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>3个字段的意义</p>
+
+<ul>
+  <li>ts：时间戳</li>
+  <li>info：具体的操作</li>
+  <li>millis：操作所花时间，毫秒</li>
+</ul>
+
+<p>参考：<a href="https://docs.mongodb.com/manual/tutorial/manage-the-database-profiler/">Database Profiler</a></p>
+
+<p>注意，造成满查询可能是索引的问题，也可能是数据不在内存造成因此磁盘读入造成。</p>
+
+<h3 id="dbserverstatus">db.serverStatus()</h3>
+
+<p>db.serverStatus()</p>
+
+<p>获取服务器的状态</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+        <span class="s2">"host"</span> : <span class="s2">"mongodb31.hkrt.cn:20000"</span>,
+        <span class="s2">"version"</span> : <span class="s2">"3.4.6"</span>,
+        <span class="s2">"process"</span> : <span class="s2">"mongos"</span>,
+        <span class="s2">"pid"</span> : NumberLong<span class="o">(</span>1940<span class="o">)</span>,
+        <span class="s2">"uptime"</span> : 67854,
+        <span class="s2">"uptimeMillis"</span> : NumberLong<span class="o">(</span>67853593<span class="o">)</span>,
+        <span class="s2">"uptimeEstimate"</span> : NumberLong<span class="o">(</span>67853<span class="o">)</span>,
+        <span class="s2">"localTime"</span> : ISODate<span class="o">(</span><span class="s2">"2017-08-23T09:39:55.400Z"</span><span class="o">)</span>,
+        <span class="s2">"asserts"</span> : <span class="o">{</span>
+                <span class="s2">"regular"</span> : 0,
+                <span class="s2">"warning"</span> : 0,
+                <span class="s2">"msg"</span> : 0,
+                <span class="s2">"user"</span> : 7048,
+                <span class="s2">"rollovers"</span> : 0
+        <span class="o">}</span>,
+        <span class="s2">"connections"</span> : <span class="o">{</span>
+                <span class="s2">"current"</span> : 56,
+                <span class="s2">"available"</span> : 52372,
+                <span class="s2">"totalCreated"</span> : 523
+        <span class="o">}</span>,
+        <span class="s2">"extra_info"</span> : <span class="o">{</span>
+                <span class="s2">"note"</span> : <span class="s2">"fields vary by platform"</span>,
+                <span class="s2">"page_faults"</span> : 3
+        <span class="o">}</span>,
+        <span class="s2">"network"</span> : <span class="o">{</span>
+                <span class="s2">"bytesIn"</span> : NumberLong<span class="o">(</span><span class="s2">"102972729600"</span><span class="o">)</span>,
+                <span class="s2">"bytesOut"</span> : NumberLong<span class="o">(</span><span class="s2">"7551683898"</span><span class="o">)</span>,
+                <span class="s2">"physicalBytesIn"</span> : NumberLong<span class="o">(</span><span class="s2">"102972729600"</span><span class="o">)</span>,
+                <span class="s2">"physicalBytesOut"</span> : NumberLong<span class="o">(</span><span class="s2">"7551683898"</span><span class="o">)</span>,
+                <span class="s2">"numRequests"</span> : NumberLong<span class="o">(</span>210803831<span class="o">)</span>
+        <span class="o">}</span>,
+        <span class="s2">"opcounters"</span> : <span class="o">{</span>
+                <span class="s2">"insert"</span> : 79028505,
+                <span class="s2">"query"</span> : 26334341,
+                <span class="s2">"update"</span> : 0,
+                <span class="s2">"delete"</span> : 4,
+                <span class="s2">"getmore"</span> : 0,
+                <span class="s2">"command"</span> : 79067537
+        <span class="o">}</span>,
+        <span class="s2">"sharding"</span> : <span class="o">{</span>
+                <span class="s2">"configsvrConnectionString"</span> : <span class="s2">"config/192.168.0.33:21000,192.168.0.34:21000,192.168.0.35:21000"</span>,
+                <span class="s2">"lastSeenConfigServerOpTime"</span> : <span class="o">{</span>
+                        <span class="s2">"ts"</span> : Timestamp<span class="o">(</span>1503481193, 1<span class="o">)</span>,
+                        <span class="s2">"t"</span> : NumberLong<span class="o">(</span>1<span class="o">)</span>
+                <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="s2">"tcmalloc"</span> : <span class="o">{</span>
+                <span class="s2">"generic"</span> : <span class="o">{</span>
+                        <span class="s2">"current_allocated_bytes"</span> : 3643648,
+                        <span class="s2">"heap_size"</span> : 40898560
+                <span class="o">}</span>,
+                <span class="s2">"tcmalloc"</span> : <span class="o">{</span>
+                        <span class="s2">"pageheap_free_bytes"</span> : 36864,
+                        <span class="s2">"pageheap_unmapped_bytes"</span> : 24522752,
+                        <span class="s2">"max_total_thread_cache_bytes"</span> : NumberLong<span class="o">(</span>1073741824<span class="o">)</span>,
+                        <span class="s2">"current_total_thread_cache_bytes"</span> : 4660344,
+                        <span class="s2">"total_free_bytes"</span> : 12695296,
+                        <span class="s2">"central_cache_free_bytes"</span> : 2833608,
+                        <span class="s2">"transfer_cache_free_bytes"</span> : 5201344,
+                        <span class="s2">"thread_cache_free_bytes"</span> : 4660344,
+                        <span class="s2">"aggressive_memory_decommit"</span> : 0,
+                        <span class="s2">"formattedString"</span> : <span class="s2">"------------------------------------------------</span><span class="se">\n</span><span class="s2">MALLOC:        3643648 (    3.5 MiB) Bytes in use by application</span><span class="se">\n</span><span class="s2">MALLOC: +        36864 (    0.0 MiB) Bytes in page heap freelist</span><span class="se">\n</span><span class="s2">MALLOC: +      2833608 (    2.7 MiB) Bytes in central cache freelist</span><span class="se">\n</span><span class="s2">MALLOC: +      5201344 (    5.0 MiB) Bytes in transfer cache freelist</span><span class="se">\n</span><span class="s2">MALLOC: +      4660344 (    4.4 MiB) Bytes in thread cache freelists</span><span class="se">\n</span><span class="s2">MALLOC: +      1401024 (    1.3 MiB) Bytes in malloc metadata</span><span class="se">\n</span><span class="s2">MALLOC:   ------------</span><span class="se">\n</span><span class="s2">MALLOC: =     17776832 (   17.0 MiB) Actual memory used (physical + swap)</span><span class="se">\n</span><span class="s2">MALLOC: +     24522752 (   23.4 MiB) Bytes released to OS (aka unmapped)</span><span class="se">\n</span><span class="s2">MALLOC:   ------------</span><span class="se">\n</span><span class="s2">MALLOC: =     42299584 (   40.3 MiB) Virtual address space used</span><span class="se">\n</span><span class="s2">MALLOC:</span><span class="se">\n</span><span class="s2">MALLOC:           1936              Spans in use</span><span class="se">\n</span><span class="s2">MALLOC:            109              Thread heaps in use</span><span class="se">\n</span><span class="s2">MALLOC:           4096              Tcmalloc page size</span><span class="se">\n</span><span class="s2">------------------------------------------------</span><span class="se">\n</span><span class="s2">Call ReleaseFreeMemory() to release freelist memory to the OS (via madvise()).</span><span class="se">\n</span><span class="s2">Bytes released to the OS take up virtual address space but no physical memory.</span><span class="se">\n</span><span class="s2">"</span>
+                <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="s2">"mem"</span> : <span class="o">{</span>
+                <span class="s2">"bits"</span> : 64,
+                <span class="s2">"resident"</span> : 24,
+                <span class="s2">"virtual"</span> : 689,
+                <span class="s2">"supported"</span> : <span class="nb">true</span>
+        <span class="o">}</span>,
+        <span class="s2">"metrics"</span> : <span class="o">{</span>
+                <span class="s2">"cursor"</span> : <span class="o">{</span>
+                        <span class="s2">"timedOut"</span> : NumberLong<span class="o">(</span>21<span class="o">)</span>,
+                        <span class="s2">"open"</span> : <span class="o">{</span>
+                                <span class="s2">"multiTarget"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"singleTarget"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"pinned"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>
+                        <span class="o">}</span>
+                <span class="o">}</span>,
+                <span class="s2">"commands"</span> : <span class="o">{</span>
+                        <span class="s2">"aggregate"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>1<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>16<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"balancerStatus"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>2<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"buildInfo"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>519<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"collStats"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>1<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>97<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"count"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>12<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"createIndexes"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>4<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"currentOp"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>2<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"dbStats"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>4<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"delete"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>4<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"drop"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>7<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"dropDatabase"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>2<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"find"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>2<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>26334294<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"getLastError"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>252<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"getLog"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>6<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"insert"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>79028505<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"isMaster"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>24048<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"listCollections"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>44<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"listDatabases"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>1<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>135<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"ping"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>13575<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"profile"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>3<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>3<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"replSetGetStatus"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>34<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>34<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"serverStatus"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>131<span class="o">)</span>
+                        <span class="o">}</span>,
+                        <span class="s2">"whatsmyuri"</span> : <span class="o">{</span>
+                                <span class="s2">"failed"</span> : NumberLong<span class="o">(</span>0<span class="o">)</span>,
+                                <span class="s2">"total"</span> : NumberLong<span class="o">(</span>135<span class="o">)</span>
+                        <span class="o">}</span>
+                <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="s2">"ok"</span> : 1
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>需要关心的地方：</p>
+
+<ul>
+  <li>connections 当前连接和可用连接数，听过一个同行介绍过，mongodb最大处理到2000个连接就不行了（要根据你的机器性能和业务来设定），所以设大了没意义。设个合理值的话，到达这个值mongodb就拒绝新的连接请求，避免被太多的连接拖垮。</li>
+  <li>indexCounters:btree:misses 索引的不命中数，和hits的比例高就要考虑索引是否正确建立。你看我的”missRatio”3.543930204420982e-7，很健康吧。所以miss率在mongostat里面也可以看</li>
+  <li>其他的都能自解释，也不是查看mongo健康状况的关键，就不说明了。</li>
+</ul>
+
+<p>详细的解释参考这里：<a href="https://docs.mongodb.com/manual/reference/command/serverStatus/#dbcmd.serverStatus">serverStatus</a></p>
+
+<h3 id="dbcurrentop">db.currentOp()</h3>
+
+<p>Mongodb 的命令一般很快就完成，但是在一台繁忙的机器或者有比较慢的命令时，你可以通过db.currentOp()获取当前正在执行的操作。</p>
+
+<p>在没有负载的机器上，该命令基本上都是返回空的</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span>  db.currentOp<span class="o">()</span>
+<span class="o">{</span> <span class="s2">"inprog"</span> : <span class="o">[</span> <span class="o">]</span> <span class="o">}</span>
+</code></pre></div></div>
+
+<p>以下是一个有负载的机器上得到的返回值样例：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span> <span class="s2">"opid"</span> : <span class="s2">"shard3:466404288"</span>, <span class="s2">"active"</span> : <span class="nb">false</span>, <span class="s2">"waitingForLock"</span> : <span class="nb">false</span>, <span class="s2">"op"</span> : <span class="s2">"query"</span>, <span class="s2">"ns"</span> : <span class="s2">"sd.usersEmails"</span>, <span class="s2">"query"</span> : <span class="o">{</span> <span class="o">}</span>, <span class="s2">"client_s"</span> : <span class="s2">"10.121.13.8:34473"</span>, <span class="s2">"desc"</span> : <span class="s2">"conn"</span> <span class="o">}</span>,
+</code></pre></div></div>
+
+<p>字段名字都能自解释。如果你发现一个操作太长，把数据库卡死的话，可以用这个命令杀死他</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> db.killOp<span class="o">(</span><span class="s2">"shard3:466404288"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p><a href="https://docs.mongodb.com/manual/reference/method/db.currentOp/index.html">db.currentOp()</a></p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/mongodb/2017/09/06/mongodb-operation.html';
+        this.page.identifier = '/mongodb/2017/09/06/mongodb-operation.html';
+        this.page.title = 'mongodb集群监控和运维';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/mongodb/2017/09/06/mongodb-operation.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

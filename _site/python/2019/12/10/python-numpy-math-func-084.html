@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第84天：NumPy 数学函数 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 闲欢&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/10/python-numpy-math-func-084.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第84天：NumPy 数学函数">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第84天：NumPy 数学函数</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/10
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 闲欢</p>
+
+<p>本文向大家介绍一下 NumPy 常见的数学函数。
+<!--more--></p>
+
+<h2 id="numpy-三角函数">NumPy 三角函数</h2>
+
+<p>三角函数是基本初等函数之一，是以角度（数学上最常用弧度制，下同）为自变量，角度对应任意角终边与单位圆交点坐标或其比值为因变量的函数。三角函数一般用于计算三角形中未知长度的边和未知的角度，在导航、工程学以及物理学方面都有广泛的用途。</p>
+
+<p>常见的三角函数包括正弦函数、余弦函数和正切函数。下面我们来学习这三个常见的三角函数：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sin()</td>
+      <td>数组中角度的正弦值</td>
+    </tr>
+    <tr>
+      <td>cos()</td>
+      <td>数组中角度的余弦值</td>
+    </tr>
+    <tr>
+      <td>tan()</td>
+      <td>数组中角度的正切值</td>
+    </tr>
+    <tr>
+      <td>arcsin()</td>
+      <td>数组中角度的反正弦值</td>
+    </tr>
+    <tr>
+      <td>arccos()</td>
+      <td>数组中角度的反余弦值</td>
+    </tr>
+    <tr>
+      <td>arctan()</td>
+      <td>数组中角度的反正切值</td>
+    </tr>
+    <tr>
+      <td>degrees()</td>
+      <td>将弧度转换成角度</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>我们直接来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([0, 30, 45, 60, 90])
+
+print(np.char.center('不同角度的正弦值', 30, '*'))
+# 通过乘 pi/180 转化为弧度
+sin = np.sin(a*np.pi/180)
+print(sin)
+print('\n')
+
+print(np.char.center('不同角度的余弦值', 30, '*'))
+# 通过乘 pi/180 转化为弧度
+cos = np.cos(a*np.pi/180)
+print(cos)
+print('\n')
+
+print(np.char.center('不同角度的正切值', 30, '*'))
+# 通过乘 pi/180 转化为弧度
+tan = np.tan(a*np.pi/180)
+print(tan)
+print('\n')
+
+print(np.char.center('不同角度的反正弦值', 30, '*'))
+arcsin = np.arcsin(sin)
+# 将弧度转换成角度打印输出
+print(np.degrees(arcsin))
+print('\n')
+
+print(np.char.center('不同角度的反余弦值', 30, '*'))
+arccos = np.arccos(cos)
+# 将弧度转换成角度打印输出
+print(np.degrees(arccos))
+print('\n')
+
+print(np.char.center('不同角度的反正切值', 30, '*'))
+arctan = np.arctan(tan)
+# 将弧度转换成角度打印输出
+print(np.degrees(arctan))
+print('\n')
+
+# 返回
+***********不同角度的正弦值***********
+[0.         0.5        0.70710678 0.8660254  1.        ]
+***********不同角度的余弦值***********
+[1.00000000e+00 8.66025404e-01 7.07106781e-01 5.00000000e-01
+ 6.12323400e-17]
+***********不同角度的正切值***********
+[0.00000000e+00 5.77350269e-01 1.00000000e+00 1.73205081e+00
+ 1.63312394e+16]
+**********不同角度的反正弦值***********
+[ 0. 30. 45. 60. 90.]
+**********不同角度的反余弦值***********
+[ 0. 30. 45. 60. 90.]
+**********不同角度的反正切值***********
+[ 0. 30. 45. 60. 90.]
+</code></pre></div></div>
+
+<p>上面例子中，我们先计算不同角度的正弦值、余弦值、正切值，然后我们通过反三角函数，将前面计算的值计算成弧度，然后通过 <code class="highlighter-rouge">degrees</code> 函数转换成角度。我们可以看到最后的出来的角度和开始输入的数组的角度是一样的。</p>
+
+<h2 id="numpy-四舍五入函数">NumPy 四舍五入函数</h2>
+
+<p>我们在数据的处理中可能会遇到需要将一组数字进行四舍五入操作，这时候我们就可以使用 NumPy 提供的四舍五入函数来处理了。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>around()</td>
+      <td>四舍五入</td>
+    </tr>
+    <tr>
+      <td>round()</td>
+      <td>舍弃小数位</td>
+    </tr>
+    <tr>
+      <td>floor()</td>
+      <td>向下取整</td>
+    </tr>
+    <tr>
+      <td>ceil()</td>
+      <td>向上取整</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="numpyaround">numpy.around()</h3>
+
+<blockquote>
+  <p>对数组中的数字进行四舍五入</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([1, 2.0, 30.12, 129.567])
+
+# 四舍五入（取整）
+print(np.around(a))
+# 四舍五入（取一位小数）
+print(np.around(a, decimals=1))
+# 四舍五入（取小数点左侧第一位）
+print(np.around(a, decimals=-1))
+
+# 返回
+[  1.   2.  30. 130.]
+[  1.    2.   30.1 129.6]
+[  0.   0.  30. 130.]
+</code></pre></div></div>
+
+<p>我们可以通过 <code class="highlighter-rouge">decimals</code> 参数来表示舍入的小数位数，默认值为0。 如果为负，整数将四舍五入到小数点左侧的位置。</p>
+
+<h3 id="numpyround">numpy.round()</h3>
+
+<blockquote>
+  <p>对数组中的数字进行若干位的舍弃。</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([1, 2.0, 30.12, 129.567])
+
+# 只舍不入（取整）
+print(np.around(a))
+# 只舍不入（到小数点后一位）
+print(np.around(a, decimals=1))
+# 只舍不入（取小数点左侧第一位）
+print(np.around(a, decimals=-1))
+
+# 返回
+[  1.   2.  30. 130.]
+[  1.    2.   30.1 129.6]
+[  0.   0.  30. 130.]
+</code></pre></div></div>
+
+<p>这个函数与 <code class="highlighter-rouge">around</code> 函数的区别就是只是舍弃，不做四舍五入。</p>
+
+<h3 id="numpyfloor">numpy.floor()</h3>
+
+<blockquote>
+  <p>返回小于或者等于指定表达式的最大整数，即向下取整。</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([1, 2.0, 30.12, 129.567])
+
+# 向下取整
+print(np.floor(a))
+
+# 返回
+[  1.   2.  30. 129.]
+</code></pre></div></div>
+
+<p>这个函数很好理解，就是舍弃小数位。</p>
+
+<h3 id="numpyceil">numpy.ceil()</h3>
+
+<blockquote>
+  <p>返回大于或者等于指定表达式的最小整数，即向上取整。</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([1, 2.0, 30.12, 129.567])
+
+# 向上取整
+print(np.ceil(a))
+
+# 返回
+[  1.   2.  31. 130.]
+</code></pre></div></div>
+
+<p>这个函数和上面的 <code class="highlighter-rouge">floor</code> 是相反含义的函数，向上取整意思是如果没有小数位或者小数位是0，取当前整数；如果有小数位并且小数位不是0，则取当前数字的整数加1。</p>
+
+<h2 id="numpy-算术函数">NumPy 算术函数</h2>
+
+<p>接下来我们来介绍一下 NumPy 的几个常用的算术函数：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>add()</td>
+      <td>两个数组元素相加</td>
+    </tr>
+    <tr>
+      <td>multiply()</td>
+      <td>两个数组元素相乘</td>
+    </tr>
+    <tr>
+      <td>divide()</td>
+      <td>两个数组元素相除</td>
+    </tr>
+    <tr>
+      <td>subtract()</td>
+      <td>两个数组元素相减</td>
+    </tr>
+    <tr>
+      <td>pow()</td>
+      <td>将第一个输入数组中的元素作为底数，计算它与第二个输入数组中相应元素的幂</td>
+    </tr>
+    <tr>
+      <td>mod()</td>
+      <td>计算输入数组中相应元素的相除后的余数</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>我们先来看看两个数组元素的加减乘除的实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.arange(6, dtype=np.float_).reshape(2, 3)
+print('第一个数组：')
+print(a)
+print('第二个数组：')
+b = np.array([10, 10, 10])
+print(b)
+print('\n')
+
+print(np.char.center('两个数组相加', 20, '*'))
+print(np.add(a, b))
+print('\n')
+
+print(np.char.center('两个数组相减', 20, '*'))
+print(np.subtract(a, b))
+print('\n')
+
+print(np.char.center('两个数组相乘', 20, '*'))
+print('两个数组相乘：')
+print(np.multiply(a, b))
+print('\n')
+
+print(np.char.center('两个数组相除', 20, '*'))
+print(np.divide(a, b))
+print('\n')
+
+# 返回
+第一个数组：
+[[0. 1. 2.]
+ [3. 4. 5.]]
+第二个数组：
+[10 10 10]
+*******两个数组相加*******
+[[10. 11. 12.]
+ [13. 14. 15.]]
+*******两个数组相减*******
+[[-10.  -9.  -8.]
+ [ -7.  -6.  -5.]]
+*******两个数组相乘*******
+两个数组相乘：
+[[ 0. 10. 20.]
+ [30. 40. 50.]]
+*******两个数组相除*******
+[[0.  0.1 0.2]
+ [0.3 0.4 0.5]]
+
+</code></pre></div></div>
+
+<p>在上面例子中，我们先定义了两个数组，第一个数一个二维数组，第二个是一个一维数组，然后对两个数组的元素进行加减乘除操作，返回的是一个二维数组。</p>
+
+<p>这里需要注意的是数组必须具有相同的形状或符合数组广播规则。</p>
+
+<h3 id="numpypow">numpy.pow</h3>
+
+<blockquote>
+  <p>将第一个输入数组中的元素作为底数，计算它与第二个输入数组中相应元素的幂。</p>
+</blockquote>
+
+<p>我们先来看看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+c = np.array([10, 100, 1000])
+print('第一个数组是：')
+print(c)
+print('\n')
+
+print(np.char.center('调用 power 函数', 20, '*'))
+print(np.power(c, 2))
+print('\n')
+
+d = np.array([1, 2, 3])
+print('第二个数组是：')
+print(d)
+print('\n')
+
+print(np.char.center('再次调用 power 函数', 20, '*'))
+print(np.power(c, d))
+
+# 返回
+第一个数组是：
+[  10  100 1000]
+****调用 power 函数*****
+[    100   10000 1000000]
+第二个数组是：
+[1 2 3]
+***再次调用 power 函数****
+[        10      10000 1000000000]
+</code></pre></div></div>
+
+<p>从例子中我们可以看到，如果第二个参数是数字，就将第一个参数数组中的每个元素作为底数，计算它与第二个参数的幂；如果第二个参数是数组，那就将第一个参数数组中的每个元素作为底数，计算它与第二个数组中元素的幂。</p>
+
+<h3 id="numpymod">numpy.mod()</h3>
+
+<blockquote>
+  <p>计算输入数组中相应元素的相除后的余数。</p>
+</blockquote>
+
+<p>我们先来看看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+e = np.array([10, 20, 30])
+f = np.array([3, 5, 7])
+print('第一个数组：')
+print(e)
+print('\n')
+
+print('第二个数组：')
+print(f)
+print('\n')
+
+print(np.char.center('调用 mod 函数', 20, '*'))
+print(np.mod(e, f))
+
+# 返回
+第一个数组：
+[10 20 30]
+第二个数组：
+[3 5 7]
+*****调用 mod 函数******
+[1 0 2]
+</code></pre></div></div>
+
+<p>这里也需要注意数组必须具有相同的形状或符合数组广播规则。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文向大家介绍了 NumPy 的数学函数，包括三角函数、四舍五入函数和算术函数。这些函数在一些数据分析中比较常见，运用得好会使你事半功倍。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>https://numpy.org/devdocs/reference/routines.math.html</p>
+
+<blockquote>
+  <p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+</blockquote>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/10/python-numpy-math-func-084.html';
+        this.page.identifier = '/python/2019/12/10/python-numpy-math-func-084.html';
+        this.page.title = '第84天：NumPy 数学函数';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/10/python-numpy-math-func-084.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

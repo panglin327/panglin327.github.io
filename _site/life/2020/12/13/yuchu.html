@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         aiXcoder3.0呼之欲出，代码补全 AI，带你进入「个性化智能编程时代」 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="全新体验···">
+
+    <link rel="canonical" href="http://localhost:4000/life/2020/12/13/yuchu.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="aiXcoder3.0呼之欲出，代码补全 AI，带你进入「个性化智能编程时代」">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>aiXcoder3.0呼之欲出，代码补全 AI，带你进入「个性化智能编程时代」</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2020/12/13
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>智能化」是新一代IDE的重要特征，「代码自动补全」是智能化IDE的必备特征。aiXcoder是大家熟知的代码补全插件，特别是aiXcoder2.0推出之后，更是引发了众多小伙伴们的关注，几乎成为Java开发者的必备利器！</p>
+
+<p>当前，aiXcoder已发布的版本是2.5，听说「支持个性化训练」的3.0版也即将发布。在3.0发布之前，小编带大家全面了解一下这款代码补全利器的「全系列版本」。</p>
+
+<p>众所周知，aiXcoder是一个基于「纯深度学习AI引擎」的代码补全插件，每个插件都由一个「极速AI微内核」来驱动，这一直是aiXcoder的一个鲜明特色。但可能大家还不知道，根据AI引擎能力的不同，aiXcoder共有4个不同的版本：</p>
+
+<ul>
+  <li>
+    <p>个人版（面向个人用户，由预定的AI引擎驱动）</p>
+  </li>
+  <li>
+    <p>个人可定制版（3.0版，支持开发者自由个性化定制）</p>
+  </li>
+  <li>
+    <p>企业定制版（支持企业级个性化AI引擎定制）</p>
+  </li>
+  <li>
+    <p>企业定制加强版（企业级定制AI引擎 + 开发者端个性化定制）</p>
+  </li>
+</ul>
+
+<p>今天，小编先带大家看一下「aiXcoder2.5个人版」，然后带大家探秘一下即将推出的「aiXcoder3.0 可定制版」，闲话少说，直接上手。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu01.jpg" alt="" /></p>
+
+<p>上面的这段代码，小编一共敲了12个字符，就完成了编写，剩下的字符由aiXcoder自动补全，让人感觉特别爽利！大家可以亲自上手试试效果。</p>
+
+<h2 id="1快速上手指南">1、快速上手指南</h2>
+
+<p>aiXcoder个人版，利用已训练好的AI引擎提供补全服务，该引擎利用互联网上的海量开源代码训练而来。所以说，我们在写代码时，aiXcoder可是见过大场面的，它的推荐也都是挺合理的。</p>
+
+<p>读者朋友大多都使用 Java 编程，小编就介绍一下我们该怎样为 Java 配上 aiXcoder 编程助手。</p>
+
+<p><strong>1. IntelliJ IDE下的安装</strong></p>
+
+<p>在 IntelliJ 市场，只需三步即可安装最新版 aiXcoder 个人版。</p>
+
+<p>即点击IntelliJ IDEA菜单中的Preferences，打开Plugins，选择「Marketplace」，然后搜索「aiXcoder」，接着就可完成安装。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu02.jpg" alt="" /></p>
+
+<p>如果完成安装，重启 IntelliJ IDEA 后，在代码窗口中，左侧存在带有 aiXcoder  logo的预测，右侧存在aiXcoder图标，即表明安装成功。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu03.jpg" alt="" /></p>
+
+<blockquote>
+  <p>图注：正确安装后的图示</p>
+</blockquote>
+
+<p><strong>2. Eclipse 下的安装</strong></p>
+
+<p>在浏览器中打开「Eclipse Marketplace」页面，地址为：https://marketplace.eclipse.org/</p>
+
+<p>在搜索栏中查找「aiXcoder」：</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu04.jpg" alt="" /></p>
+
+<p>搜索到后，直接将「Install」拖拽到 Eclipse 的工作窗口，即可完成安装。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu05.jpg" alt="" /></p>
+
+<p>如果完成安装，重启 Eclipse 后，在代码窗口中，会存在 aiXcoder 预测，在Eclipse的「Preferences」中会显示 aiXcoder 插件的一些设置。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu06.jpg" alt="" /></p>
+
+<blockquote>
+  <p>图注：正确安装后的图示</p>
+</blockquote>
+
+<p><strong>3. aiXcoder 普通版使用指南</strong></p>
+
+<p>在正常的编程过程，aiXcoder 每一次都会给出两条预测，第一条为短预测，第二条为长预测。IntelliJ 可以调整滚动条，来平衡「补全能力」和「计算性能」之间的关系。越靠近「Faster」，表示会尽快返回预测结果；越靠近「Longer」，表示插件将反馈更好的预测结果。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu07.jpg" alt="" /></p>
+
+<h2 id="2本地训练aixcoder-30-抢先体验">2、本地训练！aiXcoder 3.0 抢先体验</h2>
+
+<p>即将推出的aiXcoder3.0的特点是增加了「开发者自由定制功能」，开发者可以用指定的代码来让aiXcoder学习，从得到一个「专属于自己的aiXcoder」，是不是很酷啊~~</p>
+
+<p>小编先拿到了一个 aiXcoder 3.0 的Beta测试版，先帮大家尝尝鲜儿：</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu08.jpg" alt="" /></p>
+
+<p>最醒目的，aiXcoder3.0的控制栏多了一个「Learn Project Code」的按钮，点击这个按钮，就可以开始自己的定制训练了。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu09.jpg" alt="" /></p>
+
+<p>上图左边就是经过简单学习的模型，它的预测显然要更加优秀，尤其是长预测，很可能正好就是我们所需要的整行代码。</p>
+
+<p>可以说，代码补全 AI 模型，在学习了海量通用开源代码后，能知道广大开发者都在用的代码编写逻辑。而在这样通用 AI 模型的基础上，继续学习我们自己项目上的代码，它才能给出更多个性化的代码推荐。</p>
+
+<p>如果小伙伴们也希望在自己的项目上，训练一个自己的代码补全 AI，也可以加微信联系aiXcoder 申请试用：aixcoder001。</p>
+
+<h2 id="3企业版代码补全ai-更强大更智能">3、企业版代码补全AI 更强大、更智能</h2>
+
+<p>对于小编这种个人用户，上面两种模式就已经足够了。但是对于企业，自有代码库具有比较鲜明的特点，与开源代码库有比较大的差别。那么这就需要我们有更强的代码补全 AI，以及个性化的补全推荐。</p>
+
+<p><strong>1. 企业定制版</strong></p>
+
+<p>在企业内部 GPU 服务器上，增量训练一个「个性化企业级模型」，并部署在 GPU 服务器，从而为企业内部开发者提供预测服务。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu10.jpg" alt="" /></p>
+
+<blockquote>
+  <p>图注：相比普通版的「小模型」，企业版级「大模型」会有更高的准确率，它需要企业内部有众多高质量代码进行训练</p>
+</blockquote>
+
+<p><strong>2.企业定制加强版</strong></p>
+
+<p>通过结合个人可定制能力与企业服务器个性化策略，开发者在编写代码时能同时获得两者的预测结果，同时利用两种策略的优势。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/yuchu/yuchu11.jpg" alt="" /></p>
+
+<blockquote>
+  <p>图注：开发者在本地 CPU 个性化小模型，企业在 GPU 服务器个性化大模型，两者相得益彰</p>
+</blockquote>
+
+<p>总之，从通用代码补全，到自己训练一个代码补全 AI，甚至企业根据已有代码库定制一个更强的 AI。小编认为，代码补全，甚至代码生成，将来一定 Hi帮助我们构建更美的代码。</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/life/2020/12/13/yuchu.html';
+        this.page.identifier = '/life/2020/12/13/yuchu.html';
+        this.page.title = 'aiXcoder3.0呼之欲出，代码补全 AI，带你进入「个性化智能编程时代」';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/life/2020/12/13/yuchu.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

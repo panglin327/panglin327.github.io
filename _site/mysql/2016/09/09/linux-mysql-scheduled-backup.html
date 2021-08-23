@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         linux定时备份mysql并同步到其它服务器 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;数据在任何一家公司里面都是最核心的资产，定期备份则是为了保证数据库出现问题的时候能够及时回滚到最近的备份点，将损失缩小到最小&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/mysql/2016/09/09/linux-mysql-scheduled-backup.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="linux定时备份mysql并同步到其它服务器">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>linux定时备份mysql并同步到其它服务器</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2016/09/09
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>数据在任何一家公司里面都是最核心的资产，定期备份则是为了保证数据库出现问题的时候能够及时回滚到最近的备份点，将损失缩小到最小</p>
+
+<p>这篇文章将会两部分来说明：1、mysql的定期备份；2、同步到其它服务器</p>
+
+<h2 id="mysql-备份">mysql 备份</h2>
+
+<h3 id="备份还原某个数据库">备份还原某个数据库</h3>
+
+<p>备份还原</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 导出数据库</span>
+/usr/bin/mysqldump <span class="nt">-u</span> root <span class="nt">-ppwd</span> database <span class="o">&gt;</span> database20160929.sql
+<span class="c"># 导入数据库</span>
+mysql <span class="nt">-u</span> root <span class="nt">-p</span> database &lt; database20160929.sql
+</code></pre></div></div>
+
+<p>备份到压缩文件从压缩文件导入</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#备份到压缩文件</span>
+/usr/bin/mysqldump <span class="nt">-u</span> root <span class="nt">-ppwd</span> database  | <span class="nb">gzip</span> <span class="o">&gt;</span> database20160929.sql.gz
+<span class="c">#从压缩文件导入</span>
+<span class="nb">gzip</span> &lt; database20160929.sql.gz | mysql <span class="nt">-u</span> root <span class="nt">-p</span> database
+</code></pre></div></div>
+
+<h3 id="crontab定时备份">crontab定时备份</h3>
+
+<p>1、创建备份目录</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># root 用户,创建备份目录</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> /bak/mysqlbak
+<span class="nb">cd</span> /bak/mysqldata
+</code></pre></div></div>
+
+<p>2、编写运行脚本</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi  /usr/sbin/bakmysql.sh
+</code></pre></div></div>
+
+<p>脚本代码：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># Name:bakmysql.sh</span>
+<span class="c"># This is a ShellScript For Auto DB Backup and Delete old Backup</span>
+<span class="c">#</span>
+<span class="nv">backupdir</span><span class="o">=</span>/bak/mysqlbak
+<span class="nb">time</span><span class="o">=</span><span class="sb">`</span> <span class="nb">date</span> +%Y%m%d%H <span class="sb">`</span>
+mysql_bin_dir/mysqldump <span class="nt">-u</span> root <span class="nt">-ppwd</span> database | <span class="nb">gzip</span> <span class="o">&gt;</span> <span class="nv">$backupdir</span>/database<span class="nv">$time</span>.sql.gz
+<span class="c">#</span>
+find <span class="nv">$backupdir</span> <span class="nt">-name</span> <span class="s2">"name_*.sql.gz"</span> <span class="nt">-type</span> f <span class="nt">-mtime</span> +7 <span class="nt">-exec</span> <span class="nb">rm</span> <span class="o">{}</span> <span class="p">;</span> <span class="o">&gt;</span> /dev/null 2&gt;&amp;1
+
+<span class="c">#</span>
+</code></pre></div></div>
+
+<p>脚本说明：</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">backupdir</code> mysql备份地址<br />
+<code class="highlighter-rouge">root</code> mysql用户名<br />
+<code class="highlighter-rouge">pwd</code> mysql密码<br />
+<code class="highlighter-rouge">database</code> 数据库名<br />
+<code class="highlighter-rouge">mysql_bin_dir</code> mysql的bin路径；<br />
+<code class="highlighter-rouge">time=` date +%Y%m%d%H `</code>也可以写为<code class="highlighter-rouge">time="$(date +"%Y%m%d$H")"</code>其中<code class="highlighter-rouge">`</code>  符号是TAB键上面的符号，不是ENTER左边的’符号，还有date后要有一个空格。<br />
+<code class="highlighter-rouge">type f</code>   表示查找普通类型的文件，f表示普通文件。<br />
+<code class="highlighter-rouge">mtime +7</code>   按照文件的更改时间来查找文件，+7表示文件更改时间距现在7天以前；如果是 -mmin +5 表示文件更改时间距现在5分钟以前。<br />
+<code class="highlighter-rouge">exec rm {} \</code>  表示执行一段shell命令，exec选项后面跟随着所要执行的命令或脚本，然后是一对儿{}，一个空格和一个\，最后是一个分号。<br />
+<code class="highlighter-rouge">/dev/null 2&gt;&amp;1</code>  把标准出错重定向到标准输出，然后扔到/DEV/NULL下面去。通俗的说，就是把所有标准输出和标准出错都扔到垃圾桶里面；其中的&amp; 表示让该命令在后台执行。</p>
+</blockquote>
+
+<p>3、为脚本添加执行权限</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># chmod +x /usr/sbin/bakmysql.sh</span>
+</code></pre></div></div>
+
+<p>4、设置crontab定时执行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/crontab 
+<span class="c">#在最后一行中加入：  </span>
+00 3 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> root /usr/sbin/bakmysql.sh
+<span class="c">#表示每天3点00分执行备份</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注：crontab配置文件格式如下：<br />
+分　时　日　月　周　 命令</p>
+</blockquote>
+
+<p>5、重启crontab</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/rc.d/init.d/crond restart  
+</code></pre></div></div>
+
+<p>这样就完了定时备份并清理前7天的备份数据</p>
+
+<h2 id="同步到其它服务器">同步到其它服务器</h2>
+
+<p>这里使用Linux同步文件工具rsync+inotify来进行文件的同步</p>
+
+<h3 id="rsync">rsync</h3>
+
+<p>rsync是类unix系统下的数据镜像备份工具——remote sync。一款快速增量备份工具 Remote Sync，远程同步 支持本地复制，或者与其他SSH、rsync主机同步</p>
+
+<p><strong>用法</strong></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rsync src dest
+</code></pre></div></div>
+
+<p>这是最简单的用法，表示同步src,dest文件。（即，执行之后，dest的文件与src的相同，以src的为准)</p>
+
+<p>常用选项</p>
+<blockquote>
+  <p><code class="highlighter-rouge">-a</code>: 等价于-rlptgoD,归档式<br />
+<code class="highlighter-rouge">-r</code>: 递归<br />
+<code class="highlighter-rouge">-l</code>: 复制软件链接<br />
+<code class="highlighter-rouge">-p</code>: 保留权限信息<br />
+<code class="highlighter-rouge">-t</code>: 将src的修改时间，同步到dest<br />
+<code class="highlighter-rouge">-g</code>: 同步组信息(group)<br />
+<code class="highlighter-rouge">-o</code>: 同步拥有者信息(own)<br />
+<code class="highlighter-rouge">-D</code>: 保持字符与块设备文件<br />
+<code class="highlighter-rouge">-z</code>: 启用压缩传输<br />
+<code class="highlighter-rouge">–delete</code>：如果src没有此文件，那么dest也不能有，即在dest删除src里没有的文件。（如果你使用这个选项，就必须搭配-r选项一起）</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## 将本地/bak/mysqlbak/文件同步到 远程服务器 /bak/mysql/bak 目录下面 排除 mysqlbak/index目录 通过ssh端口</span>
+rsync <span class="nt">-vzacu</span>  /bak/mysqlbak/  root@192.168.53.86:/bak/mysqlbak   <span class="nt">--exclude</span>  <span class="s2">"mysqlbak/index"</span>   <span class="nt">-e</span> <span class="s2">"ssh -p 22"</span>
+<span class="c"># 将远程目录 /bak/mysqlbak下的文件同步到本地 /bak/mysqlbak/目录下</span>
+rsync <span class="nt">-vzrtopg</span> <span class="nt">--progress</span> <span class="nt">--delete</span> root@192.168.53.85:/bak/mysqlbak  /bak
+</code></pre></div></div>
+
+<p><strong>启用rsync服务器端同步远程文件</strong></p>
+
+<p>rsycn的服务端为服务器的文件接收端，rsycn的客户端为服务器的文件推动端。</p>
+
+<p><strong>rsycn的服务端/文件接收端配置</strong></p>
+
+<p>服务端需要开启rsyncd服务</p>
+
+<p>添加配置文件rsyncd.conf</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/rsyncd.conf
+<span class="c">#以下是全局配置</span>
+log file <span class="o">=</span> /var/log/rsyncd.log
+pid file <span class="o">=</span> /var/run/rsyncd.pid
+lock file <span class="o">=</span> /var/lock/rsyncd
+<span class="o">[</span>mysqlbak]     <span class="c">#模块名，在源服务器指定这个名字</span>
+   comment <span class="o">=</span> <span class="nb">sync </span>rsync/home      <span class="c">#描述信息</span>
+   path <span class="o">=</span> /bak/mysqlbak      <span class="c">#备份目录</span>
+   use <span class="nb">chroot</span><span class="o">=</span>no           <span class="c">#不使用chroot，不用root权限</span>
+   <span class="nb">read </span>only <span class="o">=</span> no          <span class="c">#设置本地备份目录为读写权限</span>
+   <span class="nv">uid</span><span class="o">=</span>root          
+   <span class="nv">gid</span><span class="o">=</span>root
+   max <span class="nv">connections</span><span class="o">=</span>10       <span class="c">#客户端最大连接数</span>
+   auth <span class="nb">users</span> <span class="o">=</span> root      <span class="c">#指定数据同步用户</span>
+   secrets file <span class="o">=</span> /etc/rsyncd.pass          <span class="c">#指定数据同步用户信息文件</span>
+   hosts <span class="nv">allow</span><span class="o">=</span>192.168.53.0/85     <span class="c">#允许连接的客户端</span>
+   ignore errors <span class="o">=</span> <span class="nb">yes</span>     <span class="c">#忽略出现I/O错误</span>
+   <span class="nb">timeout</span> <span class="o">=</span> 600
+</code></pre></div></div>
+
+<p>创建认证文件</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  vi /etc/rsyncd.pass
+  <span class="c">##代码</span>
+  root:root      <span class="c">#格式是用户名：密码</span>
+  <span class="c">#属主要有权限读这个文件，否则会报没权限</span>
+  <span class="nb">chmod </span>600 /etc/rsyncd.pass  
+</code></pre></div></div>
+
+<p>修改/etc/xinetd.d/rsync文件，disable 改为 no</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service rsync
+<span class="o">{</span>
+        disable <span class="o">=</span> no
+        socket_type     <span class="o">=</span> stream
+        <span class="nb">wait</span>            <span class="o">=</span> no
+        user            <span class="o">=</span> root
+        server          <span class="o">=</span> /usr/bin/rsync
+        server_args     <span class="o">=</span> <span class="nt">--daemon</span>
+        log_on_failure  +<span class="o">=</span> USERID
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>启动服务端</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rsync <span class="nt">--daemon</span> <span class="nt">--config</span><span class="o">=</span>/etc/rsyncd.conf
+</code></pre></div></div>
+
+<p><strong>rsycn的客户端/文件发送端配置</strong></p>
+
+<p>客户端配置简单 只需要配置密码既可</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  vi /etc/rsync_client.pwd
+  <span class="c">##代码</span>
+  root    <span class="c">#只需要填写rsync服务的密码</span>
+  <span class="c">#属主要有权限读这个文件，否则会报没权限</span>
+  <span class="nb">chmod </span>600 /etc/rsync_client.pwd 
+</code></pre></div></div>
+
+<p>客户端同步测试</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/rsync <span class="nt">-auvrtzopgP</span> <span class="nt">--progress</span> <span class="nt">--password-file</span><span class="o">=</span>/etc/rsync_client.pwd /bak/mysqlbak/ root@192.168.53.86::mysqlbak
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>rsync只是一次性同步,如果需要实时同步就需要引入另一个工具了</strong></p>
+</blockquote>
+
+<h3 id="inotify">inotify</h3>
+
+<p>Inotify 是一种强大的、细粒度的、异步的文件系统事件监控机制，linux内核从2.6.13起，加入了Inotify支持，通过Inotify可以监控文件系统中添加、删除，修改、移动等各种细微事件，利用这个内核接口，第三方软件就可以监控文件系统下文件的各种变化情况，而inotify-tools就是这样的一个第三方软件。</p>
+
+<blockquote>
+  <p>Inotify只需要要按照部署在同步的客户端，当监控的文件有变化触动 rsync脚本来同步</p>
+</blockquote>
+
+<p>安装</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install </span>inotify-tools
+</code></pre></div></div>
+
+<p>配置监控的文件路径</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/inotify_exclude.lst
+<span class="c">#代码</span>
+/bak/mysqlbak <span class="c">#监控目录</span>
+@/bak/log <span class="c">#排除监控目录</span>
+</code></pre></div></div>
+
+<p>rsync排除监控文件目录</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/rsyncd.d/rsync_exclude.lst
+<span class="c">#代码</span>
+src/<span class="k">*</span>.html<span class="k">*</span>
+src/js/
+src/2014/20140[1-9]/
+</code></pre></div></div>
+
+<p>客户端同步到远程的脚本rsync.sh</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#rsync auto sync script with inotify</span>
+<span class="c">#variables</span>
+<span class="nv">current_date</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%Y%m%d_%H%M%S<span class="si">)</span>
+<span class="nv">source_path</span><span class="o">=</span>/bak/mysqlbak/
+<span class="nv">log_file</span><span class="o">=</span>/var/log/rsync_client.log
+<span class="c">#rsync</span>
+<span class="nv">rsync_server</span><span class="o">=</span>192.168.53.86
+<span class="nv">rsync_user</span><span class="o">=</span>root
+<span class="nv">rsync_pwd</span><span class="o">=</span>/etc/rsync_client.pwd
+<span class="nv">rsync_module</span><span class="o">=</span>mysqlbak
+<span class="nv">INOTIFY_EXCLUDE</span><span class="o">=</span><span class="s1">'(.*/*\.log|.*/*\.swp)$|^/tmp/src/mail/(2014|20.*/.*che.*)'</span>
+<span class="nv">RSYNC_EXCLUDE</span><span class="o">=</span><span class="s1">'/bak/rsync_exclude.lst'</span>
+<span class="c">#rsync client pwd check</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-e</span> <span class="k">${</span><span class="nv">rsync_pwd</span><span class="k">}</span> <span class="o">]</span><span class="p">;</span><span class="k">then
+    </span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"rsync client passwod file </span><span class="k">${</span><span class="nv">rsync_pwd</span><span class="k">}</span><span class="s2"> does not exist!"</span>
+    <span class="nb">exit </span>0
+<span class="k">fi</span>
+<span class="c">#inotify_function</span>
+inotify_fun<span class="o">(){</span>
+    /usr/bin/inotifywait <span class="nt">-mrq</span> <span class="nt">--timefmt</span> <span class="s1">'%Y/%m/%d-%H:%M:%S'</span> <span class="nt">--format</span> <span class="s1">'%T %w %f'</span> <span class="se">\</span>
+          <span class="nt">--exclude</span> <span class="k">${</span><span class="nv">INOTIFY_EXCLUDE</span><span class="k">}</span>  <span class="nt">-e</span> modify,delete,create,move,attrib <span class="k">${</span><span class="nv">source_path</span><span class="k">}</span> <span class="se">\</span>
+          | <span class="k">while </span><span class="nb">read </span>file
+      <span class="k">do</span>
+          /usr/bin/rsync <span class="nt">-auvrtzopgP</span> <span class="nt">--exclude-from</span><span class="o">=</span><span class="k">${</span><span class="nv">RSYNC_EXCLUDE</span><span class="k">}</span> <span class="nt">--progress</span> <span class="nt">--bwlimit</span><span class="o">=</span>200 <span class="nt">--password-file</span><span class="o">=</span><span class="k">${</span><span class="nv">rsync_pwd</span><span class="k">}</span> <span class="k">${</span><span class="nv">source_path</span><span class="k">}</span> <span class="k">${</span><span class="nv">rsync_user</span><span class="k">}</span>@<span class="k">${</span><span class="nv">rsync_server</span><span class="k">}</span>::<span class="k">${</span><span class="nv">rsync_module</span><span class="k">}</span> 
+      <span class="k">done</span>
+<span class="o">}</span>
+<span class="c">#inotify log</span>
+inotify_fun <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">log_file</span><span class="k">}</span> 2&gt;&amp;1 &amp;
+</code></pre></div></div>
+
+<p>给脚本执行权限，执行后就可以了</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>777 rsync.sh
+./rsync.sh 
+</code></pre></div></div>
+
+<h2 id="参考">参考：</h2>
+
+<p><a href="http://seanlook.com/2014/12/12/rsync_inotify_setup/">Linux下同步工具inotify+rsync使用详解</a></p>
+
+<hr />
+
+<p><strong>作者：纯洁的微笑</strong><br />
+<strong>出处：<a href="http://www.ityouknow.com">www.ityouknow.com</a></strong> <br />
+<strong>版权所有，欢迎保留原文链接进行转载 :)</strong></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/mysql/2016/09/09/linux-mysql-scheduled-backup.html';
+        this.page.identifier = '/mysql/2016/09/09/linux-mysql-scheduled-backup.html';
+        this.page.title = 'linux定时备份mysql并同步到其它服务器';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/mysql/2016/09/09/linux-mysql-scheduled-backup.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

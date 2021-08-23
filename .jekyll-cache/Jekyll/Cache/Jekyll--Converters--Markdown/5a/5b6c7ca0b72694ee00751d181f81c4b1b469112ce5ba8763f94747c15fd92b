@@ -1,0 +1,352 @@
+I"�<p>by 極光</p>
+
+<p>上次给大家介绍了 Python 如何操作 Excel ，是不是感觉还挺有趣的，今天为大家再介绍下，用 Python 如何操作 Word ，这个可能跟数据处理关系不大，用的也不多，不过可以先了解下都能实现什么功能，以备不时之需。</p>
+
+<!--more-->
+
+<h2 id="安装-python-docx">安装 python-docx</h2>
+
+<p>处理 Word 需要用到 python-docx 库，目前版本为 <code class="highlighter-rouge">0.8.10</code> ，执行如下安装命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip3 <span class="nb">install </span>python-docx
+<span class="c">################# 运行结果 ################</span>
+Collecting python-docx
+  Downloading https://files.pythonhosted.org/packages/e4/83/c66a1934ed5ed8ab1dbb9931f1779079f8bca0f6bbc5793c06c4b5e7d671/python-docx-0.8.10.tar.gz <span class="o">(</span>5.5MB<span class="o">)</span>
+     |████████████████████████████████| 5.5MB 553kB/s
+Requirement already satisfied: lxml&gt;<span class="o">=</span>2.3.2 <span class="k">in</span> /usr/local/lib/python3.7/site-packages <span class="o">(</span>from python-docx<span class="o">)</span> <span class="o">(</span>4.4.1<span class="o">)</span>
+Building wheels <span class="k">for </span>collected packages: python-docx
+  Building wheel <span class="k">for </span>python-docx <span class="o">(</span>setup.py<span class="o">)</span> ... <span class="k">done
+  </span>Stored <span class="k">in </span>directory: /Users/mjg/Library/Caches/pip/wheels/18/0b/a0/1dd62ff812c857c9e487f27d80d53d2b40531bec1acecfa47b
+Successfully built python-docx
+Installing collected packages: python-docx
+Successfully installed python-docx-0.8.10
+</code></pre></div></div>
+
+<p>OK，如果提示以上信息则安装成功。</p>
+
+<h2 id="写入-word">写入 Word</h2>
+
+<p>平时我们在操作 Word 写文档的时候，一般分为几部分：标题、章节、段落、图片、表格、引用以及项目符号编号等。下面我们就按这几部分如何用 Python 操作来一一介绍。</p>
+
+<h3 id="标题">标题</h3>
+
+<p>文档标题创建比较简单，通过 <code class="highlighter-rouge">Document()</code> 创建出一个空白文档，只要调用 <code class="highlighter-rouge">add_heading</code> 方法就能创建标题。</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建空白文档
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="c1"># 新增文档标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'如何使用 Python 创建 Word'</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>这样就完成了创建文档和文章标题的操作，下面通过命令 <code class="highlighter-rouge">python word_1.py </code> 运行程序，会生成名为 <code class="highlighter-rouge">word1.docx</code> 的文档，打开文章显示如下图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_01.png" alt="标题" /></p>
+
+<h3 id="章节与段落">章节与段落</h3>
+
+<p>有了文章标题，下面我们来看章节和段落是怎么操作的，在上面代码后面增加章节和段落操作的代码如下：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建空白文档
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="c1"># 新增文档标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'如何使用 Python 创建 Word'</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'我们平时使用 Word 用来做文章的处理，可能没想过它可以用 Python 生成，下面我们就介绍具体如何操作……'</span><span class="p">)</span>
+
+<span class="c1"># 创建一级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'安装 python-docx 库'</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'现在开始我们来介绍如何安装 python-docx 库，具体需要以下两步操作：'</span><span class="p">)</span>
+
+<span class="c1"># 创建二级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'第一步：安装 Python'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>上面我们说了 <code class="highlighter-rouge">add_heading</code> 方法用来增加文章标题，不过通过上面代码我们能知道，这个方法的第二上参数为数字，其实这个就是用来标示几级标题的，在我们平时就用来标示章节。<code class="highlighter-rouge">add_paragraph</code> 方法则是用来在文章中增加段落的，那我们现在就通过命令 <code class="highlighter-rouge">python word_1.py </code> 运行程序看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_02.png" alt="章节段落" /></p>
+
+<h3 id="字体和引用">字体和引用</h3>
+
+<p>前面我们通过 <code class="highlighter-rouge">add_paragraph</code> 方法增加了两个段落，现在我们就看下如何对段落中字体如何操作，以及引用段落的操作。继续修改以上代码，增加对文章字体字号、加粗、倾斜等操作，具体代码如下：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">RGBColor</span>
+
+<span class="c1"># 新建空白文档
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="c1"># 新增文档标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'如何使用 Python 创建 Word'</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'我们平时使用 Word 用来做文章的处理，可能没想过它可以用 Python 生成，下面我们就介绍具体如何操作……'</span><span class="p">)</span>
+
+<span class="c1"># 创建一级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'安装 python-docx 库'</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'现在开始我们来介绍如何安装 python-docx 库，具体需要以下两步操作：'</span><span class="p">)</span>
+
+<span class="c1"># 创建二级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'第一步：安装 Python'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 创建段落，添加文档内容
+</span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这是第一步的安装描述！'</span><span class="p">)</span>
+
+<span class="c1"># 段落中增加文字，并设置字体字号
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">paragraph</span><span class="p">.</span><span class="n">add_run</span><span class="p">(</span><span class="s">'(注意：这里设置了字号为20)'</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># 设置英文字体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这里设置英文字体：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'This Font is Times New Roman '</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Times New Roman'</span>
+
+<span class="c1"># 设置中文字体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这里设置中文字体：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'当前字体为黑体'</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="s">'黑体'</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">run</span><span class="p">.</span><span class="n">_element</span>
+<span class="n">r</span><span class="p">.</span><span class="n">rPr</span><span class="p">.</span><span class="n">rFonts</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">qn</span><span class="p">(</span><span class="s">'w:eastAsia'</span><span class="p">),</span> <span class="s">'黑体'</span><span class="p">)</span>
+
+<span class="c1"># 设置斜体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段设置：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'文字的是斜体 '</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">italic</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># 设置粗体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段再设置：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'这里设置粗体'</span><span class="p">).</span><span class="n">bold</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># 设置字体带下划线
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段为下划线：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'这里设置带下划线'</span><span class="p">).</span><span class="n">underline</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># 设置字体颜色
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段字体为红色：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'这里设置字体为红色'</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">color</span><span class="p">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">)</span>
+
+<span class="c1"># 增加引用
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这里是我们引用的一段话：人生苦短，我用Python。'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'Intense Quote'</span><span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>上面代码主要是针对段落字体的各种设置，每段代码都标有注释应该比较容易理解，现在通过命令 <code class="highlighter-rouge">python word_1.py </code> 运行程序看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_03.png" alt="字体引用" /></p>
+
+<h3 id="项目列表">项目列表</h3>
+
+<p>我们平时在使用 Word 时，为了能展示更清晰，会用到项目符号和编号，将内容通过列表的方式展示出来，下面我们新建一个文件 <code class="highlighter-rouge">word_2.py</code> 并编写如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_2.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建文档
+</span><span class="n">doc2</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'哪个不是水果：'</span><span class="p">)</span>
+
+<span class="c1"># 增加无序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'苹果'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'香蕉'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'馄炖'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'2020年度计划：'</span><span class="p">)</span>
+<span class="c1"># 增加有序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'每周健身一天'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'学习50本书'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'减少加班时间'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word2.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>现在通过命令 <code class="highlighter-rouge">python word_2.py </code> 运行程序看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_05.png" alt="项目列表" /></p>
+
+<h3 id="图片和表格">图片和表格</h3>
+
+<p>我们平时编辑文章时，插入图片和表格也是经常使用到的，那用 Python 该如何操作插入图片和表格？首先我们随便找了个图片，我这用了 Python 安装时的一张截图，文件名为 <code class="highlighter-rouge">python_install.png</code>，然后在 <code class="highlighter-rouge">word_2.py</code> 文件中增加如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_2.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建文档
+</span><span class="n">doc2</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'哪个不是水果：'</span><span class="p">)</span>
+
+<span class="c1"># 增加无序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'苹果'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'香蕉'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'馄炖'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'2020年度计划：'</span><span class="p">)</span>
+<span class="c1"># 增加有序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'每周健身一天'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'学习50本书'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'减少加班时间'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'图片'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 增加图像
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_picture</span><span class="p">(</span><span class="s">'python_install.png'</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">Inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">))</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'表格'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 增加表格，这是表格头
+</span><span class="n">table</span> <span class="o">=</span> <span class="n">doc2</span><span class="p">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">hdr_cells</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">cells</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="s">'编号'</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="s">'姓名'</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="s">'职业'</span>
+
+<span class="c1"># 这是表格数据
+</span><span class="n">records</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'张三'</span><span class="p">,</span> <span class="s">'电工'</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'张五'</span><span class="p">,</span> <span class="s">'老板'</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">'马六'</span><span class="p">,</span> <span class="s">'IT'</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># 遍历数据并展示
+</span><span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">work</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+    <span class="n">row_cells</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">add_row</span><span class="p">().</span><span class="n">cells</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="n">work</span>
+
+<span class="c1"># 手动增加分页
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_page_break</span><span class="p">()</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word2.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>OK，现在再来让我们再来看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_06.png" alt="图片表格" /></p>
+
+<h2 id="读取-word-文件">读取 Word 文件</h2>
+
+<p>上面写了很多用 Python 创建空白 Word 文件格式化字体并保存到文件中，接下来我们再简单介绍下如何读取已有的 Word 文件，请看如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_3.py
+</span>
+<span class="c1"># 引入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+
+<span class="c1"># 打开文档1
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+
+<span class="c1"># 读取每段内容
+</span><span class="n">pl</span> <span class="o">=</span> <span class="p">[</span> <span class="n">paragraph</span><span class="p">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">doc1</span><span class="p">.</span><span class="n">paragraphs</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'###### 输出word1文章内容'</span><span class="p">)</span>
+<span class="c1"># 输出读取到的内容
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pl</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+
+<span class="c1"># 打开文档2
+</span><span class="n">doc2</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s">'word2.docx'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">###### 输出word2文章内容'</span><span class="p">)</span>
+
+<span class="n">pl2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">paragraph</span><span class="p">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">doc2</span><span class="p">.</span><span class="n">paragraphs</span><span class="p">]</span>
+
+<span class="c1"># 输出读取到的内容
+</span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pl2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="c1"># 读取表格材料，并输出结果
+</span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">table</span> <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">doc2</span><span class="p">.</span><span class="n">tables</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">.</span><span class="n">rows</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">.</span><span class="n">cells</span><span class="p">:</span>
+            <span class="k">print</span> <span class="p">(</span><span class="n">cell</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s">'  '</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>以上代码是将之前我们输出的两个文档内容都读取出来，当然这里只是打印到控制台，并没有做其他处理。现在我们来执行命令 <code class="highlighter-rouge">python word_3.py</code> 把代码执行看下结果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_07.png" alt="读取并打印" /></p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文为大家介绍了 Python 中如何操作 Word 文档，其中写入文件时，我们常用各种标题段落字体设置等，会比较复杂，这里只是简单介绍了最常用的几种方法，如果想了解更多请参考文末官网介绍，之后会为大家介绍其他类型文件的操作方式，希望大家能多多关注。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>python-excel 官网：https://python-docx.readthedocs.io/en/latest/index.html</p>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day</p>
+</blockquote>
+:ET

@@ -1,0 +1,211 @@
+I"�U<p>by 戴景波</p>
+
+<h2 id="scrapy-框架实现爬虫的基本原理">Scrapy 框架实现爬虫的基本原理</h2>
+
+<p>Scrapy 就是封装好的框架，你可以专心编写爬虫的核心逻辑，无需自己编写与爬虫逻辑无关的代码，套用这个框架就可以实现以上功能——爬取到想要的数据。</p>
+
+<p>Scrapy是一个Python实现的轻量级爬虫框架，它借助Twisted实现异步抓取。</p>
+
+<p>Scrapy 是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+
+<p>本文档将通过介绍Scrapy背后的概念使您对其工作原理有所了解，如果暂时理解不深也没关系，后边会结合实例具体介绍。</p>
+
+<!--more-->
+
+<h2 id="python-爬虫基本流程">Python 爬虫基本流程</h2>
+
+<h2 id="a-发起请求b-解析内容c-获取响应内容d-保存数据">A 发起请求———B 解析内容———C 获取响应内容———D 保存数据</h2>
+
+<p>A 通过 HTTP 向目标站点发起请求，即发送一个 Request ，请求可以包含额外的 headers 等信息，等待服务器响应。</p>
+
+<p>B 得到的内容可能是 HTML ，可以用正则表达式、网页解析库进行解析。可能是 Json ，可以直接转为 Json 对象解析，可能是二进制数据，可以做保存或者进一步的处理。</p>
+
+<p>C 如果服务器能正常响应，会得到一个 Response ， Response 的内容便是所要获取的页面内容，类型可能有 HTML ， Json 字符串，二进制数据（如图片视频）等类型。</p>
+
+<p>D 保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件。</p>
+
+<p>搭建自己本机环境如下：Windows7 64bit———Python3.7———Pycharm64</p>
+
+<h2 id="安装-python安装-pycharm安装-scrapy新建爬虫项目">安装 Python———安装 Pycharm———安装 Scrapy———新建爬虫项目</h2>
+
+<p>简单解释：将 Python 比作 Java ，那么 Pycharm 就相当于 eclipse ， Pycharm 就是 Python 语言的运行环境 IDE 工具。</p>
+
+<h2 id="安装-python">安装 Python</h2>
+
+<p>在 Python 的官网 www.python.org 中找到最新版本的 Python 安装包，点击进行下载，请注意，当你的电脑是32位的机器，请选择32位的安装包，如果是64位的，请选择64位的安装包；</p>
+
+<p>我自己机器是 win7 64bit 所以我下载的是 python-3.7.4.amd64.exe，其中的 add python 3.7 to PATH 一定要勾选。</p>
+
+<p>另外安装 python 路径不要有中文和空格，避免以后麻烦。后边就点击下一步即可。</p>
+
+<p>如果忘记勾选则需要手动添加环境变量：（需要添加两个： c:\python3.7.0;c:\python3.7.0\Scripts）</p>
+
+<p>右键计算机——点击属性——点击高级系统设置——高级——环境变量——用户变量——PATH  添加自己安装 python 的路径。</p>
+
+<h2 id="安装-pycharm">安装 Pycharm</h2>
+
+<p>本篇对于环境的搭建只是起到抛砖引玉的作用，建议大家以下边做参考。</p>
+
+<p>https://www.runoob.com/w3cnote/pycharm-windows-install.html</p>
+
+<h2 id="安装-scrapy">安装 Scrapy</h2>
+
+<p>由于安装 Scrapy 不是本系列重点，所以仅展示 Windows 系统上安装 Scrapy 的步骤。注意：一定按顺序安装。 Cmd 进入 dos 窗口：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\Administrator&gt;python
+Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 27 2018, 04:59:51) [MSC v.1914 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+C:\Users\Administrator&gt;python -m pip -V
+pip 19.0.3 from c:\python3.7.0\lib\site-packages\pip (python 3.7)  
+1.python -m pip install --upgrade pip
+2.python -m pip install Twisted-18.9.0-cp37-cp37m-win_amd64.whl
+3.python -m pip install pypiwin32
+4.python -m pip install scrapy
+5.python -m pip install requests
+</code></pre></div></div>
+
+<p>如果中途安装遇到问题请及时 Google 查阅资料，查阅就是积累的过程。</p>
+
+<h2 id="scrapy-创建新项目">Scrapy 创建新项目：</h2>
+
+<p>Pycharm 中用 alt+F12 切换到命令行，在命令行输入：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">venv2</span><span class="p">)</span> <span class="n">E</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">scrapy</span> <span class="n">startproject</span> <span class="n">peilv</span>
+</code></pre></div></div>
+
+<p>就会生成 Scrapy 项目，项目名称是 peilv ，结构如下：主要改写2个文件：“items、settings”，新增2个文件：“爬虫主程序”、itemcsvexporter。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>peilv
+scrapy.cfg                     #创建项目时自动生成，项目的配置文件
+peilv/
+    __init__.py                #创建项目时自动生成，无需任何改动
+    items.py                   #创建项目时自动生成，定义爬取的字段    
+    pipelines.py               #创建项目时自动生成，如存入文件，无需任何改动    
+    settings.py                #创建项目时自动生成，将爬取字段按顺序输出    
+    middlewares.py             #创建项目时自动生成，无需任何改动    
+    spiders/   
+        __init__.py            #创建项目时自动生成，无需任何改动	
+	itemcsvexporter.py     #需自己编写，代码固定	
+        爬虫主程序.py           #需自己编写，爬虫的主程序
+</code></pre></div></div>
+
+<h2 id="itemspy">items.py：</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="k">class</span> <span class="nc">PeilvItem</span><span class="p">(</span><span class="n">scrapy</span><span class="p">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="c1"># define the fields for your item here like:
+</span>    <span class="n">cc</span>  <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">Field</span><span class="p">()</span><span class="c1">#changci
+</span>    <span class="n">li</span> <span class="o">=</span>  <span class="n">scrapy</span><span class="p">.</span><span class="n">Field</span><span class="p">()</span><span class="c1">#libo
+</span>    <span class="n">b5</span>  <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">Field</span><span class="p">()</span><span class="c1">#bet365
+</span></code></pre></div></div>
+
+<p>以上是定义您想抓取的数据，在Scrapy中， 这是通过 Scrapy Items 来完成的。通过scrapy.Field()方法创建需要存储的字段，比如cc存储比赛的场次信息，li存储立博的赔率信息，等等。</p>
+
+<p>关于这个items.py，你只要考虑它就是一个存储数据的容器，可以考虑成一个结构体，你所有需要提取的信息都在这里面存着。</p>
+
+<p>这里我们需要存储3个变量，cc，li，b5，所以我在里面加入三个变量，就这么简单。</p>
+
+<h2 id="pipelinespy">pipelines.py：</h2>
+
+<p>一般来说，如果你要操作数据库什么的，需要在这里处理items，你可以把items写入数据库，但是今天我们用不到数据库，scrapy自带了一个很好的功能就是Feed exports，它支持多种格式的自动输出。</p>
+
+<p>所以我们直接用这个就好了，pipelines维持不变。</p>
+
+<h2 id="settingspy">settings.py：</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="n">FEED_EXPORT_ENCODING</span> <span class="o">=</span> <span class="s">"gb18030"</span> <span class="c1">#解决导出的 Excel 文件中文乱码问题
+</span><span class="p">...</span>
+<span class="n">FEED_EXPORTERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'csv'</span><span class="p">:</span> <span class="s">'peilv.spiders.itemcsvexporter.itemcsvexporter'</span><span class="p">,</span>
+<span class="p">}</span>   
+<span class="n">FIELDS_TO_EXPORT</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'cc'</span><span class="p">,</span><span class="c1">#比赛场次
+</span>    <span class="s">'li'</span><span class="p">,</span><span class="c1">#立博的赔率
+</span>    <span class="s">'b5'</span><span class="p">,</span><span class="c1">#bet365的赔率
+</span>   <span class="p">]</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>FEED_EXPORT_ENCODING用gb18030常量来解决中文乱码问题，FEED_EXPORTERS表明了输出文件的格式，FIELDS_TO_EXPORT给定了输出字段的顺序。</p>
+
+<h2 id="itemcsvexporterpy">itemcsvexporter.py：</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scrapy.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">scrapy.exporters</span> <span class="kn">import</span> <span class="n">CsvItemExporter</span>
+<span class="c1">#指定输出到 csv 文件中字段的顺序，结合 setting.py
+</span><span class="k">class</span> <span class="nc">itemcsvexporter</span><span class="p">(</span><span class="n">CsvItemExporter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>这里需要注意的是有的版本不支持from scrapy.contrib.exporter import CsvItemExporter类，所以用from scrapy.exporters import CsvItemExporter替换即可。
+通常结合setting中的字段顺序，规定最终CSV文件中的列排序规则。</p>
+
+<h2 id="爬虫主程序py下一篇详细介绍">爬虫主程序.py：(下一篇详细介绍)</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="n">ls_url</span> <span class="o">=</span> <span class="s">'https://live.leisu.com/wanchang?date='</span><span class="c1">#ls历史https://live.leisu.com/wanchang?date=20190606
+</span><span class="k">class</span> <span class="nc">LiveJiangSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="p">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'FBP'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">'leisu.com'</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">d1</span><span class="o">=</span><span class="s">'20190606'</span> <span class="c1">#历史的比赛
+</span>            <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">ls_url</span> <span class="o">+</span> <span class="n">d1</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parseLs</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'d1'</span><span class="p">:</span> <span class="n">d1</span><span class="p">})</span> <span class="c1">#历史的比赛
+</span>            <span class="c1"># request = scrapy.http.FormRequest(wl_url + d1,callback=self.parseWl, meta={'d1': d1})#未来的比赛
+</span>            <span class="k">yield</span> <span class="n">request</span>
+    <span class="k">def</span> <span class="nf">parseLs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">response</span><span class="p">):</span>
+        <span class="n">d2</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'d1'</span><span class="p">]</span>
+        <span class="n">sel</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">racelist</span><span class="o">=</span><span class="p">[</span><span class="n">e5</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"'"</span><span class="p">)</span> <span class="k">for</span> <span class="n">e5</span> <span class="ow">in</span> <span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-status="8"]/@data-id'</span><span class="p">).</span><span class="n">extract</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">raceid</span> <span class="ow">in</span> <span class="n">racelist</span><span class="p">:</span><span class="c1">#raceid=['2674547'];raceid[0]=2674547
+</span>            <span class="n">item</span> <span class="o">=</span> <span class="n">PeilvItem</span><span class="p">()</span>
+            <span class="n">sel_div</span><span class="o">=</span><span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-id='</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s">']/div[@class="find-table layout-grid-tbody hide"]/div[@class="clearfix-row"]'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span> <span class="o">==</span> <span class="s">"[]"</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="s">""</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s">"周"</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]:</span><span class="c1">#取竞彩-周一001等
+</span>                <span class="n">plurl</span><span class="o">=</span><span class="s">'https://live.leisu.com/3in1-'</span><span class="o">+</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">plurl</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parse</span><span class="p">,</span><span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'item'</span><span class="p">:</span><span class="n">item</span><span class="p">})</span>
+                <span class="k">yield</span> <span class="n">request</span> <span class="c1">#并非return，yield压队列，parse函数将会被当做一个生成器使用。scrapy会逐一获取parse方法中生成的结果，并没有直接执行parse，循环完成后，再执行parse
+</span>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'--------------into parse----------------------'</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'item'</span><span class="p">]</span>
+        <span class="n">pv</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">pl_str</span> <span class="o">=</span> <span class="s">'/td[@class="bd-left"]/div[@class="begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"]/span[@class="float-left col-3"]/text()'</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">item</span><span class="c1">#程序在取得各个页面的items前，会先处理完之前所有的request队列里的请求，然后再提取items
+</span></code></pre></div></div>
+
+<p>爬虫主程序实现了爬取网页数据的具体逻辑，在下一讲会结合一个具体事例详细介绍。</p>
+
+<p>改写完程序后，最终执行命令：
+Pycharm 用 alt+F12 切换到命令行在项目 peilv 路径上执行：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">venv2</span><span class="p">)</span> <span class="n">E</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">cd</span> <span class="n">peilv</span>\<span class="n">peilv</span> 
+<span class="p">(</span><span class="n">venv2</span><span class="p">)</span> <span class="n">E</span><span class="p">:</span>\<span class="n">peilv</span>\<span class="n">peilv</span><span class="o">&gt;</span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">FBP</span> <span class="o">-</span><span class="n">o</span> <span class="n">BaseData</span><span class="p">.</span><span class="n">csv</span>
+</code></pre></div></div>
+
+<p>其中 FBP 是在“爬虫主程序.py”定义的——name = ‘FBP’，“-o BaseData.csv” 是将爬取的数据输出到 csv 文件中。</p>
+
+<h2 id="总结">总结</h2>
+<p>以上首先创建一个工程和Spider模板，然后编写Spider，编写Item Pipeline，借助了Scrapy中的三个类——Request类、Response类和Item类。</p>
+
+<p>同时我们以一个实战项目为依托，将建立 Scrapy 项目的过程从零开始，深入浅出，让读者能够实践爬虫的整个过程。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-070">Python-100-days-day070</a></p>
+</blockquote>
+
+:ET

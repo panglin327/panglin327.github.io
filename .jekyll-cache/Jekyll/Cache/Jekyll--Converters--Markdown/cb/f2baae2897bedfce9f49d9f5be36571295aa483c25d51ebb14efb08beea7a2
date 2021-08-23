@@ -1,0 +1,302 @@
+I"hg<blockquote>
+  <p>by 轩辕御龙</p>
+</blockquote>
+
+<h1 id="python-sys-模块详解">Python sys 模块详解</h1>
+
+<h2 id="1-简介">1. 简介</h2>
+
+<p>“sys”即“system”，“系统”之意。该模块提供了一些接口，用于访问 Python 解释器自身使用和维护的变量，同时模块中还提供了一部分函数，可以与解释器进行比较深度的交互。</p>
+
+<!--more-->
+
+<h2 id="2-常用功能">2. 常用功能</h2>
+
+<h3 id="21-sysargv">2.1 sys.argv</h3>
+
+<p>“argv”即“argument value”的简写，是一个列表对象，其中存储的是在命令行调用 Python 脚本时提供的“命令行参数”。</p>
+
+<p>这个列表中的第一个参数是被调用的脚本名称，也就是说，调用 Python 解释器的“命令”（<code class="highlighter-rouge">python</code>）本身并没有被加入这个列表当中。这个地方要注意一下，因为这一点跟 C 程序的行为有所不同，C 程序读取命令行参数是从头开始的。</p>
+
+<p>举例来说，在当前目录下新建一个 Python 文件<code class="highlighter-rouge">sys_argv_example.py</code>，其内容为：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"The list of command line arguments:</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>在命令行运行该脚本：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python sys_argv_example.py
+The list of <span class="nb">command </span>line arguments:
+ <span class="o">[</span><span class="s1">'example.py'</span><span class="o">]</span>
+ 
+</code></pre></div></div>
+
+<p>加上几个参数试试：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python sys_argv_example.py arg1 arg2 arg3
+The list of <span class="nb">command </span>line arguments:
+ <span class="o">[</span><span class="s1">'example.py'</span>, <span class="s1">'arg1'</span>, <span class="s1">'arg2'</span>, <span class="s1">'arg3'</span><span class="o">]</span>
+
+</code></pre></div></div>
+
+<p>利用好这个属性，可以极大增强 Python 脚本的交互性。</p>
+
+<h3 id="22-sysplatform">2.2 sys.platform</h3>
+
+<p>在《<a href="http://www.justdopython.com/2019/10/09/python-os-demonstration-026/">第26天： Python 标准库之 os 模块详解</a>》中，我们提到过“查看<code class="highlighter-rouge">sys</code>模块中的<code class="highlighter-rouge">sys.platform</code>属性可以得到关于运行平台更详细的信息”，这里我们就来试试：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">sys</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">platform</span>
+<span class="s">'win32'</span>
+</code></pre></div></div>
+
+<p>在 Linux 上：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">platform</span>
+<span class="s">'linux'</span>
+</code></pre></div></div>
+
+<p>比较一下<code class="highlighter-rouge">os.name</code>的结果，不难发现，<code class="highlighter-rouge">sys.platform</code>的信息更加准确。</p>
+
+<h3 id="23-sysbyteorder">2.3 sys.byteorder</h3>
+
+<p>“byteorder”即“字节序”，指的是在计算机内部存储数据时，数据的低位字节存储在存储空间中的高位还是低位。</p>
+
+<p>“小端存储”时，数据的低位也存储在存储空间的低位地址中，此时<code class="highlighter-rouge">sys.byteorder</code>的值为<code class="highlighter-rouge">“little”</code>。如果不注意，在按地址顺序打印内容的时候，可能会把小端存储的内容打错。当前<strong>大部分机器</strong>都是使用的小端存储。</p>
+
+<p>所以不出意外的话，你的机器上执行下述交互语句也应当跟我的结果一样：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">byteorder</span>
+<span class="s">'little'</span>
+</code></pre></div></div>
+
+<p>而另外还存在一种存储顺序是“大端存储”，即数据的高位字节存储在存储空间的低位地址上，此时<code class="highlighter-rouge">sys.byteorder</code>的值为<code class="highlighter-rouge">“big”</code>。</p>
+
+<p>这种方式看起来好像很合理也很自然，因为我们一般在书面表示的时候都将低位地址写在左边，高位地址写在右边，大端存储的顺序就很符合人类的阅读习惯。但实际上对机器而言，内存地址并没有左右之分，所谓的“自然”其实并不存在。</p>
+
+<p>抱歉我并没有使用大端存储的机器可以用作演示，因此只能说如果是大端存储的机器上运行 Python，输出结果应该像下面这样，也就是说下面这个示例并非我得到的真实运行结果，仅供参考：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">byteorder</span>
+<span class="s">'big'</span>
+</code></pre></div></div>
+
+<h3 id="24-sysexecutable">2.4 sys.executable</h3>
+
+<p>该属性是一个字符串，在正常情况下，其值是当前运行的 Python 解释器对应的可执行程序所在的绝对路径。</p>
+
+<p>比如在 Windows 上使用 Anaconda 安装的 Python，该属性的值就是：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">executable</span>
+<span class="s">'E:</span><span class="se">\\</span><span class="s">Anaconda</span><span class="se">\\</span><span class="s">Anaconda</span><span class="se">\\</span><span class="s">python.exe'</span>
+</code></pre></div></div>
+
+<h3 id="25-sysmodules">2.5 sys.modules</h3>
+
+<p>该属性是一个字典，包含的是各种已加载的模块的模块名到模块具体位置的映射。</p>
+
+<p>通过手动修改这个字典，可以重新加载某些模块；但要注意，切记不要大意删除了一些基本的项，否则可能会导致 Python 整个儿无法运行。</p>
+
+<p>关于其具体的值，由于内容过多，就不在此给出示例了，读者可以自行查看。</p>
+
+<h3 id="26-sysbuiltin_module_names">2.6 sys.builtin_module_names</h3>
+
+<p>该属性是一个字符串元组，其中的元素均为当前所使用的的 Python 解释器内置的模块名称。</p>
+
+<p>注意区别<code class="highlighter-rouge">sys.modules</code>和<code class="highlighter-rouge">sys.builtin_module_names</code>——前者的关键字（keys）列出的是导入的模块名，而后者则是解释器内置的模块名。</p>
+
+<p>其值示例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">builtin_module_names</span>
+<span class="p">(</span><span class="s">'_abc'</span><span class="p">,</span> <span class="s">'_ast'</span><span class="p">,</span> <span class="s">'_bisect'</span><span class="p">,</span> <span class="s">'_blake2'</span><span class="p">,</span> <span class="s">'_codecs'</span><span class="p">,</span> <span class="s">'_codecs_cn'</span><span class="p">,</span> <span class="s">'_codecs_hk'</span><span class="p">,</span> <span class="s">'_codecs_iso2022'</span><span class="p">,</span> <span class="s">'_codecs_jp'</span><span class="p">,</span> <span class="s">'_codecs_kr'</span><span class="p">,</span> <span class="s">'_codecs_tw'</span><span class="p">,</span> <span class="s">'_collections'</span><span class="p">,</span> <span class="s">'_contextvars'</span><span class="p">,</span> <span class="s">'_csv'</span><span class="p">,</span> <span class="s">'_datetime'</span><span class="p">,</span> <span class="s">'_functools'</span><span class="p">,</span> <span class="s">'_heapq'</span><span class="p">,</span> <span class="s">'_imp'</span><span class="p">,</span> <span class="s">'_io'</span><span class="p">,</span> <span class="s">'_json'</span><span class="p">,</span> <span class="s">'_locale'</span><span class="p">,</span> <span class="s">'_lsprof'</span><span class="p">,</span> <span class="s">'_md5'</span><span class="p">,</span> <span class="s">'_multibytecodec'</span><span class="p">,</span> <span class="s">'_opcode'</span><span class="p">,</span> <span class="s">'_operator'</span><span class="p">,</span> <span class="s">'_pickle'</span><span class="p">,</span> <span class="s">'_random'</span><span class="p">,</span> <span class="s">'_sha1'</span><span class="p">,</span> <span class="s">'_sha256'</span><span class="p">,</span> <span class="s">'_sha3'</span><span class="p">,</span> <span class="s">'_sha512'</span><span class="p">,</span> <span class="s">'_signal'</span><span class="p">,</span> <span class="s">'_sre'</span><span class="p">,</span> <span class="s">'_stat'</span><span class="p">,</span> <span class="s">'_string'</span><span class="p">,</span> <span class="s">'_struct'</span><span class="p">,</span> <span class="s">'_symtable'</span><span class="p">,</span> <span class="s">'_thread'</span><span class="p">,</span> <span class="s">'_tracemalloc'</span><span class="p">,</span> <span class="s">'_warnings'</span><span class="p">,</span> <span class="s">'_weakref'</span><span class="p">,</span> <span class="s">'_winapi'</span><span class="p">,</span> <span class="s">'array'</span><span class="p">,</span> <span class="s">'atexit'</span><span class="p">,</span> <span class="s">'audioop'</span><span class="p">,</span> <span class="s">'binascii'</span><span class="p">,</span> <span class="s">'builtins'</span><span class="p">,</span> <span class="s">'cmath'</span><span class="p">,</span> <span class="s">'errno'</span><span class="p">,</span> <span class="s">'faulthandler'</span><span class="p">,</span> <span class="s">'gc'</span><span class="p">,</span> <span class="s">'itertools'</span><span class="p">,</span> <span class="s">'marshal'</span><span class="p">,</span> <span class="s">'math'</span><span class="p">,</span> <span class="s">'mmap'</span><span class="p">,</span> <span class="s">'msvcrt'</span><span class="p">,</span> <span class="s">'nt'</span><span class="p">,</span> <span class="s">'parser'</span><span class="p">,</span> <span class="s">'sys'</span><span class="p">,</span> <span class="s">'time'</span><span class="p">,</span> <span class="s">'winreg'</span><span class="p">,</span> <span class="s">'xxsubtype'</span><span class="p">,</span> <span class="s">'zipimport'</span><span class="p">,</span> <span class="s">'zlib'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="27-syspath">2.7 sys.path</h3>
+
+<p>A list of strings that specifies the search path for modules. Initialized from the environment variable <a href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH"><code class="highlighter-rouge">PYTHONPATH</code></a>, plus an installation-dependent default.</p>
+
+<p>该属性是一个由字符串组成的列表，其中各个元素表示的是 Python 搜索模块的路径；在程序启动期间被初始化。</p>
+
+<p>其中第一个元素（也就是<code class="highlighter-rouge">path[0]</code>）的值是最初调用 Python 解释器的脚本所在的绝对路径；如果是在交互式环境下查看<code class="highlighter-rouge">sys.path</code>的值，就会得到一个空字符串。</p>
+
+<p>命令行运行脚本（脚本代码见示例 <code class="highlighter-rouge">sys_path_example.py</code>）：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python sys_path_example.py
+The path[0] <span class="o">=</span>  D:<span class="se">\j</span>ustdopython<span class="se">\s</span>ys_example
+</code></pre></div></div>
+
+<p>交互式环境查看属性第一个元素：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="s">''</span>
+</code></pre></div></div>
+
+<h2 id="3-进阶功能">3. 进阶功能</h2>
+
+<h3 id="31-sysstdin">3.1 sys.stdin</h3>
+
+<p>即 Python 的标准输入通道。通过改变这个属性为其他的类文件（file-like）对象，可以实现输入的重定向，也就是说可以用其他内容替换标准输入的内容。</p>
+
+<p>所谓“标准输入”，实际上就是通过键盘输入的字符。</p>
+
+<p>在示例（<code class="highlighter-rouge">sys_stdin_example.py</code>）中，我们尝试把这个属性的值改为一个打开的文件对象<code class="highlighter-rouge">hello_python.txt</code>，其中包含如下的内容：</p>
+
+<pre><code class="language-none">Hello Python!
+Just do Python, go~
+
+Go, Go, GO!
+</code></pre>
+
+<p>由于<code class="highlighter-rouge">input()</code>使用的就是标准输入流，因此通过修改<code class="highlighter-rouge">sys.stdin</code>的值，我们使用老朋友<code class="highlighter-rouge">input()</code>函数，也可以实现对文件内容的读取，程序运行效果如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python sys_stdin_example.py
+Hello Python!
+Just <span class="k">do </span>Python, go~
+
+Go, Go, GO!
+
+</code></pre></div></div>
+
+<h3 id="32-sysstdout">3.2 sys.stdout</h3>
+
+<p>与上一个“标准输入”类似，<code class="highlighter-rouge">sys.stdout</code>则是代表“标准输出”的属性。</p>
+
+<p>通过将这个属性的值修改为某个文件对象，可以将本来要打印到屏幕上的内容写入文件。</p>
+
+<p>比如运行示例程序<code class="highlighter-rouge">sys_stdout_example.py</code>，用来临时生成日志也是十分方便的：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="c1"># 以附加模式打开文件，若不存在则新建
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"count_log.txt"</span><span class="p">,</span> <span class="s">'a'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"count = "</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="33-syserr">3.3 sys.err</h3>
+
+<p>与前面两个属性类似，只不过该属性标识的是标准错误，通常也是定向到屏幕的，可以粗糙地认为是一个输出错误信息的特殊的标准输出流。由于性质类似，因此不做演示。</p>
+
+<p>此外，<code class="highlighter-rouge">sys</code>模块中还存在几个“私有”属性：<code class="highlighter-rouge">sys.__stdin__</code>，<code class="highlighter-rouge">sys.__stdout__</code>，<code class="highlighter-rouge">sys.__stderr__</code>。这几个属性中保存的就是最初定向的“标准输入”、“标准输出”和“标准错误”流。在适当的时侯，我们可以借助这三个属性将<code class="highlighter-rouge">sys.stdin</code>、<code class="highlighter-rouge">sys.stdout</code>和<code class="highlighter-rouge">sys.err</code>恢复为初始值。</p>
+
+<h3 id="34-sysgetrecursionlimit-和-syssetrecursionlimit">3.4 sys.getrecursionlimit() 和 sys.setrecursionlimit()</h3>
+
+<p><code class="highlighter-rouge">sys.getrecursionlimit()</code>和<code class="highlighter-rouge">sys.setrecursionlimit()</code>是成对的。前者可以获取 Python 的最大递归数目，后者则可以设置最大递归数目。因为初学阶段很少用到，因此只做了解。</p>
+
+<h3 id="35-sysgetrefcount">3.5 sys.getrefcount()</h3>
+
+<p>在《<a href="http://www.justdopython.com/2019/09/12/python-reference-012">第12天：Python 之引用</a>》中我们其实已经用到过这个函数，其返回值是 Python 中某个对象被引用的次数。关于“引用”的知识可以回去看看这篇文章。</p>
+
+<h3 id="36-sysgetsizeof">3.6 sys.getsizeof()</h3>
+
+<p>这个函数的作用与 C 语言中的<code class="highlighter-rouge">sizeof</code>运算符类似，返回的是作用对象所占用的字节数。</p>
+
+<p>比如我们就可以看看一个整型对象<code class="highlighter-rouge">1</code>在内存中的大小：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="mi">28</span>
+</code></pre></div></div>
+
+<p>注意，在 Python 中，某类对象的大小并非一成不变的：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="mi">28</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">)</span>
+<span class="mi">32</span>
+</code></pre></div></div>
+
+<h3 id="37-sysint_info-和-sysfloat_info">3.7 sys.int_info 和 sys.float_info</h3>
+
+<p>这两个属性分别给出了 Python 中两个重要的数据类型的相关信息。</p>
+
+<p>其中<code class="highlighter-rouge">sys.int_info</code>的值为：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">int_info</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">int_info</span><span class="p">(</span><span class="n">bits_per_digit</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">sizeof_digit</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>在文档中的解释为：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">属性</th>
+      <th style="text-align: center">解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">bits_per_digit</td>
+      <td style="text-align: center">number of bits held in each digit. Python integers are stored internally in base <code class="highlighter-rouge">2**int_info.bits_per_digit</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sizeof_digit</td>
+      <td style="text-align: center">size in bytes of the C type used to represent a digit</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>指的是 Python 以 2 的<code class="highlighter-rouge">sys.int_info.bits_per_digit</code>次方为基来表示整数，也就是说它是“2 的<code class="highlighter-rouge">sys.int_info.bits_per_digit</code>次方进制”的数。这样的数每一个为都用 C 类中的 4 个字节来存储。</p>
+
+<p>换句话说，每“进 1 位”（即整数值增加2 的<code class="highlighter-rouge">sys.int_info.bits_per_digit</code>次方），就需要多分配 4 个字节用以保存某个整数。</p>
+
+<p>因此在<code class="highlighter-rouge">sys.getsizeof()</code>的示例中，我们可以看到<code class="highlighter-rouge">2**30-1</code>和<code class="highlighter-rouge">2**30</code>之间，虽然本身只差了 1，但是所占的字节后者却比前者多了 4。</p>
+
+<p>而<code class="highlighter-rouge">sys.float_info</code>的值则是：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">float_info</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">float_info</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.7976931348623157e+308</span><span class="p">,</span> <span class="n">max_exp</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">max_10_exp</span><span class="o">=</span><span class="mi">308</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">2.2250738585072014e-308</span><span class="p">,</span> <span class="n">min_exp</span><span class="o">=-</span><span class="mi">1021</span><span class="p">,</span> <span class="n">min_10_exp</span><span class="o">=-</span><span class="mi">307</span><span class="p">,</span> <span class="n">dig</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">mant_dig</span><span class="o">=</span><span class="mi">53</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">2.220446049250313e-16</span><span class="p">,</span> <span class="n">radix</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rounds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>其中各项具体的含义就不在这里继续展开了，感兴趣的同学可以参看<a href="https://docs.python.org/3/library/sys.html?highlight=sys.float_info#sys.float_info">文档</a>和<a href="https://book.douban.com/subject/26912767/">《深入理解计算机系统》</a>等讲解组成原理的书。</p>
+
+<h2 id="4-一个有趣的功能">4. 一个有趣的功能</h2>
+
+<p>接下来让我们放松一下。</p>
+
+<p>每次打开 Python 的交互式界面，我们都会看到一个提示符<code class="highlighter-rouge">&gt;&gt;&gt;</code>。不知道你有没有想过要把这个东西换成另外的什么呢？</p>
+
+<p>反正我没想过哈哈——至少在文档中看到这两个属性之前，我确实没有想过。哪两个属性呢？</p>
+
+<p>就这俩货：<code class="highlighter-rouge">sys.ps1</code>和<code class="highlighter-rouge">sys.ps2</code></p>
+
+<p>所谓“ps”，应当是“prompts”的简写，即“提示符”。</p>
+
+<p>这两个属性中，<code class="highlighter-rouge">sys.ps1</code>代表的是一级提示符，也就是进入 Python 交互界面之后就会出现的那一个<code class="highlighter-rouge">&gt;&gt;&gt;</code>；而第二个<code class="highlighter-rouge">sys.ps2</code>则是二级提示符，是在同一级内容没有输入完，换行之后新行行首的提示符<code class="highlighter-rouge">...</code>。当然，两个属性都是字符串。</p>
+
+<p>好了，知道怎么回事儿就好办了。</p>
+
+<p>现在我们就来一个：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s">"justdopython "</span>
+<span class="n">justdopython</span> <span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">justdopython</span> <span class="n">li</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="mi">1</span>
+<span class="n">justdopython</span> 
+</code></pre></div></div>
+
+<p>提示符已经被改变了，当然，有点长，不大美观哈哈。</p>
+
+<p>咱们换一下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">justdopython</span> <span class="n">sys</span><span class="p">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s">"ILoveYou: "</span>
+<span class="n">ILoveYou</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s">"你可真是个小机灵鬼儿！"</span><span class="p">)</span>
+<span class="n">你可真是个小机灵鬼儿</span><span class="err">！</span>
+<span class="n">ILoveYou</span><span class="p">:</span>
+</code></pre></div></div>
+
+<p>有点儿意思吧？</p>
+
+<p>注意不要忘了在字符串最后加个空格，否则提示符就会和你输入的内容混杂在一起了，会十分难看的哟~</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+</blockquote>
+
+<h2 id="参考资料">参考资料</h2>
+
+<p><a href="docs.python.org/3/library/sys.html">Python3 标准库-sys 模块</a></p>
+:ET

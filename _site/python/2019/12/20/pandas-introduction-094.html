@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第94天：数据分析之 pandas 初步 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 轩辕御龙&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/20/pandas-introduction-094.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第94天：数据分析之 pandas 初步">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第94天：数据分析之 pandas 初步</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/20
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 轩辕御龙</p>
+
+<h1 id="数据分析之-pandas-初步">数据分析之 pandas 初步</h1>
+
+<p><code class="highlighter-rouge">pandas</code>是一个常用的第三方 Python 库，提供快速灵活的数据处理功能，也是进行数据分析的有力工具。我们的口号是：“更快，更高，更强”（皮一下）。啊，当然，现在经常有很多库一上来就要“吊打”<code class="highlighter-rouge">pandas</code>，咱们还是不必在意。</p>
+
+<!--more-->
+
+<p><code class="highlighter-rouge">pandas</code>尤其擅长处理以下数据：</p>
+
+<p>以下几种数据尤其适合用<code class="highlighter-rouge">pandas</code>进行处理：</p>
+
+<ul>
+  <li>多种数据混合的扁平化数据格式，比如 SQL 表和 Excel 电子表格；</li>
+  <li>时间序列数据，不管有序无序；</li>
+  <li>任意带有行列标签的矩阵数据，不管是同种数据类型还是多种数据类型；</li>
+  <li>还有其他任意的统计数据集，不必带标签。</li>
+</ul>
+
+<p>在本文开头要提醒的是，<code class="highlighter-rouge">pandas</code>指的不是英语中的“panda”，熊猫。实际上<code class="highlighter-rouge">pandas</code>是术语“panel data”（面板数据）的简写，大家要注意：这不是国宝模块哈哈，不要看到这个模块就想起憨憨的大熊猫啦~</p>
+
+<h2 id="1-pandas-安装">1. pandas 安装</h2>
+
+<p>有了之前文章的铺垫，其实安装这个步骤大家应该已经很熟悉了，但是在这里依然要再叙述一遍。已经安装好的同学跳过就好。</p>
+
+<p>由于<code class="highlighter-rouge">pandas</code>并非 Python 的内置模块，因此我们直接从 Python 官网下载安装的发行版是不包含 <code class="highlighter-rouge">pandas</code>这个模块的。这个时候你要是想<code class="highlighter-rouge">import numpy</code>，显然是会无功而返的。因此我们需要额外安装 <code class="highlighter-rouge">pandas</code>模块。</p>
+
+<p>安装 <code class="highlighter-rouge">pandas</code>有好几种方式，我们这里推荐的是：1）使用<code class="highlighter-rouge">pip</code>进行安装；2）安装<a href="https://www.anaconda.com/">Anaconda</a>。</p>
+
+<h3 id="11-使用pip安装">1.1 使用<code class="highlighter-rouge">pip</code>安装</h3>
+
+<p>这种方式推荐给已经从 Python 官网下载了某个 Python 发行版的读者，或是已经通过其它方式获得了 Python 环境，但却没有 <code class="highlighter-rouge">pandas</code>这个模块的读者。</p>
+
+<p>安装命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>pandas
+</code></pre></div></div>
+
+<p>或：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install </span>pandas
+</code></pre></div></div>
+
+<p>均可。</p>
+
+<p>当然，实际上 <code class="highlighter-rouge">pandas</code>模块本身也有很多依赖，也需要其他一些模块才能够真正发挥出它强大的功能，因此我们推荐一次安装多个模块：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--user</span> numpy scipy matplotlib ipython jupyter pandas sympy nose
+</code></pre></div></div>
+
+<h3 id="12-安装-anaconda">1.2 安装 <a href="https://www.anaconda.com/">Anaconda</a></h3>
+
+<p>这种方式适合还没有安装 Python 的读者，或是已经安装了 Python 但是想一劳永逸拥有大多数科学计算库的读者。</p>
+
+<p>访问 <a href="https://www.anaconda.com/">Anaconda</a> 官网找到下载链接进行安装即可。</p>
+
+<p>或者如果你觉得 <a href="https://www.anaconda.com/">Anaconda</a> 过于臃肿，也可以安装其简化版本 <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> 。</p>
+
+<h2 id="2-主要数据类型">2. 主要数据类型</h2>
+
+<p><code class="highlighter-rouge">pandas</code>中有两个主要的数据类型，一种是 <strong>Series</strong>，称为“序列”，是一种一维数据结构；另一种是 <strong>DataFrame</strong>，称为“数据帧”或是“数据框架”，是一种二维数据结构。在<code class="highlighter-rouge">pandas</code>中，我们就是使用这两种主要的数据结构，“喜迎四海宾朋，笑对八方来客”，分分钟处理掉天上地下来的各种数据。</p>
+
+<p>其中，Series 内部要求是同种数据，而 DataFrame 则可以使混合数据。更进一步地说， <strong>DataFrame 其实就是包含了一至多个 Series</strong>。</p>
+
+<p>前面我们学习了<code class="highlighter-rouge">numpy</code>模块的基本相关知识，如果大家还有印象的话可以回忆一下。</p>
+
+<p><code class="highlighter-rouge">numpy</code>虽然提供了强大的多维数组供我们进行数据处理，但是这中间有一个要命的问题：<strong>维数比较少的时候还好，维数一旦多起来，你还分得清哪个轴代表什么意义吗</strong>？呃当然不排除有人可以，但是大多数人肯定是不行的，因为<code class="highlighter-rouge">numpy</code>的每个轴之间其实没有什么本质上的差异，你可以是轴 1，我也可以是轴 1，谁有比谁高贵怎么滴？因此在使用<code class="highlighter-rouge">numpy</code>进行高维数据处理，尤其是当其中每个维度都有特定的意义时，使用<code class="highlighter-rouge">numpy</code>的多维数组就会给使用者造成很大的负担——而这些本来不应该是由使用者负担的。</p>
+
+<p>因此<code class="highlighter-rouge">pandas</code>的优势就体现出来了。<code class="highlighter-rouge">pandas</code>可以为每一列数据打上标签，这样通过标签就可以直接区分开每个轴谁是谁，也可以通过标签获得更具语义性的信息，知道每列数据都是什么、有什么用途。即使是交换了顺序也无所谓，比较在<code class="highlighter-rouge">pandas</code>中，我们可以不再以默认的序号作为索引。</p>
+
+<p>当然<code class="highlighter-rouge">pandas</code>还有可以组合多种数据类型等优势，这些就留待大家在实践中体会啦~</p>
+
+<p>我们预先导入<code class="highlighter-rouge">pandas</code>，并且由于演示过程中会用到<code class="highlighter-rouge">numpy</code>模块，在这里也一并导入：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<h3 id="21-series">2.1 Series</h3>
+
+<p>Series 实际上是一个带标签的一维数组，数组中的内容可以是任何数据类型。在 Series 中，“带标签的轴”统称为“index（索引）”，类似于我们之前学习的字典数据类型中的“key（关键字）”。</p>
+
+<h4 id="211-创建-series">2.1.1 创建 Series</h4>
+
+<p>创建 Series 最常用的方法就是调用<code class="highlighter-rouge">pd.Series</code>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>其中，<code class="highlighter-rouge">data</code>要求是下列数据类型之一：</p>
+
+<ul>
+  <li>Python 字典；</li>
+  <li>Python 列表；</li>
+  <li>N 维数组；</li>
+  <li>标量（即一个数字）。</li>
+</ul>
+
+<p>而参数<code class="highlighter-rouge">index</code>则应当是一个用来指定轴标签的列表。</p>
+
+<p>按照原始数据类型的不同，创建 Series 的方式也分为 4 种：1）用 Python 字典创建；2）用 Python 列表创建；3）用 N 维数组创建；4）用标量创建。</p>
+
+<ol>
+  <li>Python 字典</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="n">b</span>    <span class="mi">1</span>
+<span class="n">a</span>    <span class="mi">0</span>
+<span class="n">c</span>    <span class="mi">2</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Python 列表</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="mi">0</span>    <span class="mi">1</span>
+<span class="mi">1</span>    <span class="mi">2</span>
+<span class="mi">2</span>    <span class="mi">3</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</code></pre></div></div>
+
+<p>可以看到，在只使用列表而不提供索引值时，<code class="highlighter-rouge">pandas</code>会自动为 Series 中的数据分配默认索引作为标签。</p>
+
+<ol>
+  <li>N 维数组</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">ar</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ar</span>
+<span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.12383463</span><span class="p">,</span>  <span class="mf">0.2312694</span> <span class="p">,</span>  <span class="mf">1.82605315</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4743252</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.71267657</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ar</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="n">a</span>   <span class="o">-</span><span class="mf">0.123835</span>
+<span class="n">b</span>    <span class="mf">0.231269</span>
+<span class="n">c</span>    <span class="mf">1.826053</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mf">1.474325</span>
+<span class="n">e</span>   <span class="o">-</span><span class="mf">0.712677</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<ol>
+  <li>标量</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="c1"># 标量生成单元素序列
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="mf">5.</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="mi">0</span>    <span class="mf">5.0</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># 标量生成多元素序列
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="mf">5.</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="n">a</span>    <span class="mf">5.0</span>
+<span class="n">b</span>    <span class="mf">5.0</span>
+<span class="n">c</span>    <span class="mf">5.0</span>
+<span class="n">d</span>    <span class="mf">5.0</span>
+<span class="n">e</span>    <span class="mf">5.0</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<h4 id="212-索引-series">2.1.2 索引 Series</h4>
+
+<p>既然说到 Series 类似于一维数组，也就是说 Series 也可以通过序号进行索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'b'</span><span class="p">,</span><span class="s">'c'</span><span class="p">,</span><span class="s">'d'</span><span class="p">,</span><span class="s">'e'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="n">a</span>    <span class="mi">5</span>
+<span class="n">b</span>   <span class="o">-</span><span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">7</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mi">8</span>
+<span class="n">e</span>    <span class="mi">9</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="mi">7</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="o">-</span><span class="mi">4</span>
+</code></pre></div></div>
+
+<p>其次，Series 还可以通过标签进行索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
+<span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="s">'d'</span><span class="p">]</span>
+<span class="o">-</span><span class="mi">8</span>
+</code></pre></div></div>
+
+<p>并且 Series 也有切片功能：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span>   <span class="o">-</span><span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">7</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">a</span>    <span class="mi">5</span>
+<span class="n">b</span>   <span class="o">-</span><span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">7</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</code></pre></div></div>
+
+<p>甚至标签也可以用于切片：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="s">'a'</span><span class="p">:</span><span class="s">'d'</span><span class="p">]</span>
+<span class="n">a</span>    <span class="mi">5</span>
+<span class="n">b</span>   <span class="o">-</span><span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">7</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mi">8</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</code></pre></div></div>
+
+<p>都是观察可以发现，使用标签进行索引与使用序号进行索引还是存在一点儿<strong>不同</strong>：使用序号进行索引时，切片结果不会包括结束序号对应的内容；但使用标签进行索引就会包括末尾标签指定的内容。</p>
+
+<p>还可以从 Series 中直接选取特定的项。同样地，也是既可以使用序号，也可以使用标签，但要记得将指定的序号或标签放在一个列表中：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="c1"># 使用序号
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">b</span>   <span class="o">-</span><span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">7</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># 使用标签
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'d'</span><span class="p">]]</span>
+<span class="n">a</span>    <span class="mi">5</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mi">8</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</code></pre></div></div>
+
+<p>此外还有根据条件进行筛选的用法，这种用法是一种<code class="highlighter-rouge">pandas</code>的<code class="highlighter-rouge">if-then</code>方言：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">a</span>    <span class="mi">5</span>
+<span class="n">c</span>    <span class="mi">7</span>
+<span class="n">e</span>    <span class="mi">9</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</code></pre></div></div>
+
+<p>这样就提取出了<code class="highlighter-rouge">s</code>中大于 0 的部分。</p>
+
+<p>还要注意，Series 的直接赋值不会创建副本，如果想要新的 Series 对象与旧的没有关系，需要显式地创建副本并赋值：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s2</span> <span class="ow">is</span> <span class="n">s</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s2</span> <span class="ow">is</span> <span class="n">s</span>
+<span class="bp">False</span>
+</code></pre></div></div>
+
+<h4 id="213-series-的运算">2.1.3 Series 的运算</h4>
+
+<p>类似<code class="highlighter-rouge">numpy</code>数组地，Series 的算术运算——包括应用于很多<code class="highlighter-rouge">numpy</code>中的函数——也是逐元素进行的：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">+</span> <span class="n">s</span>
+<span class="n">a</span>    <span class="mf">10.0</span>
+<span class="n">b</span>    <span class="o">-</span><span class="mf">8.0</span>
+<span class="n">c</span>    <span class="mf">14.0</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mf">16.0</span>
+<span class="n">e</span>    <span class="mf">18.0</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">a</span>    <span class="mf">10.0</span>
+<span class="n">b</span>    <span class="o">-</span><span class="mf">8.0</span>
+<span class="n">c</span>    <span class="mf">14.0</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mf">16.0</span>
+<span class="n">e</span>    <span class="mf">18.0</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">a</span>     <span class="mf">148.413159</span>
+<span class="n">b</span>       <span class="mf">0.018316</span>
+<span class="n">c</span>    <span class="mf">1096.633158</span>
+<span class="n">d</span>       <span class="mf">0.000335</span>
+<span class="n">e</span>    <span class="mf">8103.083928</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<p>而 Series 与<code class="highlighter-rouge">numpy</code>数组的不同之处在于，Series 有自动对齐的特性，也就是说，在运算中如果两个参与运算的 Series 数据长度不一样，<code class="highlighter-rouge">pandas</code>会自动用默认的缺省值补全缺失的部分，以使运算顺利进行：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">a</span>     <span class="n">NaN</span>
+<span class="n">b</span>    <span class="o">-</span><span class="mf">8.0</span>
+<span class="n">c</span>    <span class="mf">14.0</span>
+<span class="n">d</span>   <span class="o">-</span><span class="mf">16.0</span>
+<span class="n">e</span>     <span class="n">NaN</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<p>简单来讲，在运算时如果遇到了“在某个运算对象中找不到对应项标签”的情况，那么<code class="highlighter-rouge">pandas</code>就会自作主张用缺省值<code class="highlighter-rouge">NaN</code>来代替。这就使得在进行交互式数据分析的时候有了极大的灵活性。</p>
+
+<h3 id="22-dataframe">2.2 DataFrame</h3>
+
+<h4 id="221-创建-dataframe">2.2.1 创建 DataFrame</h4>
+
+<p>DataFrame 是一种二维带标签的数据结构，并且允许各列直接数据类型不同。我们既可以把它当做是电子表格或是 SQL 表，也可以将其当作是一个由若干个 Series 对象组成的字典；也是<code class="highlighter-rouge">pandas</code>中最常用的数据结构。</p>
+
+<p>创建 DataFrame 的方法是调用<code class="highlighter-rouge">pd.DataFrame</code>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>其中的<code class="highlighter-rouge">data</code>参数要求是下列数据类型之一：</p>
+
+<ul>
+  <li>由一维数组、列表、字典或是 Series 构成的字典；</li>
+  <li>二维 Numpy 数组；</li>
+  <li>结构化数组；</li>
+  <li>一个 Series；</li>
+  <li>别的 DataFrame。</li>
+</ul>
+
+<p>参数<code class="highlighter-rouge">index</code>对应于 DataFrame 中的行标签，参数<code class="highlighter-rouge">columns</code>对应于DataFrame 中的列标签。通过指定这两个参数，可以有筛选使用哪些数据来生成 DataFrame。</p>
+
+<p>在这里我们仅仅介绍 3 中可能用到的方法。</p>
+
+<ol>
+  <li>使用<strong>由 Series 组成的字典</strong>或<strong>由字典组成的的字典</strong>来创建 DataFrame</li>
+</ol>
+
+<blockquote>
+  <p>如果不指定<code class="highlighter-rouge">columns</code>参数的话，默认将<code class="highlighter-rouge">columns</code>设置为字典关键字的有序列表。</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'one'</span><span class="p">:</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]),</span>
+<span class="p">...</span>      <span class="s">'two'</span><span class="p">:</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">])}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'two'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">two</span> <span class="n">three</span>
+<span class="n">d</span>  <span class="mf">4.0</span>   <span class="n">NaN</span>
+<span class="n">b</span>  <span class="mf">2.0</span>   <span class="n">NaN</span>
+<span class="n">a</span>  <span class="mf">1.0</span>   <span class="n">NaN</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># 默认形式
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">3.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+</code></pre></div></div>
+
+<ol>
+  <li>使用 N 维数组或列表的字典</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'one'</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+<span class="p">...</span>      <span class="s">'two'</span><span class="p">:</span> <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="mi">0</span>  <span class="mf">1.0</span>  <span class="mf">4.0</span>
+<span class="mi">1</span>  <span class="mf">2.0</span>  <span class="mf">3.0</span>
+<span class="mi">2</span>  <span class="mf">3.0</span>  <span class="mf">2.0</span>
+<span class="mi">3</span>  <span class="mf">4.0</span>  <span class="mf">1.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">])</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">4.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">3.0</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">2.0</span>
+<span class="n">d</span>  <span class="mf">4.0</span>  <span class="mf">1.0</span>
+</code></pre></div></div>
+
+<ol>
+  <li>使用字典组成的列表</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">data2</span> <span class="o">=</span> <span class="p">[{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">20</span><span class="p">}]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+   <span class="n">a</span>   <span class="n">b</span>     <span class="n">c</span>
+<span class="mi">0</span>  <span class="mi">1</span>   <span class="mi">2</span>   <span class="n">NaN</span>
+<span class="mi">1</span>  <span class="mi">5</span>  <span class="mi">10</span>  <span class="mf">20.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'first'</span><span class="p">,</span> <span class="s">'second'</span><span class="p">])</span>
+        <span class="n">a</span>   <span class="n">b</span>     <span class="n">c</span>
+<span class="n">first</span>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="n">NaN</span>
+<span class="n">second</span>  <span class="mi">5</span>  <span class="mi">10</span>  <span class="mf">20.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">])</span>
+   <span class="n">a</span>   <span class="n">b</span>
+<span class="mi">0</span>  <span class="mi">1</span>   <span class="mi">2</span>
+<span class="mi">1</span>  <span class="mi">5</span>  <span class="mi">10</span>
+</code></pre></div></div>
+
+<h4 id="222-索引-dataframe">2.2.2 索引 DataFrame</h4>
+
+<p>通过<code class="highlighter-rouge">index</code>和<code class="highlighter-rouge">columns</code>两个属性可以分别查看 DataFrame 的行标签和列标签：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'one'</span><span class="p">:</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]),</span>
+<span class="p">...</span>       <span class="s">'two'</span><span class="p">:</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">])}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">3.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">index</span>
+<span class="n">Index</span><span class="p">([</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'object'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span>
+<span class="n">Index</span><span class="p">([</span><span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'object'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>可以使用列标签来索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s">'one'</span><span class="p">]</span>
+<span class="n">a</span>    <span class="mf">1.0</span>
+<span class="n">b</span>    <span class="mf">2.0</span>
+<span class="n">c</span>    <span class="mf">3.0</span>
+<span class="n">d</span>    <span class="n">NaN</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">one</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<p>也可以直接将列标签作为属性：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">one</span>
+<span class="n">a</span>    <span class="mf">1.0</span>
+<span class="n">b</span>    <span class="mf">2.0</span>
+<span class="n">c</span>    <span class="mf">3.0</span>
+<span class="n">d</span>    <span class="n">NaN</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">one</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<p>还可以按列选取：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[[</span><span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">]]</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">3.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+</code></pre></div></div>
+
+<p>要对 DataFrame 按行索引，则需要使用<code class="highlighter-rouge">loc</code>这个属性：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
+<span class="n">one</span>    <span class="mf">1.0</span>
+<span class="n">two</span>    <span class="mf">1.0</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<p>同样地，也可以通过行标签来按行切片、选取：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'a'</span><span class="p">:</span><span class="s">'c'</span><span class="p">]</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">3.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'d'</span><span class="p">]]</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+</code></pre></div></div>
+
+<p>此外，还可以使用<code class="highlighter-rouge">head</code>和<code class="highlighter-rouge">tail</code>来分别获取数据的前、后几行，具体数目由参数指定：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">3.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+</code></pre></div></div>
+
+<h4 id="223-统计信息">2.2.3 统计信息</h4>
+
+<p>使用<code class="highlighter-rouge">describe</code>可以计算得到一个 DataFrame 数据的相关统计信息，并且计算统计信息时会自动忽略缺省值<code class="highlighter-rouge">NaN</code>。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">one</span>  <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>  <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">2.0</span>  <span class="mf">2.0</span>
+<span class="n">c</span>  <span class="mf">3.0</span>  <span class="mf">3.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">4.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+       <span class="n">one</span>       <span class="n">two</span>
+<span class="n">count</span>  <span class="mf">3.0</span>  <span class="mf">4.000000</span>
+<span class="n">mean</span>   <span class="mf">2.0</span>  <span class="mf">2.500000</span>
+<span class="n">std</span>    <span class="mf">1.0</span>  <span class="mf">1.290994</span>
+<span class="nb">min</span>    <span class="mf">1.0</span>  <span class="mf">1.000000</span>
+<span class="mi">25</span><span class="o">%</span>    <span class="mf">1.5</span>  <span class="mf">1.750000</span>
+<span class="mi">50</span><span class="o">%</span>    <span class="mf">2.0</span>  <span class="mf">2.500000</span>
+<span class="mi">75</span><span class="o">%</span>    <span class="mf">2.5</span>  <span class="mf">3.250000</span>
+<span class="nb">max</span>    <span class="mf">3.0</span>  <span class="mf">4.000000</span>
+</code></pre></div></div>
+
+<p>其中<code class="highlighter-rouge">count</code>是各列的数据个数，<code class="highlighter-rouge">mean</code>是各列数据的平均值，<code class="highlighter-rouge">std</code>则对应标准差，后续的各行为从最小值到最大值的均匀数据。</p>
+
+<p>还可以使用<code class="highlighter-rouge">median</code>方法主动求出平均值：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="n">median</span><span class="p">()</span> <span class="c1"># 也适用于 Series
+</span><span class="n">one</span>    <span class="mf">2.0</span>
+<span class="n">two</span>    <span class="mf">2.5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</code></pre></div></div>
+
+<h3 id="23-其他">2.3 其他</h3>
+
+<p>Series 和 DataFrame 都可以使用同样的方法转换为<code class="highlighter-rouge">numpy</code>数组的形式：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">array</span><span class="p">([</span> <span class="mf">5.</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>此外，两种主要数据结构还有一个叫做<code class="highlighter-rouge">apply</code>的方法，用来对实例调用指定的函数。可以指定已有的函数，也可以临时定义一个匿名函数，后者更加常见一些：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="nb">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+<span class="n">one</span>    <span class="mi">4</span>
+<span class="n">two</span>    <span class="mi">4</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+   <span class="n">one</span>   <span class="n">two</span>
+<span class="n">a</span>  <span class="mf">1.0</span>   <span class="mf">1.0</span>
+<span class="n">b</span>  <span class="mf">4.0</span>   <span class="mf">4.0</span>
+<span class="n">c</span>  <span class="mf">9.0</span>   <span class="mf">9.0</span>
+<span class="n">d</span>  <span class="n">NaN</span>  <span class="mf">16.0</span>
+</code></pre></div></div>
+
+<h2 id="3-读取数据">3. 读取数据</h2>
+
+<p>实际上，大多数时候我们并不会手动创建一个 Series 或是 DataFrame，更一般的方法是通过使用<code class="highlighter-rouge">pandas</code>的读写接口，直接从文件中读取需要处理的数据。</p>
+
+<p>为了演示<code class="highlighter-rouge">pandas</code>读取数据的功能，我们提供了一个真实的数据集，其中包含加利福尼亚州住房数据。同学们可以从“代码示例”获取该文件；也可直接使用示例代码中指定的 URL 进行下载。</p>
+
+<pre><code class="language-pyhton">california_housing_dataframe = pd.read_csv("/data/california_housing_train.csv", sep=",")
+</code></pre>
+
+<p>使用<code class="highlighter-rouge">columns</code>来看看有哪些种类的数据：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">california_housing_dataframe</span><span class="p">.</span><span class="n">columns</span>
+<span class="n">Index</span><span class="p">([</span><span class="s">'longitude'</span><span class="p">,</span> <span class="s">'latitude'</span><span class="p">,</span> <span class="s">'housing_median_age'</span><span class="p">,</span> <span class="s">'total_rooms'</span><span class="p">,</span>
+       <span class="s">'total_bedrooms'</span><span class="p">,</span> <span class="s">'population'</span><span class="p">,</span> <span class="s">'households'</span><span class="p">,</span> <span class="s">'median_income'</span><span class="p">,</span>
+       <span class="s">'median_house_value'</span><span class="p">],</span>
+      <span class="n">dtype</span><span class="o">=</span><span class="s">'object'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">pandas</code>提供了大量函数用于文件读写，适用于 CSV、Excel、HDF、SQL、JSON、HTML 等文件类型，还包括一个读取系统剪贴板的接口<code class="highlighter-rouge">pd.read_clipboard()</code>。</p>
+
+<h2 id="4-pandas-画图">4. pandas 画图</h2>
+
+<p>上一节我们读取了一个真实的数据集，现在让我们针对其中意义最丰富的属性<code class="highlighter-rouge">median_house_value</code>（即平均房价）这一列，来画个直方图瞧一瞧：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">california_housing_dataframe</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="s">'median_house_value'</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="p">.</span><span class="n">axes</span><span class="p">.</span><span class="n">_subplots</span><span class="p">.</span><span class="n">AxesSubplot</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000222934BC8D0</span><span class="o">&gt;</span><span class="p">]],</span>
+      <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/12/19/加州平均房价.png" alt="加州平均房价直方图" /></p>
+
+<p>然后我们使用<code class="highlighter-rouge">latitude</code>作为 x 轴，以<code class="highlighter-rouge">latitude</code>作为 y 轴，考察一下加州房价在南北走向上的分布：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">california_housing_dataframe</span><span class="p">.</span><span class="n">plot</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'median_house_value'</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s">'latitude'</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">matplotlib</span><span class="p">.</span><span class="n">axes</span><span class="p">.</span><span class="n">_subplots</span><span class="p">.</span><span class="n">AxesSubplot</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x000002229301C7B8</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/12/19/加州房价南北分布.png" alt="加州房价南北分布" /></p>
+
+<p>从图上我们可以看到，加州的房价在南北走向上有两个高价带。</p>
+
+<p>再考察一下东西走向上的分布：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">california_housing_dataframe</span><span class="p">.</span><span class="n">plot</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'median_house_value'</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s">'longitude'</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">matplotlib</span><span class="p">.</span><span class="n">axes</span><span class="p">.</span><span class="n">_subplots</span><span class="p">.</span><span class="n">AxesSubplot</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000222939A87B8</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/12/19/加州房价东西分布.png" alt="加州房价东西分布" /></p>
+
+<p>可以看到，加州房价在东西走向上也出现了两个高价带。显然加州高价房应该是集中在两个区域，我们可以通过对应的经纬度，找到这两个区域。</p>
+
+<p>最后我们将经纬度分别作为 x、y 轴，将平均房价作为 z 轴画出一个三维图像，直观地观察一下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">california_housing_dataframe</span><span class="p">[</span><span class="s">'longitude'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">california_housing_dataframe</span><span class="p">[</span><span class="s">'latitude'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">z</span> <span class="o">=</span> <span class="n">california_housing_dataframe</span><span class="p">[</span><span class="s">'median_house_value'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">Axes3D</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">mpl_toolkits</span><span class="p">.</span><span class="n">mplot3d</span><span class="p">.</span><span class="n">art3d</span><span class="p">.</span><span class="n">Path3DCollection</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000222943317B8</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/12/19/加州房价平面分布.png" alt="加州房价平面分布" /></p>
+
+<p>通过拖动 3D 图像转换视角，容易看出确实有两个区域集中分布着高价房。</p>
+
+<h2 id="5-总结">5. 总结</h2>
+
+<p>本文初步介绍了<code class="highlighter-rouge">pandas</code>模块中最核心的两个数据类型：Series 和 DataFrame，以及它们的一些性质。</p>
+
+<p>通过演示读取数据和使用<code class="highlighter-rouge">pandas</code>画图，我们熟悉了<code class="highlighter-rouge">pandas</code>的基本操作，也感受了一下数据可视化的效果。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/">Python-100-days</a></p>
+</blockquote>
+
+<h2 id="参考资料">参考资料</h2>
+
+<p><a href="https://pandas.pydata.org/pandas-docs/stable/index.html">pandas 文档</a></p>
+
+<p><a href="https://colab.research.google.com/notebooks/mlcc/intro_to_pandas.ipynb">Google colab - pandas 简介</a></p>
+
+<p><a href="https://blog.csdn.net/genome_denovo/article/details/78322628">python：利用pandas进行绘图（总结）基础篇</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/20/pandas-introduction-094.html';
+        this.page.identifier = '/python/2019/12/20/pandas-introduction-094.html';
+        this.page.title = '第94天：数据分析之 pandas 初步';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/20/pandas-introduction-094.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

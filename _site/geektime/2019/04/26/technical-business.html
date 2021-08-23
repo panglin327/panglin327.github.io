@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         技术人应不应该具备商业思维？ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="毫无疑问，Google是公认的大数据鼻祖。">
+
+    <link rel="canonical" href="http://localhost:4000/geektime/2019/04/26/technical-business.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="技术人应不应该具备商业思维？">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>技术人应不应该具备商业思维？</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/04/26
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-12 markdown-body">
+
+            <p>​大家可能都知道，我们耳熟能详的一些商业大佬都是技术出身。张小龙早年开发 Foxmail 出名，后来以1200万元的价格把 Foxmail 卖给博大公司，2005 年 Foxmail 被腾讯收购，张小龙来到了腾讯，后来才有了微信全民级别的伟大产品。</p>
+
+<p>张一鸣，字节跳动创始人，大学学的是软件开发，毕业后和师兄一起创业，做一款面向企业的协同办公软件，刚开始没经验因此失败了。出来后加入了酷讯成为第003号员工，第一位软件工程师，一年以后做到了技术委员会主席。从酷讯出来后，以技术合伙人的身份和王兴一起创建了饭否，再到后来创建字节跳动公司，现在字节跳动是全世界估值最高的创业公司。</p>
+
+<p>还有很多类似的案例丁磊、李彦宏、马化腾、雷军、周鸿祎等等，他们都有一个共同的特点，技术出身并且超级热爱搞程序，随着事业的不断发展，看到了更多的商业机会，于是出来创业，成就了一番事业。</p>
+
+<p>其实在互联网迅猛发展的这30年中，世界上出现了很多大大小小有意思的IT公司。有的犹如昙花一现，在快速崛起之后迅速陨落，也有的九死一生，在跌跌撞撞中获得了更大的成功。</p>
+
+<p>我们这辈子最幸福的事情是生在了一个迅速变化的时代。在这个变化的时代里，有那么多演员在演出，我们坐在前排，可以看得很清楚，以史为鉴，可正衣冠。</p>
+
+<h2 id="如何才能建立商业思维打造自己的商业理解力呢">如何才能建立商业思维，打造自己的商业理解力呢？</h2>
+
+<p>一个优秀的技术人如果掌握了商业思维，他会在工作中如鱼得水，思维层次会更上一层楼。比如他能理解老板的决定，洞察行业的发展趋势，善于在公司发展中找到机会。</p>
+
+<p>那么技术人如何能够快速的掌握商业思维呢？其实这和学技术差不多，只有看的多了解的多，才能慢慢形成自己的思维模式。同时在日常生活和工作中，用看到的商业模式来试着解读产品的商业目的，从而获得一些提示和启发，逐渐形成自己的商业思维模式。</p>
+
+<p>因为刚好同是自媒体的原因，认识西雅图的飞总，在日常的沟通中就感触到，飞总是一个非常平易近人，见识渊博的大佬，经常用不一样的思维给我们解读国内外的热门事件。</p>
+
+<p>后来得知飞总在极客时间开了一个《技术与商业案例解读》专栏时，我就第一时间进行了拜读，花了将近一个月的时间才全部听完，感触颇深。大家可能不知道，飞总的这个专栏写了近 159 讲，每个案例都很精彩。当时订阅的价格是 199 元，现在因为极客时间做活动的原因只要 79元。</p>
+
+<p>大家如果对技术与商业感兴趣，一定不要错过这个机会，相当于每节课不到 0.5 元，即可了解国内外大厂的发展经历和深入解读。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/geektime/business01.jpg" alt="" /></p>
+
+<p>说起飞总，再谈一些他的个人经历，他是计算机博士，资深架构师，大数据基础架构专家，早年在美国从事数据库和大数据基础架构的研究工作，在世界最顶级的会议和杂志上发表论文10余篇，曾经做过多个国际最顶级会议和杂志的评委和审稿人，获得过IBM Pat Goldbeg最佳论文奖。</p>
+
+<p>毕业后入职微软，是微软内部大数据平台Cosmos的最早期开发人员之一，主要致力于内部查询语言SCOPE的研发工作，Cosmos平台从无到有目前支撑了微软主流产品包括必应搜索引擎，office365，Windows，Xbox等的数据分析。</p>
+
+<p>后加入全球领先的数据可视化分析公司Tableau，在Tableau负责数据查询相关的架构工作，是公司资深架构师。飞总于2016年夏天开始写公众号“飞总聊IT”，早期聚焦于数据库和大数据领域，其中SAP HANA系列和大数据那些事系列在同行中受到广泛好评。</p>
+
+<p>曾经很重要的一个分析是在Cloudera上市前对其进行的分析，这个分析的目的之一也是为飞总自身决定是否投资Cloudera做决策。通过分析飞总觉得Cloudera的估值是实际价值的两倍。这篇文章引起了广泛反响，当时获得了很多正面和负面的评价。三天后Cloudera发布新闻宣布自砍估值一半上市，和飞总之前的分析相吻合，此后飞总撰写了关于微软是如何转型云计算成功的文章分析，得到了包括 计算机行业，投资界等多个行业的极大好评。</p>
+
+<p>为了这次宣传，特意争取了一个限定人数，限定时间的超级团，平时单独购买价格是199元，平时拼团价格99元，这次争取的超级团价格是79元！</p>
+
+<p>《技术与商业案例解读》其实是极客时间的第一个上架的专栏，当时平台流量没有现在这么大，另外作为一门开拓视野的专栏和专业技能型的专栏相比起来，大多数程序员并不是特别刚需，导致销量在预售的时候不太高，而这个专栏时隔这么久，我又重新推荐，是因为<strong>它是一门真正能让互联网从业人员，站在一个更高的高度上了解自己的行业，从而更好的规划自己的职业发展这么一个专栏。</strong></p>
+
+<p>仅需79元，一共159篇深度文章，带你看懂技术创新与商业模式。优惠名额有限，优惠时间也仅限24小时，先到先得。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/geektime/business02.jpg" alt="" /></p>
+
+<p>专栏我看过之后，大致内容包含三个方面：</p>
+
+<ol>
+  <li>
+    <p>互联网企业：Cloudera的生意经、MongoDB的营销策略、DataBricks的创始之路、微软的转型、谷歌的创新精神、智能音箱与大数据领域的行业变迁等，这一部分从开阔眼界的角度出发，带你广泛而全面地了解互联网行业里的企业。</p>
+  </li>
+  <li>
+    <p>引领行业的重要人物：周鸿祎、彼得 · 蒂尔、贝佐斯、杨致远、巴顿、保罗 · 格雷厄姆等。企业是由人构成的，互联网行业和其他任何行业一样离不开人的因素，尤其是那些有着特殊影响力的人。理解人在互联网行业发展和企业变迁中的作用，同样非常重要。</p>
+  </li>
+  <li>
+    <p>徐飞的方法论：如何透过企业用人之道看企业发展、如何通过企业的技术积累分析一家企业、如何透过一个领域去联合分析多家企业等，这一部分看完，你的思维也不仅仅是一个普通的程序员了。</p>
+  </li>
+</ol>
+
+<p>纵观互联网企业的发展，然后对应到个体，人的一生很长，也有着很多很多的选择，它们都在或深或浅地影响着我们的命运。</p>
+
+<p>因为认识飞总原因，同时也是认真的收听了飞总的专栏课程，因此对这门专栏的质量很有信心。如果大家对这方面感兴趣，我个人非常推荐大家购买此专栏学习。</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+           <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/geektime/2019/04/26/technical-business.html';
+        this.page.identifier = '/geektime/2019/04/26/technical-business.html';
+        this.page.title = '技术人应不应该具备商业思维？';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/geektime/2019/04/26/technical-business.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+           </div>
+
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

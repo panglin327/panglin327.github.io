@@ -1,0 +1,298 @@
+I"c<p>by 某某白米饭</p>
+
+<h2 id="aiohttp">aiohttp</h2>
+
+<p>什么是 aiohttp？一个异步的 HTTP 客户端\服务端框架，基于 asyncio 的异步模块。可用于实现异步爬虫，更快于 requests 的同步爬虫。
+<!--more--></p>
+
+<h3 id="安装">安装</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install aiohttp
+</code></pre></div></div>
+
+<h3 id="aiohttp-和-requests">aiohttp 和 requests</h3>
+
+<h4 id="requests-版爬虫">requests 版爬虫</h4>
+
+<p>requests 同步方式连续 30 次简单爬取 <code class="highlighter-rouge">http://httpbin.org</code> 网站</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">fetch</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">)</span>
+
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"requests版爬虫花费时间为："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 打印网站返回的内容
+....
+requests版爬虫花费时间为：
+0:00:43.248761
+</code></pre></div></div>
+
+<p>从爬取结果可以看出，同步爬取30次网站将花费43秒左右的时间，耗时非常长。</p>
+
+<h4 id="aiohttp-版爬虫">aiohttp 版爬虫</h4>
+
+<p>使用 aiohttp 和 asyncio 异步方式简单爬取30次网站</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">resp</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="p">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">loop</span><span class="p">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="n">tasks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="n">loop</span><span class="p">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"aiohttp版爬虫花费时间为："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 打印网站返回的内容
+....
+aiohttp版爬虫花费时间为：
+0:00:00.539416
+</code></pre></div></div>
+
+<p>从爬取时间可以看出，aiohttp 异步爬取网站只用了0.5秒左右的时间，比 requests 同步方式快了80倍左右，速度非常之快。</p>
+
+<h3 id="同一个-session">同一个 session</h3>
+
+<p>aiohttp.ClientSession() 中封装了一个 session 的连接池，并且在默认情况下支持 keepalives，官方建议在程序中使用单个 ClientSession 对象，而不是像上面示例中的那样每次连接都创建一个 ClientSession 对象，除非在程序中遇到大量的不同的服务。</p>
+
+<p>将上面的示例修改为：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"打印 ClientSession 对象"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">resp</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="p">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+       <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+           <span class="n">tasks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">asyncio</span><span class="p">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">)))</span>
+       <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="n">loop</span><span class="p">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"aiohttp版爬虫花费时间为："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 重复30遍
+打印 ClientSession 对象
+&lt;aiohttp.client.ClientSession object at 0x1094aff98&gt;
+aiohttp版爬虫花费时间为：
+0:00:01.778045
+</code></pre></div></div>
+
+<p>从上面爬取的时间可以看出单个 ClientSession 对象比多个 ClientSession 对象多花了3倍时间。ClientSession 对象一直是同一个 0x1094aff98。</p>
+
+<h3 id="返回值">返回值</h3>
+
+<h4 id="json-串">Json 串</h4>
+
+<p>在上面的示例中使用 response.text() 函数返回爬取到的内容，aiohttp 在处理 Json 返回值的时候，可以直接将字符串转换为 Json。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'args': {}, 'headers': {'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Host': 'httpbin.org', 'User-Agent': 'Python/3.7 aiohttp/3.6.2'}, 'origin': '49.80.42.33, 49.80.42.33', 'url': 'https://httpbin.org/get'}
+</code></pre></div></div>
+
+<p>当返回的 Json 串不是一个标准的 Json 时，resp.json() 函数可以传递一个函数对json进行预处理，如：resp.json(replace(a, b))，replace()函数表示 a 替换为 b。</p>
+
+<h4 id="字节流">字节流</h4>
+
+<p>aiohttp 使用 response.read() 函数处理字节流，使用 with open() 方式保存文件或者图片</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/image/png'</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="p">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"/Users/xxx/Desktop/image.png"</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>response.read() 函数可以传递数字参数用于读取多少个字节，如：response.read(3)读取前3个字节。</p>
+
+<h3 id="参数">参数</h3>
+
+<p>aiohttp 可以使用3种方式在 URL 地址中传递参数</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>示例URL地址</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://httpbin.org/get?a=1&amp;b=2
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s">"b"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>示例URL地址</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://httpbin.org/get?a=1&amp;b=2
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="s">'q=aiohttp+python&amp;a=1'</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>示例URL地址</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://httpbin.org/get?q=aiohttp+python&amp;a=1
+</code></pre></div></div>
+
+<h3 id="请求头">请求头</h3>
+
+<p>aiohttp 在自定义请求头时，类似于向 URL 传递参数的方式</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'content-type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span> <span class="s">'User-Agent'</span><span class="p">:</span> <span class="s">'Python/3.7 aiohttp/3.7.2'</span><span class="p">}</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="cookies">COOKIES</h3>
+
+<p>cookies 是整个会话共用的，所以应该在初始化 ClientSession 对象时传递</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">cookies</span> <span class="o">=</span> <span class="p">{</span><span class="s">'cookies'</span><span class="p">:</span> <span class="s">'this is cookies'</span><span class="p">}</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="p">.</span><span class="n">ClientSession</span><span class="p">(</span><span class="n">cookies</span><span class="o">=</span><span class="n">cookies</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="post-方式">POST 方式</h3>
+
+<p>在前面的示例中都是以 GET 方式提交请求，下面用 POST 方式请求</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="s">'1'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="s">'2'</span><span class="p">}</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">'http://httpbin.org/post'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "args": {}, 
+  "data": "", 
+  "files": {}, 
+  "form": {
+    "a": "1", 
+    "b": "2"
+  }, 
+  "headers": {
+    "Accept": "*/*", 
+    "Accept-Encoding": "gzip, deflate", 
+    "Content-Length": "7", 
+    "Content-Type": "application/x-www-form-urlencoded", 
+    "Host": "httpbin.org", 
+    "User-Agent": "Python/3.7 aiohttp/3.6.2"
+  }, 
+  "json": null, 
+  "origin": "49.80.42.33, 49.80.42.33", 
+  "url": "https://httpbin.org/post"
+}
+
+aiohttp版爬虫花费时间为：
+0:00:00.514402
+</code></pre></div></div>
+
+<p>在示例结果中可以看到 form 中的内容就是模拟 POST 方式提交的内容</p>
+
+<h3 id="超时">超时</h3>
+
+<p>在请求网站时，有时会遇到超时问题，aiohttp 中使用 timeout 参数设置，单位为秒数，aiohttp 默认超时时间为5分钟</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://httpbin.org/get'</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="总结">总结</h3>
+
+<p>aiohttp 以异步的方式爬取网站耗时远小于 requests 同步方式，这里列举了一些 aiohttp 常用功能，希望对大家有所帮助。</p>
+
+<h3 id="代码地址">代码地址</h3>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-102">Python-100-day</a></p>
+</blockquote>
+:ET

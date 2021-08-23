@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Spring Boot (十九)：使用 Spring Boot Actuator 监控应用 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="Spring Boot Actuator，监控，应用">
+    <meta name="description"
+          content="监控是企业的一道生命线，Spring Boot Actuator 提供了一套完备的监控方案用来监控 Spring Boot 应用。">
+
+    <link rel="canonical" href="http://localhost:4000/springboot/2018/02/06/spring-boot-actuator.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Spring Boot (十九)：使用 Spring Boot Actuator 监控应用">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Spring Boot (十九)：使用 Spring Boot Actuator 监控应用</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2018/02/06
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>微服务的特点决定了功能模块的部署是分布式的，大部分功能模块都是运行在不同的机器上，彼此通过服务调用进行交互，前后台的业务流会经过很多个微服务的处理和传递，出现了异常如何快速定位是哪个环节出现了问题？</p>
+
+<p>在这种框架下，微服务的监控显得尤为重要。本文主要结合 Spring Boot Actuator，跟大家一起分享微服务 Spring Boot Actuator 的常见用法，方便我们在日常中对我们的微服务进行监控治理。</p>
+
+<h2 id="actuator-监控">Actuator 监控</h2>
+
+<p>Spring Boot 使用“习惯优于配置的理念”，采用包扫描和自动化配置的机制来加载依赖 Jar 中的 Spring bean，不需要任何 Xml 配置，就可以实现 Spring 的所有配置。虽然这样做能让我们的代码变得非常简洁，但是整个应用的实例创建和依赖关系等信息都被离散到了各个配置类的注解上，这使得我们分析整个应用中资源和实例的各种关系变得非常的困难。</p>
+
+<p>Actuator 是 Spring Boot 提供的对应用系统的自省和监控的集成功能，可以查看应用配置的详细信息，例如自动化配置信息、创建的 Spring beans 以及一些环境属性等。</p>
+
+<p>为了保证 actuator 暴露的监控接口的安全性，需要添加安全控制的依赖<code class="highlighter-rouge">spring-boot-start-security</code>依赖，访问应用监控端点时，都需要输入验证信息。Security 依赖，可以选择不加，不进行安全管理，但不建议这么做。</p>
+
+<h2 id="actuator-的-rest-接口">Actuator 的 REST 接口</h2>
+
+<p>Actuator 监控分成两类：原生端点和用户自定义端点；自定义端点主要是指扩展性，用户可以根据自己的实际应用，定义一些比较关心的指标，在运行期进行监控。</p>
+
+<p>原生端点是在应用程序里提供众多 Web 接口，通过它们了解应用程序运行时的内部状况。原生端点又可以分成三类：</p>
+
+<ul>
+  <li>应用配置类：可以查看应用在运行期的静态信息：例如自动配置信息、加载的 springbean 信息、yml 文件配置信息、环境信息、请求映射信息；</li>
+  <li>度量指标类：主要是运行期的动态信息，例如堆栈、请求连、一些健康指标、metrics 信息等；</li>
+  <li>操作控制类：主要是指 shutdown,用户可以发送一个请求将应用的监控功能关闭。</li>
+</ul>
+
+<p>Actuator 提供了 13 个接口，具体如下表所示。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>HTTP 方法</th>
+      <th>路径</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>/auditevents</td>
+      <td>显示应用暴露的审计事件 (比如认证进入、订单失败)</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/beans</td>
+      <td>描述应用程序上下文里全部的 Bean，以及它们的关系</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/conditions</td>
+      <td>就是 1.0 的 /autoconfig ，提供一份自动配置生效的条件情况，记录哪些自动配置条件通过了，哪些没通过</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/configprops</td>
+      <td>描述配置属性(包含默认值)如何注入Bean</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/env</td>
+      <td>获取全部环境属性</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/env/{name}</td>
+      <td>根据名称获取特定的环境属性值</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/flyway</td>
+      <td>提供一份 Flyway 数据库迁移信息</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/liquidbase</td>
+      <td>显示Liquibase 数据库迁移的纤细信息</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/health</td>
+      <td>报告应用程序的健康指标，这些值由 HealthIndicator 的实现类提供</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/heapdump</td>
+      <td>dump 一份应用的 JVM 堆信息</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/httptrace</td>
+      <td>显示HTTP足迹，最近100个HTTP request/repsponse</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/info</td>
+      <td>获取应用程序的定制信息，这些信息由info打头的属性提供</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/logfile</td>
+      <td>返回log file中的内容(如果 logging.file 或者 logging.path 被设置)</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/loggers</td>
+      <td>显示和修改配置的loggers</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/metrics</td>
+      <td>报告各种应用程序度量信息，比如内存用量和HTTP请求计数</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/metrics/{name}</td>
+      <td>报告指定名称的应用程序度量值</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/scheduledtasks</td>
+      <td>展示应用中的定时任务信息</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/sessions</td>
+      <td>如果我们使用了 Spring Session 展示应用中的 HTTP sessions 信息</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/shutdown</td>
+      <td>关闭应用程序，要求endpoints.shutdown.enabled设置为true</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/mappings</td>
+      <td>描述全部的 URI路径，以及它们和控制器(包含Actuator端点)的映射关系</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/threaddump</td>
+      <td>获取线程活动的快照</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="快速上手">快速上手</h2>
+
+<h3 id="相关配置">相关配置</h3>
+
+<p><strong>项目依赖</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+  <span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<p><strong>配置文件</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>info.app.name=spring-boot-actuator
+info.app.version= 1.0.0
+info.app.test=test
+
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=always
+#management.endpoints.web.base-path=/monitor
+
+management.endpoint.shutdown.enabled=true
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">management.endpoints.web.base-path=/monitor</code> 代表启用单独的url地址来监控 Spring Boot 应用，为了安全一般都启用独立的端口来访问后端的监控信息</li>
+  <li><code class="highlighter-rouge">management.endpoint.shutdown.enabled=true</code> 启用接口关闭 Spring Boot</li>
+</ul>
+
+<p>配置完成之后，启动项目就可以继续验证各个监控功能了。</p>
+
+<h2 id="命令详解">命令详解</h2>
+
+<p>在 Spring Boot 2.x 中为了安全期间，Actuator 只开放了两个端点 <code class="highlighter-rouge">/actuator/health</code> 和 <code class="highlighter-rouge">/actuator/info</code>。可以在配置文件中设置打开。</p>
+
+<p>可以打开所有的监控点</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>management.endpoints.web.exposure.include=*
+</code></pre></div></div>
+
+<p>也可以选择打开部分</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>management.endpoints.web.exposure.exclude=beans,trace
+</code></pre></div></div>
+
+<p>Actuator 默认所有的监控点路径都在<code class="highlighter-rouge">/actuator/*</code>，当然如果有需要这个路径也支持定制。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>management.endpoints.web.base-path=/manage
+</code></pre></div></div>
+
+<p>设置完重启后，再次访问地址就会变成<code class="highlighter-rouge">/manage/*</code></p>
+
+<p>Actuator 几乎监控了应用涉及的方方面面，我们重点讲述一些经常在项目中常用的命令。</p>
+
+<h3 id="health">health</h3>
+
+<p>health 主要用来检查应用的运行状态，这是我们使用最高频的一个监控点。通常使用此接口提醒我们应用实例的运行状态，以及应用不”健康“的原因，比如数据库连接、磁盘空间不够等。</p>
+
+<p>默认情况下 health 的状态是开放的，添加依赖后启动项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/health</code>即可看到应用的状态。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "status" : "UP"
+}
+</code></pre></div></div>
+
+<p>默认情况下，最终的 Spring Boot 应用的状态是由 HealthAggregator 汇总而成的，汇总的算法是：</p>
+
+<ul>
+  <li>1 设置状态码顺序：<code class="highlighter-rouge">setStatusOrder(Status.DOWN, Status.OUT_OF_SERVICE, Status.UP, Status.UNKNOWN);</code>。</li>
+  <li>2 过滤掉不能识别的状态码。</li>
+  <li>3 如果无任何状态码，整个 Spring Boot 应用的状态是 UNKNOWN。</li>
+  <li>4 将所有收集到的状态码按照 1 中的顺序排序。</li>
+  <li>5 返回有序状态码序列中的第一个状态码，作为整个 Spring Boot 应用的状态。</li>
+</ul>
+
+<p>health  通过合并几个健康指数检查应用的健康情况。Spring Boot Actuator 有几个预定义的健康指标比如<code class="highlighter-rouge">DataSourceHealthIndicator</code>, <code class="highlighter-rouge">DiskSpaceHealthIndicator</code>, <code class="highlighter-rouge">MongoHealthIndicator</code>, <code class="highlighter-rouge">RedisHealthIndicator</code>等，它使用这些健康指标作为健康检查的一部分。</p>
+
+<p>举个例子，如果你的应用使用 Redis，<code class="highlighter-rouge">RedisHealthindicator</code> 将被当作检查的一部分；如果使用 MongoDB，那么<code class="highlighter-rouge">MongoHealthIndicator</code> 将被当作检查的一部分。</p>
+
+<p>可以在配置文件中关闭特定的健康检查指标，比如关闭 redis 的健康检查：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>management.health.redise.enabled=false
+</code></pre></div></div>
+
+<p>默认，所有的这些健康指标被当作健康检查的一部分。</p>
+
+<h3 id="info">info</h3>
+
+<p>info 就是我们自己配置在配置文件中以 info 开头的配置信息，比如我们在示例项目中的配置是：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>info.app.name=spring-boot-actuator
+info.app.version= 1.0.0
+info.app.test= test
+</code></pre></div></div>
+
+<p>启动示例项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/info</code>返回部分信息如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "app": {
+    "name": "spring-boot-actuator",
+    "version": "1.0.0",
+    "test":"test"
+  }
+}
+</code></pre></div></div>
+
+<h3 id="beans">beans</h3>
+
+<p>根据示例就可以看出，展示了 bean 的别名、类型、是否单例、类的地址、依赖等信息。</p>
+
+<p>启动示例项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/beans</code>返回部分信息如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "context": "application:8080:management",
+    "parent": "application:8080",
+    "beans": [
+      {
+        "bean": "embeddedServletContainerFactory",
+        "aliases": [
+          
+        ],
+        "scope": "singleton",
+        "type": "org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory",
+        "resource": "null",
+        "dependencies": [
+          
+        ]
+      },
+      {
+        "bean": "endpointWebMvcChildContextConfiguration",
+        "aliases": [
+          
+        ],
+        "scope": "singleton",
+        "type": "org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration$$EnhancerBySpringCGLIB$$a4a10f9d",
+        "resource": "null",
+        "dependencies": [
+          
+        ]
+      }
+  }
+]
+</code></pre></div></div>
+
+<h3 id="conditions">conditions</h3>
+
+<p>Spring Boot 的自动配置功能非常便利，但有时候也意味着出问题比较难找出具体的原因。使用 conditions 可以在应用运行时查看代码了某个配置在什么条件下生效，或者某个自动配置为什么没有生效。</p>
+
+<p>启动示例项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/conditions</code>返回部分信息如下：</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"positiveMatches"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="nl">"DevToolsDataSourceAutoConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"notMatched"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"condition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DevToolsDataSourceAutoConfiguration.DevToolsDataSourceCondition"</span><span class="p">,</span><span class="w"> 
+                    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DevTools DataSource Condition did not find a single DataSource bean"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w"> 
+            </span><span class="nl">"matched"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w"> 
+        </span><span class="nl">"RemoteDevToolsAutoConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"notMatched"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"condition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnPropertyCondition"</span><span class="p">,</span><span class="w"> 
+                    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@ConditionalOnProperty (spring.devtools.remote.secret) did not find property 'secret'"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w"> 
+            </span><span class="nl">"matched"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"condition"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnClassCondition"</span><span class="p">,</span><span class="w"> 
+                    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@ConditionalOnClass found required classes 'javax.servlet.Filter', 'org.springframework.http.server.ServerHttpRequest'; @ConditionalOnMissingClass did not find unwanted class"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="heapdump">heapdump</h3>
+
+<p>返回一个 GZip 压缩的 JVM 堆 dump</p>
+
+<p>启动示例项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/heapdump</code>会自动生成一个 Jvm 的堆文件 heapdump，我们可以使用 JDK 自带的 Jvm 监控工具 VisualVM 打开此文件查看内存快照。类似如下图：</p>
+
+<p><img src="http://favorites.ren/assets/images/2018/springboot/heapdump.png" alt="" /></p>
+
+<h3 id="shutdown">shutdown</h3>
+
+<p>开启接口优雅关闭 Spring Boot 应用，要使用这个功能首先需要在配置文件中开启：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>management.endpoint.shutdown.enabled=true
+</code></pre></div></div>
+
+<p>配置完成之后，启动示例项目，使用 curl 模拟 post 请求访问 shutdown 接口。</p>
+<blockquote>
+  <p>shutdown 接口默认只支持 post 请求。</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X POST "http://localhost:8080/actuator/shutdown" 
+{
+    "message": "Shutting down, bye..."
+}
+</code></pre></div></div>
+
+<p>此时你会发现应用已经被关闭。</p>
+
+<h3 id="mappings">mappings</h3>
+
+<p>描述全部的 URI 路径，以及它们和控制器的映射关系</p>
+
+<p>启动示例项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/mappings</code>返回部分信息如下：</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"/**/favicon.ico"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"bean"</span><span class="p">:</span><span class="w"> </span><span class="s2">"faviconHandlerMapping"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"{[/hello]}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"bean"</span><span class="p">:</span><span class="w"> </span><span class="s2">"requestMappingHandlerMapping"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public java.lang.String com.neo.controller.HelloController.index()"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"{[/error]}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"bean"</span><span class="p">:</span><span class="w"> </span><span class="s2">"requestMappingHandlerMapping"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="threaddump">threaddump</h3>
+
+<p>/threaddump 接口会生成当前线程活动的快照。这个功能非常好，方便我们在日常定位问题的时候查看线程的情况。
+主要展示了线程名、线程ID、线程的状态、是否等待锁资源等信息。</p>
+
+<p>启动示例项目，访问：<code class="highlighter-rouge">http://localhost:8080/actuator/threaddump</code>返回部分信息如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "threadName": "http-nio-8088-exec-6",
+    "threadId": 49,
+    "blockedTime": -1,
+    "blockedCount": 0,
+    "waitedTime": -1,
+    "waitedCount": 2,
+    "lockName": "java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1630a501",
+    "lockOwnerId": -1,
+    "lockOwnerName": null,
+    "inNative": false,
+    "suspended": false,
+    "threadState": "WAITING",
+    "stackTrace": [
+      {
+        "methodName": "park",
+        "fileName": "Unsafe.java",
+        "lineNumber": -2,
+        "className": "sun.misc.Unsafe",
+        "nativeMethod": true
+      },
+      ...
+      {
+        "methodName": "run",
+        "fileName": "TaskThread.java",
+        "lineNumber": 61,
+        "className": "org.apache.tomcat.util.threads.TaskThread$WrappingRunnable",
+        "nativeMethod": false
+      }
+      ...
+    ],
+    "lockInfo": {
+      "className": "java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject",
+      "identityHashCode": 372286721
+    }
+  }
+  ...
+]
+</code></pre></div></div>
+
+<p>生产出现问题的时候，可以通过应用的线程快照来检测应用正在执行的任务。</p>
+
+<blockquote>
+  <p>文章内容已经升级到 Spring Boot 2.x</p>
+</blockquote>
+
+<p><strong><a href="https://github.com/ityouknow/spring-boot-examples/tree/master/spring-boot-actuator">示例代码-github</a></strong></p>
+
+<p><strong><a href="https://gitee.com/ityouknow/spring-boot-examples/tree/master/spring-boot-actuator">示例代码-码云</a></strong></p>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready">Spring Boot Actuator: Production-ready features</a><br />
+<a href="http://mp.163.com/v2/article/detail/D7SQCHGT0511FQO9.html">对没有监控的微服务Say No！</a>  <br />
+<a href="https://www.jianshu.com/p/af9738634a21">Spring Boot Actuator 使用</a></p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/springboot/2018/02/06/spring-boot-actuator.html';
+        this.page.identifier = '/springboot/2018/02/06/spring-boot-actuator.html';
+        this.page.title = 'Spring Boot (十九)：使用 Spring Boot Actuator 监控应用';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/springboot/2018/02/06/spring-boot-actuator.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

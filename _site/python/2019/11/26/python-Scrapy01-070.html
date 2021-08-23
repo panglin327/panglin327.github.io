@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第70天： Python Scrapy 爬虫框架及搭建 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 戴景波&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/11/26/python-Scrapy01-070.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第70天： Python Scrapy 爬虫框架及搭建">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第70天： Python Scrapy 爬虫框架及搭建</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/26
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 戴景波</p>
+
+<h2 id="scrapy-框架实现爬虫的基本原理">Scrapy 框架实现爬虫的基本原理</h2>
+
+<p>Scrapy 就是封装好的框架，你可以专心编写爬虫的核心逻辑，无需自己编写与爬虫逻辑无关的代码，套用这个框架就可以实现以上功能——爬取到想要的数据。</p>
+
+<p>Scrapy是一个Python实现的轻量级爬虫框架，它借助Twisted实现异步抓取。</p>
+
+<p>Scrapy 是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+
+<p>本文档将通过介绍Scrapy背后的概念使您对其工作原理有所了解，如果暂时理解不深也没关系，后边会结合实例具体介绍。</p>
+
+<!--more-->
+
+<h2 id="python-爬虫基本流程">Python 爬虫基本流程</h2>
+
+<h2 id="a-发起请求b-解析内容c-获取响应内容d-保存数据">A 发起请求———B 解析内容———C 获取响应内容———D 保存数据</h2>
+
+<p>A 通过 HTTP 向目标站点发起请求，即发送一个 Request ，请求可以包含额外的 headers 等信息，等待服务器响应。</p>
+
+<p>B 得到的内容可能是 HTML ，可以用正则表达式、网页解析库进行解析。可能是 Json ，可以直接转为 Json 对象解析，可能是二进制数据，可以做保存或者进一步的处理。</p>
+
+<p>C 如果服务器能正常响应，会得到一个 Response ， Response 的内容便是所要获取的页面内容，类型可能有 HTML ， Json 字符串，二进制数据（如图片视频）等类型。</p>
+
+<p>D 保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件。</p>
+
+<p>搭建自己本机环境如下：Windows7 64bit———Python3.7———Pycharm64</p>
+
+<h2 id="安装-python安装-pycharm安装-scrapy新建爬虫项目">安装 Python———安装 Pycharm———安装 Scrapy———新建爬虫项目</h2>
+
+<p>简单解释：将 Python 比作 Java ，那么 Pycharm 就相当于 eclipse ， Pycharm 就是 Python 语言的运行环境 IDE 工具。</p>
+
+<h2 id="安装-python">安装 Python</h2>
+
+<p>在 Python 的官网 www.python.org 中找到最新版本的 Python 安装包，点击进行下载，请注意，当你的电脑是32位的机器，请选择32位的安装包，如果是64位的，请选择64位的安装包；</p>
+
+<p>我自己机器是 win7 64bit 所以我下载的是 python-3.7.4.amd64.exe，其中的 add python 3.7 to PATH 一定要勾选。</p>
+
+<p>另外安装 python 路径不要有中文和空格，避免以后麻烦。后边就点击下一步即可。</p>
+
+<p>如果忘记勾选则需要手动添加环境变量：（需要添加两个： c:\python3.7.0;c:\python3.7.0\Scripts）</p>
+
+<p>右键计算机——点击属性——点击高级系统设置——高级——环境变量——用户变量——PATH  添加自己安装 python 的路径。</p>
+
+<h2 id="安装-pycharm">安装 Pycharm</h2>
+
+<p>本篇对于环境的搭建只是起到抛砖引玉的作用，建议大家以下边做参考。</p>
+
+<p>https://www.runoob.com/w3cnote/pycharm-windows-install.html</p>
+
+<h2 id="安装-scrapy">安装 Scrapy</h2>
+
+<p>由于安装 Scrapy 不是本系列重点，所以仅展示 Windows 系统上安装 Scrapy 的步骤。注意：一定按顺序安装。 Cmd 进入 dos 窗口：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\Administrator&gt;python
+Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 27 2018, 04:59:51) [MSC v.1914 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+C:\Users\Administrator&gt;python -m pip -V
+pip 19.0.3 from c:\python3.7.0\lib\site-packages\pip (python 3.7)  
+1.python -m pip install --upgrade pip
+2.python -m pip install Twisted-18.9.0-cp37-cp37m-win_amd64.whl
+3.python -m pip install pypiwin32
+4.python -m pip install scrapy
+5.python -m pip install requests
+</code></pre></div></div>
+
+<p>如果中途安装遇到问题请及时 Google 查阅资料，查阅就是积累的过程。</p>
+
+<h2 id="scrapy-创建新项目">Scrapy 创建新项目：</h2>
+
+<p>Pycharm 中用 alt+F12 切换到命令行，在命令行输入：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">venv2</span><span class="p">)</span> <span class="n">E</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">scrapy</span> <span class="n">startproject</span> <span class="n">peilv</span>
+</code></pre></div></div>
+
+<p>就会生成 Scrapy 项目，项目名称是 peilv ，结构如下：主要改写2个文件：“items、settings”，新增2个文件：“爬虫主程序”、itemcsvexporter。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>peilv
+scrapy.cfg                     #创建项目时自动生成，项目的配置文件
+peilv/
+    __init__.py                #创建项目时自动生成，无需任何改动
+    items.py                   #创建项目时自动生成，定义爬取的字段    
+    pipelines.py               #创建项目时自动生成，如存入文件，无需任何改动    
+    settings.py                #创建项目时自动生成，将爬取字段按顺序输出    
+    middlewares.py             #创建项目时自动生成，无需任何改动    
+    spiders/   
+        __init__.py            #创建项目时自动生成，无需任何改动	
+	itemcsvexporter.py     #需自己编写，代码固定	
+        爬虫主程序.py           #需自己编写，爬虫的主程序
+</code></pre></div></div>
+
+<h2 id="itemspy">items.py：</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="k">class</span> <span class="nc">PeilvItem</span><span class="p">(</span><span class="n">scrapy</span><span class="p">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="c1"># define the fields for your item here like:
+</span>    <span class="n">cc</span>  <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">Field</span><span class="p">()</span><span class="c1">#changci
+</span>    <span class="n">li</span> <span class="o">=</span>  <span class="n">scrapy</span><span class="p">.</span><span class="n">Field</span><span class="p">()</span><span class="c1">#libo
+</span>    <span class="n">b5</span>  <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">Field</span><span class="p">()</span><span class="c1">#bet365
+</span></code></pre></div></div>
+
+<p>以上是定义您想抓取的数据，在Scrapy中， 这是通过 Scrapy Items 来完成的。通过scrapy.Field()方法创建需要存储的字段，比如cc存储比赛的场次信息，li存储立博的赔率信息，等等。</p>
+
+<p>关于这个items.py，你只要考虑它就是一个存储数据的容器，可以考虑成一个结构体，你所有需要提取的信息都在这里面存着。</p>
+
+<p>这里我们需要存储3个变量，cc，li，b5，所以我在里面加入三个变量，就这么简单。</p>
+
+<h2 id="pipelinespy">pipelines.py：</h2>
+
+<p>一般来说，如果你要操作数据库什么的，需要在这里处理items，你可以把items写入数据库，但是今天我们用不到数据库，scrapy自带了一个很好的功能就是Feed exports，它支持多种格式的自动输出。</p>
+
+<p>所以我们直接用这个就好了，pipelines维持不变。</p>
+
+<h2 id="settingspy">settings.py：</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="n">FEED_EXPORT_ENCODING</span> <span class="o">=</span> <span class="s">"gb18030"</span> <span class="c1">#解决导出的 Excel 文件中文乱码问题
+</span><span class="p">...</span>
+<span class="n">FEED_EXPORTERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'csv'</span><span class="p">:</span> <span class="s">'peilv.spiders.itemcsvexporter.itemcsvexporter'</span><span class="p">,</span>
+<span class="p">}</span>   
+<span class="n">FIELDS_TO_EXPORT</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'cc'</span><span class="p">,</span><span class="c1">#比赛场次
+</span>    <span class="s">'li'</span><span class="p">,</span><span class="c1">#立博的赔率
+</span>    <span class="s">'b5'</span><span class="p">,</span><span class="c1">#bet365的赔率
+</span>   <span class="p">]</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>FEED_EXPORT_ENCODING用gb18030常量来解决中文乱码问题，FEED_EXPORTERS表明了输出文件的格式，FIELDS_TO_EXPORT给定了输出字段的顺序。</p>
+
+<h2 id="itemcsvexporterpy">itemcsvexporter.py：</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scrapy.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">scrapy.exporters</span> <span class="kn">import</span> <span class="n">CsvItemExporter</span>
+<span class="c1">#指定输出到 csv 文件中字段的顺序，结合 setting.py
+</span><span class="k">class</span> <span class="nc">itemcsvexporter</span><span class="p">(</span><span class="n">CsvItemExporter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>这里需要注意的是有的版本不支持from scrapy.contrib.exporter import CsvItemExporter类，所以用from scrapy.exporters import CsvItemExporter替换即可。
+通常结合setting中的字段顺序，规定最终CSV文件中的列排序规则。</p>
+
+<h2 id="爬虫主程序py下一篇详细介绍">爬虫主程序.py：(下一篇详细介绍)</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="n">ls_url</span> <span class="o">=</span> <span class="s">'https://live.leisu.com/wanchang?date='</span><span class="c1">#ls历史https://live.leisu.com/wanchang?date=20190606
+</span><span class="k">class</span> <span class="nc">LiveJiangSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="p">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'FBP'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">'leisu.com'</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">d1</span><span class="o">=</span><span class="s">'20190606'</span> <span class="c1">#历史的比赛
+</span>            <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">ls_url</span> <span class="o">+</span> <span class="n">d1</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parseLs</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'d1'</span><span class="p">:</span> <span class="n">d1</span><span class="p">})</span> <span class="c1">#历史的比赛
+</span>            <span class="c1"># request = scrapy.http.FormRequest(wl_url + d1,callback=self.parseWl, meta={'d1': d1})#未来的比赛
+</span>            <span class="k">yield</span> <span class="n">request</span>
+    <span class="k">def</span> <span class="nf">parseLs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">response</span><span class="p">):</span>
+        <span class="n">d2</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'d1'</span><span class="p">]</span>
+        <span class="n">sel</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">racelist</span><span class="o">=</span><span class="p">[</span><span class="n">e5</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"'"</span><span class="p">)</span> <span class="k">for</span> <span class="n">e5</span> <span class="ow">in</span> <span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-status="8"]/@data-id'</span><span class="p">).</span><span class="n">extract</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">raceid</span> <span class="ow">in</span> <span class="n">racelist</span><span class="p">:</span><span class="c1">#raceid=['2674547'];raceid[0]=2674547
+</span>            <span class="n">item</span> <span class="o">=</span> <span class="n">PeilvItem</span><span class="p">()</span>
+            <span class="n">sel_div</span><span class="o">=</span><span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-id='</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s">']/div[@class="find-table layout-grid-tbody hide"]/div[@class="clearfix-row"]'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span> <span class="o">==</span> <span class="s">"[]"</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="s">""</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s">"周"</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]:</span><span class="c1">#取竞彩-周一001等
+</span>                <span class="n">plurl</span><span class="o">=</span><span class="s">'https://live.leisu.com/3in1-'</span><span class="o">+</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">plurl</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parse</span><span class="p">,</span><span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'item'</span><span class="p">:</span><span class="n">item</span><span class="p">})</span>
+                <span class="k">yield</span> <span class="n">request</span> <span class="c1">#并非return，yield压队列，parse函数将会被当做一个生成器使用。scrapy会逐一获取parse方法中生成的结果，并没有直接执行parse，循环完成后，再执行parse
+</span>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'--------------into parse----------------------'</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'item'</span><span class="p">]</span>
+        <span class="n">pv</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">pl_str</span> <span class="o">=</span> <span class="s">'/td[@class="bd-left"]/div[@class="begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"]/span[@class="float-left col-3"]/text()'</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">item</span><span class="c1">#程序在取得各个页面的items前，会先处理完之前所有的request队列里的请求，然后再提取items
+</span></code></pre></div></div>
+
+<p>爬虫主程序实现了爬取网页数据的具体逻辑，在下一讲会结合一个具体事例详细介绍。</p>
+
+<p>改写完程序后，最终执行命令：
+Pycharm 用 alt+F12 切换到命令行在项目 peilv 路径上执行：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">venv2</span><span class="p">)</span> <span class="n">E</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">cd</span> <span class="n">peilv</span>\<span class="n">peilv</span> 
+<span class="p">(</span><span class="n">venv2</span><span class="p">)</span> <span class="n">E</span><span class="p">:</span>\<span class="n">peilv</span>\<span class="n">peilv</span><span class="o">&gt;</span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">FBP</span> <span class="o">-</span><span class="n">o</span> <span class="n">BaseData</span><span class="p">.</span><span class="n">csv</span>
+</code></pre></div></div>
+
+<p>其中 FBP 是在“爬虫主程序.py”定义的——name = ‘FBP’，“-o BaseData.csv” 是将爬取的数据输出到 csv 文件中。</p>
+
+<h2 id="总结">总结</h2>
+<p>以上首先创建一个工程和Spider模板，然后编写Spider，编写Item Pipeline，借助了Scrapy中的三个类——Request类、Response类和Item类。</p>
+
+<p>同时我们以一个实战项目为依托，将建立 Scrapy 项目的过程从零开始，深入浅出，让读者能够实践爬虫的整个过程。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-070">Python-100-days-day070</a></p>
+</blockquote>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/11/26/python-Scrapy01-070.html';
+        this.page.identifier = '/python/2019/11/26/python-Scrapy01-070.html';
+        this.page.title = '第70天： Python Scrapy 爬虫框架及搭建';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/11/26/python-Scrapy01-070.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

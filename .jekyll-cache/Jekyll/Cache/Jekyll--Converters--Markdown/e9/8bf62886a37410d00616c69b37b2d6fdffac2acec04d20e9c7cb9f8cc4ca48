@@ -1,0 +1,403 @@
+I"�<p>by 太阳雪</p>
+
+<p>用户登录功能是 Web 系统一个基本功能，是为用户提供更好服务的基础，在 Flask 框架中怎么做用户登录功能呢？今天我们学习一下 Flask 的用户登录组件 <code class="highlighter-rouge">Flask-Login</code></p>
+
+<!--more-->
+
+<p>Python 之所以如此强大和流行，除了本身易于学习和功能丰富之外，最重要的是因为各种类库和组件，可以说没有 Python 做不了的事情，只有不知道的组件。</p>
+
+<p>但是同一个问题领域中的组件或类库名称、功能可能近似，版本多而混乱，会给使用者造成了困扰，比如之前讲述的 <code class="highlighter-rouge">Flask-Bootstrap</code> 和 <code class="highlighter-rouge">Bootstrap-Flask</code> ，以及今天要讲述的用户登录，由于方式多样，功能相似，所以出现了很多类似的框架，比如 <code class="highlighter-rouge">Flask-Login</code> 、<code class="highlighter-rouge">Flask-Auth</code> 、<code class="highlighter-rouge">Flask-Security</code> 等等</p>
+
+<p>之所以选择 <code class="highlighter-rouge">Flask-Login</code>，是因为它基于 <code class="highlighter-rouge">Session</code>，适合做有 UI 交互的用户登录，用我们学习了的 Flask 表单做演示，更容易理清用户登录的流程</p>
+
+<h2 id="用户登录说明">用户登录说明</h2>
+
+<p><code class="highlighter-rouge">Flask-Login</code> 和其他 Flask 组件并没有太大区别，有必要开始之前了解下用户登录的步骤：</p>
+
+<ul>
+  <li>1 登录：用户提供登录凭证（如用户名和密码）提交给服务器</li>
+  <li>2 建立会话：服务器验证用户提供的凭证，如果通过验证，则建立会话（ <code class="highlighter-rouge">Session</code> ），并返回给用户一个会话号（ <code class="highlighter-rouge">Session id</code> ）</li>
+  <li>3 验证：用户在后续的交互中提供会话号，服务器将根据会话号（ <code class="highlighter-rouge">Session id</code> ）确定用户是否有效</li>
+  <li>4 登出：当用户不再与服务器交互时，注销与服务器建立的会话</li>
+</ul>
+
+<p>依据以上步骤，我们设计一个应用场景，作为实现：</p>
+
+<ul>
+  <li>提供一个主页，需要登录才能访问</li>
+  <li>如果没有登录，跳转到登录页面，登录成功再跳回</li>
+  <li>登录成功后，可以点击登出退出登录</li>
+  <li>在登录页面提供注册连接，点击后跳转到注册页面</li>
+  <li>注册完成后，跳转到登录页面</li>
+</ul>
+
+<h2 id="安装">安装</h2>
+
+<p>使用 <code class="highlighter-rouge">pip</code> 安装 <code class="highlighter-rouge">Flask-Login</code> 组件：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>flask-login
+</code></pre></div></div>
+
+<p>如果一切正常，可以将 <code class="highlighter-rouge">Flask-Login</code> 模块引入:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">from</span> <span class="n">flask</span><span class="o">-</span><span class="n">login</span> <span class="kn">import</span> <span class="nn">LoginManager</span>
+<span class="o">&gt;&gt;&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>本次实践中，会用到 <code class="highlighter-rouge">Flask Form</code> 相关功能，请确保已经安装了 <code class="highlighter-rouge">Flask-WTF</code> 组件，详见 <strong>Web 开发 Form</strong></p>
+</blockquote>
+
+<h2 id="初始化">初始化</h2>
+
+<p>先实例化 <code class="highlighter-rouge">login_manager</code> 对象，然后用它来初始化应用：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">LoginManager</span>
+<span class="c1"># ...
+</span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>  <span class="c1"># 创建 Flask 应用
+</span>
+<span class="n">app</span><span class="p">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="s">'abc'</span>  <span class="c1"># 设置表单交互密钥
+</span>
+<span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">()</span>  <span class="c1"># 实例化登录管理对象
+</span><span class="n">login_manager</span><span class="p">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>  <span class="c1"># 初始化应用
+</span><span class="n">login_manager</span><span class="p">.</span><span class="n">login_view</span> <span class="o">=</span> <span class="s">'login'</span>  <span class="c1"># 设置用户登录视图函数 endpoint
+</span></code></pre></div></div>
+
+<ul>
+  <li>表单交互时，所以要设置 <code class="highlighter-rouge">secret_key</code>，以防跨域攻击（ CSRF ）</li>
+  <li>登录管理对象 <code class="highlighter-rouge">login_manager</code> 的 <code class="highlighter-rouge">login_view</code> 属性，指定登录页面的视图函数 (登录页面的 <code class="highlighter-rouge">endpoint</code>)，即验证失败时要跳转的页面，这里设置为登录页</li>
+</ul>
+
+<h2 id="用户模块">用户模块</h2>
+
+<h3 id="用户数据">用户数据</h3>
+
+<p>要做用户验证，需要维护用户记录，为了方便演示，使用一个全局列表 <code class="highlighter-rouge">USERS</code> 来记录用户信息，并且初始化了两个用户信息：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">werkzeug.security</span> <span class="kn">import</span> <span class="n">generate_password_hash</span>
+<span class="c1"># ...
+</span><span class="n">USERS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s">"name"</span><span class="p">:</span> <span class="s">'lily'</span><span class="p">,</span>
+        <span class="s">"password"</span><span class="p">:</span> <span class="n">generate_password_hash</span><span class="p">(</span><span class="s">'123'</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s">"name"</span><span class="p">:</span> <span class="s">'tom'</span><span class="p">,</span>
+        <span class="s">"password"</span><span class="p">:</span> <span class="n">generate_password_hash</span><span class="p">(</span><span class="s">'123'</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>用户信息只包含最基本的信息：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">name</code> 为登录用户名</li>
+  <li><code class="highlighter-rouge">password</code> 为登录密码，<strong>切忌：无论如何不要在系统中存放用户密码的明文</strong>，幸运的是模块 <code class="highlighter-rouge">werkzeug.security</code> 提供了 <code class="highlighter-rouge">generate_password_hash</code> 方法，使用 sha256 加密算法将字符串变为密文</li>
+  <li><code class="highlighter-rouge">id</code> 为用户识别码，相当于主键</li>
+</ul>
+
+<p>基于用户信息，定义两方法，用来创建( <code class="highlighter-rouge">create_user</code> )和获取( <code class="highlighter-rouge">get_user</code> )用户信息:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">werkzeug.security</span> <span class="kn">import</span> <span class="n">generate_password_hash</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="c1"># ...
+</span><span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">user_name</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="s">"""创建一个用户"""</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"name"</span><span class="p">:</span> <span class="n">user_name</span><span class="p">,</span>
+        <span class="s">"password"</span><span class="p">:</span> <span class="n">generate_password_hash</span><span class="p">(</span><span class="n">password</span><span class="p">),</span>
+        <span class="s">"id"</span><span class="p">:</span> <span class="n">uuid</span><span class="p">.</span><span class="n">uuid4</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="n">USERS</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">user_name</span><span class="p">):</span>
+    <span class="s">"""根据用户名获得用户记录"""</span>
+    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">USERS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">user</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span> <span class="o">==</span> <span class="n">user_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">user</span>
+    <span class="k">return</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">create_user</code> 接受用户名和密码，创建用户记录，对密码明文进行加密，并添加用户 <code class="highlighter-rouge">ID</code> (使用 <code class="highlighter-rouge">uuid</code> 模板的 <code class="highlighter-rouge">uuid4</code> 方法生成一个全球唯一码)，存储到 <code class="highlighter-rouge">USERS</code> 列表中</li>
+  <li><code class="highlighter-rouge">get_user</code> 接受用户名，从 <code class="highlighter-rouge">USERS</code> 列表中查找用户记录，没有返回空</li>
+</ul>
+
+<h3 id="用户类">用户类</h3>
+
+<p>下面创建一个用户类，类维护用户的登录状态，是生成 <code class="highlighter-rouge">Session</code> 的基础，<code class="highlighter-rouge">Flask-Login</code> 提供了用户基类 <code class="highlighter-rouge">UserMixin</code>，方便定义自己的用户类，我们定义一个 <code class="highlighter-rouge">User</code>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">UserMixin</span>  <span class="c1"># 引入用户基类
+</span><span class="kn">from</span> <span class="nn">werkzeug.security</span> <span class="kn">import</span> <span class="n">check_password_hash</span>
+<span class="c1"># ...
+</span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
+    <span class="s">"""用户类"""</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">password_hash</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"password"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="nb">id</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"id"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">verify_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="s">"""密码验证"""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">password_hash</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">check_password_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">password_hash</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""获取用户ID"""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="nb">id</span>
+
+    <span class="o">@</span><span class="nb">staticmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+        <span class="s">"""根据用户ID获取用户实体，为 login_user 方法提供支持"""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">USERS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<ul>
+  <li>实例化方法接受一个用户记录，即 <code class="highlighter-rouge">USERS</code> 列表中的一个元素，用来初始化成员变量</li>
+  <li><code class="highlighter-rouge">get_id</code> 方法返回用户实例的 <code class="highlighter-rouge">ID</code>，这是必须实现的，不然 <code class="highlighter-rouge">Flask-Login</code> 将无法判断用户是否被验证</li>
+  <li><code class="highlighter-rouge">get</code> 是个静态方法，即可以通过类之间调用，是为了在获取验证后的用户实例时用的，必须接受参数 <code class="highlighter-rouge">ID</code>，返回 <code class="highlighter-rouge">ID</code> 所以对应的用户实例</li>
+  <li><code class="highlighter-rouge">verify_password</code> 方法接受一个明文密码，与用户实例中的密码做校验，将被用在用户验证的判断逻辑中</li>
+</ul>
+
+<h3 id="加载登录用户">加载登录用户</h3>
+
+<p>有了用户类，并且实现了 <code class="highlighter-rouge">get</code> 方法，就可以实现 <code class="highlighter-rouge">login_manager</code> 的 <code class="highlighter-rouge">user_loader</code> 回调函数了，<code class="highlighter-rouge">user_loader</code> 的作用是根据 <code class="highlighter-rouge">Session</code> 信息加载登录用户，它根据用户 <code class="highlighter-rouge">ID</code>，返回一个用户实例:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">login_manager</span><span class="p">.</span><span class="n">user_loader</span>  <span class="c1"># 定义获取登录用户的方法
+</span><span class="k">def</span> <span class="nf">load_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">User</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="登录页面">登录页面</h2>
+
+<p>页面包括后台和展现(可以理解成前台)两部分</p>
+
+<h3 id="后台">后台</h3>
+
+<p>根据前面介绍的 <code class="highlighter-rouge">Form</code> 相关知识 (参见 <strong>Web 开发 Form</strong> )，需要定义一个 <code class="highlighter-rouge">Form</code> 类，用来设置页面的元素和规则:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">wtforms</span> <span class="kn">import</span> <span class="n">StringField</span><span class="p">,</span> <span class="n">PasswordField</span>
+<span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="kn">import</span> <span class="n">DataRequired</span><span class="p">,</span> <span class="n">EqualTo</span>
+<span class="c1"># ...
+</span><span class="k">class</span> <span class="nc">LoginForm</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="s">"""登录表单类"""</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s">'用户名'</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="s">'密码'</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+</code></pre></div></div>
+
+<ul>
+  <li>定义用户名和密码两个字段，分别是字符类型字段和密码类型字段，密码类型字段会在页面上显示为密码形式，以提高安全性</li>
+  <li>为两个字段设置必填规则</li>
+</ul>
+
+<p>然后定义一个用户登录的视图函数 <code class="highlighter-rouge">login</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">login_user</span>
+<span class="c1"># ...
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/login/'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s">'GET'</span><span class="p">,</span> <span class="s">'POST'</span><span class="p">))</span>  <span class="c1"># 登录
+</span><span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">LoginForm</span><span class="p">()</span>
+    <span class="n">emsg</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">form</span><span class="p">.</span><span class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="n">user_name</span> <span class="o">=</span> <span class="n">form</span><span class="p">.</span><span class="n">username</span><span class="p">.</span><span class="n">data</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">form</span><span class="p">.</span><span class="n">password</span><span class="p">.</span><span class="n">data</span>
+        <span class="n">user_info</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span><span class="n">user_name</span><span class="p">)</span>  <span class="c1"># 从用户数据中查找用户记录
+</span>        <span class="k">if</span> <span class="n">user_info</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">emsg</span> <span class="o">=</span> <span class="s">"用户名或密码密码有误"</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">user_info</span><span class="p">)</span>  <span class="c1"># 创建用户实体
+</span>            <span class="k">if</span> <span class="n">user</span><span class="p">.</span><span class="n">verify_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>  <span class="c1"># 校验密码
+</span>                <span class="n">login_user</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>  <span class="c1"># 创建用户 Session
+</span>                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">args</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'next'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">url_for</span><span class="p">(</span><span class="s">'index'</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">emsg</span> <span class="o">=</span> <span class="s">"用户名或密码密码有误"</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'login.html'</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">emsg</span><span class="o">=</span><span class="n">emsg</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>分析下视图函数的逻辑:</p>
+
+<ul>
+  <li>视图函数同时支持 <code class="highlighter-rouge">GET</code> 和 <code class="highlighter-rouge">POST</code> 方法</li>
+  <li><code class="highlighter-rouge">form.validate_on_submit()</code> 可以判断用户是否完整的提交了表单，只对 <code class="highlighter-rouge">POST</code> 有效，所以可以用来判断请求方式</li>
+  <li>如果是 <code class="highlighter-rouge">POST</code> 请求，获取提交数据，通过 <code class="highlighter-rouge">get_user</code> 方法查找是否存在该用户</li>
+  <li>如果用户存在，则创建用户实体，并校验登录密码</li>
+  <li>校验通过后，调用 <code class="highlighter-rouge">login_user</code> 方法创建用户 <code class="highlighter-rouge">Session</code>，然后跳转到请求参数中 <code class="highlighter-rouge">next</code> 所指定的地址或者首页 (不用担心如何设置 <code class="highlighter-rouge">next</code>，还记得上面设置的 <code class="highlighter-rouge">login_manager.login_view = 'login'</code> 吗？ 对，未登录访问时，会跳转到 <code class="highlighter-rouge">login</code>，并且带上 <code class="highlighter-rouge">next</code> 查询参数)</li>
+  <li>非 <code class="highlighter-rouge">POST</code> 请求，或者未经过验证，会显示 <code class="highlighter-rouge">login.html</code> 模板渲染后的结果</li>
+</ul>
+
+<h3 id="前台">前台</h3>
+
+<p>在 <code class="highlighter-rouge">templates</code> 模板下创建登录页面的模板 <code class="highlighter-rouge">login.html</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% macro render_field(field) %} <span class="c">&lt;!-- 定义字段宏 --&gt;</span>
+  <span class="nt">&lt;dt&gt;</span>{{ field.label }}:
+  <span class="nt">&lt;dd&gt;</span>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">errors</span><span class="nt">&gt;</span>
+    {% for error in field.errors %}
+      <span class="nt">&lt;li&gt;</span>{{ error }}<span class="nt">&lt;/li&gt;</span>
+    {% endfor %}
+    <span class="nt">&lt;/ul&gt;</span>
+  {% endif %}
+  <span class="nt">&lt;/dd&gt;</span>
+{% endmacro %}
+
+<span class="c">&lt;!-- 登录表单 --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"POST"</span><span class="nt">&gt;</span>
+    {{ form.csrf_token }}
+    {{ render_field(form.username) }}
+    {{ render_field(form.password) }}
+    {% if emsg %}  <span class="c">&lt;!-- 如果有错误信息 则显示 --&gt;</span>
+        <span class="nt">&lt;h3&gt;</span> {{ emsg }}<span class="nt">&lt;/h3&gt;</span>
+    {% endif %}
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"登录"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">render_field</code> 是 Jinja2 模板引擎的宏，接受表单字段将其渲染成 Html 代码，并格式化错误信息</li>
+  <li><code class="highlighter-rouge">emsg</code> 错误信息单独做了处理，如果存在会显示出来</li>
+  <li><code class="highlighter-rouge">form</code> 中并没有 <code class="highlighter-rouge">action</code> 属性，默认为当前路径</li>
+</ul>
+
+<h2 id="需要验证的页面">需要验证的页面</h2>
+
+<p>为了方便演示，将首页作为需要验证的页面，通过验证将看到登录者欢迎信息，页面上还有个登出链接</p>
+
+<p>首页视图函数 <code class="highlighter-rouge">index</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">current_user</span><span class="p">,</span> <span class="n">login_required</span>
+<span class="c1"># ...
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>  <span class="c1"># 首页
+</span><span class="o">@</span><span class="n">login_required</span>  <span class="c1"># 需要登录才能访问
+</span><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'index.html'</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">current_user</span><span class="p">.</span><span class="n">username</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>注解 <code class="highlighter-rouge">@login_required</code> 会做用户登录检测，如果没有登录要方法此视图函数，就被跳转到 <code class="highlighter-rouge">login</code> 接入点( <code class="highlighter-rouge">endpoint</code> )</li>
+  <li><code class="highlighter-rouge">current_user</code> 是当前登录者，是 <code class="highlighter-rouge">User</code> 的实例，是 <code class="highlighter-rouge">Flask-Login</code> 提供全局变量（ 类似于全局变量 <code class="highlighter-rouge">g</code> ）</li>
+  <li><code class="highlighter-rouge">username</code> 是模板中的变量，可以将当前登录者的用户名传入 <code class="highlighter-rouge">index.html</code> 模板</li>
+</ul>
+
+<p>首页模板 <code class="highlighter-rouge">index.html</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>欢迎 {{ username }}！<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">'{{ url_for('</span><span class="na">logout</span><span class="err">')}}'</span><span class="nt">&gt;</span>登出<span class="nt">&lt;/a&gt;</span>
+</code></pre></div></div>
+
+<p>登出视图函数 <code class="highlighter-rouge">logout</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">logout_user</span>
+<span class="c1"># ...
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/logout'</span><span class="p">)</span>  <span class="c1"># 登出
+</span><span class="o">@</span><span class="n">login_required</span>
+<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="n">logout_user</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">'login'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<ul>
+  <li>只有登录了才有必要登出，所以加上注解 <code class="highlighter-rouge">@login_required</code></li>
+  <li><code class="highlighter-rouge">logout_user</code> 方法和 <code class="highlighter-rouge">login_user</code> 相反，由于注销用户的 <code class="highlighter-rouge">Session</code></li>
+  <li>登出视图不需要模板，直接跳转到登录页，实际项目中可以增加一个登出页，展示些有趣的东西</li>
+</ul>
+
+<h2 id="小试牛刀">小试牛刀</h2>
+
+<p>终于可以试试了，加上启动代码:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>启动项目，如果一切正常将看到类似的反馈：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python app.py
+ <span class="k">*</span> Serving Flask app <span class="s2">"app"</span> <span class="o">(</span>lazy loading<span class="o">)</span>
+ <span class="k">*</span> Environment: production
+   WARNING: This is a development server. Do not use it <span class="k">in </span>a production deployment.
+   Use a production WSGI server instead.
+ <span class="k">*</span> Debug mode: on
+ <span class="k">*</span> Restarting with <span class="nb">stat</span>
+ <span class="k">*</span> Debugger is active!
+ <span class="k">*</span> Debugger PIN: 176-611-251
+ <span class="k">*</span> Running on http://127.0.0.1:5000/ <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</code></pre></div></div>
+
+<p>访问 <a href="localhost:5000">localhost:5000</a>，将看到登录页，主要浏览器地址上的 <code class="highlighter-rouge">next</code> 查询参数:</p>
+
+<p><img src="https://www.justdopython.com/assets/images/2019/python/python_web_auth_01.png" alt="显示结果" /></p>
+
+<p>填写正确的用户名和密码，点击登录，将进入首页:</p>
+
+<p><img src="https://www.justdopython.com/assets/images/2019/python/python_web_auth_02.png" alt="显示结果" /></p>
+
+<h2 id="用户注册">用户注册</h2>
+
+<p>上面的演示了，已存在用户登录的情况，不存在用户需要完成注册才能登录。</p>
+
+<p>注册功能和登录很类似，页面上多了密码确认字段，并且需要验证两次输入的密码是否一致，后台逻辑是：如果用户不存在，且通过检验，将用户数据保存到 <code class="highlighter-rouge">USERS</code> 列表中，跳转到 <code class="highlighter-rouge">login</code> 页面。</p>
+
+<p>关于具体实现这里不做详细讲解了，本节代码示例中有实现，可以参考。</p>
+
+<p>如果您来实现注册功能的话打算怎么做？欢迎交流</p>
+
+<h2 id="flask-login-其他特性">Flask-Login 其他特性</h2>
+
+<p>上面的实例中使用了一些 <code class="highlighter-rouge">Flask-Login</code> 的基本特性，<code class="highlighter-rouge">Flask-Login</code> 还提供了一些其他重要特性</p>
+
+<h3 id="记住我">记住我</h3>
+
+<p>记住我，并不是用户登出之后，再次登录时自动填写用户名和密码（这是浏览器的功能），而是在用户意外退出后（比如关闭浏览器）不用再次登录。</p>
+
+<p>如果用户本地的 <code class="highlighter-rouge">cookie</code> 失效了，<code class="highlighter-rouge">Flask-Login</code> 会自动将用户 <code class="highlighter-rouge">Session</code> 放入 <code class="highlighter-rouge">cookie</code> 中。</p>
+
+<p>开启方法是将 <code class="highlighter-rouge">login_user</code> 方法的命名参数 <code class="highlighter-rouge">remember</code> 设置为 <code class="highlighter-rouge">True</code>，此功能默认是关闭的</p>
+
+<h3 id="session-防护">Session 防护</h3>
+
+<p><code class="highlighter-rouge">Session</code> 信息一般存放在 <code class="highlighter-rouge">cookie</code> 中，但是 <code class="highlighter-rouge">cookie</code> 不够安全，容易被窃取其中 <code class="highlighter-rouge">Session</code> 信息，伪造用户登录系统，幸运的是 <code class="highlighter-rouge">Flask-Login</code> 提供了 <code class="highlighter-rouge">Session</code> 防护机制，提供有 <code class="highlighter-rouge">basic</code> 和 <code class="highlighter-rouge">strong</code> 两种保护等级，通过 <code class="highlighter-rouge">login_manager.session_protection</code> 来开关和设置等级，默认等级为 <code class="highlighter-rouge">basic</code>，如果设置为 <code class="highlighter-rouge">None</code> 将关闭 <code class="highlighter-rouge">Session</code> 防护机制。</p>
+
+<p>在保护机制开启的情况下，每次请求会根据用户的特征（一般指有用户IP、浏览器类型生成的哈希码）与 <code class="highlighter-rouge">Session</code> 中的对比，如果无法匹配则要求用户重新登录，在强模式下( <code class="highlighter-rouge">strong</code> )一旦匹配失败会删除登录者 <code class="highlighter-rouge">Session</code>，以消除攻击者重构 <code class="highlighter-rouge">cookie</code> 的可能</p>
+
+<h3 id="request-loader">Request Loader</h3>
+
+<p>有时候因为一些原因不想或者无法使用 <code class="highlighter-rouge">cookie</code>，可以将 <code class="highlighter-rouge">Session</code> 记录在其他地方，比如 <code class="highlighter-rouge">Header</code> 中或者请求参数中，那么构造用户 <code class="highlighter-rouge">Session</code> 时就需要将 <code class="highlighter-rouge">user_loader</code> 替换为 <code class="highlighter-rouge">request_loader</code>， <code class="highlighter-rouge">request_loader</code> 将 <code class="highlighter-rouge">request</code> 作为参数，这样就可以从请求的任何数据中获取 <code class="highlighter-rouge">Session</code> 信息了</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节课程主要通过一个简单的用户登录实例，介绍了 <code class="highlighter-rouge">Flask-Login</code> 组件的使用，大体步骤是：引入 <code class="highlighter-rouge">Flask-Login</code> 模块，初始化应用，构造登录用户类，设置登录页面入口，使用 <code class="highlighter-rouge">login_user</code> 创建用户 <code class="highlighter-rouge">Session</code>，
+用 <code class="highlighter-rouge">user_loader</code> 恢复登录者，用 <code class="highlighter-rouge">logout_user</code> 推出登录，还有在视图函数中如何进行用户验证等，最后介绍了一些额外的 <code class="highlighter-rouge">Flask-Login</code> 特性。</p>
+
+<p>用户登录是 <code class="highlighter-rouge">Web</code> 应用的一个常用而又复杂的功能，除了今天介绍的 <code class="highlighter-rouge">Session</code> 方式之外，还有基于 <code class="highlighter-rouge">RESTful</code> 的非状态的 <code class="highlighter-rouge">token</code> 方式，以及第三方认证机制，比如微信、支付宝等，后面会陆续讲解，敬请期待。</p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+  <li><a href="https://zhuanlan.zhihu.com/p/23137867">https://zhuanlan.zhihu.com/p/23137867</a></li>
+  <li><a href="https://blog.csdn.net/sinat_29315627/article/details/74177792">https://blog.csdn.net/sinat_29315627/article/details/74177792</a></li>
+  <li><a href="http://www.bjhee.com/flask-ext9.html">http://www.bjhee.com/flask-ext9.html</a></li>
+  <li><a href="http://www.pythondoc.com/flask-restful/third.html">http://www.pythondoc.com/flask-restful/third.html</a></li>
+  <li><a href="https://flask-login.readthedocs.io/en/latest/">https://flask-login.readthedocs.io/en/latest/</a></li>
+  <li><a href="https://flask-httpauth.readthedocs.io/en/latest/">https://flask-httpauth.readthedocs.io/en/latest/</a></li>
+  <li><a href="https://www.jianshu.com/p/8c87099f72a5">https://www.jianshu.com/p/8c87099f72a5</a></li>
+</ul>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-057-flask-login">Python-100-days-day057</a></p>
+</blockquote>
+:ET

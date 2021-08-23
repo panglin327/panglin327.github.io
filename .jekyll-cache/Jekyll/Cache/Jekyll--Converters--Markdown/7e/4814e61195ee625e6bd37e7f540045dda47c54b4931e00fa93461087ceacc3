@@ -1,0 +1,240 @@
+I"O*<blockquote>
+  <p>by 程序员野客</p>
+</blockquote>
+
+<p>calendar 是与日历相关的模块，该模块定义了很多类型，主要包括：Calendar、TextCalendar、HTMLCalendar，其中 Calendar 是 TextCalendar 和 HTMLCalendar 的基类，这些类有着十分丰富的日历处理方法。</p>
+
+<!--more-->
+
+<h2 id="1-calendar-模块">1 calendar 模块</h2>
+
+<p>对于简单的文本日历，我们使用 calendar 模块直接调用的方法或属性即可，下面来具体看一下。</p>
+
+<h3 id="setfirstweekdayfirstweekday">setfirstweekday(firstweekday)</h3>
+
+<p>设置每一周的开始（0 表示星期一，6 表示星期天），calendar 提供了 MONDAY、TUESDAY、WEDNESDAY、THURSDAY、FRIDAY、SATURDAY 和 SUNDAY 几个常量方便使用。例如，设置每周的第一天为星期天，示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+calendar.setfirstweekday(calendar.SUNDAY)
+</code></pre></div></div>
+
+<h3 id="firstweekday">firstweekday()</h3>
+
+<p>返回当前设置的每星期的第一天的数值，默认为星期一。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.firstweekday())
+</code></pre></div></div>
+
+<h3 id="isleapyear">isleap(year)</h3>
+
+<p>如果 year 是闰年则返回 True，否则返回 False。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.isleap(9102))
+</code></pre></div></div>
+
+<h3 id="leapdaysy1-y2">leapdays(y1, y2)</h3>
+
+<p>返回在范围 y1 至 y2 （包含 y1 和 y2 ）之间的闰年的年数，其中 y1 和 y2 是年份。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.leapdays(1945,2019))
+</code></pre></div></div>
+
+<h3 id="weekdayyear-month-day">weekday(year, month, day)</h3>
+
+<p>返回一周中的某一天 （ 0 ~ 6 代表周一至周日）。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.weekday(2019,10,1))
+</code></pre></div></div>
+
+<h3 id="monthrangeyear-month">monthrange(year, month)</h3>
+
+<p>返回指定年、月份第一天是星期几和这个月的天数。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.monthrange(2019, 10))
+</code></pre></div></div>
+
+<h3 id="monthcalendaryear-month">monthcalendar(year, month)</h3>
+
+<p>返回表示一个月的日历的矩阵，每一行代表一周，此月份外的日子由零表示，每周默认从周一开始，可使用 setfirstweekday() 改变默认值。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.monthcalendar(2019,10))
+</code></pre></div></div>
+
+<h3 id="prmonththeyear-themonth-w0-l0">prmonth(theyear, themonth, w=0, l=0)</h3>
+
+<p>打印由 month() 返回的一个月的日历，每日宽度间隔为 w 字符，l 是每星期的行数。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.prmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="prcalyear-w0-l0-c6-m3">prcal(year, w=0, l=0, c=6, m=3)</h3>
+
+<p>打印由 calendar() 返回的整年的日历。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.prcal(2019))
+</code></pre></div></div>
+
+<h3 id="day_name">day_name</h3>
+
+<p>在当前的语言环境下表示星期几的列表。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.day_name[0])
+</code></pre></div></div>
+
+<h3 id="day_abbr">day_abbr</h3>
+
+<p>在当前语言环境下表示星期几缩写的列表。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.day_abbr[0])
+</code></pre></div></div>
+
+<h3 id="month_name">month_name</h3>
+
+<p>在当前语言环境下表示一年中月份的列表，一月的月号为 1，它的长度为 13 且 month_name[0] 是空字符串。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.month_name[1])
+</code></pre></div></div>
+
+<h3 id="month_abbr">month_abbr</h3>
+
+<p>在当前语言环境下表示月份简写的列表。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import calendar
+print(calendar.month_abbr[1])
+</code></pre></div></div>
+
+<h2 id="2-calendar-类">2 Calendar 类</h2>
+
+<p>Calendar 对象提供了一些可被用于准备日历数据格式化的方法，这个类本身不执行任何格式化操作，这部分任务应由子类来完成，下面具体看一下。</p>
+
+<h3 id="iterweekdays">iterweekdays()</h3>
+
+<p>返回一个迭代器，迭代器的内容为一星期的数字。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.iterweekdays()))
+</code></pre></div></div>
+
+<h3 id="itermonthdatesyear-month">itermonthdates(year, month)</h3>
+
+<p>返回一个迭代器，迭代器的内容为 year 年 month 月（1-12）的日期。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.itermonthdates(2019,10)))
+</code></pre></div></div>
+
+<h3 id="itermonthdays2year-month">itermonthdays2(year, month)</h3>
+
+<p>返回一个迭代器，迭代器的内容与 itermonthdates() 类似为 year 年 month 月的日期，但不受 datetime.date 范围的限制，迭代器中的元素为一个由日期和代表星期几的数字组成的的元组。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.itermonthdays2(2019,10)))
+</code></pre></div></div>
+
+<h3 id="itermonthdays3year-month">itermonthdays3(year, month)</h3>
+
+<p>返回一个迭代器，迭代器的内容与 itermonthdates() 类似为 year 年 month 月的日期，不受 datetime.date 范围的限制，迭代器的元素为一个由年、月、日组成的元组。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import Calendar
+c = Calendar()
+print(list(c.itermonthdays3(2019,10)))
+</code></pre></div></div>
+
+<h2 id="3-textcalendar-类">3 TextCalendar 类</h2>
+
+<p>TextCalendar 对象提供了一些生成纯文本日历的方法，下面具体看一下。</p>
+
+<h3 id="formatmonththeyear-themonth-w0-l0">formatmonth(theyear, themonth, w=0, l=0)</h3>
+
+<p>返回一个多行字符串来表示指定年月的日历，w 为日期的宽度，始终保持日期居中，l 指定了每星期占用的行数；以上这些还依赖于构造器或者 setfirstweekday() 方法指定的周的第一天是哪一天。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.formatmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="prmonththeyear-themonth-w0-l0-1">prmonth(theyear, themonth, w=0, l=0)</h3>
+
+<p>与 formatmonth() 方法一样，返回一个月的日历。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.prmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="formatyeartheyear-w2-l1-c6-m3">formatyear(theyear, w=2, l=1, c=6, m=3)</h3>
+
+<p>返回一个多行字符串，这个字符串为一个 m 列日历，可选参数 w、l、c 分别表示日期列数、周的行数、月之间的间隔；以上这些还依赖于构造器或者 setfirstweekday() 指定哪一天为一周的第一天。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.formatyear(2019))
+</code></pre></div></div>
+
+<h3 id="pryeartheyear-w0-l0-c6-m3">pryear(theyear, w=0, l=0, c=6, m=3)</h3>
+
+<p>与 formatyear() 方法一样，返回一整年的日历。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.pryear(2019))
+</code></pre></div></div>
+
+<h2 id="4-htmlcalendar-类">4 HTMLCalendar 类</h2>
+
+<p>HTMLCalendar 对象提供了一些生成 HTML 日历的方法，下面具体看一下。</p>
+
+<h3 id="formatmonththeyear-themonth-withyeartrue">formatmonth(theyear, themonth, withyear=True)</h3>
+
+<p>返回一个 HTML 表格作为指定年月的日历，withyear 为 True，则年份将会包含在表头，否则只显示月份。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import HTMLCalendar
+hc = HTMLCalendar()
+print(hc.formatmonth(2019,10))
+</code></pre></div></div>
+
+<h3 id="formatyeartheyear-width3">formatyear(theyear, width=3)</h3>
+
+<p>返回一个 HTML 表格作为指定年份的日历，width 用于规定每一行显示月份的数量。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import HTMLCalendar
+hc = HTMLCalendar()
+print(hc.formatyear(2019))
+</code></pre></div></div>
+
+<h3 id="formatyearpagetheyear-width3-csscalendarcss-encodingnone">formatyearpage(theyear, width=3, css=’calendar.css’, encoding=None)</h3>
+
+<p>返回一个完整的 HTML 页面作为指定年份的日历，width 用于规定每一行显示的月份数量，css 为层叠样式表的名字，如果不使用任何层叠样式表，可以使用 None，encoding 为输出页面的编码 (默认为系统的默认编码)。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from calendar import HTMLCalendar
+hc = HTMLCalendar()
+print(hc.formatyearpage(2019))
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了和演示了日历模块 calendar 一些基本概念和使用，对 Python 工程师使用 calendar 提供了支撑。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-036">Python-100-days-day036</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p><a href="https://docs.python.org/zh-cn/3/library/calendar.html">https://docs.python.org/zh-cn/3/library/calendar.html</a></p>
+
+:ET

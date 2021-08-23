@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第11天：Python dictionary(字典) - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;blockquote&gt;
+  &lt;p&gt;by 潮汐&lt;/p&gt;
+&lt;/blockquote&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/09/11/python-dictionary-011.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第11天：Python dictionary(字典)">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第11天：Python dictionary(字典)</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/09/11
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <blockquote>
+  <p>by 潮汐</p>
+</blockquote>
+
+<p>Python 中的字典提供了一种灵活的访问和组织数据的方式</p>
+
+<ul>
+  <li>字典是由很多值组成的集合</li>
+  <li>字典的索引可以是不同的数据类型，同样也不止是整数，也有字符串</li>
+  <li>字典的索引被称为“键”，键及键所关联的值叫键值对（类似于 Java 中的 Map 集合）</li>
+  <li>字典是另一种可变容器模型，且可存储任意类型对象。</li>
+  <li>字典的每个键值 key=&gt;value 对用冒号 : 分割，每个键值对之间用逗号 , 分割，整个字典包括在花括号 {} 中 ,格式如下所示：</li>
+</ul>
+
+<!--more-->
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dictionary  = {'url1':'baidu', 'url':'google', 'num1':12, 'num2':34};
+</code></pre></div></div>
+
+<p>键一般是唯一的，如果键重复，最后的一个键值对会替换前面的键值对，值没有唯一性要求，如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dic1 = {'name':'zhangsan','age':23,'address':'BeiJing','name':'lisi'}
+# 查看字典值发现重复的键值后面的替换前面的
+
+dic1
+{'name': 'lisi', 'age': 23, 'address': 'BeiJing'}
+
+dic1['name']
+'lisi'
+</code></pre></div></div>
+
+<p>值可以取任何数据类型，但键必须是不可变的，如字符串，数字或元组，如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258',('a','b'):(12,43)}
+</code></pre></div></div>
+
+<h2 id="1-访问字典数据">1. 访问字典数据</h2>
+
+<p>创建一个字典，并访问数据字典内容，以下字典的键是 ‘size’,’color’,’character’,这些键对应的值是‘big’,’white’,’gentle’ 访问字典的值通过方括号里面添加键就可以直接进行访问，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MyDog = {'size':'big','color':'white','character':'gentle'}
+
+# 字典值通过[‘键’]来访问
+print(MyDog['size'])
+ big   #输出结果
+
+print('My Dog has '+MyDog['color']+' fur.' + ' and it has a ' + MyDog['character']+' character')
+My Dog has white fur. and it has a gentle character #输出结果
+
+</code></pre></div></div>
+
+<p>同样的，字典也可以用整数作为键，和列表的索引类似，只是字典的值是任何整数类型都行，不必要从0开始，因为键值的数据类型是任意的，如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MyCon = {12:'big',0:'white',354:'gentle',1:'good'}
+# 访问键为 12 的字典值
+MyCon[12]
+'big'
+# 访问键为 0 的字典值
+MyCon[0]
+'white'
+</code></pre></div></div>
+
+<p>因为字典是不排序的，所以不能像列表那样切片。
+如果访问字典中不存在的键，将导致 KeyError 出错信息。这很像列表的“越界”
+IndexError 出错信息。在交互式环境中输入以下代码，并注意显示的出错信息，因
+为没有 ‘color’ 键：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dic1 = {'name':'zhangsan','age':23,'address':'BeiJing'}
+#找字典中键为 'color' 的值
+dic1['color']
+Traceback (most recent call last):
+  File "&lt;input&gt;", line 1, in &lt;module&gt;
+KeyError: 'color'
+</code></pre></div></div>
+
+<h2 id="2修改字典元素">2、修改字典元素</h2>
+
+<h3 id="21-添加和更新字典数据">2.1 添加和更新字典数据</h3>
+
+<p>向字典添加新内容的方法是增加新的键/值对，修改或删除已有键/值对如下实例:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Fiona', 'Age': 10, 'Class': 'Three'}
+# 更新
+dict['Age'] = 8 
+# 添加
+dict['School'] = "Middle School" 
+# 查看字典数据 
+dict
+{'Name': 'Fiona', 'Age': 8, 'Class': 'Three', 'School': 'Middle School'}
+</code></pre></div></div>
+
+<h3 id="22-删除字典元素">2.2 删除字典元素</h3>
+
+<p>对字典元素的删除操作能单一删除也能将整个字典清空，显示的删除一个字典使用 del 命令“</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Fiona', 'Age': 10, 'Class': 'Three'}
+
+# 删除键是'Name'的条目 
+del dict['Name']  
+
+# 清空字典所有条目
+dict.clear()  
+
+# 删除整个字典元素
+del dict          
+ 
+print ("dict['Age']: ", dict['Age'])
+print ("dict['School']: ", dict['School'])
+</code></pre></div></div>
+
+<p>以上打印语句这会引发一个异常，因为用 del 后的字典不再存在：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+  File "test.py", line 12, in &lt;module&gt;
+    print("dict['Age']: ", dict['Age'])
+TypeError: 'type' object is not subscriptable
+</code></pre></div></div>
+
+<h2 id="3字典键的特性">3、字典键的特性</h2>
+
+<p>字典值可以没有限制地取任何python对象，既可以是标准的对象，也可以是用户定义的，但键不行。</p>
+
+<p>两个重要的点需要记住：</p>
+
+<p><strong>1）不允许同一个键出现两次。创建时如果同一个键被赋值两次，后一个值会被记住，如下实例：</strong></p>
+
+<p>实例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+dict = {'Name': 'Fiona', 'Age': 10, 'Name': 'Manni'} 
+ 
+print "dict['Name']: ", dict['Name']
+
+# 以上实例输出结果：
+
+dict['Name']:  Manni
+</code></pre></div></div>
+
+<p><strong>2）键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行，如下实例：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+dict = {['Name']: 'Fiona', 'Age': 10} 
+ 
+print "dict['Name']: ", dict['Name']
+
+# 以上实例输出结果：
+
+Traceback (most recent call last):
+  File "test.py", line 3, in &lt;module&gt;
+    dict = {['Name']: 'Zara', 'Age': 7} 
+TypeError: list objects are unhashable
+</code></pre></div></div>
+
+<h2 id="4字典的函数">4、字典的函数</h2>
+
+<h3 id="41-len">4.1 len()</h3>
+
+<p>len() 方法计算字典元素个数（键的总个数）</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; dict = {'Name': 'Fiona', 'Age': 10, 'class': 'Three'} 
+ &gt;&gt;&gt; len(dict)
+     3
+</code></pre></div></div>
+
+<h3 id="42-str">4.2 str()</h3>
+
+<p>str() 方法输出字典中可以打印的字符串标识</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; dict = {'Name': 'Runoob', 'Age': 10, 'Class': 'Three'}
+&gt;&gt;&gt; str(dict)
+"{'Name': 'Runoob', 'Age': 10, 'Class': 'Three'}"
+</code></pre></div></div>
+
+<h3 id="43-type">4.3 type()</h3>
+
+<p>type() 方法返回输入的变量类型，如果变量是字典就返回字典类型</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; dict = {'Name': 'Runoob', 'Age': 10, 'Class': 'Three'}
+&gt;&gt;&gt; type(dict)
+&lt;class 'dict'&gt;
+</code></pre></div></div>
+
+<h2 id="5字典的方法">5、字典的方法</h2>
+
+<h3 id="51-dictclear">5.1 dict.clear()</h3>
+
+<p>删除字典内所有元素，clear() 方法没有任何返回值,实例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Fiona', 'Age': 10}
+
+print ("字典长度 : %d" %  len(dict))
+dict.clear()
+print ("字典删除后长度 : %d" %  len(dict))
+
+# 输出结果为：
+字典长度 : 2
+字典删除后长度 : 0
+</code></pre></div></div>
+
+<h3 id="52-dictcopy">5.2 dict.copy()</h3>
+
+<p>copy() 方法对字典进行复制</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Runoob', 'Age': 7, 'Class': 'First'}
+
+dict11 = dict.copy()
+print(dict11)
+print("新复制的字典为 : ", dict11)
+
+dict1 = {'user': 'runoob', 'num': [1, 2, 3]}
+
+# 浅拷贝: 引用对象  赋值
+dict2 = dict1  
+# 拷贝
+dict3 = dict1.copy()  
+
+# 修改 data 数据
+dict1['user'] = 'root'
+dict1['num'].remove(1)
+
+# 输出结果
+print(dict1)
+print(dict2)
+print(dict3)
+</code></pre></div></div>
+
+<p>实例中 dict2 其实是 dict1 的引用，即别名，所以输出结果都是一致的，dict3 对父对象进行了深拷贝，深拷贝不会随dict1 修改而修改，子对象是浅拷贝所以随 dict1 的修改而修改，<strong>即赋值会随父对象的修改而修改，拷贝不会随父对象的修改而修改</strong>，以上结果输出如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'Name': 'Runoob', 'Age': 7, 'Class': 'First'}
+新复制的字典为 :  {'Name': 'Runoob', 'Age': 7, 'Class': 'First'}
+
+{'user': 'root', 'num': [2, 3]}
+{'user': 'root', 'num': [2, 3]}
+{'user': 'runoob', 'num': [2, 3]}
+</code></pre></div></div>
+
+<h3 id="53-dictfromkeys">5.3 dict.fromkeys()</h3>
+
+<p>创建一个新字典，以序列 seq 中元素做字典的键，val为字典所有键对应的初始值，该方法返回一个新的字典</p>
+
+<p><strong>fromkeys() 方法语法</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict.fromkeys(seq[, value])
+
+# 参数
+seq -- 字典键值列表。
+value -- 可选参数, 设置键序列（seq）对应的值，默认为 None。
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dict.fromkeys(seq[, value])
+seq = ('name', 'age', 'class')
+
+# 不指定值
+dict = dict.fromkeys(seq)
+print("新的字典为 : %s" % str(dict))
+
+# 赋值 10
+dict = dict.fromkeys(seq, 10)
+print("新的字典为 : %s" % str(dict))
+
+#　赋值一个元组
+dict = dict.fromkeys(seq,('zs',8,'Two'))
+print("新的字典为 : %s" % str(dict))
+</code></pre></div></div>
+<p>执行结果返回一个新的字典，如果不指定值默认为None,以上结果输出结果为：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>新的字典为 : {'name': None, 'age': None, 'class': None}
+新的字典为 : {'name': 10, 'age': 10, 'class': 10}
+新的字典为 : {'name': ('zs', 8, 'Two'), 'age': ('zs', 8, 'Two'), 'class': ('zs', 8, 'Two')}
+</code></pre></div></div>
+
+<h3 id="54-dictgetkey-defaultnone">5.4 dict.get(key, default=None)</h3>
+
+<p>返回指定键的值，如果值不在字典中返回 default 值</p>
+
+<p><strong>get() 方法语法</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict.get(key, default=None)
+
+# 参数
+key -- 字典中要查找的键。
+default -- 如果指定键的值不存在时，返回该默认值值。
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># get ()方法的应用举例
+dict = {'Name': 'Mary', 'Age': 20}
+
+print ("Age 值为 : %s" %  dict.get('Age'))
+print ("Name 值为 : %s" %  dict.get('Name'))
+print ("Sex 值为 : %s" %  dict.get('Sex', "NA"))
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Age 值为 : 20
+Name 值为 : Mary
+Sex 值为 : NA
+</code></pre></div></div>
+
+<h3 id="55-key-in-dict">5.5 key in dict</h3>
+
+<p>如果键在字典dict里返回true，否则返回false</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 20,'Address':'BeiJing'}
+
+# 检测键 Age 是否存在
+if 'Age' in dict:
+    print("键 Age 存在")
+else:
+    print("键 Age 不存在")
+
+# 检测键 Sex 是否存在
+if 'Sex' in dict:
+    print("键 Sex 存在")
+else:
+    print("键 Sex 不存在")
+
+# not in
+
+# 检测键 Name 是否存在
+if 'Name' not in dict:
+    print("键 Name 不存在")
+else:
+    print("键 Name 存在")
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>键 Age 存在
+键 Sex 不存在
+键 Name 存在
+</code></pre></div></div>
+
+<h3 id="56-dictitems">5.6 dict.items()</h3>
+
+<p>item() 方法以列表返回可遍历的(键, 值) 元组数组</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+ 
+print ("Value : %s" %  dict.items())
+
+# 输出结果为：
+Value : dict_items([('Age', 17), ('Name', 'Mary')])
+</code></pre></div></div>
+<p><strong>可遍历的元组数组举例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict1 = {'老大':'25岁',
+        '老二':'20岁',
+        '老三':'12岁',
+        }
+print(dict1.items())
+for key,values in dict1.items():
+    print(key + '已经' + values + '了')
+</code></pre></div></div>
+<p><strong>以上结果输出为：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>老大已经25岁了
+老二已经20岁了
+老三已经12岁了
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="57-dictkeys">5.7 dict..keys()</h3>
+
+<p>返回一个迭代器，可以使用 list() 来转换为列表</p>
+
+<p><strong>keys()方法语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict.keys()
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+
+print(dict.keys())
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict_keys(['Name', 'Age'])
+</code></pre></div></div>
+
+<p>由结果看出结果返回一个迭代对象，这时候我们可以使用 list 转换为列表：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>list1 = list(dict.keys())
+print ("转换后的结果为 : %s" % list1)
+
+# 输出结果为一个列表，后续可以对其进行相应操作：
+转换后的结果为 : ['Name', 'Age']
+</code></pre></div></div>
+
+<h3 id="58-dictsetdefaultkey-defaultnone">5.8 dict..setdefault(key, default=None)</h3>
+
+<p>Python 字典 setdefault() 方法和 get() 方法类似, 如果 key 在 字典中，返回对应的值。如果不在字典中，则插入 key 及设置的默认值 default，并返回 default ，default 默认值为 None。</p>
+
+<p><strong>setdefault()方法语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict.setdefault(key, default=None)
+# 参数
+key -- 查找的键值。
+default -- 键不存在时，设置的默认键值。
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+ 
+print ("Age 键的值为 : %s" %  dict.setdefault('Age', None))
+print ("Sex 键的值为 : %s" %  dict.setdefault('Sex', None))
+print ("新字典为：", dict)
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Age 键的值为 : 17
+Sex 键的值为 : None
+新字典为： {'Age': 17, 'Name': 'Mary', 'Sex': None}
+</code></pre></div></div>
+
+<h3 id="59-dictupdatedict2">5.9 dict..update(dict2)</h3>
+
+<p>Python 字典 update() 函数把字典参数 dict2 的 key/value(键/值) 对更新到字典 dict 里。</p>
+
+<p><strong>语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict.update(dict2)
+# 参数
+ dict2 -- 添加到指定字典dict里的字典。
+</code></pre></div></div>
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+dict2 = {'Sex': 'female' }
+
+# 将 dict2 中的结果添加到字典 dict 中　
+dict.update(dict2)
+print ("更新字典 dict : ", dict)
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>更新字典 dict :  {'Name': 'Mary', 'Age': 17, 'Sex': 'female'}
+</code></pre></div></div>
+
+<h3 id="510--dictvalues">5.10  dict.values()</h3>
+
+<p>Python 字典 values() 方法返回一个迭代器，可以使用 list() 来转换为列表，列表为字典中的所有值。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = { 'Name': 'Mary','Sex': 'male', 'Age': 7}
+
+print("字典所有值为 : ", list(dict.values()))
+</code></pre></div></div>
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>字典所有值为 :  ['Mary', 'male', 7]
+</code></pre></div></div>
+
+<h3 id="511--dictpopkeydefault">5.11  dict.pop(key[,default])</h3>
+
+<p>Python 字典 pop() 方法删除字典给定键 key 所对应的值，返回值为被删除的值。key 值必须给出。 否则，返回 default 值。</p>
+
+<p><strong>pop()方法语法：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pop(key[,default])
+#参数
+key: 要删除的键值
+default: 如果没有 key，返回 default 值
+
+# 返回值
+返回被删除的值。
+
+</code></pre></div></div>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+
+result = dict.pop('Age') # 删除
+
+print(result)
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>17
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="512--dictpopitem">5.12  dict.popitem()</h3>
+
+<p>Python 字典 popitem() 方法随机返回一个键值对(key,value)形式，按照 LIFO（Last In First Out 后进先出法） 顺序规则，即最末尾的键值对。
+如果字典已经为空，却调用了此方法，就报出KeyError异常。</p>
+
+<p><strong>实例：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+pop_obj=dict.popitem()
+print(pop_obj)
+print(dict)
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('Age', 17)
+{'Name': 'Mary'}
+</code></pre></div></div>
+
+<p>将字典清空：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict = {'Name': 'Mary', 'Age': 17}
+del dict
+
+print(dict.popitem())
+</code></pre></div></div>
+
+<p><strong>结果输出为：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+  File "test.py", line 4, in &lt;module&gt;
+    print(dict.popitem())
+TypeError: descriptor 'popitem' of 'dict' object needs an argument
+</code></pre></div></div>
+
+<h2 id="6字典和列表">6、字典和列表</h2>
+
+<h3 id="61-字典和列表差异">6.1 字典和列表差异</h3>
+
+<p>列表中的元素表项由于元素通过序列从 0 开始递增存放，所以列表中的表项是排序的，而字典的内容的表项是不排序的，如下例子就很好的说明列表和字典的区别：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>list1 = ['zhangsan',23,'BeiJing']
+list2 = ['BeiJing','zhangsan',23]
+list1 == list2
+False
+dic1 = {'name':'zhangsan','age':23,'address':'BeiJing'}
+dic2 = { 'age':23,'name':'zhangsan','address':'BeiJing'}
+dic1 == dic2
+True
+</code></pre></div></div>
+
+<p>由以上实例可以看出，当列表元素内容一致，顺序不同再对比内容时匹配不成功，同理字典值匹配成功，说明字典中元素内容不按顺序存放。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了 Python 数据结构之字典的操作与使用，对 Python 工程师使用字典的一些基本知识提供了支撑。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-011">Python-100-days-day011</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p>http://www.pythondoc.com/pythontutorial3
+https://www.runoob.com/python3/python3-dictionary.html</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/09/11/python-dictionary-011.html';
+        this.page.identifier = '/python/2019/09/11/python-dictionary-011.html';
+        this.page.title = '第11天：Python dictionary(字典)';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/09/11/python-dictionary-011.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

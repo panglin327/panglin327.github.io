@@ -1,0 +1,177 @@
+I"�7<p>by 某某白米饭</p>
+
+<h2 id="event事件">Event(事件)</h2>
+
+<p>Event 是一个事务处理的机制，用于通知多个异步任务某个事件已经发生了。比如在交通红绿灯中多辆在行驶中的汽车可以表示成程序中的多个异步任务，红绿灯的亮起可以表示成一个通知，红灯通知这个汽车的行驶任务必须停止了，绿灯通知这个汽车的行驶任务可以继续驾驶了。
+<!--more--></p>
+
+<p>Event 管理着一个全局的内部标志 flag，该 flag 默认为 False，当 flag 等于 False 的时候，调用 wait() 函数后程序就会被阻塞，只有当 flag 等于 True 的时候程序才会继续执行。在红绿灯中红灯相当于 flag 等于 False 的时候调用了 wait() 函数，绿灯相当于 flag 被设置为了 True，汽车允许通行，程序被允许执行 wait()之后的代码。</p>
+
+<h3 id="event事件对象">Event事件对象</h3>
+
+<p>Event 通过 threading 模块的 Event() 类创建对象</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Event</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Event 是一个低配版的 Condition，在源代码 <strong>init</strong> 函数中创建了 Condition 对象，并将 flag 设置为 False</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">_cond</span> <span class="o">=</span> <span class="n">Condition</span><span class="p">(</span><span class="n">Lock</span><span class="p">())</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">_flag</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<h3 id="函数">函数</h3>
+
+<p>Event 事件中只有4个函数：</p>
+
+<ol>
+  <li>set(): 将 flag 设为 True，通知所有处于阻塞状态的线程恢复运行状态。</li>
+  <li>clear(): 将 flag 设为 False。</li>
+  <li>wait(timeout): 如果 flag 为 True 将立即返回，否则线程将处于阻塞状态，等待其他线程将 flag 设置为 True</li>
+  <li>isSet(): 获取 flag 的状态，返回 True 或 False。</li>
+</ol>
+
+<h3 id="实例1">实例1</h3>
+
+<p>用行驶中的汽车碰到红绿灯做一个实例，红灯事件汽车停止不允许通行处于等待阻塞状态，绿灯事件汽车运行通行处于恢复运行状态。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Event</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">"正在行驶中，行驶了"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span> <span class="o">+</span> <span class="s">"Km"</span><span class="p">)</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">event</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">"通过了红灯"</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sign</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"绿灯初始化"</span><span class="p">)</span>
+    <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c1"># 红绿灯切换时间为3秒
+</span>        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">isSet</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"红灯亮起，所有行驶中的车辆不允许通过"</span><span class="p">)</span>
+            <span class="n">event</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"绿灯亮起，所有行驶中的车辆必须通过"</span><span class="p">)</span>
+            <span class="n">event</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="c1"># 设置公路线程组
+</span>    <span class="n">highwayThreads</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># 创建汽车新线程
+</span>    <span class="n">bmwCar</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">drive</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="s">"BMWCar"</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">vwCar</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">drive</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="s">"VWCar"</span><span class="p">,</span> <span class="p">))</span>
+
+    <span class="c1"># 将汽车线程添加到公路线程组
+</span>    <span class="n">highwayThreads</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">bmwCar</span><span class="p">)</span>
+    <span class="n">highwayThreads</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">vwCar</span><span class="p">)</span>
+
+    <span class="c1"># 汽车启动
+</span>    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">highwayThreads</span><span class="p">:</span>
+        <span class="n">thread</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># 红绿灯发送事件通知
+</span>    <span class="n">sign</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>运行结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>绿灯初始化
+BMWCar正在行驶中，行驶了60Km
+VWCar正在行驶中，行驶了60Km
+BMWCar通过了红灯
+BMWCar正在行驶中，行驶了120Km
+VWCar通过了红灯
+VWCar正在行驶中，行驶了120Km
+BMWCar通过了红灯
+BMWCar正在行驶中，行驶了180Km
+VWCar通过了红灯
+VWCar正在行驶中，行驶了180Km
+红灯亮起，所有行驶中的车辆不允许通过
+绿灯亮起，所有行驶中的车辆必须通过
+VWCar通过了红灯
+VWCar正在行驶中，行驶了240Km
+BMWCar通过了红灯
+BMWCar正在行驶中，行驶了240Km
+VWCar通过了红灯
+VWCar正在行驶中，行驶了300Km
+BMWCar通过了红灯
+BMWCar正在行驶中，行驶了300Km
+VWCar通过了红灯
+VWCar正在行驶中，行驶了360Km
+BMWCar通过了红灯
+BMWCar正在行驶中，行驶了360Km
+红灯亮起，所有行驶中的车辆不允许通过
+绿灯亮起，所有行驶中的车辆必须通过
+VWCar通过了红灯
+VWCar正在行驶中，行驶了420Km
+BMWCar通过了红灯
+</code></pre></div></div>
+
+<h3 id="实例2">实例2</h3>
+
+<p>面试题：有两个线程 A、B，A 线程打印 a,b,c 的字母，B线程打印 2,4,6 的数字，A、B 线程将轮询打印，如：a2 b4 c6…</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Event</span>
+
+
+<span class="c1"># 打印字母函数
+</span><span class="k">def</span> <span class="nf">printLetter</span><span class="p">(</span><span class="n">letterEvent</span><span class="p">,</span> <span class="n">numEvent</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">]:</span>
+        <span class="n">letterEvent</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">""</span><span class="p">)</span>
+        <span class="n">letterEvent</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">numEvent</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+
+
+<span class="c1"># 打印数字函数
+</span><span class="k">def</span> <span class="nf">printNum</span><span class="p">(</span><span class="n">numEvent</span><span class="p">,</span> <span class="n">letterEvent</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]:</span>
+        <span class="n">numEvent</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">" "</span><span class="p">)</span>
+        <span class="n">numEvent</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">letterEvent</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">letterEvent</span><span class="p">,</span> <span class="n">numEvent</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(),</span> <span class="n">Event</span><span class="p">()</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">printLetter</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">letterEvent</span><span class="p">,</span> <span class="n">numEvent</span><span class="p">))</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">printNum</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">numEvent</span><span class="p">,</span> <span class="n">letterEvent</span><span class="p">))</span>
+
+    <span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">threads</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
+    <span class="n">threads</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">letterEvent</span><span class="p">.</span><span class="nb">set</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>运行结果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a2</span> <span class="n">b4</span> <span class="n">c6</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本节介绍了多线程的 Event 事件，它只有4个函数：set()、clear()、wait(timeout) 和 isSet() ，大家一定会很快掌握的。</p>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day/tree/master/day-054</p>
+</blockquote>
+:ET

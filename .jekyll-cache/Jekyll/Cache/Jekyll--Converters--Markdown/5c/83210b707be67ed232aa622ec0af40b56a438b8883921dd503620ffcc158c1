@@ -1,0 +1,186 @@
+I"�<p>模块与包是任何大型程序的核心，就连 Python 安装程序本身也是一个包。</p>
+
+<p>重点涉及有关模块和包的常用编程技术，例如如何组织包、把大型模块分割成多个文件、创建命名空间包。同时，也给出了让你自定义导入语句的秘籍。</p>
+
+<!--more-->
+
+<p>先给大家解释一下模块、包、库之间的概念：</p>
+
+<ul>
+  <li>模块(module)其实就是 py 文件，里面定义了一些函数、类、变量等</li>
+  <li>包(package)是多个模块的聚合体形成的文件夹，里面可以是多个 py 文件，也可以嵌套文件夹</li>
+  <li>库是参考其他编程语言的说法，是指完成一定功能的代码集合，在 Python 中的形式就是模块和包</li>
+</ul>
+
+<p>模块其实一个 py 文件，用来封装一组功能；包是将一类模块归集到一起，比模块的概念更大一些；库就是由其它程序员封装好的功能组，一般比包的概念更大一些。</p>
+
+<p>下面我们来分开介绍：</p>
+
+<h2 id="模块">模块</h2>
+
+<p>由上面的内容我们得知模块就是一个 py 文件，这个文本文件中存储着一组功能，方面我们再次使用的时候，提高代码的复用率。我们成这一个的一个 py 文件为  Python 模块（Module）。其他 Python 脚本中，通过 import 载入定义好的 Python 模块。</p>
+
+<h3 id="定义和调用-python-模块">定义和调用 Python 模块</h3>
+
+<p>我们先来看如何定义一个 Python 模块。</p>
+
+<p>定义一个 hello.py 模块，内容如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def sayhello(  ):
+   print("Hello World!")
+</code></pre></div></div>
+
+<p>通常我们使用 import 语句来引入模块，语法如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import module1[, module2[,... moduleN]]
+</code></pre></div></div>
+
+<p>当解释器遇到 import 语句，如果模块在当前的搜索路径就会被导入。调用的时候使用 <code class="highlighter-rouge">模块名.函数名</code> 来进行调用</p>
+
+<p>以上的示例为例，我们新建 do.py 文件调用 hello.py 模块中方法。</p>
+
+<p>do.py 文件内容如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import hello
+ 
+# 现在可以调用模块里包含的函数了
+hello.sayhello()
+</code></pre></div></div>
+
+<blockquote>
+  <p>一个模块只会被导入一次，不管你执行了多少次import。这样可以防止导入模块被一遍又一遍地执行。</p>
+</blockquote>
+
+<p>在 do.py 页面执行快捷键 ctrl+b 控制台输出：Hello World!，证明调用 hello.py 中的方法成功。</p>
+
+<p>这就是一个模块的定义和调用的示例，是不是也很简单。</p>
+
+<h3 id="from--import-">from … import …</h3>
+
+<p>模块提供了类似名字空间的限制，允许 Python 从模块中导入指定的符号（变量、函数、类等）到当前模块。导入后，这些符号就可以直接使用，而不需要前缀模块名。</p>
+
+<p>语法如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from modname import name1[, name2[, ... nameN]]
+</code></pre></div></div>
+
+<p>例如，要导入模块 hello 的 sayhello 函数，使用如下语句：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 直接导入方法
+from hello import sayhello
+sayhello()
+</code></pre></div></div>
+
+<p><strong>from … import * 语句</strong></p>
+
+<p>把一个模块的所有内容全都导入到当前的命名空间也是可行的，只需使用如下声明：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from modname import *
+</code></pre></div></div>
+
+<p>这提供了一个简单的方法来导入一个模块中的所有项目。</p>
+
+<p>我们在 hello.py 中再添加一个 world 方法。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def world():
+   print("Python World!")
+</code></pre></div></div>
+
+<p>在 do.py 文件中引入全部方法进行调用。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 导入所有方法
+from hello import *
+sayhello()
+world()
+</code></pre></div></div>
+
+<p>执行后输出：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World!
+Python World!
+</code></pre></div></div>
+
+<p>证明 hello 模块中的两个方法都可以直接调用，实际项目中不推荐被过多地使用。</p>
+
+<h2 id="包">包</h2>
+
+<p>包（package）是 Python 中对模块的更高一级的抽象。简单来说，Python 允许用户把目录当成模块看待。这样一来，目录中的不同模块文件，就变成了「包」里面的子模块。此外，包目录下还可以有子目录，这些子目录也可以是 Python 包。这种分层，对模块识别、管理，都是非常有好处的。</p>
+
+<p>特别地，对于一些大型 Python 工具包，内里可能有成百上千个不同功能的模块。科学计算领域，SciPy, NumPy, Matplotlib 等第三方工具，都是用包的形式发布的。</p>
+
+<h3 id="包-定义">包 定义</h3>
+
+<p>常见的包结构如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pakageName
+-------__init__.py 
+-------moduleName1.py
+-------moduleName2.py
+------- ...
+</code></pre></div></div>
+
+<p>包路径下必须存在 <code class="highlighter-rouge">__init__.py</code> 文件。</p>
+
+<p>示例：</p>
+
+<p>我们创建一个 cal 的包，包中有一个计算器的 model ，结构如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cal
+-------__init__.py 
+-------calculator.py
+</code></pre></div></div>
+
+<p>calculator.py 模块的代码如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def add(a,b) :
+   return a+b
+
+def reduce(a,b) :
+   return a-b
+
+def multiply(a,b) :
+   return a*b
+
+def divide(a,b) :
+   return a/b
+</code></pre></div></div>
+
+<h3 id="使用-python-包">使用 Python 包</h3>
+
+<p>Python 包的使用和模块的使用类似，下面是导入的语法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import 包名.包名.模块名
+</code></pre></div></div>
+
+<p>比如我们在 do.py 中导入 <code class="highlighter-rouge">calculator.py</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入包
+import cal.calculator
+# 使用包的模块的方法
+print(cal.calculator.add(1,2))
+</code></pre></div></div>
+
+<p>但是导入调用的时候报名比较长，这样就可以使用<code class="highlighter-rouge">from ... import ...</code>语句来简化一下。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入包
+from cal import calculator
+# 使用包的模块的方法
+print(calculator.multiply(3,6))
+</code></pre></div></div>
+
+<p>当包名越来越长的时候效果也会越好。</p>
+
+<p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了 Python  模块和包的使用，对 Python 工程师使用提供了支撑，模块和包的合理使用不断可以提高代码的使用效率，也可以更规范的整个工程项目的调用。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-006">Python-100-days-day006</a></p>
+</blockquote>
+
+<p>参考：  <br />
+https://liam.page/2017/07/23/modules-and-packages-of-python/</p>
+:ET

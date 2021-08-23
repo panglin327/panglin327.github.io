@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第65天：爬虫利器 Beautiful Soup 之遍历文档 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 豆豆&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/11/21/Beautiful-Soup-065.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第65天：爬虫利器 Beautiful Soup 之遍历文档">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第65天：爬虫利器 Beautiful Soup 之遍历文档</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/21
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 豆豆</p>
+
+<h2 id="beautiful-soup-简介">Beautiful Soup 简介</h2>
+
+<p>Beautiful Soup 是一个可以从 HTML 或 XML 文件中提取数据的 Python 库，它提供了一些简单的操作方式来帮助你处理文档导航，查找，修改文档等繁琐的工作。因为使用简单，所以 Beautiful Soup 会帮你节省不少的工作时间。</p>
+
+<!--more-->
+
+<h2 id="beautiful-soup-安装">Beautiful Soup 安装</h2>
+
+<p>你可以使用如下命令安装 Beautiful Soup。二选一即可。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>easy_install beautifulsoup4
+
+<span class="nv">$ </span>pip <span class="nb">install </span>beautifulsoup4
+</code></pre></div></div>
+
+<p>Beautiful Soup 不仅支持 Python 标准库中的 HTML 解析器，还支持很多第三方的解析器，比如 lxml，html5lib 等。初始化 Beautiful Soup 对象时如果不指定解析器，那么 Beautiful Soup 将会选择最合适的解析器（前提是你的机器安装了该解析器）来解析文档，当然你也可以手动指定解析器。这里推荐大家使用 lxml 解析器，功能强大，方便快捷，而且该解析器是唯一支持 XML 的解析器。</p>
+
+<p>你可以使用如下命令来安装 lxml 解析器。二选一即可。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>easy_install lxml
+
+<span class="nv">$ </span>pip <span class="nb">install </span>lxml
+</code></pre></div></div>
+
+<h2 id="beautiful-soup-小试牛刀">Beautiful Soup 小试牛刀</h2>
+
+<p>Beautiful Soup 使用来起来非常简单，你只需要传入一个文件操作符或者一段文本即可得到一个构建完成的文档对象，有了该对象之后，就可以对该文档做一些我们想做的操作了。而传入的文本大都是通过爬虫爬取过来的，所以 Beautiful Soup 和 requests 库结合使用体验更佳。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 1
+</span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="c1"># soup = BeautifulSoup(open("index.html"))
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="s">"&lt;html&gt;&lt;head&gt;&lt;title&gt;index&lt;/title&gt;&lt;/head&gt;&lt;body&gt;content&lt;/body&gt;&lt;/html&gt;"</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">)</span> <span class="c1"># 指定解析器
+</span><span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Beautiful Soup 将复杂的 HTML 文档转换成一个复杂的树形结构，每个节点都是 Python 对象，所有对象可以归纳为 4 种: Tag，NavigableString，BeautifulSoup，Comment。</p>
+
+<p>Tag 就是 HTML 的一个标签，比如 div，p 标签等，也是我们用的最多的一个对象。</p>
+
+<p>NavigableString 指标签内部的文字，直译就是可遍历的字符串。</p>
+
+<p>BeautifulSoup 指一个文档的全部内容，可以当成一个 Tag 来处理。</p>
+
+<p>Comment 是一个特殊的 NavigableString，其输出内容不包括注视内容。</p>
+
+<p>为了故事的顺利发展，我们先定义一串 HTML 文本，下文的所有例子都是基于这段文本的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">html_doc</span> <span class="o">=</span> <span class="s">"""
+&lt;html&gt;&lt;head&gt;&lt;title&gt;index&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class="title"&gt;&lt;b&gt;首页&lt;/b&gt;&lt;/p&gt;
+&lt;p class="main"&gt;我常用的网站
+&lt;a href="https://www.google.com" class="website" id="google"&gt;Google&lt;/a&gt;
+&lt;a href="https://www.baidu.com" class="website" id="baidu"&gt;Baidu&lt;/a&gt;
+&lt;a href="https://cn.bing.com" class="website" id="bing"&gt;Bing&lt;/a&gt;
+&lt;/p&gt;
+&lt;div&gt;&lt;!--这是注释内容--&gt;&lt;/div&gt;
+&lt;p class="content1"&gt;...&lt;/p&gt;
+&lt;p class="content2"&gt;...&lt;/p&gt;
+&lt;/body&gt;
+"""</span>
+</code></pre></div></div>
+
+<h3 id="子节点">子节点</h3>
+
+<p>Tag 有两个很重要的属性，name 和 attributes。期中 name 就是标签的名字，attributes 是标签属性。标签的名字和属性是可以被修改的，注意，这种修改会直接改变 BeautifulSoup 对象。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 2
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">p_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">p</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">[</span><span class="s">"class"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">.</span><span class="n">attrs</span><span class="p">)</span>
+
+<span class="n">p_tag</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="s">"myTag"</span> <span class="c1"># attrs 同样可被修改，操作同字典
+</span><span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="n">p</span>
+<span class="p">[</span><span class="s">'title'</span><span class="p">]</span>
+<span class="p">{</span><span class="s">'class'</span><span class="p">:</span> <span class="p">[</span><span class="s">'title'</span><span class="p">]}</span>
+<span class="o">&lt;</span><span class="n">myTag</span> <span class="n">class</span><span class="o">=</span><span class="s">"title"</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;/</span><span class="n">myTag</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>由以上例子我么可以看出，可以直接通过点属性的方法来获取 Tag，但是这种方法只能获取第一个标签。同时我们可以多次调用点属性这个方法，来获取更深层次的标签。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 3
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">p</span><span class="p">.</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>如果想获得所有的某个名字的标签，则可以使用 find_all(tag_name) 函数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 4
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">a_tags</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a_tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>我们可以使用 .contents 将 tag 以列表方式输出，即将 tag 的子节点格式化为列表，这很有用，意味着可以通过下标进行访问指定节点。同时我们还可以通过 .children 生成器对节点的子节点进行遍历。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 5
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">head_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head_tag</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head_tag</span><span class="p">.</span><span class="n">contents</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">head_tag</span><span class="p">.</span><span class="n">children</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"child is : "</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="n">child</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>.children 只可以获取 tag 的直接节点，而获取不到子孙节点，.descendants 可以满足你。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 6
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">head_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span>
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">head_tag</span><span class="p">.</span><span class="n">descendants</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"child is : "</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">child</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="n">child</span> <span class="ow">is</span> <span class="p">:</span>  <span class="n">index</span>
+</code></pre></div></div>
+
+<h3 id="父节点">父节点</h3>
+
+<p>通过 .parent 属性获取标签的父亲节点。 title 的父标签是 head，html 的父标签是 BeautifulSoup 对象，而 BeautifulSoup 对象的父标签是 None。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 7
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">title_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">title</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">title_tag</span><span class="p">.</span><span class="n">parent</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">html</span><span class="p">.</span><span class="n">parent</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">parent</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="s">'&gt;
+None
+</span></code></pre></div></div>
+
+<p>同时，我们可以通过 parents 得到指定标签的所有父亲标签。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 8
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">a_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">a</span>
+
+<span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">a_tag</span><span class="p">.</span><span class="n">parents</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">p</span>
+<span class="n">body</span>
+<span class="n">html</span>
+<span class="p">[</span><span class="n">document</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="兄弟节点">兄弟节点</h3>
+
+<p>通过 .next_sibling 和 .previous_sibling 来获取下一个标签和上一个标签。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 9
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">div_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">div</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">div_tag</span><span class="p">.</span><span class="n">next_sibling</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">div_tag</span><span class="p">.</span><span class="n">next_sibling</span><span class="p">.</span><span class="n">next_sibling</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span>
+<span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"content1"</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>你可能会纳闷，调用了两次 next_sibling 怎么只有一个输出呢，这方法是不是有 bug 啊。事实上是 div 的第一个 next_sibling 是<strong>div 和 p 之间的换行符</strong>。这个规则对于 previous_sibling 同样适用。</p>
+
+<p>另外，我们可以通过 .next_siblings 和 .previous_siblings 属性可以对当前节点的兄弟节点迭代输出。在该例子中，我们在每次输出前加了前缀，这样就可以更直观的看到 dib 的第一个 previous_sibling 是换行符了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 10
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">div_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">div</span>
+
+<span class="k">for</span> <span class="n">pre_tag</span> <span class="ow">in</span> <span class="n">div_tag</span><span class="p">.</span><span class="n">previous_siblings</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"pre_tag is : "</span><span class="p">,</span> <span class="n">pre_tag</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"main"</span><span class="o">&gt;</span><span class="n">我常用的网站</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"title"</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  
+</code></pre></div></div>
+
+<h3 id="前进和后退">前进和后退</h3>
+
+<p>通过 .next_element 和 .previous_element 获取指定标签的前一个或者后一个被解析的对象，注意这个和兄弟节点是有所不同的，兄弟节点是指有相同父亲节点的子节点，而这个前一个或者后一个是按照文档的解析顺序来计算的。</p>
+
+<p>比如在我们的文本 html_doc 中，head 的兄弟节点是 body（不考虑换行符），因为他们具有共同的父节点 html，但是 head 的下一个节点是 title。即<code class="highlighter-rouge">soup.head.next_sibling=title soup.head.next_element=title</code>。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 11
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+
+<span class="n">head_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head_tag</span><span class="p">.</span><span class="n">next_element</span><span class="p">)</span>
+
+<span class="n">title_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">title</span>
+<span class="k">print</span><span class="p">(</span><span class="n">title_tag</span><span class="p">.</span><span class="n">next_element</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="n">index</span>
+</code></pre></div></div>
+
+<p>同时这里还需要注意的是 title 下一个解析的标签不是 body，而是 title 标签内的内容，因为 html 的解析顺序是打开 title 标签，然后解析内容，最后关闭 title 标签。</p>
+
+<p>另外，我们同样可以通过 .next_elements 和 .previous_elements 来迭代文档树。由遗下例子我们可以看出，换行符同样会占用解析顺序，与迭代兄弟节点效果一致。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 12
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">div_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">div</span>
+<span class="k">for</span> <span class="n">next_element</span> <span class="ow">in</span> <span class="n">div_tag</span><span class="p">.</span><span class="n">next_elements</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"next_element is : "</span><span class="p">,</span> <span class="n">next_element</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="n">这是注释内容</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"content1"</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="p">...</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"content2"</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="p">...</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+</code></pre></div></div>
+
+<h2 id="beautiful-soup-总结">Beautiful Soup 总结</h2>
+
+<p>本章节介绍了 Beautiful Soup 的使用场景以及操作文档树节点的基本操作，看似很多东西其实是有规律可循的，比如函数的命名，兄弟节点或者下一个节点的迭代函数都是获取单个节点函数的复数形式。</p>
+
+<p>同时由于 HTML 或者 XML 这种循环嵌套的复杂文档结构，致使操作起来甚是麻烦，掌握了本文对节点的基本操作，将有助于提高你写爬虫程序的效率。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day/tree/master/day-065</p>
+</blockquote>
+
+<h2 id="参考内容">参考内容</h2>
+
+<p>https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html#</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/11/21/Beautiful-Soup-065.html';
+        this.page.identifier = '/python/2019/11/21/Beautiful-Soup-065.html';
+        this.page.title = '第65天：爬虫利器 Beautiful Soup 之遍历文档';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/11/21/Beautiful-Soup-065.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

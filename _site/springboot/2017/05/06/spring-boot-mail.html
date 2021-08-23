@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Spring Boot (十)：邮件服务 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;Spring Boot 仍然在狂速发展，才几个多月没有关注，现在看&lt;a href=&quot;http://projects.spring.io/spring-boot/&quot;&gt;官网&lt;/a&gt;已经到 2.1.0.RELEASE 版本了。准备慢慢在写写 Spring Boot 相关的文章，本篇文章使用 Spring Boot 最新版本 2.1.0 进行开发。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/springboot/2017/05/06/spring-boot-mail.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Spring Boot (十)：邮件服务">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Spring Boot (十)：邮件服务</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/05/06
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>Spring Boot 仍然在狂速发展，才几个多月没有关注，现在看<a href="http://projects.spring.io/spring-boot/">官网</a>已经到 2.1.0.RELEASE 版本了。准备慢慢在写写 Spring Boot 相关的文章，本篇文章使用 Spring Boot 最新版本 2.1.0 进行开发。</p>
+
+<p>发送邮件应该是网站的必备功能之一，什么注册验证，忘记密码或者是给用户发送营销信息。最早期的时候我们会使用 JavaMail 相关 api 来写发送邮件的相关代码，后来 Spring 推出了 JavaMailSender 更加简化了邮件发送的过程，在之后 Spring Boot 对此进行了封装就有了现在的 <code class="highlighter-rouge">spring-boot-starter-mail</code> ,本章文章的介绍主要来自于此包。</p>
+
+<h2 id="简单使用">简单使用</h2>
+
+<h3 id="1pom-包配置">1、pom 包配置</h3>
+
+<p>pom 包里面添加 <code class="highlighter-rouge">spring-boot-starter-mail</code> 包引用</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+	<span class="nt">&lt;dependency&gt;</span> 
+	    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-mail<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;/dependency&gt;</span> 
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2在-applicationproperties-中添加邮箱配置">2、在 application.properties 中添加邮箱配置</h3>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.mail.host</span><span class="p">=</span><span class="s">smtp.qiye.163.com //邮箱服务器地址</span>
+<span class="py">spring.mail.username</span><span class="p">=</span><span class="s">xxx@oo.com //用户名</span>
+<span class="py">spring.mail.password</span><span class="p">=</span><span class="s">xxyyooo    //密码</span>
+<span class="py">spring.mail.default-encoding</span><span class="p">=</span><span class="s">UTF-8</span>
+
+<span class="py">mail.fromMail.addr</span><span class="p">=</span><span class="s">xxx@oo.com  //以谁来发送邮件</span>
+</code></pre></div></div>
+
+<h3 id="3编写-mailservice这里只提出实现类">3、编写 mailService，这里只提出实现类。</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MailServiceImpl</span> <span class="kd">implements</span> <span class="nc">MailService</span><span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">JavaMailSender</span> <span class="n">mailSender</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${mail.fromMail.addr}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">from</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendSimpleMail</span><span class="o">(</span><span class="nc">String</span> <span class="n">to</span><span class="o">,</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">,</span> <span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SimpleMailMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleMailMessage</span><span class="o">();</span>
+        <span class="n">message</span><span class="o">.</span><span class="na">setFrom</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+        <span class="n">message</span><span class="o">.</span><span class="na">setTo</span><span class="o">(</span><span class="n">to</span><span class="o">);</span>
+        <span class="n">message</span><span class="o">.</span><span class="na">setSubject</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+        <span class="n">message</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">content</span><span class="o">);</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">mailSender</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"简单邮件已经发送。"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"发送简单邮件时发生异常！"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="4编写-test-类进行测试">4、编写 test 类进行测试</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MailServiceTest</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">MailService</span> <span class="nc">MailService</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSimpleMail</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="nc">MailService</span><span class="o">.</span><span class="na">sendSimpleMail</span><span class="o">(</span><span class="s">"ityouknow@126.com"</span><span class="o">,</span><span class="s">"test simple mail"</span><span class="o">,</span><span class="s">" hello this is simple mail"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>至此一个简单的文本发送就完成了。</p>
+
+<h2 id="加点料">加点料</h2>
+
+<p>但是在正常使用的过程中，我们通常在邮件中加入图片或者附件来丰富邮件的内容，下面讲介绍如何使用 Spring Boot 来发送丰富的邮件。</p>
+
+<h3 id="发送-html-格式邮件">发送 html 格式邮件</h3>
+
+<p>其它都不变在 MailService 添加 sendHtmlMail 方法.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendHtmlMail</span><span class="o">(</span><span class="nc">String</span> <span class="n">to</span><span class="o">,</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">,</span> <span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">mailSender</span><span class="o">.</span><span class="na">createMimeMessage</span><span class="o">();</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">//true表示需要创建一个multipart message</span>
+        <span class="nc">MimeMessageHelper</span> <span class="n">helper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MimeMessageHelper</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setFrom</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setTo</span><span class="o">(</span><span class="n">to</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setSubject</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">content</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="n">mailSender</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"html邮件发送成功"</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">MessagingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"发送html邮件时发生异常！"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>在测试类中构建 html 内容，测试发送</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testHtmlMail</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">content</span><span class="o">=</span><span class="s">"&lt;html&gt;\n"</span> <span class="o">+</span>
+            <span class="s">"&lt;body&gt;\n"</span> <span class="o">+</span>
+            <span class="s">"    &lt;h3&gt;hello world ! 这是一封Html邮件!&lt;/h3&gt;\n"</span> <span class="o">+</span>
+            <span class="s">"&lt;/body&gt;\n"</span> <span class="o">+</span>
+            <span class="s">"&lt;/html&gt;"</span><span class="o">;</span>
+    <span class="nc">MailService</span><span class="o">.</span><span class="na">sendHtmlMail</span><span class="o">(</span><span class="s">"ityouknow@126.com"</span><span class="o">,</span><span class="s">"test simple mail"</span><span class="o">,</span><span class="n">content</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="发送带附件的邮件">发送带附件的邮件</h3>
+
+<p>在 MailService 添加 sendAttachmentsMail 方法.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendAttachmentsMail</span><span class="o">(</span><span class="nc">String</span> <span class="n">to</span><span class="o">,</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">,</span> <span class="nc">String</span> <span class="n">content</span><span class="o">,</span> <span class="nc">String</span> <span class="n">filePath</span><span class="o">){</span>
+    <span class="nc">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">mailSender</span><span class="o">.</span><span class="na">createMimeMessage</span><span class="o">();</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="nc">MimeMessageHelper</span> <span class="n">helper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MimeMessageHelper</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setFrom</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setTo</span><span class="o">(</span><span class="n">to</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setSubject</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">content</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="nc">FileSystemResource</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileSystemResource</span><span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">filePath</span><span class="o">));</span>
+        <span class="nc">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">filePath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">filePath</span><span class="o">.</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="nc">File</span><span class="o">.</span><span class="na">separator</span><span class="o">));</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">addAttachment</span><span class="o">(</span><span class="n">fileName</span><span class="o">,</span> <span class="n">file</span><span class="o">);</span>
+
+        <span class="n">mailSender</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"带附件的邮件已经发送。"</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">MessagingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"发送带附件的邮件时发生异常！"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<blockquote>
+  <p>添加多个附件可以使用多条 <code class="highlighter-rouge">helper.addAttachment(fileName, file)</code></p>
+</blockquote>
+
+<p>在测试类中添加测试方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendAttachmentsMail</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">filePath</span><span class="o">=</span><span class="s">"e:\\tmp\\application.log"</span><span class="o">;</span>
+    <span class="n">mailService</span><span class="o">.</span><span class="na">sendAttachmentsMail</span><span class="o">(</span><span class="s">"ityouknow@126.com"</span><span class="o">,</span> <span class="s">"主题：带附件的邮件"</span><span class="o">,</span> <span class="s">"有附件，请查收！"</span><span class="o">,</span> <span class="n">filePath</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="发送带静态资源的邮件">发送带静态资源的邮件</h3>
+
+<p>邮件中的静态资源一般就是指图片，在 MailService 添加 sendAttachmentsMail 方法.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendInlineResourceMail</span><span class="o">(</span><span class="nc">String</span> <span class="n">to</span><span class="o">,</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">,</span> <span class="nc">String</span> <span class="n">content</span><span class="o">,</span> <span class="nc">String</span> <span class="n">rscPath</span><span class="o">,</span> <span class="nc">String</span> <span class="n">rscId</span><span class="o">){</span>
+    <span class="nc">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">mailSender</span><span class="o">.</span><span class="na">createMimeMessage</span><span class="o">();</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="nc">MimeMessageHelper</span> <span class="n">helper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MimeMessageHelper</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setFrom</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setTo</span><span class="o">(</span><span class="n">to</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setSubject</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">content</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="nc">FileSystemResource</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileSystemResource</span><span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">rscPath</span><span class="o">));</span>
+        <span class="n">helper</span><span class="o">.</span><span class="na">addInline</span><span class="o">(</span><span class="n">rscId</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+
+        <span class="n">mailSender</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"嵌入静态资源的邮件已经发送。"</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">MessagingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"发送嵌入静态资源的邮件时发生异常！"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>在测试类中添加测试方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendInlineResourceMail</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">rscId</span> <span class="o">=</span> <span class="s">"neo006"</span><span class="o">;</span>
+    <span class="nc">String</span> <span class="n">content</span><span class="o">=</span><span class="s">"&lt;html&gt;&lt;body&gt;这是有图片的邮件：&lt;img src=\'cid:"</span> <span class="o">+</span> <span class="n">rscId</span> <span class="o">+</span> <span class="s">"\' &gt;&lt;/body&gt;&lt;/html&gt;"</span><span class="o">;</span>
+    <span class="nc">String</span> <span class="n">imgPath</span> <span class="o">=</span> <span class="s">"C:\\Users\\summer\\Pictures\\favicon.png"</span><span class="o">;</span>
+
+    <span class="n">mailService</span><span class="o">.</span><span class="na">sendInlineResourceMail</span><span class="o">(</span><span class="s">"ityouknow@126.com"</span><span class="o">,</span> <span class="s">"主题：这是有图片的邮件"</span><span class="o">,</span> <span class="n">content</span><span class="o">,</span> <span class="n">imgPath</span><span class="o">,</span> <span class="n">rscId</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>添加多个图片可以使用多条 <code class="highlighter-rouge">&lt;img src='cid:" + rscId + "' &gt;</code> 和  <code class="highlighter-rouge">helper.addInline(rscId, res)</code> 来实现</p>
+</blockquote>
+
+<p>到此所有的邮件发送服务已经完成了。</p>
+
+<h2 id="邮件系统">邮件系统</h2>
+
+<p>上面发送邮件的基础服务就这些了，但是如果我们要做成一个邮件系统的话还需要考虑以下几个问题：</p>
+
+<h3 id="邮件模板">邮件模板</h3>
+
+<p>我们会经常收到这样的邮件：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>尊敬的neo用户：
+              
+          恭喜您注册成为xxx网的用户,，同时感谢您对xxx的关注与支持并欢迎您使用xx的产品与服务。
+          ...
+
+</code></pre></div></div>
+
+<p>其中只有 neo 这个用户名在变化，其它邮件内容均不变，如果每次发送邮件都需要手动拼接的话会不够优雅，并且每次模板的修改都需要改动代码的话也很不方便，因此对于这类邮件需求，都建议做成邮件模板来处理。模板的本质很简单，就是在模板中替换变化的参数，转换为 html 字符串即可，这里以<code class="highlighter-rouge">thymeleaf</code>为例来演示。</p>
+
+<p><strong>1、pom 中导入 thymeleaf 的包</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>**2、在 resorces/templates 下创建 emailTemplate.html **</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"zh"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        您好,这是验证邮件,请点击下面的链接完成验证,<span class="nt">&lt;br/&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">th:href=</span><span class="s">"@{ http://www.ityouknow.com/neo/{id}(id=${id}) }"</span><span class="nt">&gt;</span>激活账号<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><strong>3、解析模板并发送</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendTemplateMail</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">//创建邮件正文</span>
+    <span class="nc">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Context</span><span class="o">();</span>
+    <span class="n">context</span><span class="o">.</span><span class="na">setVariable</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span> <span class="s">"006"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">emailContent</span> <span class="o">=</span> <span class="n">templateEngine</span><span class="o">.</span><span class="na">process</span><span class="o">(</span><span class="s">"emailTemplate"</span><span class="o">,</span> <span class="n">context</span><span class="o">);</span>
+
+    <span class="n">mailService</span><span class="o">.</span><span class="na">sendHtmlMail</span><span class="o">(</span><span class="s">"ityouknow@126.com"</span><span class="o">,</span><span class="s">"主题：这是模板邮件"</span><span class="o">,</span><span class="n">emailContent</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="发送失败">发送失败</h3>
+
+<p>因为各种原因，总会有邮件发送失败的情况，比如：邮件发送过于频繁、网络异常等。在出现这种情况的时候，我们一般会考虑重新重试发送邮件，会分为以下几个步骤来实现：</p>
+
+<ul>
+  <li>1、接收到发送邮件请求，首先记录请求并且入库。</li>
+  <li>2、调用邮件发送接口发送邮件，并且将发送结果记录入库。</li>
+  <li>3、启动定时系统扫描时间段内，未发送成功并且重试次数小于3次的邮件，进行再次发送</li>
+</ul>
+
+<h3 id="异步发送">异步发送</h3>
+
+<p>很多时候邮件发送并不是我们主业务必须关注的结果，比如通知类、提醒类的业务可以允许延时或者失败。这个时候可以采用异步的方式来发送邮件，加快主交易执行速度，在实际项目中可以采用MQ发送邮件相关参数，监听到消息队列之后启动发送邮件。</p>
+
+<p>可以参考前期文章：<a href="http://www.ityouknow.com/springboot/2016/11/30/spring-boot-rabbitMQ.html">Spring Boot(八)：RabbitMQ 详解</a> 来实现。</p>
+
+<blockquote>
+  <p>文章内容已经升级到 Spring Boot 2.x</p>
+</blockquote>
+
+<p><strong><a href="https://github.com/ityouknow/spring-boot-examples/tree/master/spring-boot-mail">示例代码-github</a></strong></p>
+
+<p><strong><a href="https://gitee.com/ityouknow/spring-boot-examples/tree/master/spring-boot-mail">示例代码-码云</a></strong></p>
+
+<p><strong>参考:</strong><br />
+<a href="http://blog.csdn.net/clementad/article/details/51833416">spring boot 发送邮件</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/springboot/2017/05/06/spring-boot-mail.html';
+        this.page.identifier = '/springboot/2017/05/06/spring-boot-mail.html';
+        this.page.title = 'Spring Boot (十)：邮件服务';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/springboot/2017/05/06/spring-boot-mail.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

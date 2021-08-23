@@ -1,0 +1,341 @@
+I"��<p>by 極光</p>
+
+<p>Redis 作为常用的 NoSql 数据库，主要用于缓存数据，提高数据读取效率，那在 Python 中应该如果连接和操作 Redis 呢？今天就为大家简单介绍下，在 Python 中操作 Redis 常用命令。</p>
+
+<!--more-->
+
+<h2 id="安装-redis">安装 redis</h2>
+
+<p>首先还是需要先安装 redis 模块，使用如下命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip3 <span class="nb">install </span>redis
+</code></pre></div></div>
+
+<h2 id="创建-redis-连接池">创建 redis 连接池</h2>
+
+<p>安装成功后就可以在代码中导入模块，然后通过创建连接池的方式，连接到 Redis 服务器，创建代码如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">redis</span>   <span class="c1">#导入redis模块
+</span>
+<span class="c1"># 建议使用以下连接池的方式
+# 设置decode_responses=True，写入的KV对中的V为string类型，不加则写入的为字节类型。
+</span><span class="n">pool</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">ConnectionPool</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'127.0.0.1'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">connection_pool</span><span class="o">=</span><span class="n">pool</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<blockquote>
+  <p>需要注意的是，设置 <code class="highlighter-rouge">decode_responses=True</code>，写入的 Key/Value 对中的 Value 为 string 类型，不加则写入的为字节类型。</p>
+</blockquote>
+
+<h2 id="redis-操作方法">Redis 操作方法</h2>
+
+<p>Redis 支持五种类型的数据操作，分别为字符串、 List、 Hash、 Set、 zSet类型，还有一些方法是不区分类型操作的。上面我们已经连接到 Redis 服务器，接下来为大家介绍各类型基本的操作方法。</p>
+
+<h3 id="字符串类型方法">字符串类型方法</h3>
+
+<ul>
+  <li>单键值操作</li>
+</ul>
+
+<p>set(name, value, ex=None, px=None, nx=False, xx=False)</p>
+<blockquote>
+  <p><strong>参数说明：</strong></p>
+  <ul>
+    <li>ex：过期时间（秒）</li>
+    <li>px：过期时间（毫秒）</li>
+    <li>nx：如果设置为True，则只有name不存在时，当前set操作才执行</li>
+    <li>xx：如果设置为True，则只有name存在时，当前set操作才执行</li>
+  </ul>
+</blockquote>
+
+<p>使用方法如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># key="color",value="red"，设置过期时间5秒
+</span><span class="n">rs</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'color'</span><span class="p">,</span> <span class="s">'red'</span><span class="p">,</span> <span class="n">ex</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 与rs.set('color', 'red', ex=5)相同
+</span><span class="n">rs</span><span class="p">.</span><span class="n">setex</span><span class="p">(</span><span class="s">'color'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'red'</span><span class="p">)</span>
+
+<span class="c1"># 打印获取color键对应的值，超时后获取值为None
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'color'</span><span class="p">))</span>
+
+<span class="c1"># 如果color存在输出None，如果不存在，则输出True
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'color'</span><span class="p">,</span> <span class="s">'green'</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+
+<span class="c1"># 如果color存在输出True，如果不存在，则输出None
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'color'</span><span class="p">,</span> <span class="s">'yellow'</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+</code></pre></div></div>
+
+<ul>
+  <li>批量键值操作</li>
+</ul>
+
+<p>可以批量对多个 key 赋值，也可以同时获取多个 key 的值，使用方法如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 批量赋值
+</span><span class="n">rs</span><span class="p">.</span><span class="n">mset</span><span class="p">({</span><span class="s">'key1'</span><span class="p">:</span><span class="s">'value1'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">:</span><span class="s">'value2'</span><span class="p">,</span> <span class="s">'key3'</span><span class="p">:</span><span class="s">'value3'</span><span class="p">})</span>
+
+<span class="c1"># 批量获取值
+</span><span class="n">rs</span><span class="p">.</span><span class="n">mget</span><span class="p">(</span><span class="s">'key1'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">,</span> <span class="s">'key3'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>其他操作</li>
+</ul>
+
+<p>除了基础的赋值和取值，可以在赋新值时返回旧值，还可将返回值通过索引来截取，也可以在 key 对应值后追回值等，具体使用可见以下代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 设置新值为blue，同时返回设置前的值
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getset</span><span class="p">(</span><span class="s">'color'</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">))</span>  
+
+<span class="n">rs</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'lang'</span><span class="p">,</span> <span class="s">'Chinese'</span><span class="p">)</span>
+
+<span class="c1"># 取索引为1-3字符
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">getrange</span><span class="p">(</span><span class="s">'lang'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1">#返回结果： hin
+</span>
+<span class="c1"># 从索引号为4字符开始向后替换
+</span><span class="n">rs</span><span class="p">.</span><span class="n">setrange</span><span class="p">(</span><span class="s">'lang'</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'a is great'</span><span class="p">)</span>   <span class="c1">#返回结果：14
+</span>
+<span class="c1"># 在lang对应值后面追加字符 "!"
+</span><span class="n">rs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">'lang'</span><span class="p">,</span> <span class="s">'!'</span><span class="p">)</span>         <span class="c1">#返回结果： 15
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'lang'</span><span class="p">))</span>    <span class="c1">#返回结果：China is great!
+</span>
+<span class="c1"># 返回lang对应值的长度
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">strlen</span><span class="p">(</span><span class="s">'lang'</span><span class="p">))</span>   <span class="c1">#返回结果：15
+</span>
+<span class="c1"># 如果total对应值不存在，则total当前值设置为10
+</span><span class="n">rs</span><span class="p">.</span><span class="n">incr</span><span class="p">(</span><span class="s">'total'</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># 当前total对应值增加1
+</span><span class="n">rs</span><span class="p">.</span><span class="n">incr</span><span class="p">(</span><span class="s">'total'</span><span class="p">)</span>    <span class="c1">#结果为11
+</span>
+<span class="c1"># 当前total对应值减少1
+</span><span class="n">rs</span><span class="p">.</span><span class="n">decr</span><span class="p">(</span><span class="s">'total'</span><span class="p">)</span>    <span class="c1">#结果为10
+</span></code></pre></div></div>
+
+<h3 id="list-类型方法">list 类型方法</h3>
+
+<p>list 的特点：一个有序的列表，列表中的元素可以重复，并且可以在列表前后或中间任意位置插入新元素，具体使用方式见如下代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 每个新增元素都插入到list最左边，如果list不存在则会新建
+</span><span class="n">rs</span><span class="p">.</span><span class="n">lpush</span><span class="p">(</span><span class="s">'leftList'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lrange</span><span class="p">(</span><span class="s">'leftList'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>  <span class="c1">#返回结果：['5', '4', '3', '2', '1']
+</span>
+<span class="c1"># 新插入元素在右侧，如果list不存在则新建
+</span><span class="n">rs</span><span class="p">.</span><span class="n">rpush</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lrange</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#返回结果：['6', '7', '8', '9', '10']
+</span>
+<span class="c1"># 在list左边新增元素，如果list不存在则不创建
+</span><span class="n">rs</span><span class="p">.</span><span class="n">lpushx</span><span class="p">(</span><span class="s">'noList'</span><span class="p">,</span> <span class="s">'apple'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">llen</span><span class="p">(</span><span class="s">'noList'</span><span class="p">))</span>     <span class="c1">#返回结果：0
+</span>
+<span class="c1"># 在list中从左遍历出第一个为'7'的元素，在它后面(如果是在前面插入则用'before')插入元素'08'
+</span><span class="n">rs</span><span class="p">.</span><span class="n">linsert</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="s">'after'</span><span class="p">,</span> <span class="s">'7'</span><span class="p">,</span> <span class="s">'08'</span><span class="p">)</span>  
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lrange</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#返回结果：['6', '7', '08', '8', '9', '10']
+</span>
+<span class="c1"># 将list中索引号为1的元素修改为'-7'
+</span><span class="n">rs</span><span class="p">.</span><span class="n">lset</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'-7'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lrange</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#返回结果：['6', '-7', '08', '8', '9', '10']
+</span>
+<span class="c1"># 删除list中从左遍历第一个为'8'的元素
+</span><span class="n">rs</span><span class="p">.</span><span class="n">lrem</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="s">'8'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lrange</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#返回结果：['6', '-7', '08', '9', '10']
+</span>
+<span class="c1"># 弹出左侧第一个元素
+</span><span class="n">rs</span><span class="p">.</span><span class="n">lpop</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">)</span>       <span class="c1">#返回值为：'6'
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lrange</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#返回结果：['-7', '08', '9', '10']
+</span>
+<span class="c1">#取出list中索引编号为1的值
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">lindex</span><span class="p">(</span><span class="s">'rightList'</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1">#返回结果：08
+</span></code></pre></div></div>
+
+<h3 id="hash-类型方法">hash 类型方法</h3>
+
+<p>hash 的特点：一个 key 对应一个 value，并且 key 不允许重复，可以单个操作，也可以批量键值操作，下面列举了常用方法的使用方法：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 单键值操作
+# 设置hash名为hName的键和值
+</span><span class="n">rs</span><span class="p">.</span><span class="n">hset</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key1'</span><span class="p">,</span> <span class="s">'value1'</span><span class="p">)</span>
+<span class="n">rs</span><span class="p">.</span><span class="n">hset</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">,</span> <span class="s">'value2'</span><span class="p">)</span>
+
+<span class="c1"># 取hName的key1对应的值
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hget</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key1'</span><span class="p">))</span>   <span class="c1">#返回结果：value1
+</span>
+<span class="c1">#批量键值操作
+</span><span class="n">rs</span><span class="p">.</span><span class="n">hmset</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="p">{</span><span class="s">'key3'</span><span class="p">:</span> <span class="s">'value3'</span><span class="p">,</span> <span class="s">'key5'</span><span class="p">:</span> <span class="s">'value5'</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hmget</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key1'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">,</span> <span class="s">'key3'</span><span class="p">))</span>  <span class="c1">#返回结果：['value1', 'value2', 'value3']
+</span>
+<span class="c1"># 取出hName所有键值
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hgetall</span><span class="p">(</span><span class="s">'hName'</span><span class="p">))</span>  <span class="c1">#返回结果：{'key1': 'value1', 'key2': 'value2', 'key3': 'value3', 'key5': 'value5'}
+</span>
+<span class="c1"># 取hName中所有的keys
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hkeys</span><span class="p">(</span><span class="s">'hName'</span><span class="p">))</span>  <span class="c1">#返回结果：['key1', 'key2', 'key3', 'key5']
+</span>
+<span class="c1"># 取hName中所有的values
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hvals</span><span class="p">(</span><span class="s">'hName'</span><span class="p">))</span>  <span class="c1">#返回结果：['value1', 'value2', 'value3', 'value5']
+</span>
+<span class="c1"># 获取hName对应hash键值对个数
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hlen</span><span class="p">(</span><span class="s">'hName'</span><span class="p">))</span>   <span class="c1">#返回结果：4
+</span>
+<span class="c1"># 判断key2是否存在
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hexists</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">))</span>   <span class="c1">#返回结果：True
+</span>
+<span class="c1"># 删除key2对应键值对
+</span><span class="n">rs</span><span class="p">.</span><span class="n">hdel</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">)</span>
+
+<span class="c1"># 再次判断key2是否存在
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">hexists</span><span class="p">(</span><span class="s">'hName'</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">))</span>   <span class="c1">#返回结果：False
+</span></code></pre></div></div>
+
+<h3 id="set-类型方法">set 类型方法</h3>
+
+<p>set 的特点：一个无序的元素集合，集合中元素不能重复，可以随机 pop 元素，两个集合可以取交集，并集，差集运算。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 增加集合元素，如集合不存在则新建
+</span><span class="n">rs</span><span class="p">.</span><span class="n">sadd</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">,</span> <span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># 返回集合元素个数
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">scard</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">))</span>
+
+<span class="c1"># 返回所有元素
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">smembers</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">))</span>    <span class="c1">#结果：{'two', 'one', '3'}
+</span>
+<span class="c1"># 返回所有成员
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">sscan</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">))</span>   <span class="c1">#结果：(0, ['3', 'one', 'two'])
+</span>
+<span class="c1"># 再次创建一个集合mySet2
+</span><span class="n">rs</span><span class="p">.</span><span class="n">sadd</span><span class="p">(</span><span class="s">'mySet2'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># 获取两个集合交集
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">sinter</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">,</span> <span class="s">'mySet2'</span><span class="p">))</span>    <span class="c1">#返回结果：{'3'}
+</span>
+<span class="c1"># 获取两个集合并集
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">sunion</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">,</span> <span class="s">'mySet2'</span><span class="p">))</span>   <span class="c1">#返回结果：{'5', 'two', 'one', '7', '3'}
+</span>
+<span class="c1"># 获取两个集合差集
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">sdiff</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">,</span> <span class="s">'mySet2'</span><span class="p">))</span>   <span class="c1">#返回结果：{'two', 'one'}
+</span>
+<span class="c1"># 取mySet和mySet2的并集，将结果存到storeSet集合中
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">sunionstore</span><span class="p">(</span><span class="s">'sotreSet'</span><span class="p">,</span> <span class="s">'mySet'</span><span class="p">,</span> <span class="s">'mySet2'</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">smembers</span><span class="p">(</span><span class="s">'sotreSet'</span><span class="p">))</span>    <span class="c1">#返回结果：{'5', 'two', 'one', '7', '3'}
+</span>
+<span class="c1"># 判断one元素是否存在集合中
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">sismember</span><span class="p">(</span><span class="s">'sotreSet'</span><span class="p">,</span> <span class="s">'one'</span><span class="p">))</span>
+
+<span class="c1"># 随机删除并返回集合中的一个元素
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">spop</span><span class="p">(</span><span class="s">'sotreSet'</span><span class="p">))</span>
+
+<span class="c1"># 删除集合中元素值为5的元素
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">srem</span><span class="p">(</span><span class="s">'sotreSet'</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h3 id="zset-类型方法">zset 类型方法</h3>
+
+<p>zset 的特点：一个不允许重复的集合，集合中元素是有序的，每个元素有两个值：值和分数，分数专门用来做排序。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 增加集合元素，如集合不存在则新建
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zadd</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="p">{</span><span class="s">'apple'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'banana'</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">'orange'</span><span class="p">:</span><span class="mi">5</span><span class="p">})</span>
+
+<span class="c1"># 遍历所有元素
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrange</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>    <span class="c1">#结果：['apple', 'banana', 'orange']
+</span>
+<span class="c1"># withscores=True指带上分数
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrange</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">withscores</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>   <span class="c1">#结果：[('apple', 1.0), ('banana', 3.0), ('orange', 5.0)]
+</span>
+<span class="c1"># 根据分数由大到小遍历所有元素
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrevrange</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#结果：['orange', 'banana', 'apple']
+</span>
+<span class="c1"># 获取orange元素对应的分数
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zscore</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="s">'orange'</span><span class="p">)</span>     <span class="c1">#结果：5.0
+</span>
+<span class="c1"># 取出分数&gt;=3 and 分数&lt;=5的元素
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrangebyscore</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># 取出分数&lt;=5 and 分数&gt;=3的元素，根据分数从大到小排序
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrevrangebyscore</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># 遍历所有元素，返回一个元组
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zscan</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">))</span>   <span class="c1">#结果：(0, [('apple', 1.0), ('banana', 3.0), ('orange', 5.0)])
+</span>
+<span class="c1"># 打印集合元素个数
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zcard</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">))</span>    <span class="c1">#结果：3
+</span>
+<span class="c1"># 返回集合中分数&gt;=1 and 分数&lt;=3元素个数
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zcount</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># 将集合中apple元素的分数+5
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zincrby</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'apple'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrange</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">withscores</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>   <span class="c1">#返回结果：[('banana', 3.0), ('orange', 5.0), ('apple', 6.0)]
+</span>
+<span class="c1"># 返回orange元素在集合中的索引号
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zrank</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="s">'orange'</span><span class="p">)</span>     <span class="c1">#结果：1
+</span>
+<span class="c1"># 按分数从大到小排序，取出banana元素索引号
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zrevrank</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="s">'banana'</span><span class="p">)</span>   <span class="c1">#结果：2
+</span>
+<span class="c1"># #删除集合中apple元素
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zrem</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="s">'apple'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">zrange</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>   <span class="c1">#返回结果：['banana', 'orange']
+</span>
+<span class="c1"># #删除集合索引号&gt;=0 and 索引号&lt;=2的元素
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zremrangebyrank</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 删除集合分数&gt;=1 and 分数&lt;=5的元素
+</span><span class="n">rs</span><span class="p">.</span><span class="n">zremrangebyscore</span><span class="p">(</span><span class="s">'fruits'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="其他操作方法">其他操作方法</h3>
+
+<p>以下操作方法针对 redis 任意数据类型（字符串，list，hash，set，zset），可以删除 key ，查询 key 是否存在，还可设置超时，重命名 key 的名称等：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 删除key为color的对象
+</span><span class="n">rs</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'color'</span><span class="p">)</span>
+
+<span class="c1"># 查询key为color的对象是否存在
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="s">'color'</span><span class="p">))</span>    <span class="c1">#结果：False
+</span><span class="n">rs</span><span class="p">.</span><span class="n">sadd</span><span class="p">(</span><span class="s">'mySet5'</span><span class="p">,</span> <span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">)</span>
+
+<span class="c1"># 设置key的超时时间
+</span><span class="n">rs</span><span class="p">.</span><span class="n">expire</span><span class="p">(</span><span class="s">'mySet5'</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>   <span class="c1">#单位：秒
+</span>
+<span class="c1"># 重命名key的值
+</span><span class="n">rs</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="s">'mySet5'</span><span class="p">,</span> <span class="s">'set5'</span><span class="p">)</span>
+
+<span class="c1"># 随机返回当前库中一个key，但不会删除
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">randomkey</span><span class="p">())</span>
+
+<span class="c1"># 查看某个key对应值的类型
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="nb">type</span><span class="p">(</span><span class="s">'mySet'</span><span class="p">))</span>   <span class="c1">#返回结果：set
+</span>
+<span class="c1"># 通过模糊匹配出满足条件的key
+</span><span class="k">print</span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="n">keys</span><span class="p">(</span><span class="s">'my*'</span><span class="p">))</span>    <span class="c1">#返回结果：['mySet', 'mySet2']
+</span>
+<span class="c1">#各类型元素迭代方式
+#hash类型迭代
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">.</span><span class="n">hscan_iter</span><span class="p">(</span><span class="s">"hName"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="c1">#set类型迭代
+</span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">.</span><span class="n">sscan_iter</span><span class="p">(</span><span class="s">"mySet"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="c1">#zset类型迭代
+</span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">.</span><span class="n">zscan_iter</span><span class="p">(</span><span class="s">"fruits"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本文为大家介绍了 Python 中如何创建连接 Redis 数据库，并通过代码的方式展示了 Redis 支持的各数据类型的操作方法，通过学习发现操作起来还是很方便的，接下来还会为大家介绍其他数据库的操作。</p>
+
+<p>参考</p>
+
+<ul>
+  <li><a href="https://github.com/andymccurdy/redis-py">Redis Python Client 源码：https://github.com/andymccurdy/redis-py</a></li>
+</ul>
+
+<p><a href="https://github.com/JustDoPython/python-100-day">示例代码：https://github.com/JustDoPython/python-100-day</a></p>
+:ET

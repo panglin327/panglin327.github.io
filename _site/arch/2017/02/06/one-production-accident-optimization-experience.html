@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         一次生产事故的优化经历 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;在一次正常的活动促销之后，客服开始陆续反馈有用户反应在抢标的时候打不开网页或者APP，在打开的时候标的就已经被抢光了，刚开始没有特别的上心，觉得抢标不就是这样吗，抢小米手机的时候也不就这样吗？随着活动继续推进，有更多的用户强烈抗议，用户领了加息卷或者抵现卷之后抢不上标的，认为是平台作假故意不让使用以达到节省资源。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/arch/2017/02/06/one-production-accident-optimization-experience.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="一次生产事故的优化经历">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>一次生产事故的优化经历</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/02/06
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>在一次正常的活动促销之后，客服开始陆续反馈有用户反应在抢标的时候打不开网页或者APP，在打开的时候标的就已经被抢光了，刚开始没有特别的上心，觉得抢标不就是这样吗，抢小米手机的时候也不就这样吗？随着活动继续推进，有更多的用户强烈抗议，用户领了加息卷或者抵现卷之后抢不上标的，认为是平台作假故意不让使用以达到节省资源。</p>
+
+<h2 id="分析过程">分析过程</h2>
+
+<p>其实以前也会有陆续的用户反馈不减少，给客户以小米抢手机为例子忽悠了过去，这次用户反馈太过强烈，才让我们重视了起来。我们前端一共三款产品，app、官网、H5，其中app使用量最大，官网其次，H5平时使用量极少但是做活动期间流量会暴增（活动一般都是H5游戏居多，H5也便于推广营销）,前端的三款产品都是分别使用lvs负载到后端的两台web服务器中（如下图），这次用户反馈基本在web和app端，所以重点观察这四台服务器。</p>
+
+<p><img src="http://favorites.ren/assets/images/2017/optimize/once1.png" alt="" /></p>
+
+<p>首先怀疑网络带宽是否被涌满，找到网络工程师通过工具来监控，在抢标的时候带宽最高使用率只有70%左右，随排除之；再次怀疑web服务器是否抗不住了，使用top命令查看官网负载的两台服务器，在抢标的瞬间会飙到6-8左右，抢标后也慢慢的恢复了正常，app两台服务器高峰到10-12，随后也恢复正常。</p>
+
+<p>跟踪web服务器业务日志，发现在数据库更新层报请求不到新的数据库连接或者数据库连接已经用完，认为是数据库的最大连接数太小，于是调整mysql数据库最大连接数为以往的3倍；下次抢标的时候继续观察业务日志，发现已经不报数据库链接的相关错误了，但还是很多用户反馈抢标时候打不开页面。</p>
+
+<p>继续跟踪web服务器，在抢标时使用命令（<code class="highlighter-rouge">ps -ef|grep httpd|wc -l</code>）查看httpd得连接数有1千左右，随机查看apache配置文件中设置的最大连接数为1024（apache默认的最大连接数为256），原来抢标期间连接数已经到达最大连接数，很多用户在抢标的过程中已经获取不到http连接导致页面无响应或者app一直在等待中。于是调整apache配置文件中的最大连接数为1024*3。</p>
+
+<p>在抢标过程中继续观察，apache的连接数在抢标的时候仍然可以飙到2600-2800之间，根据客服反馈，仍然有很多用户反馈抢标的问题，但比之前稍微好一点，但是有零星的用户反馈已经抢到标的，最后又给回退了。然后继续观察数据库服务器，使用top命令和MySQLWorkbench查看mysql主库和从库的各项负载吓一跳（如下图），mysql服务器主库的各项指标均已经达到峰值，而从库几乎没有太大压力。</p>
+
+<p><img src="http://favorites.ren/assets/images/2017/optimize/mysql_before.jpg" alt="" /></p>
+
+<p>跟踪代码发现，三端的业务代码全部连接主库，从库只有后台的查询业务在使用，于是立刻启动改造；将除过抢标过程中的查询外，其它页面或者业务的所有查询改造为查询从库，改造之后观察，发现主库的压力明显减少，从库的压力开始上来了。如下图：</p>
+
+<p><img src="http://favorites.ren/assets/images/2017/optimize/mysql_after.jpg" alt="" /></p>
+
+<p>根据客服的反馈，改造之后抢到标回退的问题几乎没有了，抢标过程中页面打不开或者打开慢的问题有一定的缓解但仍有部分用户反馈此问题，根据上面各项目分析结果得出：</p>
+
+<ul>
+  <li>1 负载的两台服务器均已经达到处理的极限，需要配置更多的服务器来负载。</li>
+  <li>2 mysql主库的压力明显减少，但是从库的压力却上去了，需要将现在的一主一从已从改为一主多从的模式。</li>
+  <li>3 彻底解决这些问题，需要综合考虑平台的整体优化，如：业务优化（去掉业务中热点）、增加缓存、部分页面静态化（可以使用雅虎和谷歌的前端优化规则，网上也有很多的测试网站可以评测）等等。</li>
+</ul>
+
+<blockquote>
+  <p>当时根据这些情况写了一份优化的报告,见下文：</p>
+</blockquote>
+
+<h2 id="优化报告">优化报告</h2>
+
+<h3 id="1-背景">1 背景</h3>
+
+<p>随着公司业务不断发展，业务量和用户量的激增，官网pv也从最初的xxx-xxx到现在的xxx-xxxx，APP活跃用户更是大幅增加；因此也对平台目前的技术架构有了更大的挑战。特别是近期平台标源紧张的情况下，满标的时间更是越来越短。服务器的压力也越来越大；因此需要升级目前的系统架构，以支持更大的用户量和业务量。</p>
+
+<h3 id="2-用户访问示意图">2 用户访问示意图</h3>
+
+<p><img src="http://favorites.ren/assets/images/2017/optimize/userVisit.jpg" alt="" /></p>
+
+<p>目前平台有三款产品面对用户，平台官网、平台APP、平台小网页；其中平台官网和平台APP的压力比较大。</p>
+
+<h3 id="3-存在的问题">3 存在的问题</h3>
+
+<p>用户抢标的时候问题集中在以下几个方面<br />
+1、网页或者APP打不开<br />
+2、网站或者APP打开慢<br />
+3、抢标过程中转账成功后，因为服务器负责压力大更新失败，再次退款<br />
+4、数据库连接数用完，导致满标后添加投资记录失败，回退标的进度</p>
+
+<h3 id="4-分析">4 分析</h3>
+
+<p>通过对近期的服务器参数，并发量，以及系统日志等进行深入的分析，得出：<br />
+1、平台官网、平台APP抢标过程中服务器压力巨大，其中平台APP问题更加突出，抢标高峰期间单台APP服务器apache最大连接数已经接近2600，接近apache最大的处理能力</p>
+
+<p>2、数据库服务器压力巨大。数据库压力主要在两个时期比较突出<br />
+1）当平台做活动的时候，官网、小网页、APP访问量巨增，导致数据查询量跟着巨增，当到达数据库处理极限时，就会表现出网站打开慢等问题；<br />
+2）当用户抢标的时候，用户抢标的压力又分为两个阶段：抢标前和抢标中。抢标前，因为满标速度很快，用户提前打开抢标页面不断刷新，这样数据库的查询压力会不断增大，如果抢标的用户量非常大，会导致在抢标之前将数据库连接数用完；抢标中，单次购买大概会涉及15张左右表进行更改查询，每个标的份额1000万大概每次会有100-200人左右购买完成满标，以中间值150人计算，在几秒的时间内需要对数据更新2000-3000次(仅仅是更新，不包括查询 )，产生大量并发，可能会导致更新失败或者连接超时，从而影响到用户投标和系统正常满标。</p>
+
+<h3 id="5-解决方案">5 解决方案</h3>
+
+<p>1、web服务器解决方案<br />
+单个用户访问web服务的示意图</p>
+
+<p><img src="http://favorites.ren/assets/images/2017/optimize/once1.png" alt="" /></p>
+
+<p>目前网站和平台APP均是采用了两台服务来做均衡负载，每台服务器中安装了apache来做服务端接受处理，每台apache最大可以处理大约2000条连接。因此理论上目前网站或者APP可以处理大于4000个用户请求。如果要支持同时1万的请求，则需要5台apache服务器来支持,因此目前缺少6台web服务器。<br />
+升级服务器后的访问示意图<br />
+<img src="http://favorites.ren/assets/images/2017/optimize/once2.png" alt="" /></p>
+
+<p>2、数据库解决方案<br />
+当前数据库的部署方案<br />
+<img src="http://favorites.ren/assets/images/2017/optimize/once3.png" alt="" /></p>
+
+<p>1)主从分离解决主库80%的查询压力。目前平台官网、APP均连接mysql主库导致主库压力倍增，把服务中的查询全部迁移到从数据库可以大量减轻主库的压力。</p>
+
+<p>2)增加缓存服务器。当从库查询到达峰值的时候，也会影响主从的同步，从而影响交易，因此对用户经常使用的查询进行缓存以达到减少数据库的请求压力。需要新增三台缓存服务器搭建redis集群。<br />
+ <img src="http://favorites.ren/assets/images/2017/optimize/once4.png" alt="" /></p>
+
+<p>3、其它优化<br />
+1）官网首页静态化，从cnzz统计来分析，首页占比网站的整体访问量的15%左右，对于首页不经常变动的数据通过静态化来处理，提升官网打开的流畅度。</p>
+
+<p>2）apache服务器的优化，开启gzip压缩，配置合理的链接数等</p>
+
+<p>3) 去掉投资过程中的更新热点：标的进度表。每次投标成功或者失败都需要对标的进度表进行更新，多线程更新的时候就会出现乐观锁等问题。去掉过程中的更新，只在满标后将标的进度信息保存在标的进度表，优化投资过程中对数据库的压力。</p>
+
+<h3 id="6-服务器升级方案">6 服务器升级方案</h3>
+
+<p>1、平台最大的压力来自于数据库，需要将现在的一主一从，改为一主四从。官网/app/小网页产生的大量查询，由虚IP分发到三台从库，后台管理查询走另外的一个从库。数据库需要新增三台服务器<br />
+数据库升级后的示意图<br />
+<img src="http://favorites.ren/assets/images/2017/optimize/once5.png" alt="" /></p>
+
+<p>2、增加缓存减少数据的压力，需要新增两台大内存的缓存服务器<br />
+<img src="http://favorites.ren/assets/images/2017/optimize/once6.png" alt="" /></p>
+
+<p>3、需要新增三台web服务器分解用户访问请求</p>
+
+<p><strong>app需要新增两台服务器</strong><br />
+在抢标过程中app服务器压力最大，需要新增两台服务器，配置完成后的示意图<br />
+<img src="http://favorites.ren/assets/images/2017/optimize/once7.png" alt="" /></p>
+
+<p><strong>官网需要新增一台服务器</strong><br />
+官网在抢标过程也有一定的压力，需要新增一条服务器，完成后示意图如下：<br />
+<img src="http://favorites.ren/assets/images/2017/optimize/once8.png" alt="" /></p>
+
+<blockquote>
+  <p>总合计之后需要购置8台服务器，其中有两台要求有大内存（64G以上）</p>
+</blockquote>
+
+<p><strong>公众号回复“优化”，可下载完整版word优化报告</strong></p>
+
+<p><em>备注：所有优化方案投产后，问题解决，抢标无忧！</em></p>
+
+<hr />
+
+<p><strong>作者：纯洁的微笑</strong><br />
+<strong>出处：<a href="http://www.ityouknow.com">www.ityouknow.com</a></strong>    <br />
+<strong>版权归作者所有，转载请注明出处</strong></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/arch/2017/02/06/one-production-accident-optimization-experience.html';
+        this.page.identifier = '/arch/2017/02/06/one-production-accident-optimization-experience.html';
+        this.page.title = '一次生产事故的优化经历';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/arch/2017/02/06/one-production-accident-optimization-experience.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

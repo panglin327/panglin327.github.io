@@ -1,0 +1,64 @@
+I"�<p>收集 github 开源的好玩好用的项目</p>
+
+<h2 id="x-alarm">X-Alarm</h2>
+
+<p>非常有意思的app,如果你是一个起床困难者，OK，就是它了。闹钟响了之后需要做一些小游戏或者小动作可以熄灭闹钟知道你彻底清醒过来。</p>
+
+<blockquote>
+  <p>X-ALARM is a cool application to help lazy boys/girls to get up.
+Yes, we are all lazy in the morning :D.</p>
+
+  <p>It offers a variety of interesting ways to unlock alarm.
+It provides a very soothing ringtone which wakes you up smoothly.
+Welcome to have a try!</p>
+</blockquote>
+
+<h3 id="效果图">效果图：</h3>
+<p><img src="http://loop-x.github.io/X-Alarm/assets/css/images/banner.png" alt="" /> <br /></p>
+
+<p>项目地址：
+<a href="http://loop-x.github.io/X-Alarm/">X-Alarm</a></p>
+
+<h2 id="text-diagram">text-diagram</h2>
+<p>可以通过输入特定的格式来输出文字对话，挺好玩的：</p>
+
+<h3 id="效果图-1">效果图：</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    +-------+                       +-------+   +-------+
+                | April |                       | Todd  |   | Monad |
+                +-------+                       +-------+   +-------+
+                    |                               |           |
+                    | Prepare food for lunch.       |           |
+                    |------------------------       |           |
+                    |                       |       |           |
+                    |&lt;-----------------------       |           |
+------------------\ |                               |           |
+| Lunch is ready. |-|                               |           |
+|-----------------| |                               |           |
+                    | Todd, what are you doing?     |           |
+                    |------------------------------&gt;|           |
+                    |                               | ------\   |
+                    |                               |-| @_@ |   |
+                    |                               | |-----|   |
+                    |                       Well... |           |
+                    |              I'm programming. |           |
+                    |&lt;------------------------------|           |
+                    |                               |           |
+                    | How about you?                |           |
+                    |------------------------------------------&gt;|
+                    |                               |           |
+                    |                         I'm reading book. |
+                    |&lt;------------------------------------------|
+                    |                               |           |
+                    | Good boy!                     |           |
+                    |------------------------------------------&gt;|
+                    |                               |           | ------\
+                    |                               |           |-| ^_^ |
+                    |                               |           | |-----|
+                    |                               |           |
+</code></pre></div></div>
+
+<p>项目地址：
+<a href="https://github.com/weidagang/text-diagram">text-diagram</a></p>
+
+:ET

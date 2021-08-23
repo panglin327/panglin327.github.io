@@ -1,0 +1,523 @@
+I"�\<p>by 某某白米饭</p>
+
+<h1 id="xpath-和-lxml">XPath 和 lxml</h1>
+
+<p>XPath 全称为 Xml Path Language，即 Xml 路径语言，是一种在 Xml 文档中查找信息的语言。它提供了非常简洁的路径选择表达式，几乎所有的节点定位都可以用它来选择。</p>
+
+<p>XPath 可以用于 Xml 和 Html，在爬虫中经常使用 XPath 获取 Html 文档内容。</p>
+
+<p>lxml 是 Python 语言用 Xpath 解析 XML、Html文档功能最丰富的、最容易的功能模块。 
+<!--more--></p>
+<h2 id="xpath-术语">XPath 术语</h2>
+
+<h3 id="节点">节点</h3>
+
+<p>在 XPath 中有七种节点分别是元素、属性、文本、文档、命名空间、处理指令、注释，前3种节点为常用节点</p>
+
+<p>请看下面的 Html 例子，(注：这个例子全文都需要使用)</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="c">&lt;!-- 这里是注释 --&gt;</span>
+            <span class="nt">&lt;h4&gt;</span>手机品牌商<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"margin-left:10px"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/span&gt;&lt;/h4&gt;</span>
+            <span class="nt">&lt;ul&gt;</span>
+               <span class="nt">&lt;li&gt;</span>小米<span class="nt">&lt;/li&gt;</span>
+               <span class="nt">&lt;li&gt;</span>华为<span class="nt">&lt;/li&gt;</span> 
+               <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">'blank'</span><span class="nt">&gt;</span> OPPO <span class="nt">&lt;/li&gt;</span>
+               <span class="nt">&lt;li&gt;</span>苹果<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;h4&gt;</span>电脑品牌商<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"margin-left:10px"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/span&gt;&lt;/h4&gt;</span>
+            <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"ul"</span> <span class="na">style=</span><span class="s">"color:red"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;li&gt;</span>戴尔<span class="nt">&lt;/li&gt;</span> 
+                <span class="nt">&lt;li&gt;</span>机械革命<span class="nt">&lt;/li&gt;</span> 
+                <span class="nt">&lt;li&gt;</span>ThinkPad<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>在上面的例子中</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span> 为文档节点
+<span class="nt">&lt;li&gt;</span>小米<span class="nt">&lt;/li&gt;</span> 为元素节点
+class='blank' 为属性节点
+<span class="c">&lt;!-- 这里是注释 --&gt;</span> 为注释节点
+</code></pre></div></div>
+
+<h3 id="节点关系">节点关系</h3>
+
+<p>在 XPath中有多中节点关系分别是父节点、子节点、同胞节点、先辈节点、后代节点</p>
+
+<p>在上面的例子中</p>
+
+<ol>
+  <li>父节点：每个元素以及属性都有一个父节点，如：div 节点的父节点是 body 节点</li>
+  <li>子节点：元素节点可有零个、一个或多个子节点，如：第一个 ul 节点的子节点是4个 li 节点</li>
+  <li>同胞节点：拥有相同的父节点的节点，如：两个 div 节点是同胞节点</li>
+  <li>先辈节点：某节点的父节点、父节点的父节点…，如：ul 节点的先辈节点有 div 节点、body 节点</li>
+  <li>后代节点：某个节点的子节点，子节点的子节点…，如：body 节点的后代节点有div 节点、ul 节点、li 节点</li>
+</ol>
+
+<h2 id="xpath-语法">XPath 语法</h2>
+
+<h3 id="基本语法">基本语法</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>表达式</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>nodeName</td>
+      <td>选择nodeName节点的所有子节点</td>
+    </tr>
+    <tr>
+      <td>/</td>
+      <td>从根节点开始</td>
+    </tr>
+    <tr>
+      <td>//</td>
+      <td>从匹配的节点开始选择节点</td>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>选择当前节点</td>
+    </tr>
+    <tr>
+      <td>..</td>
+      <td>选择当前节点的父节点</td>
+    </tr>
+    <tr>
+      <td>@</td>
+      <td>选择元素</td>
+    </tr>
+    <tr>
+      <td>*</td>
+      <td>匹配任意元素节点</td>
+    </tr>
+    <tr>
+      <td>@*</td>
+      <td>匹配任意属性节点</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>用上面的 Html 文档举个例子</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>路径表达式</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>body</td>
+      <td>选取 body 的所有子节点</td>
+    </tr>
+    <tr>
+      <td>/html</td>
+      <td>选取 html 节点</td>
+    </tr>
+    <tr>
+      <td>//div</td>
+      <td>选取所有 div 节点</td>
+    </tr>
+    <tr>
+      <td>//div/./h4</td>
+      <td>div 节点下的 h4 节点</td>
+    </tr>
+    <tr>
+      <td>../div</td>
+      <td>选取当前节点的父节点下的所有 div 节点</td>
+    </tr>
+    <tr>
+      <td>//@class</td>
+      <td>所有带有 class 元素的节点</td>
+    </tr>
+    <tr>
+      <td>//*</td>
+      <td>选择所有节点</td>
+    </tr>
+    <tr>
+      <td>//@*</td>
+      <td>选择所有属性节点</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="常用函数">常用函数</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>表达式</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>position()</td>
+      <td>返回节点的 index 位置</td>
+    </tr>
+    <tr>
+      <td>last()</td>
+      <td>返回节点的个数</td>
+    </tr>
+    <tr>
+      <td>contains(string1,string2)</td>
+      <td>string1 是否包含 string2</td>
+    </tr>
+    <tr>
+      <td>text()</td>
+      <td>返回文本节点</td>
+    </tr>
+    <tr>
+      <td>comment()</td>
+      <td>返回注释节点</td>
+    </tr>
+    <tr>
+      <td>normalize-space(string)</td>
+      <td>去除首位空格，中间多个空格用一个空格代替</td>
+    </tr>
+    <tr>
+      <td>substring(string,start,len)</td>
+      <td>返回从 start 位置开始的指定长度的子字符串,第一个字符下标为1</td>
+    </tr>
+    <tr>
+      <td>substring-before(string1,string2)</td>
+      <td>返回string1中位于第一个string2之前的部分</td>
+    </tr>
+    <tr>
+      <td>substring-after(string1,string2)</td>
+      <td>返回string1中位于第一个string2之后的部分</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>同样用上面的Html文档举个例子</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>路径表达式</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>//div[position()&gt;1]</td>
+      <td>选择第二个 div 节点</td>
+    </tr>
+    <tr>
+      <td>//div[last()]</td>
+      <td>选择最后一个 div 节点</td>
+    </tr>
+    <tr>
+      <td>contains(//h4[2],’手机’)</td>
+      <td>第二个 h4 标签是否包含手机字符串</td>
+    </tr>
+    <tr>
+      <td>//li/text()</td>
+      <td>li 节点中的文本内容</td>
+    </tr>
+    <tr>
+      <td>//div/comment()</td>
+      <td>div 节点下的 html 注释</td>
+    </tr>
+    <tr>
+      <td>normalize-space(//li[@class=’blank’])</td>
+      <td>li 节点下 class属性为 blank 的文本去掉空格</td>
+    </tr>
+    <tr>
+      <td>substring(//h4[1],1,2)</td>
+      <td>第一个 h4 节点的前2个字</td>
+    </tr>
+    <tr>
+      <td>substring-before(//h4[1],’品牌商’)</td>
+      <td>第一个 h4 节点的品牌商字符串之前的字符串</td>
+    </tr>
+    <tr>
+      <td>substring-after(//h4[1],’品牌商’)</td>
+      <td>第一个 h4 节点的品牌商字符串之后的字符串</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="谓语">谓语</h3>
+
+<p>XPath 中的谓语就是删选表达式，相当于 SQL 中的 Where 条件，谓语被嵌在 [ ] 中</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>路径表达式</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>//div[1]</td>
+      <td>选择第一个 div 节点</td>
+    </tr>
+    <tr>
+      <td>//div[2]/ul/li[last()]</td>
+      <td>选择第二个 div 节点下的最后一个 li 节点</td>
+    </tr>
+    <tr>
+      <td>//div[2]/ul/li[position()&gt;3]</td>
+      <td>选择第二个 div 节点下的前两个 li 节点</td>
+    </tr>
+    <tr>
+      <td>//ul[@class]</td>
+      <td>选择所有带 class 属性的 ul 节点</td>
+    </tr>
+    <tr>
+      <td>//ul[@class=’computer’]</td>
+      <td>选择 class 属性为 computer 的 ul 节点</td>
+    </tr>
+    <tr>
+      <td>//h4[span = 4]</td>
+      <td>选择 h4 节点下 span 值等于4的节点</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="xpath-结语">Xpath 结语</h3>
+
+<p>以上内容介绍了 XPath 的基本语法，下面将介绍 XPath 如何在 Python 中使用。</p>
+
+<h2 id="lxml-模块">lxml 模块</h2>
+
+<h3 id="安装">安装</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="n">lxml</span><span class="o">==</span><span class="mf">4.4</span><span class="p">.</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="解析-html-文档">解析 HTML 文档</h3>
+
+<p>lxml.etree 一个强大的 Xml 处理模块，etree 中的 ElementTree 类是一个主要的类，用于对XPath的解析、增加、删除和修改节点。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+</code></pre></div></div>
+
+<p>etree.parse() 函数可以解析一个网页文件还可以解析字符串， 在网页中下载的数据一般都是字符串形式的，使用 parse(StringIO(str)) 将整个页面内容解析加载构建一个 ElementTree 对象，ElementTree 可以使用 XPath 语法精准找到需要的数据。</p>
+
+<p>1.加载页面到内存</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="n">test_html</span> <span class="o">=</span> <span class="s">'''
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;div&gt;
+            &lt;!-- 这里是注释 --&gt;
+            &lt;h4&gt;手机品牌商&lt;span style="margin-left:10px"&gt;4&lt;/span&gt;&lt;/h4&gt;
+            &lt;ul&gt;
+               &lt;li&gt;小米&lt;/li&gt;
+               &lt;li&gt;华为&lt;/li&gt;
+               &lt;li class='blank'&gt; OPPO &lt;/li&gt;
+               &lt;li&gt;苹果&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;h4&gt;电脑品牌商&lt;span style="margin-left:10px"&gt;3&lt;/span&gt;&lt;/h4&gt;
+            &lt;ul class="ul" style="color:red"&gt;
+                &lt;li&gt;戴尔&lt;/li&gt;
+                &lt;li&gt;机械革命&lt;/li&gt;
+                &lt;li&gt;ThinkPad&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;'''</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="n">etree</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">test_html</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;lxml.etree._ElementTree object at 0x10bd6b948&gt;
+</code></pre></div></div>
+
+<p>2.获取所有 li 标签数据</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">li_list</span> <span class="o">=</span> <span class="n">html</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//li'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"类型："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">li_list</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"值："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">li_list</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"个数："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">li_list</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">li_list</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"li文本为："</span> <span class="o">+</span> <span class="n">l</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>类型：
+&lt;class 'list'&gt;
+值：
+[&lt;Element li at 0x10543c9c8&gt;, &lt;Element li at 0x10543ca08&gt;, &lt;Element li at 0x10543ca48&gt;, &lt;Element li at 0x10543ca88&gt;, &lt;Element li at 0x10543cac8&gt;, &lt;Element li at 0x10543cb48&gt;, &lt;Element li at 0x10543cb88&gt;]
+个数：
+7
+li文本为：小米
+li文本为：华为
+li文本为： OPPO 
+li文本为：苹果
+li文本为：戴尔
+li文本为：机械革命
+li文本为：ThinkPad
+</code></pre></div></div>
+
+<p>3.获取带 class=’blank’ 属性数据</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">blank_li_list</span> <span class="o">=</span> <span class="n">html</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//li[@class="blank"]'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"类型："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">blank_li_list</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"值："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">blank_li_list</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"个数："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">blank_li_list</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">blank_li_list</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"li文本为："</span> <span class="o">+</span> <span class="n">l</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>类型：
+&lt;class 'list'&gt;
+值：
+[&lt;Element li at 0x105253a48&gt;]
+个数：
+1
+li文本为： OPPO 
+</code></pre></div></div>
+
+<p>4.属性操作</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ul</span> <span class="o">=</span> <span class="n">html</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//ul'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1">#遍历属性
+</span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ul</span><span class="p">.</span><span class="n">attrib</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{0}="{1}"'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="c1">#添加新的属性
+</span><span class="n">ul</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"new_attr"</span><span class="p">,</span> <span class="s">"true"</span><span class="p">)</span>
+<span class="c1"># 获取单个属性
+</span><span class="n">new_attr</span> <span class="o">=</span> <span class="n">ul</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'new_attr'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">new_attr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class="ul"
+style="color:red"
+true
+</code></pre></div></div>
+
+<p>5.获取最后一个div标签数据</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">last_div</span> <span class="o">=</span> <span class="n">html</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[last()]'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"TAG："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">last_div</span><span class="p">.</span><span class="n">tag</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"值："</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">last_div</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>结果</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">div</span>
+<span class="n">值</span><span class="err">：</span>
+
+   
+</code></pre></div></div>
+
+<p>6.添加子节点</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">child</span> <span class="o">=</span> <span class="n">etree</span><span class="p">.</span><span class="n">Element</span><span class="p">(</span><span class="s">"child"</span><span class="p">)</span>
+<span class="n">child</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">"这里是新的子元素"</span>
+<span class="n">last_div</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="c1"># 在最后一个 div 标签查找新的子元素
+</span><span class="n">clild_text</span> <span class="o">=</span> <span class="n">last_div</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"child"</span><span class="p">).</span><span class="n">text</span>
+<span class="k">print</span><span class="p">(</span><span class="n">clild_text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>7.删除子元素</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 查找并设置第一个查询到的元素
+</span><span class="n">first_ul</span> <span class="o">=</span> <span class="n">html</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"//ul"</span><span class="p">)</span>
+<span class="n">ul_li</span> <span class="o">=</span> <span class="n">first_ul</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">"li"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">ul_li</span><span class="p">:</span>
+    <span class="c1"># 删除元素
+</span>    <span class="n">first_ul</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+
+<span class="n">ul_li</span> <span class="o">=</span> <span class="n">first_ul</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">"li"</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ul_li</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"元素被删除了"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>8.遍历元素后代</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">body</span> <span class="o">=</span> <span class="n">html</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"body"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">body</span><span class="p">.</span><span class="nb">iter</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sub</span><span class="p">.</span><span class="n">tag</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sub</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>body
+
+        
+div
+
+            
+&lt;cyfunction Comment at 0x10c374b10&gt;
+ 这里是注释 
+h4
+手机品牌商
+span
+4
+ul
+...
+</code></pre></div></div>
+
+<h2 id="工具">工具</h2>
+
+<ol>
+  <li>在 google 浏览器开发者模式下，Elements 界面选择元素后右键 Copy，可以 Copy 元素的 XPath 路径</li>
+  <li>XPath Helper 是一个 google 浏览器插件，可以验证 XPath 是否正确</li>
+</ol>
+
+<h2 id="总结">总结</h2>
+
+<ol>
+  <li>学习了 XPAth 的知识，可以快速匹配单个或多个元素节点和属性，在工作中大大加快了工作的效率。</li>
+  <li>lxml 是一个 Python 中强大的 Xml 和 Html 处理模块，结合 XPath 的使用在程序中快速、便捷的分析、修改网页内容。</li>
+</ol>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-064">Python-100-days-day064</a></p>
+</blockquote>
+
+:ET

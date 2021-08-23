@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         一次FastDFS并发问题的排查经历 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="FastDFS,并发,架构">
+    <meta name="description"
+          content="一次FastDFS并发问题的排查经历">
+
+    <link rel="canonical" href="http://localhost:4000/fastdfs/2017/12/26/fastdfs-concurrent.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="一次FastDFS并发问题的排查经历">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>一次FastDFS并发问题的排查经历</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/12/26
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p><img src="http://favorites.ren/assets/images/2017/life/router.jpg" alt="" /></p>
+
+<p>前一段时间，业务部门同事反馈在一次生产服务器升级之后，POS消费上传小票业务偶现异常，上传小票业务有重试机制，有些重试三次也不会成功，他们排查了一下没有找到原因，希望架构部帮忙解决。</p>
+
+<p>公司使用的是FastDFS来做的图片服务器，生产使用了六台服务器外加一个存储，集群采用的是：2个tracker+4个storage，storage分为两个group，使用独立的nginx做文件代理访问。各软件版本信息如下：</p>
+
+<ul>
+  <li>操作系统：centos6.9</li>
+  <li>FastDFS ：5.05</li>
+  <li>libfastcommon：1.0.36</li>
+  <li>nginx ：1.7.9</li>
+  <li>fastdfs-nginx-module：1.16</li>
+</ul>
+
+<p>为了尽可能的模拟生产，我在测试环境1:1搭建了一套和生产一样的FastDFS集群，当时也写了搭建过程：<a href="http://www.ityouknow.com/fastdfs/2017/10/10/cluster-building-fastdfs.html">FastDFS 集群 安装 配置</a></p>
+
+<h2 id="从日志中找线索">从日志中找线索</h2>
+
+<p>业务部门同事反馈，在一次生产服务器升级之后，重新搭建了一套FastDFS集群，然后过了几天就开始出现上传小票偶尔失败的问题。根据这些信息的反馈，我怀疑是否是FastDFS搭建有问题？这个怀疑点差点把我带到沟里去。</p>
+
+<p>我拉取了FastDFS的日志，tracker服务器日志如下：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2017-09-19 09:13:52] ERROR - file: tracker_nio.c, line: 306, client ip: 192.168.0.1, pkg length: 15150 &gt; max pkg size: 8192
+[2017-09-19 10:34:57] ERROR - file: tracker_nio.c, line: 306, client ip: 192.168.0.1, pkg length: 16843 &gt; max pkg size: 8192
+[2017-09-19 10:34:57] ERROR - file: tracker_nio.c, line: 306, client ip: 192.168.0.1, pkg length: 16843 &gt; max pkg size: 8192
+[2017-09-19 11:31:08] ERROR - file: tracker_nio.c, line: 306, client ip: 192.168.03, pkg length: 23955 &gt; max pkg size: 8192
+[2017-09-19 11:42:56] ERROR - file: tracker_nio.c, line: 306, client ip: 192.168.01, pkg length: 12284 &gt; max pkg size: 8192
+[2017-09-19 12:10:28] ERROR - file: tracker_service.c, line: 2452, cmd=103, client ip: 192.168.0.3, package size 6258 is too long, exceeds 144
+
+</code></pre></div></div>
+
+<p>根据tracker的日志信息可以看出，不时有一些小票文件的大小大于最大传输值8192，跟着这个线索顺着上传的那条线进行了排查，比如nginx上传大小的限制，tracker上传大小的限制，是不是生成的小票出现异常，大小突然变大。麻溜的整了半天得出结论，上传小票失败和这个异常没有关系。</p>
+
+<p>接下来看了下storaged的日志：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2017-09-25 14:22:38] WARNING - file: storage_service.c, line: 7135, client ip: 192.168.1.11, logic file: M00/D1/04/wKg5ZlnIoKWAAkNRAAAY86__WXA920.jpg-m not exist
+[2017-09-25 14:22:39] WARNING - file: storage_service.c, line: 7135, client ip: 192.168.1.11, logic file: M00/D1/04/wKg5ZlnIoKuAUXeVAAAeASIvHGw673.jpg not exist
+[2017-09-25 14:22:50] ERROR - file: storage_nio.c, line: 475, client ip: 192.168.1.13, recv failed, errno: 104, error info: Connection reset by peer
+[2017-09-25 14:22:56] ERROR - file: tracker_proto.c, line: 48, server: 192.168.1.11:23001, response status 2 != 0
+[2017-09-25 14:23:06] ERROR - file: tracker_proto.c, line: 48, server: 192.168.1.11:23001, response status 2 != 0
+[2017-09-25 14:23:11] ERROR - file: storage_service.c, line: 3287, client ip:192.168.1.13, group_name: group2 not correct, should be: group1
+</code></pre></div></div>
+
+<p>除了看到一些文件不存在的警告和响应状态不对的错误外，也没有发现其它的异常。</p>
+
+<p>最后来看应用中的错误日志，其中有两段错误日志引起了我的注意：</p>
+
+<p>第一段日志如下：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>org.csource.common.MyException: body length: 0 &lt;= 16
+	at org.csource.fastdfs.StorageClient.do_upload_file(StorageClient.java:799)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:208)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:226)
+	at com.xxx.neo.fastdfs.FileManager.upload(FileManager.java:86)
+	at com.xxx.neo.controller.QpayUploadSignController.saveSign(QpayUploadSignController.java:84)
+	at com.xxx.neo.controller.QpayUploadSignController.uploadSign(QpayUploadSignController.java:65)
+	at com.xxx.neo.controller.QpayUploadSignController$$FastClassByCGLIB$$5debf81b.invoke(&lt;generated&gt;)
+	at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:191)
+	at org.springframework.aop.framework.Cglib2AopProxy$CglibMethodInvocation.invokeJoinpoint(Cglib2AopProxy.java:689)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+</code></pre></div></div>
+
+<p>跟了一下fastdfs-client-java中的源码的do_upload_file方法，有这么一段：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ProtoCommon</span><span class="o">.</span><span class="na">RecvPackageInfo</span> <span class="n">pkgInfo</span> <span class="o">=</span> <span class="nc">ProtoCommon</span><span class="o">.</span><span class="na">recvPackage</span><span class="o">(</span><span class="n">storageSocket</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">(),</span>
+              <span class="nc">ProtoCommon</span><span class="o">.</span><span class="na">STORAGE_PROTO_CMD_RESP</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+<span class="c1">//省略中间代码              </span>
+<span class="k">if</span> <span class="o">(</span><span class="n">pkgInfo</span><span class="o">.</span><span class="na">body</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;=</span> <span class="nc">ProtoCommon</span><span class="o">.</span><span class="na">FDFS_GROUP_NAME_MAX_LEN</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">MyException</span><span class="o">(</span><span class="s">"body length: "</span> <span class="o">+</span> <span class="n">pkgInfo</span><span class="o">.</span><span class="na">body</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="s">" &lt;= "</span> <span class="o">+</span> <span class="nc">ProtoCommon</span><span class="o">.</span><span class="na">FDFS_GROUP_NAME_MAX_LEN</span><span class="o">);</span>
+  <span class="o">}</span>
+</code></pre></div></div>
+
+<p>pkgInfo是封装好的文件流信息，ProtoCommon是fastdfs-client-java中封装好的参数类，其中FDFS_GROUP_NAME_MAX_LEN的值为16，代码的意思就是当读取的大小小于16字节的时候，抛出MyException异常。</p>
+
+<p>第二段日志如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span> <span class="no">INFO</span><span class="o">]</span> <span class="o">[</span><span class="nl">http:</span><span class="c1">//*:8083-69096 2017-09-25 14:07:32] (FileManager.java:upload:92) upload_file time used:76 ms</span>
+<span class="o">[</span> <span class="no">INFO</span><span class="o">]</span> <span class="o">[</span><span class="nl">http:</span><span class="c1">//*:8083-69096 2017-09-25 14:07:32] (FileManager.java:upload:103) upload file successfully!!!group_name:group2, remoteFileName: M00/3C/A8/wKg5Z1nInSOAaHSNAAAdNipAyrQ611.jpg</span>
+<span class="n">upload</span> <span class="n">file</span> <span class="n">successfully</span><span class="o">!!!</span><span class="nl">group_name:</span><span class="n">group2</span><span class="o">,</span> <span class="nl">remoteFileName:</span> <span class="no">M00</span><span class="o">/</span><span class="mi">3</span><span class="no">C</span><span class="o">/</span><span class="no">A8</span><span class="o">/</span><span class="n">wKg5Z1nInSOAaHSNAAAdNipAyrQ611</span><span class="o">.</span><span class="na">jpg</span>
+<span class="o">[</span><span class="nc">Ljava</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span><span class="o">;</span><span class="err">@</span><span class="mi">17584701</span>
+<span class="o">[</span><span class="no">ERROR</span><span class="o">]</span> <span class="o">[</span><span class="nl">http:</span><span class="c1">//*:8083-69087 2017-09-25 14:07:32] (FileManager.java:upload:90) Non IO Exception when uploadind the file:520</span>
+<span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">NullPointerException</span>
+	<span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">csource</span><span class="o">.</span><span class="na">fastdfs</span><span class="o">.</span><span class="na">StorageClient</span><span class="o">.</span><span class="na">do_upload_file</span><span class="o">(</span><span class="nc">StorageClient</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">842</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">csource</span><span class="o">.</span><span class="na">fastdfs</span><span class="o">.</span><span class="na">StorageClient</span><span class="o">.</span><span class="na">upload_file</span><span class="o">(</span><span class="nc">StorageClient</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">208</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">csource</span><span class="o">.</span><span class="na">fastdfs</span><span class="o">.</span><span class="na">StorageClient</span><span class="o">.</span><span class="na">upload_file</span><span class="o">(</span><span class="nc">StorageClient</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">226</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">xxx</span><span class="o">.</span><span class="na">neo</span><span class="o">.</span><span class="na">fastdfs</span><span class="o">.</span><span class="na">FileManager</span><span class="o">.</span><span class="na">upload</span><span class="o">(</span><span class="nc">FileManager</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">xxx</span><span class="o">.</span><span class="na">neo</span><span class="o">.</span><span class="na">controller</span><span class="o">.</span><span class="na">QpayUploadSignController</span><span class="o">.</span><span class="na">saveSign</span><span class="o">(</span><span class="nc">QpayUploadSignController</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">84</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">xxx</span><span class="o">.</span><span class="na">neo</span><span class="o">.</span><span class="na">controller</span><span class="o">.</span><span class="na">QpayUploadSignController</span><span class="o">.</span><span class="na">uploadSign</span><span class="o">(</span><span class="nc">QpayUploadSignController</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">65</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">xxx</span><span class="o">.</span><span class="na">neo</span><span class="o">.</span><span class="na">controller</span><span class="o">.</span><span class="na">QpayUploadSignController</span><span class="err">$</span><span class="n">$FastClassByCGLIB</span><span class="err">$$</span><span class="mi">5</span><span class="n">debf81b</span><span class="o">.</span><span class="na">invoke</span><span class="o">(&lt;</span><span class="n">generated</span><span class="o">&gt;)</span>
+	<span class="n">at</span> <span class="n">net</span><span class="o">.</span><span class="na">sf</span><span class="o">.</span><span class="na">cglib</span><span class="o">.</span><span class="na">proxy</span><span class="o">.</span><span class="na">MethodProxy</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="nc">MethodProxy</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">191</span><span class="o">)</span>
+	<span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">aop</span><span class="o">.</span><span class="na">framework</span><span class="o">.</span><span class="na">Cglib2AopProxy</span><span class="n">$CglibMethodInvocation</span><span class="o">.</span><span class="na">invokeJoinpoint</span><span class="o">(</span><span class="nc">Cglib2AopProxy</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">689</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>日志中关于空指针的异常最多，跟踪了fastdfs-client-java的源码，空指针都出现在以下几段代码：</p>
+
+<p>第一处：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">...</span>
+<span class="n">storageSocket</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span><span class="o">.</span><span class="na">getSocket</span><span class="o">();</span>
+<span class="n">ext_name_bs</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="nc">ProtoCommon</span><span class="o">.</span><span class="na">FDFS_FILE_EXT_NAME_MAX_LEN</span><span class="o">];</span>
+<span class="nc">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">ext_name_bs</span><span class="o">,</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<p>第二处：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">(!</span><span class="n">bNewConnection</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">ex1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ex1</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>第三处：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">(</span><span class="n">bNewConnection</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">ex1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ex1</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div></div>
+
+<p>大家有没有发现这三段代码都有一个共同之处？就是存在storageServer变量的使用，并且在调用的地方出现了空指针异常，难道fastdfs-client-java有bug？觉得不太可能，毕竟那么多人使用，会不会是我们使用的版本太旧或者使用方式不对呢?</p>
+
+<blockquote>
+  <p>日志中的IP地址和公司信息均已进行脱敏</p>
+</blockquote>
+
+<h2 id="fastdfs提供的jar包有问题">FastDFS提供的Jar包有问题？</h2>
+
+<p>带着上面的怀疑我准备搞个多线程压测一下，看是不是并发的时候产生的问题。使用CountDownLatch让线程集中执行，代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">latchTest</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="nc">CountDownLatch</span> <span class="n">start</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountDownLatch</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="nc">CountDownLatch</span> <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountDownLatch</span><span class="o">(</span><span class="n">poolSize</span><span class="o">);</span>
+        <span class="nc">ExecutorService</span> <span class="n">exce</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">poolSize</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">poolSize</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="nc">Runnable</span> <span class="n">run</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                <span class="nd">@Override</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="n">start</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                        <span class="n">testLoad</span><span class="o">();</span>
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                        <span class="n">end</span><span class="o">.</span><span class="na">countDown</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">};</span>
+            <span class="n">exce</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">run</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">start</span><span class="o">.</span><span class="na">countDown</span><span class="o">();</span>
+        <span class="n">end</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+        <span class="n">exce</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>CountDownLatch是Java多线程同步器的四大金刚之一，CountDownLatch能够使一个线程等待其他线程完成各自的工作后再执行。</p>
+</blockquote>
+
+<p>使用Executors.newFixedThreadPool创建固定大小的线程池，刚开始设置的是12，每个线程执行一万次上传请求。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">testLoad</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">filePath</span><span class="o">=</span><span class="s">"C:\\Users\\xxx\\Pictures\\xz.jpg"</span><span class="o">;</span>
+    <span class="nc">File</span> <span class="n">file</span><span class="o">=</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">filePath</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">serverUrl</span><span class="o">=</span><span class="s">"http://localhost:8080/uploadSign"</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10000</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+        <span class="nc">HttpClientUtils</span><span class="o">.</span><span class="na">uploadFile</span><span class="o">(</span><span class="n">file</span><span class="o">,</span><span class="n">serverUrl</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Controller层接到请求后，组装FastDFSFile进行上传</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">....</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">file_buff</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">inputStream</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+		<span class="kt">int</span> <span class="n">len1</span> <span class="o">=</span> <span class="n">inputStream</span><span class="o">.</span><span class="na">available</span><span class="o">();</span>
+		<span class="n">file_buff</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">len1</span><span class="o">];</span>
+		<span class="n">inputStream</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">file_buff</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="nc">FastDFSFile</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FastDFSFile</span><span class="o">(</span><span class="s">"520"</span><span class="o">,</span> <span class="n">file_buff</span><span class="o">,</span> <span class="s">"jpg"</span><span class="o">);</span>
+<span class="k">try</span> <span class="o">{</span>
+	 <span class="n">fileAbsolutePath</span> <span class="o">=</span> <span class="nc">FileManager</span><span class="o">.</span><span class="na">upload</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>  <span class="c1">//上传到分布式文件系统</span>
+	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">fileAbsolutePath</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e1</span><span class="o">)</span> <span class="o">{</span>
+	<span class="n">e1</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<p>再进行一些封装之后，最终调用fastdfs-client-java的<code class="highlighter-rouge">upload_file()</code>方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">....</span>
+<span class="n">uploadResults</span> <span class="o">=</span> <span class="n">storageClient</span><span class="o">.</span><span class="na">upload_file</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getContent</span><span class="o">(),</span> <span class="n">file</span><span class="o">.</span><span class="na">getExt</span><span class="o">(),</span> <span class="n">meta_list</span><span class="o">);</span>
+<span class="o">....</span>
+</code></pre></div></div>
+
+<p>压测代码写完之后，迫不及待的运行了起来，准备验证一把，结果非常出意料，刚一启动就不断的报空指针异常，看到这个空指针异常我却一阵欢喜，这个异常和我在生产看到的异常一模一样。平时最棘手的问题，就是生产偶现测试环境又不能复现的问题，很难定位异常的原因，一旦可以在测试环境复现问题，那就意味着问题解决了一半。</p>
+
+<p>接下来，我将线程池的个数减少到6个，启动测试后还是狂报异常；接着将线程数减到2个，每个线程数执行的数量由以前的10000改为100个，修改后再进行测试还是报错；没办法改成一个线程来运行，果然程序可以正常上传小票了，确认是并发导致的问题。</p>
+
+<p>这样可以得出预判，在业务高峰期间产生并发导致部分小票上传业务失败，那为什么这个问题一直没有发现呢？有两方面的因素：第一，可能业务初期并发量并不是很高，上传小票也不是主干业务，偶尔出现一两笔失败也有重试机制来后补；第二，生产环境使用了六台服务器做负载，请求被均匀分发到六台服务器中，在某种程度上也避免了单台服务器的并发量，只有业务并发量进一步扩大才出现明显的异常。</p>
+
+<h2 id="尝试着去解决">尝试着去解决</h2>
+
+<p>既然异常都发生在upload_file方法storageServer出现的地方，那么我们就研究研究这个storageServer是个什么鬼？storageServer根据属性名可以看出来，storageServer是上传文件的storage存储节点，每次上传文件的时候从trackerServer中获取。</p>
+
+<p>跟踪源码可以发现，storageServer会在两个地方进行初始化：第一，在初始化storageClient的时候</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">storageClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StorageClient</span><span class="o">(</span><span class="n">trackerServer</span><span class="o">,</span> <span class="n">storageServer</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>这里的storageServer可以为空；如果为空会自动从trackerServer中获取，如果需要指定具体的storage可以在这里进行初始化。</p>
+
+<p>第二，在调用<code class="highlighter-rouge">do_upload_file()</code>方法开头中，下面代码截取于<code class="highlighter-rouge">do_upload_file()</code>方法。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bUploadSlave</span> <span class="o">=</span> <span class="o">((</span><span class="n">group_name</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">group_name</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+        <span class="o">(</span><span class="n">master_filename</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">master_filename</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+        <span class="o">(</span><span class="n">prefix_name</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">));</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">bUploadSlave</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">bNewConnection</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">newUpdatableStorageConnection</span><span class="o">(</span><span class="n">group_name</span><span class="o">,</span> <span class="n">master_filename</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+  <span class="n">bNewConnection</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">newWritableStorageConnection</span><span class="o">(</span><span class="n">group_name</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="k">try</span> <span class="o">{</span>
+  <span class="n">storageSocket</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span><span class="o">.</span><span class="na">getSocket</span><span class="o">();</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<p>在<code class="highlighter-rouge">do_upload_file()</code>方法的开头，会根据条件运行<code class="highlighter-rouge">this.newUpdatableStorageConnection(group_name, master_filename)</code>方法或者<code class="highlighter-rouge">this.newWritableStorageConnection(group_name)</code>方法，在这两个方法中都会有对storageServer进行初始化。我们来看<code class="highlighter-rouge">newWritableStorageConnection(group_name)</code>方法的源码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+* check storage socket, if null create a new connection
+*
+* @param group_name the group name to upload file to, can be empty
+* @return true if create a new connection
+*/</span>
+<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">newWritableStorageConnection</span><span class="o">(</span><span class="nc">String</span> <span class="n">group_name</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">MyException</span> <span class="o">{</span>
+<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+  <span class="nc">TrackerClient</span> <span class="n">tracker</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TrackerClient</span><span class="o">();</span>
+  <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="na">getStoreStorage</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">trackerServer</span><span class="o">,</span> <span class="n">group_name</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">MyException</span><span class="o">(</span><span class="s">"getStoreStorage fail, errno code: "</span> <span class="o">+</span> <span class="n">tracker</span><span class="o">.</span><span class="na">getErrorCode</span><span class="o">());</span>
+  <span class="o">}</span>
+  <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>这个方法比较简单，首先判断storageServer是否进行过初始化，如果没有初始化，则从tracker中获取一个可用的storageServer进行初始化。初始化之后do_upload_file()方法会根据拿到的storageServer进行文件上传操作。</p>
+
+<p><strong>接下来到了全文最关键的地方的了，do_upload_file()方法会在上传文件结束的时候，将storageServer关闭并赋值为空</strong>，相关代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(!</span><span class="n">bNewConnection</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">ex1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ex1</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="k">throw</span> <span class="n">ex</span><span class="o">;</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">bNewConnection</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">ex1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ex1</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">storageServer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>当然这个逻辑是没有问题的，每次方法执行的时候获取一个可用的storageServer，结束的时候进行回收，避免多次请求使用同一个storage。如果程序没有任何并发这段代码是没有问题的，如果出现并发呢，出现小的并发也不一定会出现问题，当并发量稍微大一点的时候就一定会出现问题，这是为什么呢？</p>
+
+<p>我们来继续跟踪storageServer，发现storageServer是StorageClient类的一个全局属性，当并发特别大的时候就有可能出现这样一个现象：第一个线程进这个方法的时候，看到storageServer没有初始化于是进行赋值并继续往下执行；这时候第二个线程又开始进入这个方法，发现storageServer已经进行了初始化，就不再初始化，继续往下执行；当第一个线程执行结束的时候，将storageServer关闭并赋值为null，然后拍屁股走人了；这个时候可苦逼第二个线程了，方法刚刚执行了一半，当需要使用storageServer的时候，才发现storageServer已经被置为了null，于是在使用storageServer的地方都有可能会出现空指针异常，第二个线程，在挂掉的时候一定在想，真XX的坑爹。</p>
+
+<p>于是上面的这个故事，过一段时间就偷偷的在我们生产环境中上演。</p>
+
+<p>后面我继续看了一下StorageClient源码，不但是do_upload_file()会存在此问题，StorageClient类中只要这样使用storageServer的地方都会出现类似的并发问题，如：do_modify_file方法、delete_file方法等等。</p>
+
+<p>那么既然找到了问题的根因，到底如何解决这个问题呢？解决这个问题的本质就是解决共享变量的并发问题，那解决共享变量并发有哪些手段呢？最常用有加锁或者使用Threadlocal，看了一下使用Threadlocal进行改造工作量比较大，因此我最后选择使用了Synchronized同步锁来解决这个问题，就是在每个使用storageServer方法上面添加一个Synchronized关键字。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protected</span> <span class="nc">Synchronized</span>  <span class="nc">String</span><span class="o">[]</span> <span class="nf">do_upload_file</span><span class="o">()</span>
+</code></pre></div></div>
+
+<p>在github上面将源码down下来 <a href="https://github.com/happyfish100/fastdfs-client-java">fastdfs-client-java</a>，修改完之后再进行压测，妥妥的再不会报空指针异常类了。</p>
+
+<h2 id="峰回路转">峰回路转</h2>
+
+<p>大家以为这样就结束了吗？当时我也是这样认为的。后来回头一想，这样虽然解决了问题，但是并发数却急剧降低，FastDFS不会这么傻吧！肯定还是自己出了问题，第二天将项目中FastDFS使用的代码又撸了一遍，果然发现问题了。</p>
+
+<p>FileManager是我们封装好的FastDFS工具类，在启动的时候会对storageClient进行初始化，这样每次项目调研的时候都会复用storageClient实例。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileManager</span> <span class="kd">implements</span> <span class="nc">FileManagerConfig</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="nc">StorageClient</span> <span class="n">storageClient</span><span class="o">;</span>
+  <span class="kd">static</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+      <span class="c1">//省略一部分代码</span>
+      <span class="n">trackerClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TrackerClient</span><span class="o">();</span>
+      <span class="n">trackerServer</span> <span class="o">=</span> <span class="n">trackerClient</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+      <span class="n">storageClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StorageClient</span><span class="o">(</span><span class="n">trackerServer</span><span class="o">,</span> <span class="n">storageServer</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>upload()方法每次会从全局变量中获取storageClient进行调用，也就意味着每次请求使用的是同一个storageClient实例，当然也包括实例中的变量storageServer。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span><span class="o">[]</span> <span class="nf">upload</span><span class="o">(</span><span class="nc">FastDFSFile</span> <span class="n">file</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">uploadResults</span> <span class="o">=</span> <span class="n">storageClient</span><span class="o">.</span><span class="na">upload_file</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getContent</span><span class="o">(),</span> <span class="n">file</span><span class="o">.</span><span class="na">getExt</span><span class="o">(),</span> <span class="n">meta_list</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Exception when uploadind the file:"</span> <span class="o">+</span> <span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">//省略一部分代码</span>
+    <span class="k">return</span> <span class="n">uploadResults</span><span class="o">;</span>
+  <span class="o">}</span>
+</code></pre></div></div>
+
+<p>如果我将上面的 upload()方法改造成下面这样呢：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span><span class="o">[]</span> <span class="nf">upload</span><span class="o">(</span><span class="nc">FastDFSFile</span> <span class="n">file</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="nc">StorageClient</span>  <span class="n">storageClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StorageClient</span><span class="o">(</span><span class="n">trackerServer</span><span class="o">,</span> <span class="n">storageServer</span><span class="o">);</span>
+      <span class="n">uploadResults</span> <span class="o">=</span> <span class="n">storageClient</span><span class="o">.</span><span class="na">upload_file</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getContent</span><span class="o">(),</span> <span class="n">file</span><span class="o">.</span><span class="na">getExt</span><span class="o">(),</span> <span class="n">meta_list</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Exception when uploadind the file:"</span> <span class="o">+</span> <span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">//省略一部分代码</span>
+    <span class="k">return</span> <span class="n">uploadResults</span><span class="o">;</span>
+  <span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong>重点是添加了这段代码：<code class="highlighter-rouge">StorageClient  storageClient = new StorageClient(trackerServer, storageServer);</code></strong></p>
+
+<p>也就是说，每次调用的时候会重新new一个StorageClient()实例，这样每次请求拿到的就是不同的StorageClient，也就意味着每个请求会获取到不同的storageServer，这样就不存在共享变量，也就避免了出现并发的空指针问题。</p>
+
+<p><strong>根据上面的分析可以看出，最好的解决方案就是每次调用的时候new一个新的实例去使用。也提醒大家在使用FastDFS的时候，尽量不要重用StorageClient！</strong></p>
+
+<p>后来我在github上面给FastDFS提交了pull来说明这个问题，有一个网友也给出了同样的理解：<a href="https://github.com/happyfish100/fastdfs-client-java/pull/28">解决并发空指针问题</a> ；文中的测试代码我放到了这里：<a href="https://github.com/ityouknow/spring-examples">spring-examples</a>，感兴趣的同学可以继续去了解。</p>
+
+<h2 id="最后">最后</h2>
+
+<p>问题终于解决了，虽然走了弯路，却让我对FastDFS有了更深的认识。平时解决问题也经常会这样，有时候排查了整整一天，才发现原来是某个非常低级错误导致的，这就是程序员的正常工作。</p>
+
+<p>研究发现，在所有报告的错误中，大约有95%是由程序员造成的，2%是由系统软件（编译器和操作系统）造成的，2%是由其他软件造成的，1%是由硬件造成的。因此不要怀疑人生、出现什么奇迹、发生某些诡异的事情，那是不会发生的。</p>
+
+<p>要相信编程的第一法则：<strong>永远都是你的错！</strong></p>
+
+<p>你应该知道那种感觉。我们所有人都曾碰到过这样的事情：已经盯着代码看了无数遍，但还是没有发现任何问题。然而，有个故障或者错误始终挥之不去。于是你开始怀疑，可能是你开发程序所用的那台机器出了问题，也可能是操作系统的问题，或者是你使用的工具和库出了问题。肯定是它们的原因！</p>
+
+<p><strong>然而，无论你多么绝望，都不要往那条路上走。沿着那条路下去就是薛定谔的猫和靠运气编程。</strong></p>
+
+<p>总是要处理一些困难的、捉摸不透的问题，这是一件令人绝望的事情，但是不要让绝望领着你误入歧途。作为一名谦逊的程序员，最基本的要求就是要有意识：你写的代码在任何时候出了问题，<strong>那一定都是你的错</strong>。</p>
+
+<blockquote>
+  <p>留言分享你最波折的一次排查问题经历。</p>
+</blockquote>
+
+<p>法则参考：<a href="https://blog.codinghorror.com/the-first-rule-of-programming-its-always-your-fault/">The First Rule of Programming: It’s Always Your Fault</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/fastdfs/2017/12/26/fastdfs-concurrent.html';
+        this.page.identifier = '/fastdfs/2017/12/26/fastdfs-concurrent.html';
+        this.page.title = '一次FastDFS并发问题的排查经历';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/fastdfs/2017/12/26/fastdfs-concurrent.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,338 @@
+I"�f<blockquote>
+  <p>by 太阳雪</p>
+</blockquote>
+
+<p>WEB 开发是现在程序必会的技能，因为大部分软件都以 Web 形式提供，及时制作后台开发，或者只做前台开发，也需要了解 Web 开发的概念和特点。
+由于 Python 是解释性脚本语言，用来做 Web 开发非常适合，而且 Python 有上百中 Web 开发框架，以及成熟的模板技术，使得Web开发如虎添翼。今天借用 Flask 框架，快速学习一下 Python 的 Web 开发知识。</p>
+
+<!--more-->
+
+<h2 id="flask-框架">Flask 框架</h2>
+
+<p>Flask 的设计易于使用和扩展。它的初衷是为各种复杂的Web应用程序构建坚实的基础。可以自由地插入任何扩展。也可以自由构建自己的模块。Flask 适合各种项目。它对原型设计特别有用。Flask 依赖于两个外部库：Jinja2 模板引擎和 Werkzeug WSGI 工具包。
+Flask 是最精致，功能最丰富的微框架之一。Flask 还很年轻，拥有蓬勃发展的社区，一流的扩展和漂亮的 API。Flask 具有快速模板，强大的 WSGI 功能，在 Web 应用程序和库级别的完整单元可测性，以及大量文档等优点。
+选用 Flask 框架也是因为它方便入手，结构简单，零配置，是个学习 Python Web 开发的好工具。</p>
+
+<h2 id="安装-flask">安装 Flask</h2>
+
+<p>像其他模块一样，Flask 的安装很简单，下面通过 pip 包管理器来安装</p>
+
+<pre><code class="language-dos">pip install flask
+</code></pre>
+
+<p>检查一下是否安装正确，在命令行下输入 <code class="highlighter-rouge">python</code> 进入命令行模式，
+引入 <code class="highlighter-rouge">flask</code> 模块，回车</p>
+
+<pre><code class="language-dos">&gt;&gt;&gt; import flask
+&gt;&gt;&gt;
+</code></pre>
+
+<p>如果没有错误提醒，就说明安装成功了</p>
+
+<h2 id="hello-world">Hello world</h2>
+
+<p>下面写个最简单的Web应用 <code class="highlighter-rouge">hello.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">from</span><span class="err"> </span><span class="n">flask</span><span class="err"> </span><span class="k">import</span><span class="err"> </span><span class="n">Flask</span><span class="err">  </span><span class="c1"># 引入Flask模块
+</span>
+<span class="n">app</span><span class="err"> </span><span class="o">=</span><span class="err"> </span><span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="err"> </span><span class="c1"># 创建一个应用
+</span>
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="n">def</span><span class="err"> </span><span class="n">index</span><span class="p">():</span><span class="err">    </span><span class="c1"># 定义根目录处理器
+</span><span class="err">    </span><span class="k">return</span><span class="err"> </span><span class="s">'&lt;h1&gt;Hello World!&lt;/h1&gt;'</span>
+
+<span class="k">if</span><span class="err"> </span><span class="n">__name__</span><span class="err"> </span><span class="o">==</span><span class="err"> </span><span class="s">'__main__'</span><span class="p">:</span>
+<span class="err">    </span><span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">()</span><span class="err"> </span><span class="c1"># 启动服务
+</span></code></pre></div></div>
+
+<p>打开终端，跳转到 <code class="highlighter-rouge">hello.py</code> 文件所在的文件夹，进入 python 命令行模式，启动服务</p>
+
+<pre><code class="language-dos">&gt;&gt;&gt; python hello.py
+</code></pre>
+
+<p>如果一起正常的话会有类似下面的反馈</p>
+
+<pre><code class="language-dos"> * Serving Flask app "hello" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre>
+
+<blockquote>
+  <p>因为是通过 <code class="highlighter-rouge">app.run()</code> 启动的服务，所以会有个错误提示，提醒不能将此Web应用部署在生产环境中，可以暂时忽略</p>
+</blockquote>
+
+<p>此时，打开浏览器，输入<a href="http://127.0.0.1:5000/">127.0.0.1:5000/</a> 或者 <a href="http://localhost:5000">localhost:5000/</a>, 就可以看到 Hello World！ 欢迎字样。</p>
+
+<h2 id="路由">路由</h2>
+
+<p>路由是 Web 开发中一个很重要的概念，用来将不同的请求，映射到响应的处理方法上，这个方法被称为<strong>视图函数</strong>。比如刚才的 <code class="highlighter-rouge">Hello</code> 应用，将根请求，映射到<code class="highlighter-rouge">index</code> 处理方法上，下面简单了解下Flask对路由的支持</p>
+
+<p>Flask通过修饰器(和Java的注解类似)来建立路由映射关系的，已经看到修饰器是 <code class="highlighter-rouge">app.rotue()</code></p>
+
+<h3 id="简单路由">简单路由</h3>
+
+<p>如 访问 <code class="highlighter-rouge">/hello</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/hello'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'Hello!'</span>
+</code></pre></div></div>
+
+<h3 id="动态路由">动态路由</h3>
+
+<p>如访问 <code class="highlighter-rouge">/user/bob</code> 或者 <code class="highlighter-rouge">/user/lily</code> 都会映射到同一视图函数上</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/user/&lt;name&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">user</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">'&lt;h1&gt;Hello, %s! &lt;/h1&gt;'</span> <span class="o">%</span> <span class="n">name</span>
+</code></pre></div></div>
+
+<p>动态域名中动态的部分可以作为视图函数的参数，也支持多个动态参数，如访问 <code class="highlighter-rouge">/user/bob/23</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/user/&lt;name&gt;/&lt;age&gt;'</span><span class="p">)</span>
+<span class="n">def</span><span class="err"> </span><span class="n">user</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="err"> </span><span class="n">age</span><span class="p">):</span>
+    <span class="k">return</span><span class="err"> </span><span class="s">"&lt;h1&gt; Hello, %s, you're %s years old"</span><span class="err"> </span><span class="o">%</span><span class="err"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="err"> </span><span class="n">age</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>还可以指定动态部分的数据类型，如</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/post/&lt;int:post_id&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">show_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">):</span>
+    <span class="c1"># show the post with the given id, the id is an integer
+</span>    <span class="k">return</span> <span class="s">'Post %d'</span> <span class="o">%</span> <span class="n">post_id</span>
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/path/&lt;path:subpath&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">show_subpath</span><span class="p">(</span><span class="n">subpath</span><span class="p">):</span>
+    <span class="c1"># show the subpath after /path/
+</span>    <span class="k">return</span> <span class="s">'Subpath %s'</span> <span class="o">%</span> <span class="n">escape</span><span class="p">(</span><span class="n">subpath</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>支持的数据类型</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">类型</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">string</td>
+      <td>(默认值) 任何不包含斜杠的文本</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">int</td>
+      <td>正整数</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">float</td>
+      <td>正浮点数</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">path</td>
+      <td>类似 string ，但可以包含斜杠</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">uuid</td>
+      <td>接受 UUID 字符串</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="指定http-方法">指定HTTP 方法</h3>
+
+<p>HTTP 协议，支持多种 HTTP 方法，例如 <code class="highlighter-rouge">HEAD</code>、<code class="highlighter-rouge">OPTIONS</code>，以及常用的 <code class="highlighter-rouge">GET</code>、<code class="highlighter-rouge">POST</code> 等，Flask自动处理了 <code class="highlighter-rouge">HEAD</code> 和 <code class="highlighter-rouge">OPTIONS</code>，路由默认接受的方法是 GET，如果要匹配其他请求方法，可以在路由方法的 <code class="highlighter-rouge">methods</code> 参数来指定</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/login'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">,</span> <span class="s">'POST'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">do_the_login</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">show_the_login_form</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="复合路由">复合路由</h3>
+
+<p>也可以将多个路由规则，用于一个视图函数, 如访问 <code class="highlighter-rouge">/job/</code> 和访问 <code class="highlighter-rouge">/work/</code> 效果是一样的</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/job/'</span><span class="p">)</span>
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/work/'</span><span class="p">)</span>
+<span class="n">def</span><span class="err"> </span><span class="n">show_works</span><span class="p">():</span>
+    <span class="k">return</span><span class="err"> </span><span class="s">'This is works page'</span>
+</code></pre></div></div>
+
+<p>再复杂一点的例子</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/users/'</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s">'page'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/users/page/&lt;int:page&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">show_users</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div></div>
+
+<p>上面的代码表示，当访问 <code class="highlighter-rouge">/user/</code> 或者 <code class="highlighter-rouge">/user/page/&lt;pageindex&gt;</code> 时，都会有 <code class="highlighter-rouge">show_users</code> 视图函数来处理, 而且还为 <code class="highlighter-rouge">/user/</code> 提供了默认值，即访问 <code class="highlighter-rouge">/user/</code> 相当于访问 <code class="highlighter-rouge">/user/page/1</code></p>
+
+<h2 id="请求和响应">请求和响应</h2>
+
+<p>Web 应用，最重要的事情就是处理接收到的请求，并返回响应。Flask 框架也一样，它提供了请求对象 <code class="highlighter-rouge">request</code> 和响应对象 <code class="highlighter-rouge">response</code> ，可以方便的在视图函数中使用。</p>
+
+<h3 id="请求">请求</h3>
+
+<p>Flask 将客户端发送的 HTTP 请求封装成了 <code class="highlighter-rouge">request</code> 请求对象，并且使用上下文 (context) 临时将 <code class="highlighter-rouge">request</code> 变为全局可访问的，于是在视图还是中，就可以直接使用了。</p>
+<blockquote>
+  <p><strong>注意</strong>: <code class="highlighter-rouge">request</code> 并非真正的全局变量！试想，在多线程服务器中，多个线程同时处理不同客户端发送的不同请求时，每个线程看到的 <code class="highlighter-rouge">request</code> 对象必然不同。Falsk 使用上下文让特定的变量在一个线程中全局可访问，与此同时却不会干扰其他线程。</p>
+</blockquote>
+
+<p>Flask 有两种上下文，分别为程序上下文和请求上下文，各自对应的全局变量如下表:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量名</th>
+      <th>上下文类型</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>current_app</td>
+      <td>程序上下文</td>
+      <td>表示当前运行的程序实例</td>
+    </tr>
+    <tr>
+      <td>g</td>
+      <td>程序上下文</td>
+      <td>处理请求时用作临时存储对象，每次请求都会重新设值</td>
+    </tr>
+    <tr>
+      <td>request</td>
+      <td>请求上下文</td>
+      <td>客户端发来的request请求对象</td>
+    </tr>
+    <tr>
+      <td>session</td>
+      <td>请求上下文</td>
+      <td>请求携带的会话信息</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>使用<code class="highlighter-rouge">request</code>对象前，需要先引入</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flash</span> <span class="kn">import</span> <span class="n">request</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">request</code> 对象提供了丰富的属性和方法，这里举个例子：
+通过使用 <code class="highlighter-rouge">method</code> 属性可以操作当前请求方法，通过使用 <code class="highlighter-rouge">form</code> 属性处理表单数据（在 <code class="highlighter-rouge">POST</code> 或者 <code class="highlighter-rouge">PUT</code> 请求 中传输的数据）。以下是使用上述两个属性的例子:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/login'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'POST'</span><span class="p">,</span> <span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">valid_login</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="s">'username'</span><span class="p">],</span>
+                       <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="s">'password'</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="n">log_the_user_in</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="s">'username'</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="s">'Invalid username/password'</span>
+    <span class="c1"># the code below is executed if the request method
+</span>    <span class="c1"># was GET or the credentials were invalid
+</span>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'login.html'</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>注意</strong>：当 form 属性中不存在这个键时会发生什么？会引发一个 KeyError 。 如果不处理这个错误 ，就会显示一个 HTTP 400 Bad Request 错误页面。</p>
+</blockquote>
+
+<p>如果要操作 URL （如 ?key=value ）中提交的参数可以使用 args 属性，如 : <code class="highlighter-rouge">searchword = request.args.get('key', '')</code></p>
+
+<h3 id="请求钩子">请求钩子</h3>
+
+<p>有时在处理请求之前或之后执行代码会很有用。例如，在请求开始时，可能需要创建数据库连接或者认证发起请求的用户。为了避免在每个视图函数中都使用重复的代码，Flask 提供了注册通用函数的功能，注册的函数可在请求被分发到视图函数之前或之后调用。
+请求钩子使用修饰器实现。Flask 支持以下4种钩子:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">before_first_request</code>：注册一个函数，在处理第一个请求之前运行。</li>
+  <li><code class="highlighter-rouge">before_request</code>：注册一个函数，在每次请求之前运行。</li>
+  <li><code class="highlighter-rouge">after_request</code>：注册一个函数，如果没有未处理的异常抛出，在每次请求之后运行。</li>
+  <li><code class="highlighter-rouge">teardown_request</code>：注册一个函数，即使有未处理的异常抛出，也在每次请求之后运行。</li>
+</ul>
+
+<p>示例:
+在接受到第一个请求是，打印一句话：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">before_first_request</span>
+<span class="n">def</span><span class="err"> </span><span class="n">first_quest</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"run before first request"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>在请求钩子函数和视图函数之间共享数据一般使用上下文全局变量g。</strong>
+例如，before_request 处理程序可以从数据库中加载已登录用户，并将其保存到 g.user 中。随后调用视图函数时，视图函数再使用 g.user 获取用户。</p>
+
+<h3 id="响应">响应</h3>
+
+<p>响应是 Web 服务器对请求的一个回应，在 Flask 中，有多种形式的响应。视图函数的返回值会自动转换为一个响应对象。
+如果返回值是一个字符串，那么会被 转换为一个包含作为响应体的字符串、一个 200 OK 出错代码 和一个 <code class="highlighter-rouge">text/html</code> 类型的响应对象。
+如果返回值是一个字典，那么会调用 <code class="highlighter-rouge">jsonify()</code> 来产生一个响应。
+以下是转换的规则：</p>
+
+<ul>
+  <li>如果视图返回的是一个响应对象，那么就直接返回它。</li>
+  <li>如果返回的是一个字符串，那么根据这个字符串和缺省参数生成一个用于返回的 响应对象。</li>
+  <li>如果返回的是一个字典，那么调用 <code class="highlighter-rouge">jsonify</code> 创建一个响应对象。</li>
+  <li>如果返回的是一个元组，那么元组中的项目可以提供额外的信息。元组中必须至少 包含一个项目，且项目应当由 <code class="highlighter-rouge">(response, status)</code> 、 <code class="highlighter-rouge">(response, headers)</code> 或者 <code class="highlighter-rouge">(response, status, headers)</code> 组成。 <code class="highlighter-rouge">status</code> 的值会重载状态代码， <code class="highlighter-rouge">headers</code> 是一个由额外头部值组成的列表 或字典。</li>
+  <li>如果以上都不是，那么 Flask 会假定返回值是一个有效的 WSGI 应用并把它转换为 一个响应对象。</li>
+</ul>
+
+<p>除此之外，还可以通过 <code class="highlighter-rouge">make_response()</code> 函数，创建可以响应对象，做更个性的事情。</p>
+
+<p>使用<code class="highlighter-rouge">make_response()</code>前，需要先引入</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">make_response</span>
+</code></pre></div></div>
+
+<p>示例：</p>
+
+<ul>
+  <li>响应有元组构成</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'error.html'</span><span class="p">),</span> <span class="mi">404</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>@app.errorhandler 修饰符，会将一个响应代码映射到一个视图函数上，这里是将404(找不到页面)码，处理成一个个性的错误页面</p>
+
+  <p>另外，<code class="highlighter-rouge">render_template</code> 是 Flask 的模板函数，简单理解就是格式化一个动态的 html 字符串，关于模板的详细用法，会在模板章节描述</p>
+</blockquote>
+
+<ul>
+  <li>使用 make_response() 包裹返回表达式，获得响应对象，并对该对象 进行修改，然后再返回:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">render_template</span><span class="p">(</span><span class="s">'error.html'</span><span class="p">),</span> <span class="mi">404</span><span class="p">)</span>
+    <span class="n">resp</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'X-Something'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'A value'</span>
+    <span class="k">return</span> <span class="n">resp</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本文借助 Flask 框架，简要介绍了下 Python Web 开发的基本知识和技术，希望能帮助您快速入门，在 Python 学习的道路上走的更顺畅。后续还会将就 Web 开发的话题，对<em>模板</em>、<em>数据库</em> 以及扩展功能等进行讲解，敬请期待!</p>
+
+<p><a href="https://github.com/JustDoPython/python-100-day/tree/master/day-014">示例代码</a></p>
+
+<p>参考</p>
+
+<ul>
+  <li><a href="https://item.jd.com/12418677.html">图书: Flask Web开发</a></li>
+  <li><a href="https://dormousehole.readthedocs.io/en/latest/quickstart.html">Flask快速上手: https://dormousehole.readthedocs.io/en/latest/quickstart.html</a></li>
+  <li><a href="https://www.cnblogs.com/java-wgm/p/6602900.html">Flask入门到精通（二）: https://www.cnblogs.com/java-wgm/p/6602900.html</a></li>
+  <li><a href="https://zh.wikipedia.org/wiki/Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E5%85%B3%E6%8E%A5%E5%8F%A3">Web服务器网关接口</a></li>
+</ul>
+:ET

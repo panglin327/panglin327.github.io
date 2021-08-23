@@ -1,0 +1,194 @@
+I"�<p>在编程的世界中，流程控制是程序员运行的基础，流程控制决定了程序按照什么样的方式去执行，本节给大家介绍 Python 流程控制相关语法。</p>
+
+<!--more-->
+
+<h2 id="if-语句">if 语句</h2>
+
+<p>if 语句表示如何发生什么样的条件，执行什么样的逻辑。</p>
+
+<p>语法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if 判断条件：
+    执行语句……
+else：
+    执行语句……
+</code></pre></div></div>
+
+<p>示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># x = int(input("Please enter an integer: "))
+x = -5
+if  x &lt; 0:
+  x = 0
+  print('Negative changed to zero')
+elif x == 0:
+  print('Zero')
+elif x == 1:
+  print('Single')
+else:
+  print('More')
+</code></pre></div></div>
+
+<p>可能会有零到多个 elif 部分，else 是可选的。关键字 ‘elif’ 是 ’else if’ 的缩写，这个可以有效地避免过深的缩进。if … elif … elif … 序列用于替代其它语言中的 switch 或 case 语句。</p>
+
+<h2 id="for-循环">for 循环</h2>
+
+<p>Python for 循环可以遍历任何序列的项目，如一个 列表 或者一个 字符串。</p>
+
+<p>语法：</p>
+
+<p>for 循环的语法格式如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'''
+for 后跟变量名，in 后跟序列，注意加冒号
+for 循环每次从序列中取一个值放到变量中
+此处的序列主要指 列表  元组   字符串   文件
+'''
+for iterating_var in sequence:
+   statements(s)
+</code></pre></div></div>
+
+<p>示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for letter in 'Python':     # 第一个实例
+   print('当前字母 :', letter)
+
+fruits = ['banana', 'apple',  'mango']
+for fruit in fruits:        # 第二个实例
+   print('当前字母 :', fruit)
+
+print("Good bye!")
+</code></pre></div></div>
+
+<p>也可以通过索引地址来遍历内容</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fruits = ['banana', 'apple',  'mango']
+for index in range(len(fruits)):
+   print('当前水果 :', fruits[index])
+
+print("Good bye!")
+</code></pre></div></div>
+
+<h2 id="while-循环">while 循环</h2>
+
+<p>Python 编程中 while 语句用于循环执行程序，即在某条件下，循环执行某段程序，以处理需要重复处理的相同任务。其基本形式为：</p>
+
+<p>语法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while 判断条件：
+    执行语句……
+</code></pre></div></div>
+
+<p>示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>count = 0
+while (count &lt; 9):
+   print( 'The count is:', count)
+   count = count + 1
+ 
+print("Good bye!")
+</code></pre></div></div>
+
+<p>也可以在 while 循环中添加判断逻辑</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>count = 0
+while count &lt; 5:
+   print(count, " is  less than 6")
+   count = count + 1
+else:
+   print(count, " is not less than 6")
+</code></pre></div></div>
+
+<h2 id="range-函数">range() 函数</h2>
+
+<p>如果你需要一个数值序列，内置函数 range() 会很方便，它生成一个等差级数链表:</p>
+
+<p>语法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>range (start， end， scan):
+</code></pre></div></div>
+<p>参数含义：</p>
+
+<ul>
+  <li>start:计数从 start 开始。默认是从 0 开始。例如 range(5) 等价于 range(0, 5);</li>
+  <li>end:计数到 end 结束，但不包括 end.例如：range(0, 5) 是[0, 1, 2, 3, 4]没有 5</li>
+  <li>scan：每次跳跃的间距，默认为1。例如：range(0, 5) 等价于 range(0, 5, 1)</li>
+</ul>
+
+<p>示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in range(6):
+ print(i)
+print(range(6),'finish')
+
+for i in range(6,10):
+ print(i)
+print(range(6,10),'finish')
+
+for i in range(6,12,2):
+ print(i)
+print(range(6,12,2),'finish')
+</code></pre></div></div>
+
+<p>需要迭代链表索引的话，如下所示结合使 用 range() 和 len():</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = ['i', 'love', 'coding', 'and', 'free']
+for i in range(len(a)):
+  print(i, a[i])
+</code></pre></div></div>
+
+<h2 id="break-用法">break 用法</h2>
+
+<p>break 语句可以跳出 for 和 while 的循环体。如果你从 for 或 while 循环中终止，任何对应的循环 else 块将不执行。</p>
+
+<p>示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for letter in 'ityouknow':     # 第一个实例
+   if letter == 'n':        # 字母为 n 时中断
+      break
+   print ('当前字母 :', letter)
+</code></pre></div></div>
+
+<h2 id="continue-用法">continue 用法</h2>
+
+<p>continue 语句被用来跳过当前循环块中的剩余语句，然后继续进行下一轮循环。</p>
+
+<p>示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for letter in 'ityouknow':     # 第一个实例
+   if letter == 'n':        # 字母为 n 时跳过输出
+      continue
+   print ('当前字母 :', letter)
+</code></pre></div></div>
+
+<h2 id="pass-语句">pass 语句</h2>
+
+<p>Python pass 是空语句，是为了保持程序结构的完整性。它用于那些语法上必须要有什么语句，但程序什么也不做的场合.</p>
+
+<p>示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while True:
+  pass  # Busy-wait for keyboard interrupt (Ctrl+C)
+
+
+# 这通常用于创建最小结构的类:
+
+class MyEmptyClass:
+  pass
+</code></pre></div></div>
+
+<p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了 Python 语法中的流程控制相关语法，方便后期在代码逻辑中进行条件控制。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-004">Python-100-days-day004</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p>http://www.pythondoc.com/pythontutorial3<br />
+https://www.runoob.com/python3/python3-tutorial.html</p>
+:ET

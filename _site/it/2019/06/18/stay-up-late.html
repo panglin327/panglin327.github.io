@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         报复性熬夜：熬夜一时爽，一直熬夜一直爽 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="熬最晚的夜，吃最野的鸡，敷最贵的面膜。">
+
+    <link rel="canonical" href="http://localhost:4000/it/2019/06/18/stay-up-late.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="报复性熬夜：熬夜一时爽，一直熬夜一直爽">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>报复性熬夜：熬夜一时爽，一直熬夜一直爽</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/06/18
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-12 markdown-body">
+
+            <p>最近有一个网络流行词”报复性熬夜“在各种热议中，我也来凑个热闹来聊聊。</p>
+
+<p>我曾经也是报复性熬夜的忠实用户。</p>
+
+<p>在互联网公司，996是日常情况，偶尔997也不是夸张的事情。<a href="http://www.ityouknow.com/it/2019/06/10/write-blog.html">《你为什么有那么多时间写博客》</a>这篇文章也给大家介绍过我的时间安排，平时10、11点回家是家常便饭。</p>
+
+<p>打个车回家，收拾东西洗澡刷牙，躺倒床上的时候，看了一下时间，怎么直接就到了12点，如果这个时候直接睡觉的话，总感觉太 TM 对不起自己了。</p>
+
+<p>白天忙了整整一天，总感觉只有到晚上的这个时间点，才真正的属于自己。所以一定要犒劳一下自己，刷个视频、看个文章什么的，一不小心就到凌晨两三点。</p>
+
+<p>第二天顶着浓浓的黑眼圈，无精打采的去上班。依旧加班到很晚，一九每天熬着夜，生活好事进入了死循环。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/aoye01.jpg" alt="" /></p>
+
+<p>有人穷得太久了，如果一旦暴富，就疯狂的炫富性消费。</p>
+
+<p>有人太渴望成名，压抑太久之后，就出现反常行为，为了出名成为跳梁小丑。</p>
+
+<p>我也一样，白天时间被占用得太多，晚上就报复性熬夜。</p>
+
+<p>因为只有凌晨两三点的时候，我才感觉自己真实的活着。</p>
+
+<h2 id="晚上熬夜有多爽白天就有多刺激">晚上熬夜有多爽，白天就有多刺激</h2>
+
+<p>如果是自己敲代码到还好，主要是自己来控制状态和时间，如果碰上了领导开会，特别是还需要自己发言的时候，那就很酸爽。</p>
+
+<p>紧紧的提醒着自己的熊猫眼要保持睁大，但如果领导持续讲话超过20分钟，还是不由自主的进入半仙境状态。</p>
+
+<p>突然听到领导说，XX，你觉得呢？</p>
+
+<p>一阵惊醒。</p>
+
+<p>掐大腿、捏手指、喝咖啡、装做记笔记均无效。</p>
+
+<p>在互联网公司，中午吃饭的时候，经常可以听到各种此消彼长鼾声。</p>
+
+<p>你会神奇的发现当人极度困乏的时候，什么姿势都可以睡着，趴着睡的、仰着睡的、靠着沙发睡的、甚至还有站着就睡着的。</p>
+
+<p>这不是最刺激的，在日本东京甚至出现了睡在街上的职场人。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/aoye02.jpg" alt="" /></p>
+
+<h2 id="为什么在坚持熬夜">为什么在坚持熬夜？</h2>
+
+<p>现实社会忍气吞声蝇营狗苟，在虚拟世界横刀立马快意恩仇。</p>
+
+<p>王者荣耀、绝境求生、完美世界、梦幻西游、阴阳师、穿越火线….，一系列的网络游戏满足着职场人的精神世界。</p>
+
+<p>于是腾讯手游员工年终奖72个月，王者荣耀日入过亿等之类的新闻冲刺着我们的眼球。</p>
+
+<p>熬最晚的夜，吃最野的鸡，敷最贵的面膜。</p>
+
+<p>这是当代职场人的真实写照。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/aoye03.jpg" alt="" /></p>
+
+<p>熊猫眼、黑眼圈已经成为了职场人的标配，女生还可以用粉底、眼霜等化妆手段遮掩一下，男生基本都素颜出镜了。</p>
+
+<p>当看到自己大大的黑眼圈、第二天上演各种疯狂刺激的时候，都会下死决心，再也不熬夜了。</p>
+
+<p>然而，好不容易下班后回到家洗漱完趟床上时，那着手机或iPad就不自觉的享受起这好不容易属于自己的时间。没啥真正的目的，就是不小心刷了下抖音，追了下美剧，看了几集综艺等等就已到深夜。内心默默的对自己说，再熬最后一晚！最后一晚永远没有到来。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/aoye04.jpg" alt="" /></p>
+
+<h2 id="报复性熬夜的本质是什么">报复性熬夜的本质是什么？</h2>
+
+<p>”报复性熬夜”的爽感，其实来自一种“补偿心理”，属于自我防御机制的一种。</p>
+
+<p>按照个体心理学开创者阿德勒的说法：当人们因生理或心理问题感到受挫，便会不自觉用其他方式（或在其他领域）来弥补这种缺憾、缓解焦虑、减轻内心不安。</p>
+
+<p>当我们总要花费大量时间用于工作、处理和别人的关系、甚至处理恋爱矛盾时，留给自己一个人的时间便少得可怜——说白了，也就只剩晚上仅有的几个小时。</p>
+
+<p>为了”补偿“，我们便容易疯狂熬夜，希望通过熬夜弥补这一天的遗憾，对生活表达一种无声的反抗或不满。</p>
+
+<p>作为一种心理防御机制，寻求“补偿”自然是有好处的：它能成为维持心理平衡的内在动力。</p>
+
+<h2 id="最后">最后</h2>
+
+<p>每个熬夜的人都知道熬夜伤身体，有时候那怕盯着天花板也要坚持到十二点，在报复性熬夜的独处中获得不自觉的心理慰寄。</p>
+
+<p>年轻还好，当人至中年，你便会发现健康的重要性，而拥有正常的生活作息状态是健康最基本的硬核保障。</p>
+
+<p>所以，因不可避免的正事偶尔熬夜还行，当你发现自己陷入在报复性熬夜的状态里时就要好好调整了。</p>
+
+<hr />
+
+<p><em><strong>作者简介</strong>：纯洁的微笑，<strong>一个有故事的程序员</strong>。曾在互联网金融，第三方支付公司工作，现为一名自由职业者，和你一起用技术的角度去看这个世界。我的个人微信号 <strong>puresmilea</strong>，欢迎大家找我聊天，记录你我的故事。</em></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+           <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2019/06/18/stay-up-late.html';
+        this.page.identifier = '/it/2019/06/18/stay-up-late.html';
+        this.page.title = '报复性熬夜：熬夜一时爽，一直熬夜一直爽';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2019/06/18/stay-up-late.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+           </div>
+
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,723 @@
+I"�P<p>by 轩辕御龙</p>
+
+<h1 id="数据分析之-numpy-初步">数据分析之 Numpy 初步</h1>
+
+<p>NumPy 是 Python 中一个基本的科学计算库，包含以下特性：</p>
+
+<ul>
+  <li>强大的 <strong>N 维数组</strong>对象；</li>
+  <li>精巧的<strong>广播</strong>（broadcasting）功能；</li>
+  <li>C/C++ 和 Fortran 代码集成工具；</li>
+  <li>实用的线性代数、傅里叶变换、随机数生成等功能。</li>
+</ul>
+
+<p>其中，N 维数组是 NumPy 最为核心的特性。</p>
+
+<p>除了显而易见的科学计算用途，NumPy 还可以用作一般数据类型的多维容器，并且是任何数据类型均可；但有一点：一个数组中必须是同种数据类型。这一特性使得 NumPy 可以高效、无缝地与各种数据库进行集成。</p>
+
+<p>NumPy 基于开源许可协议  <a href="https://numpy.org/license.html#license">BSD license</a> 发布，对于二次分发使用几乎没有限制。</p>
+
+<!--more-->
+
+<h2 id="1-安装-numpy">1. 安装 NumPy</h2>
+
+<p>由于 NumPy 并非 Python 的内置模块，因此我们直接从 Python 官网下载安装的发行版是不包含 NumPy 这个模块的。这个时候你要是想<code class="highlighter-rouge">import numpy</code>，显然是会无功而返的。因此我们需要额外安装 NumPy 模块。</p>
+
+<p>安装 NumPy 有好几种方式，我们这里推荐的是：1）使用<code class="highlighter-rouge">pip</code>进行安装；2）安装<a href="https://www.anaconda.com/">Anaconda</a>。</p>
+
+<h3 id="11-使用pip安装">1.1 使用<code class="highlighter-rouge">pip</code>安装</h3>
+
+<p>这种方式推荐给已经从 Python 官网下载了某个 Python 发行版的读者，或是已经通过其它方式获得了 Python 环境，但却没有 NumPy 这个模块的读者。</p>
+
+<p>安装命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>numpy
+</code></pre></div></div>
+
+<p>或：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install </span>numpy
+</code></pre></div></div>
+
+<p>均可。</p>
+
+<p>当然，实际上 NumPy 模块本身也有很多依赖，也需要其他一些模块才能够真正发挥出它强大的功能，因此我们推荐一次安装多个模块：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--user</span> numpy scipy matplotlib ipython jupyter pandas sympy nose
+</code></pre></div></div>
+
+<h3 id="12-安装-anaconda">1.2 安装 <a href="https://www.anaconda.com/">Anaconda</a></h3>
+
+<p>这种方式适合还没有安装 Python 的读者，或是已经安装了 Python 但是想一劳永逸拥有大多数科学计算库的读者。</p>
+
+<p>访问 <a href="https://www.anaconda.com/">Anaconda</a> 官网找到下载链接进行安装即可。</p>
+
+<p>或者如果你觉得 <a href="https://www.anaconda.com/">Anaconda</a> 过于臃肿，也可以安装其简化版本 <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> 。</p>
+
+<h2 id="2-n-维数组">2. N 维数组</h2>
+
+<p><strong>N 维数组</strong>，也称“<strong>多维数组</strong>”，这里的“N”代表的就是数组的维数。</p>
+
+<p>我们在之前已经学过了 Python 中的内置数据类型，其中有一种在表现形式上跟多维数组很像——就是序列（sequence）型的列表（list）数据：二者都是由中括号括起来的数据类型。</p>
+
+<p>但实际上，多维数组和列表是完全不同的两种数据类型，我们在使用的时候一定要严格地将二者区分开来。具体地讲，二者有以下不同点：</p>
+
+<ul>
+  <li>NumPy 的多维数组在创建之初形状<strong>大小</strong>就已经<strong>固定</strong>；而列表的大小则是动态变化的。改变一个多维数组的大小，实际上会导致一个新的数值被创建，旧的数组的删除。</li>
+  <li>NumPy 多维数组中的元素要求是<strong>同种数据类型</strong>，因此在内存中实际的大小也是相同的。只有一个例外：数组由 Python 的各种对象组成，这样数组中元素的大小才会不同。</li>
+  <li>NumPy 的多维数组使得对大量数据进行高级的数学运算或其他操作变得更加方便快捷。对同样一个运算来说，使用多维数组会比使用 Python 内置的序列类型更加<strong>高效</strong>，代码量也<strong>更少</strong>。</li>
+  <li>许许多多的基于 Python 的科学计算库、数学应用库都使用 NumPy 的多维数组进行实现，并且这些库的数量还在日渐增多。就算有些库也同样支持 Python 的序列作为输入，它们也会优先将序列转换为多维数组，再进行处理；此外，这些库的输出一般也是多维数组。换而言之，要无障碍地使用当今大多数基于 Python 的科学/数学计算软件，仅仅掌握 Python 内置的序列数据类型是不够的，还应当学会如何使用 NumPy 的多维数组。</li>
+</ul>
+
+<h3 id="21-比较">2.1 比较</h3>
+
+<blockquote>
+  <p>本小节代码示例来自《<a href="https://numpy.org/devdocs/user/whatisnumpy.html">何为 NumPy</a>》</p>
+</blockquote>
+
+<p>让我们来看一个例子（暂时忽略对变量的定义，假定存在 a、b、result 这三个数组）。</p>
+
+<p>假设我们现在有 a、b 两个一维数组（类似于一维列表），要对它们进行“对应元素相乘”的运算，如果使用 Python 内置的列表，应该写成什么样呢？</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+    <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>显然结果是正确无误的。但是我们考虑一个情形：如果 a、b 两个一维数组中每个都包含数百万甚至更多的元素，会发生什么呢？众所周知，Python 作为一门解释型语言，其代码的执行速度本就远低于众多的编译型语言，并且之前我们也讲到过，Python 中的<code class="highlighter-rouge">for</code>循环实际上是一个迭代计算的过程，这样就会导致性能上成本很高；大多数时间都被浪费在了对代码的解释和对对象的操作上。</p>
+
+<p>讲到性能问题，我们一下就想到了日常被拉出来和 Python 比较的 C 语言。那么我们用 C 语言来实现上面这个运算又如何呢？</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rows</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="o">:</span> <span class="p">{</span>
+  <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>较之之前的 Python 代码，显然这段 C 代码节省了解释代码和操作对象的性能开销，但凡事有利有弊，提升了性能的同时也牺牲了 Python 代码的简洁明了。如果是二维数组呢？</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rows</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="o">:</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">columns</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="o">:</span> <span class="p">{</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>好了，不用再往上加了。我们完全可以想见，随着数组维数越来越多，这段代码嵌套的循环也将越来越多，代码越来越庞杂——总之直观性越来越差。</p>
+
+<p>如果用上 NumPy 呢？同样是计算两个数组的逐元素乘积，NumPy 对于包含多维数组的运算默认模式就是“逐元素运算”，同时又通过预编译好的 C 代码来实现高性能的计算。使用示例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<p>啊哈！是不是有点眼熟？这不就是一个很自然的数学表达式吗？当然跟矩阵的点乘还是不一样的，但是只要了解 NumPy 的这个运算规则的人，看到这行代码就有一种一目了然之感。管你三七二十，两维、十维还是八十、八百维，我都用这一个表达式全部搞定。既保留了 Python 代码简洁明了的风格，也获得了较高的执行速度。</p>
+
+<h3 id="22-两个重要的特性">2.2 两个重要的特性</h3>
+
+<p>在上面的例子中，支撑起 NumPy 强大功能的主要有两个很重要的特性：<strong>矢量化</strong>（vectorization）和<strong>广播</strong>（broadcasting）。</p>
+
+<h4 id="221-矢量化">2.2.1 矢量化</h4>
+
+<p>其中，<strong>矢量化</strong>描述的是这么个情形：凡是在遇到需要显式循环、索引的地方，都可以省略掉这些细枝末节，由预编译好的、优化过的 C 代码在后台默默耕耘。这么一来就带来了几个好处：</p>
+
+<ul>
+  <li>矢量化的代码更加简洁易读；</li>
+  <li>代码行的减少也意味着更少的 bug；</li>
+  <li>代码中表达式更加接近数学公式的本来面目；</li>
+  <li>矢量化也使得代码更加 Pythonic。没有“矢量化”，我们的代码将会充斥着低效、难懂的<code class="highlighter-rouge">for</code>循环。</li>
+</ul>
+
+<h4 id="222-广播">2.2.2 广播</h4>
+
+<blockquote>
+  <p>“广播”这个特性对于掌握 NumPy 非常重要，文章后面会单独讲解一下，希望读者能够用心理解</p>
+</blockquote>
+
+<p>“广播”是一个 NumPy 的术语，描述的则是这么一个情况：NumPy 中的运算都是默认逐元素进行的。这些运算不仅限于常见的算术运算，也包括不那么常见的逻辑运算、位运算，以及函数，等等，凡是用到这些运算，或者说操作，NumPy 都默认是逐元素进行的；这就叫“广播”。</p>
+
+<p>从前面的例子来看，进行逐元素乘法的 a、b 两个数组，既可以是大小相同的多维数组，也可以其中一个是标量、另一个是数组，甚至可以是两个大小不同的数组，为了使得“广播”的语意明确、结果清晰，其中较小的那个数组就可以被扩展为较大数组的大小。</p>
+
+<h2 id="3-认识数组">3. 认识数组</h2>
+
+<h3 id="31-创建数组">3.1 创建数组</h3>
+
+<blockquote>
+  <p>本小节代码来自《<a href="https://numpy.org/devdocs/user/quickstart.html">NumPy 快速入门</a>》</p>
+</blockquote>
+
+<p>创建数组（array）的方式有不少，其中最自然的一种方式就是通过列表来生成数组。</p>
+
+<p>要使用 NumPy 模块，首先我们要在当前的 Python 环境中导入 NumPy，同时为了便于之后的引用，我们将其重命名为<code class="highlighter-rouge">np</code>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<h4 id="311-通过列表创建数组">3.1.1 通过列表创建数组</h4>
+
+<p>文章前面我们提到过，NumPy 的多维数组和 Python 内置的列表长得很像，估计是表亲还是啥的。并且嵌套的列表在一定程度上也能够实现多维数组的功能，因此 NumPy 也很人性化的提供了接口，可以将现成的列表转换为我们要的多维数组。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">first_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">first_array</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">first_array</span><span class="p">.</span><span class="n">dtype</span>
+<span class="n">dtype</span><span class="p">(</span><span class="s">'int32'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>其中，多维数组的<code class="highlighter-rouge">dtype</code>属性指明了多维数组中元素的类型。当然也可以将列表变量作为参数：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">example_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">second_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_list</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">second_array</span>
+<span class="n">array</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">second_array</span><span class="p">.</span><span class="n">dtype</span>
+<span class="n">dtype</span><span class="p">(</span><span class="s">'float64'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>要注意的是，通过这种方式创建数组，经常犯的一个错误是缺少了列表的方括号，这样参数就不再是一个列表，而是好几个独立的参数了：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>    <span class="c1"># 这是错的
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># 这样才是对的
+</span></code></pre></div></div>
+
+<p>实际上不仅是列表，同为 Python 中的序列类型，列表的亲兄弟元组也可以起到相同的作用：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>同时，使用<code class="highlighter-rouge">array</code>创建数组时，如果提供的序列对象是嵌套的，NumPy 还可以直接据此生成二维、三维甚至更高维的多维数组：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>还能在创建数组的同时显式指定数据类型：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">complex_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'complex'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">complex_array</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="o">+</span><span class="mf">0.j</span><span class="p">,</span> <span class="mf">2.</span><span class="o">+</span><span class="mf">0.j</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">3.</span><span class="o">+</span><span class="mf">0.j</span><span class="p">,</span> <span class="mf">4.</span><span class="o">+</span><span class="mf">0.j</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">float_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'float64'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">float_array</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<h4 id="312-元素未知的创建方式">3.1.2 元素未知的创建方式</h4>
+
+<p>一般来说，很多时候我们都是知道多维数组的大小，但不知道其元素具体的值，因此 NumPy 提供了一些函数，可以创建以占位符初始化的固定大小的多维数组。其中，<code class="highlighter-rouge">zeros</code>创建的是全为 0 的多维数组，<code class="highlighter-rouge">ones</code>创建的时候全为 1 的多维数组，而<code class="highlighter-rouge">empty</code>创建的则是随机初始值的多维数组，数组大小由一个序列（即列表或元组，建议使用元组）参数给定。并且这几种方式的默认类型都是<code class="highlighter-rouge">flloat64</code>。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># empty 的结果就是一块没有初始化的内存。这里由于形状相同，是直接取了上一个数组的值
+</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># 增大数组的大小就可以得到预期的随机结果了
+</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.40546330e-311</span><span class="p">,</span> <span class="mf">1.40546113e-311</span><span class="p">,</span> <span class="mf">1.37961302e-306</span><span class="p">,</span>
+        <span class="mf">6.23053614e-307</span><span class="p">,</span> <span class="mf">8.45593934e-307</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">7.56593017e-307</span><span class="p">,</span> <span class="mf">8.01097889e-307</span><span class="p">,</span> <span class="mf">1.78020169e-306</span><span class="p">,</span>
+        <span class="mf">7.56601165e-307</span><span class="p">,</span> <span class="mf">1.02359984e-306</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">2.04719290e-306</span><span class="p">,</span> <span class="mf">1.00132653e-307</span><span class="p">,</span> <span class="mf">1.78021527e-306</span><span class="p">,</span>
+        <span class="mf">1.66889876e-307</span><span class="p">,</span> <span class="mf">3.49694131e-317</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<h4 id="313-等差序列的数组">3.1.3 等差序列的数组</h4>
+
+<p>NumPy 还提供了一个类似于 Python 内置的<code class="highlighter-rouge">range</code>的函数<code class="highlighter-rouge">arange</code>，用以创建一个由等差序列组成的数组：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.3</span> <span class="p">)</span>
+<span class="n">array</span><span class="p">([</span> <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.3</span><span class="p">,</span>  <span class="mf">0.6</span><span class="p">,</span>  <span class="mf">0.9</span><span class="p">,</span>  <span class="mf">1.2</span><span class="p">,</span>  <span class="mf">1.5</span><span class="p">,</span>  <span class="mf">1.8</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="mf">0.2</span> <span class="p">,</span> <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.23</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.28</span><span class="p">,</span> <span class="mf">0.29</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>可以看到，<code class="highlighter-rouge">arange</code>的参数还可以是浮点数，与<code class="highlighter-rouge">range</code>略有不同。其他的特性都差不多，不再赘述。</p>
+
+<h4 id="314-元素数量固定的浮点数组">3.1.4 元素数量固定的浮点数组</h4>
+
+<p>由于浮点精度的原因，使用<code class="highlighter-rouge">arange</code>创建浮点数组时，我们不能保证得到我们预期大小的数组，因此这个时候就建议使用<code class="highlighter-rouge">linspace</code>这个函数。<code class="highlighter-rouge">linspace</code>与<code class="highlighter-rouge">arange</code>的区别就在于它们的第三个参数：前者指定的是最终得到的元素个数，而后者指定的则是元素间的步长。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="mf">0.2</span>   <span class="p">,</span> <span class="mf">0.2125</span><span class="p">,</span> <span class="mf">0.225</span> <span class="p">,</span> <span class="mf">0.2375</span><span class="p">,</span> <span class="mf">0.25</span>  <span class="p">,</span> <span class="mf">0.2625</span><span class="p">,</span> <span class="mf">0.275</span> <span class="p">,</span> <span class="mf">0.2875</span><span class="p">,</span>
+       <span class="mf">0.3</span>   <span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="32-多维数组的基本属性">3.2 多维数组的基本属性</h3>
+
+<p>多维数组是 NumPy 中最主要的对象。其实就是一个由同种元素组成的元素表，可以由元组进行索引。在 NumPy 中，维度又被称作“轴（axe）”。</p>
+
+<p>注意，在继续介绍数组的各种属性之前，我们要区别开“数组的维度”和“数组某个轴上的维度”。</p>
+
+<p>“数组的维度”指的是数组的“轴”数，用维度空间的概念来理解，也就是数组能够在多少个方向上具有坐标。比如一维的线性空间中，数组就只能在 x 方向上具有坐标；对于二维的平面空间，数组就在 x 和 y 两个方向上具有坐标。</p>
+
+<p>而“数组轴的维度”则是指的在某个特定的方向上，数组可以有几个刻度，或者说“层次”。比如一维数组<code class="highlighter-rouge">[0,1,2]</code>就是在 x 方向上具有 3 个层次；二维数组<code class="highlighter-rouge">[[0,1,2],[2,3,4]]</code>则是在 x 方向上具有 2 个层次，每个层次都是一个在 y 方向上的三个层次的一维数组，在 y 方向上具有 3 个层次，每个层次都是一个在 x 方向上具有两个层次的一维数组。</p>
+
+<p>下面介绍 NumPy 多维数组的基本属性：</p>
+
+<ol>
+  <li>ndim</li>
+</ol>
+
+<blockquote>
+  <p><code class="highlighter-rouge">ndim</code>即“n dimension”的简写。该属性指示的是多维数组的维数，或者说是“轴数”。</p>
+</blockquote>
+
+<ol>
+  <li>shape</li>
+</ol>
+
+<blockquote>
+  <p>字面意思。这个属性指示的是多维数组整体的维度，或者说是多维数组的“形状”。是一个整型元组，每一个元素都对应与相应轴上的维数。对 n 行 m 列的矩阵而言，它的<code class="highlighter-rouge">shape</code>就是<code class="highlighter-rouge">(n,m)</code>。<code class="highlighter-rouge">shape</code>的元素个数等于多维数组的轴数。</p>
+</blockquote>
+
+<ol>
+  <li>size</li>
+</ol>
+
+<blockquote>
+  <p>多维数组中元素的总个数。等于<code class="highlighter-rouge">shape</code>中各元素之积。</p>
+</blockquote>
+
+<ol>
+  <li>dtype</li>
+</ol>
+
+<blockquote>
+  <p><code class="highlighter-rouge">dtype</code>实际上是“data type”的简写，意味着它指示的是多维数组中元素的数据类型。</p>
+</blockquote>
+
+<ol>
+  <li>itemsize</li>
+</ol>
+
+<blockquote>
+  <p>多维数组中，每个元素的字节大小。等效于<code class="highlighter-rouge">dtype.itemsize</code>。</p>
+</blockquote>
+
+<ol>
+  <li>data</li>
+</ol>
+
+<blockquote>
+  <p>指示的是包含多维数组中元素实际内存的缓冲区。通常用不到。</p>
+</blockquote>
+
+<h3 id="33-数组的打印形式">3.3 数组的打印形式</h3>
+
+<p>数组在打印的时候长得跟嵌套列表差不多，但其排布都要遵循以下规律：</p>
+
+<ul>
+  <li>最后一个轴从左往右打印；</li>
+  <li>次后轴从上往下打印；</li>
+  <li>剩下的轴都从上往下打印，每部分由一个空行隔开。</li>
+</ul>
+
+<p>也就是说，一维数组按行打印，二维数组按矩阵形式打印，三维及更高维数组会打印成矩阵列表。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,)))</span> <span class="c1"># 一维数组
+</span><span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span> <span class="c1"># 二维数组
+</span><span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span> <span class="c1"># 三维数组
+</span><span class="p">[[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+  <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+  <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+
+ <span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+  <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+  <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]]</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)))</span> <span class="c1"># 四维数组
+</span><span class="p">[[[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+
+  <span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+
+  <span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]]</span>
+
+
+ <span class="p">[[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+
+  <span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+
+  <span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+   <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]]]</span>
+</code></pre></div></div>
+
+<h3 id="34-重整多维数组的大小">3.4 重整多维数组的大小</h3>
+
+<p>另外，为了更灵活地使用多维数组，NumPy 还提供了<code class="highlighter-rouge">reshape</code>方法，可以将多维数组重整为某个大小。</p>
+
+<p>比如在图像识别领域，就需要图像作为机器学习输入数据，而实用的机器学习应用图像来源又是不确定的，因此图像的像素阵列大小不一定一致。</p>
+
+<p>使用<code class="highlighter-rouge">reshape</code>要求参数乘积与被重整的数组元素个数相同：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>并且<code class="highlighter-rouge">reshape</code>还允许缺省 1 个参数（用<code class="highlighter-rouge">-1</code>占位），它会根据数组元素的总数和提供的其他参数自动求出一个合适的值，从而得到新的大小的数组：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">]],</span>
+
+       <span class="p">[[</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]]])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">]],</span>
+
+       <span class="p">[[</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]]])</span>
+</code></pre></div></div>
+
+<h2 id="4-多维数组的索引">4. 多维数组的索引</h2>
+
+<blockquote>
+  <p>本节参考自《<a href="https://numpy.org/devdocs/user/basics.indexing.html">NumPy 索引</a>》。示例代码多来自《<a href="https://numpy.org/devdocs/user/basics.indexing.html">NumPy 索引</a>》。</p>
+</blockquote>
+
+<p>所谓索引，在 NumPy 中指的是任何用<strong>中括号</strong>来获取数组元素值的行为。</p>
+
+<p>NumPy 中，索引的方式有很多，这既使得 NumPy 更加强大灵活，也带来了难于辨析的问题。</p>
+
+<h3 id="41-常用方式">4.1 常用方式</h3>
+
+<p>最简单的一种索引方式就是单个索引。对于一维数组，我们可以像对 Python 中的序列一样进行索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="mi">8</span>
+</code></pre></div></div>
+
+<p>对于二维和更高维的数组，我们可以在同一个中括号内直接索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 等同于 x = x.reshape(2,5)
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="mi">8</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="mi">9</span>
+</code></pre></div></div>
+
+<p>而不必像对嵌套序列一样，用多个中括号分别索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span> <span class="c1"># 这是一个列表，不是 NumPy 多维数组！
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+<span class="mi">8</span>
+</code></pre></div></div>
+
+<p>当给出的索引少于数组维数（轴数）时，得到的会是一个数组对象：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>而对于返回的这个数组，我们又可以继续索引，因此对于多维数组而言，也可以使用嵌套序列的索引方式，即使用多个中括号（但这种方式比一次索引要更低效，因此不推荐）：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+<span class="mi">2</span>
+</code></pre></div></div>
+
+<p>此外，NumPy 多维数组又可以像列表一样，进行切片（用冒号“:”）：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>数组也可以用另一个数组来索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">2</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">])]</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="42-不常用方式">4.2 不常用方式</h3>
+
+<p>也可以用多个数组来进行索引：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">35</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]),</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])]</span>
+<span class="n">array</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]),</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">29</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>还可以用布尔数组作为掩码，筛选数组元素：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">y</span><span class="o">&gt;</span><span class="mi">20</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+<span class="n">array</span><span class="p">([[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+       <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+       <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span>
+       <span class="p">[</span> <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">],</span>
+       <span class="p">[</span> <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">,</span>  <span class="bp">True</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>对应于布尔数组中为“真”的元素就被筛选出来了。</p>
+
+<h2 id="5-numpy-中的广播">5. NumPy 中的广播</h2>
+
+<blockquote>
+  <p>本小节参考自《<a href="https://numpy.org/devdocs/user/basics.broadcasting.html">NumPy 广播</a>》和《<a href="https://numpy.org/devdocs/user/theory.broadcasting.html">NumPy 广播机制详解</a>》。图片来自《<a href="https://numpy.org/devdocs/user/theory.broadcasting.html">NumPy 广播机制详解</a>》。</p>
+</blockquote>
+
+<p>NumPy 中，各种运算默认都是“逐元素”进行的。最简单的例子就是两个明显大小相同的数组运算：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">array</span><span class="p">([</span> <span class="mf">2.</span><span class="p">,</span>  <span class="mf">4.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>但是逐元素计算有一个问题：对于形状不太像的数组怎么办呢？比如下面这个数组和标量的乘法运算：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">multi_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">scalar</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">multi_array</span> <span class="o">*</span> <span class="n">scalar</span> <span class="c1"># array([2., 4., 6.])
+</span></code></pre></div></div>
+
+<p>按“逐元素”运算的预期，显然我们是期望把这个标量与数组的每一个元素相乘，来得到一个新的数组。但是 NumPy 懂得这其中的逻辑吗？诶？好像还真的懂。</p>
+
+<p>既然我们号称 NumPy 可以用自然的方式来表达数学公式，肯定不能把一个简单的标量乘向量弄得太复杂，同样是直接乘就可以了，得到的结果与之前两个大小相同的数组直接相乘是一样的：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">multi_array</span> <span class="o">*</span> <span class="n">scalar</span>
+<span class="n">array</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>在这里边，标量<code class="highlighter-rouge">scalar</code>就好像被扩展为了一个跟<code class="highlighter-rouge">multi_array</code>大小相当的数组一样。</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/29/NumPy-broadcasting-scalar.png" alt="NumPy 标量广播图示" /></p>
+
+<h3 id="51-广播的前提相容的形状">5.1 广播的前提：相容的形状</h3>
+
+<p>在 NumPy 的广播机制中，有一个很重要的概念叫做“相容的形状”。只有当两个数组具有“相容的形状”时，“广播”才能起作用；否则抛出异常<code class="highlighter-rouge"> ValueError: operands could not be broadcast together with shapes xx yy </code>。</p>
+
+<p>所谓“相容的形状”，指的是参与运算的这两个数组各个维度要么 1）相等；要么 2）其中一个数组的对应维度为 1（不存在的维度也是 1）。</p>
+
+<p>而 NumPy 比较各个维度的顺序是从后往前，一次比较，就相当于把参与运算的数组形状右对齐，然后若相等就再往前看，若其中一个为 1 就将其在这个维度上扩展到更高的维度，直到第一个维度。</p>
+
+<p>下面是对于上述规则一个更清晰的表述描述：</p>
+
+<pre><code class="language-none">Image  (3d array): 256 x 256 x 3
+Scale  (1d array):             3
+Result (3d array): 256 x 256 x 3
+
+A      (4d array):  8 x 1 x 6 x 1
+B      (3d array):      7 x 1 x 5
+Result (4d array):  8 x 7 x 6 x 5
+</code></pre>
+
+<p>但是像这样的两个数组就无法通过“广播”实现逐元素运算了：</p>
+
+<pre><code class="language-none">A      (1d array):  3
+B      (1d array):  4 # 最后一个维度无法匹配
+
+A      (2d array):      2 x 1
+B      (3d array):  8 x 4 x 3 # 倒数第二个维度无法匹配
+</code></pre>
+
+<h3 id="52-广播的实例">5.2 广播的实例</h3>
+
+<p>对于一个多维数组和一个一维数组的运算，实例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">...</span>            <span class="p">[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span>
+<span class="p">...</span>            <span class="p">[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">],</span>
+<span class="p">...</span>            <span class="p">[</span><span class="mf">30.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">11.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">21.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">,</span> <span class="mf">23.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">31.</span><span class="p">,</span> <span class="mf">32.</span><span class="p">,</span> <span class="mf">33.</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>广播图示如下：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/29/NumPy-broadcasting-vector.png" alt="NumPy 向量广播图示" /></p>
+
+<p>对齐之后，维度不相容是万万不行的：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">...</span>            <span class="p">[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span>
+<span class="p">...</span>            <span class="p">[</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">],</span>
+<span class="p">...</span>            <span class="p">[</span><span class="mf">30.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nb">ValueError</span><span class="p">:</span> <span class="n">operands</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">broadcast</span> <span class="n">together</span> <span class="k">with</span> <span class="n">shapes</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+</code></pre></div></div>
+
+<p>图示如下：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/29/NumPy-no-broadcasting-vector.png" alt="NumPy 向量无法广播的图示" /></p>
+
+<p>当然我们也可以通过<code class="highlighter-rouge">reshape</code>重整<code class="highlighter-rouge">b</code>数组的形状，以适应广播的要求：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">2.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">3.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">4.</span><span class="p">]])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">12.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">23.</span><span class="p">,</span> <span class="mf">23.</span><span class="p">,</span> <span class="mf">23.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">34.</span><span class="p">,</span> <span class="mf">34.</span><span class="p">,</span> <span class="mf">34.</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>这样就没问题了。</p>
+
+<h2 id="6-多维数组切片之图像裁剪">6. 多维数组切片之图像裁剪</h2>
+
+<p>看了那么多枯燥的原理，我们接下来轻松一下，看看 NumPy 还能干什么。</p>
+
+<p>喜欢拍照的同学都知道，图片是由“像素（pixel）”构成的。所谓“像素”，英文 pixel 就是“picture element”的简写，指的是“构成图像的元素”。</p>
+
+<p>实际上我们可以把一张图片纵横切分成很多小块，这些最基本的小方格就是构成多姿多彩的数字图像世界的一砖一瓦。作为二维的图像，它们像素的排布是不是跟二维数组很像？诶~ 对了，我们可以用一个很常用的图形库<code class="highlighter-rouge">matplotlib</code>来读取图像，得到的实际上就是一个 NumPy 二维数组：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">image</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="s">"python-logo.png"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">image</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/29/python-logo.png" alt="Python Logo" /></p>
+
+<p>取下一半图像：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">image_crop</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">300</span><span class="p">:,::,::]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_crop</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">matplotlib</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">AxesImage</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x0000019C783EA2B0</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/29/crop_down.png" alt="Python Logo 裁剪图" /></p>
+
+<p>取右边一半的图像：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">image_crop</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span><span class="mi">400</span><span class="p">:,:]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_crop</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">matplotlib</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">AxesImage</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x0000019C78BC0BE0</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/29/crop_right.png" alt="Python Logo 裁剪图" /></p>
+
+<h2 id="7-总结">7. 总结</h2>
+
+<p>本文对我们以后经常会用到的 NumPy 模块进行了简要的介绍。虽然本文篇幅已经很长，但对于 NumPy 相关知识的讲解依然只是沧海一粟。</p>
+
+<p>本文的目的在于给读者提供一个粗略的印象，记不住没关系，希望在以后的使用中读者能够熟练掌握 NumPy 的使用。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-077">Python-100-days-day077</a></p>
+</blockquote>
+
+<h2 id="8-参考资料">8. 参考资料</h2>
+
+<p><a href="https://numpy.org/">NumPy 官网</a></p>
+
+<p><a href="https://numpy.org/devdocs/user/whatisnumpy.html">何为 NumPy</a></p>
+
+<p><a href="https://numpy.org/devdocs/user/quickstart.html">NumPy 快速入门</a></p>
+
+<p><a href="https://numpy.org/devdocs/user/basics.indexing.html">NumPy 索引</a></p>
+
+<p><a href="https://numpy.org/devdocs/user/basics.broadcasting.html">NumPy 广播</a></p>
+
+<p><a href="https://numpy.org/devdocs/user/theory.broadcasting.html">NumPy 广播机制详解</a></p>
+:ET

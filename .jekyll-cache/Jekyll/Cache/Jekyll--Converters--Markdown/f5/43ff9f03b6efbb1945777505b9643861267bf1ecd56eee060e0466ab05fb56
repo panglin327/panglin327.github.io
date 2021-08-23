@@ -1,0 +1,366 @@
+I"R0<p>by 程序员野客</p>
+
+<h2 id="1-简介">1 简介</h2>
+
+<p>SQLite 是一种轻型嵌入式关系型数据库，它包含在一个相对小的 C 库中。SQLite 占用资源低，处理速度快，它支持 Windows、Linux、Unix 等多种主流操作系统，支持 Python、Java、C# 等多种语言，目前的版本已经发展到了 SQLite3。</p>
+
+<!--more-->
+
+<p>SQLite 是一个进程内的库，它实现了自给自足、无服务器、无需配置、支持事务。Python 可以通过 sqlite3 模块与 SQLite3 集成，Python 2.5.x 以上版本内置了 sqlite3 模块，因此，我们在 Python 中可以直接使用 SQLite。</p>
+
+<h2 id="2-sqlite-数据类型">2 SQLite 数据类型</h2>
+
+<p>在介绍使用之前，我们先了解下 SQLite 数据类型。SQLite 采用动态数据类型，也就是说数据的类型取决于数据本身。</p>
+
+<h3 id="21-存储类型">2.1 存储类型</h3>
+
+<p>存储类型就是数据保存成文件后的表现形式，存储类型有 5 种，如下所示：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th style="text-align: center">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NULL</td>
+      <td style="text-align: center">空值</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td style="text-align: center">有符号的整数类型</td>
+    </tr>
+    <tr>
+      <td>REAL</td>
+      <td style="text-align: center">浮点数类型</td>
+    </tr>
+    <tr>
+      <td>TEXT</td>
+      <td style="text-align: center">字符串，使用数据库编码（UTF-8、UTF-16BE 或 UTF-16LE）存储</td>
+    </tr>
+    <tr>
+      <td>BLOB</td>
+      <td style="text-align: center">二进制表示</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="22-亲和类型">2.2 亲和类型</h3>
+
+<p>亲和类型简单来说就是数据表列的数据对应存储类型的倾向性，当数据插入时，字段的数据将会优先采用亲缘类型作为值的存储方式，同样有 5 种，如下所示：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th style="text-align: center">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NONE</td>
+      <td style="text-align: center">不做任何转换，直接以该数据所属的数据类型进行存储</td>
+    </tr>
+    <tr>
+      <td>NUMERIC</td>
+      <td style="text-align: center">该列可以包含使用所有五个存储类型的值</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td style="text-align: center">类似于 NUMERIC，区别是在执行 CAST 表达式时</td>
+    </tr>
+    <tr>
+      <td>TEXT</td>
+      <td style="text-align: center">该列使用存储类型 NULL、TEXT 或 BLOB 存储数据</td>
+    </tr>
+    <tr>
+      <td>REAL</td>
+      <td style="text-align: center">类似于 NUMERIC，区别是它会强制把整数值转换为浮点类型</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="23-声明类型">2.3 声明类型</h3>
+
+<p>声明类型也就是我们写 SQL 时字段定义的类型，我们看一下常用的声明类型与亲和类型的对应关系。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>声明类型</th>
+      <th style="text-align: center">亲和类型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INT/INTEGER/TINYINT/BIGINT</td>
+      <td style="text-align: center">INTEGER</td>
+    </tr>
+    <tr>
+      <td>VARCHAR/TEXT/CLOB</td>
+      <td style="text-align: center">TEXT</td>
+    </tr>
+    <tr>
+      <td>BLOB</td>
+      <td style="text-align: center">NONE</td>
+    </tr>
+    <tr>
+      <td>DOUBLE/FLOAT</td>
+      <td style="text-align: center">REAL</td>
+    </tr>
+    <tr>
+      <td>DECIMAL/BOOLEAN/DATE/DATETIME</td>
+      <td style="text-align: center">NUMERIC</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="3-sqlite-常用函数">3 SQLite 常用函数</h2>
+
+<p>SQLite 提供了一些内置函数，也就是我们可以直接使用的函数，下面来看一下。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th style="text-align: center">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>COUNT</td>
+      <td style="text-align: center">计算一个数据库表中的行数</td>
+    </tr>
+    <tr>
+      <td>MAX</td>
+      <td style="text-align: center">某列的最大值</td>
+    </tr>
+    <tr>
+      <td>MIN</td>
+      <td style="text-align: center">某列的最小值</td>
+    </tr>
+    <tr>
+      <td>AVG</td>
+      <td style="text-align: center">某列的平均值</td>
+    </tr>
+    <tr>
+      <td>SUM</td>
+      <td style="text-align: center">某列的和</td>
+    </tr>
+    <tr>
+      <td>RANDOM</td>
+      <td style="text-align: center">返回一个介于 -9223372036854775808 和 +9223372036854775807 之间的随机整数</td>
+    </tr>
+    <tr>
+      <td>ABS</td>
+      <td style="text-align: center">返回数值参数的绝对值</td>
+    </tr>
+    <tr>
+      <td>UPPER</td>
+      <td style="text-align: center">把字符串转换为大写字母</td>
+    </tr>
+    <tr>
+      <td>LOWER</td>
+      <td style="text-align: center">把字符串转换为小写字母</td>
+    </tr>
+    <tr>
+      <td>LENGTH</td>
+      <td style="text-align: center">返回字符串的长度</td>
+    </tr>
+    <tr>
+      <td>sqlite_version</td>
+      <td style="text-align: center">返回 SQLite 库的版本</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>使用示例如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT COUNT(*) FROM table;
+SELECT MAX/MIN/AVG/SUM/ABS/UPPER/LOWER/LENGTH(col) FROM table;
+SELECT random() AS Random;
+SELECT sqlite_version() AS 'SQLite Version';
+</code></pre></div></div>
+
+<h2 id="4-基本使用">4 基本使用</h2>
+
+<h3 id="41-连接数据库">4.1 连接数据库</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import sqlite3
+# 连接数据库
+conn = sqlite3.connect('test.db')
+</code></pre></div></div>
+
+<p>如果数据库不存在，则会自动被创建。</p>
+
+<h3 id="42-游标">4.2 游标</h3>
+
+<p>连接数据库后，我们需要使用游标进行相应 SQL 操作，游标创建如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 创建游标
+cs = conn.cursor()
+</code></pre></div></div>
+
+<h3 id="43-创建表">4.3 创建表</h3>
+
+<p>我们在 test.db 库中新建一张表 student，如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 创建表
+cs.execute('''CREATE TABLE student
+       (id varchar(20) PRIMARY KEY,
+        name varchar(20));''')
+# 关闭 Cursor
+cs.close()
+# 提交当前事务
+conn.commit()
+# 关闭连接
+conn.close()
+</code></pre></div></div>
+
+<p>表创建好后，我们可以使用图形化工具 SQLiteStudio 直观的查看一下，官方下载地址： <a href="https://sqlitestudio.pl/index.rvt?act=download">https://sqlitestudio.pl/index.rvt?act=download</a>，打开如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio1.PNG" alt="" /></p>
+
+<p>以 Windows 系统为例，选择免安装版 portable 进行下载，下载好后解压文件，直接运行文件夹中的 SQLiteStudio.exe 即可，打开后如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio2.PNG" alt="" /></p>
+
+<p>我们先点击上方工具栏上的 Database 按钮，然后选 Add a database，如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio3.PNG" alt="" /></p>
+
+<p>接着点击文件下方右侧的绿色加号按钮或文件夹按钮，选择数据库文件，比如我们选择 test.db 文件，选好了后点击测试连接，如果能够正常连接，我们就点击 OK 按钮添加数据库。</p>
+
+<p>添加完数据库后，再点击 SQLiteStudio 主界面上方工具栏中 View 按钮，接着选数据库，结果如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio4.PNG" alt="" /></p>
+
+<p>接着双击 test 库，结果如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio5.PNG" alt="" /></p>
+
+<p>此时已经看到 student 表了，双击 student 表，我们还可以查看表的更多信息，如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio6.PNG" alt="" /></p>
+
+<h3 id="44-新增">4.4 新增</h3>
+
+<p>我们向 student 表中插入两条数据，如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cs.execute("INSERT INTO student (id, name) VALUES ('1', 'Jhon')")
+cs.execute("INSERT INTO student (id, name) VALUES ('2', 'Alan')")
+cs.execute("INSERT INTO student (id, name) VALUES ('3', 'Bob')")
+cs.close()
+conn.commit()
+conn.close()
+</code></pre></div></div>
+
+<p>执行完后，到 SQLiteStudio 中看一下，如图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/sqlite/sqlitestudio7.PNG" alt="" /></p>
+
+<p>我们看到数据已经进来了。</p>
+
+<h3 id="45-查询">4.5 查询</h3>
+
+<p>前面我们是通过 SQLiteStudio 查看数据的，现在我们通过 SQL 查看一下，如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import sqlite3
+# 连接数据库
+conn = sqlite3.connect('test.db')
+# 创建游标
+cs = conn.cursor()
+# 查询数据
+cs.execute("SELECT id, name FROM student")
+# 获取查询结果集中的下一行
+print('fetchone--&gt;', cs.fetchone())
+# 获取查询结果集中的下一行组
+print('fetchmany--&gt;', cs.fetchmany())
+# 获取查询结果集中所有（剩余）的行
+print('fetchall--&gt;', cs.fetchall())
+cs.close()
+conn.close()
+</code></pre></div></div>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fetchone--&gt; ('1', 'Jhon')
+fetchmany--&gt; [('2', 'Alan')]
+fetchall--&gt; [('3', 'Bob')]
+</code></pre></div></div>
+
+<h3 id="46-更新">4.6 更新</h3>
+
+<p>我们修改 id 为 1 这条数据的 name 值，如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import sqlite3
+# 连接数据库
+conn = sqlite3.connect('test.db')
+# 创建游标
+cs = conn.cursor()
+# 修改数据
+cs.execute("SELECT id, name FROM student WHERE id = '1'")
+print('修改前--&gt;', cs.fetchall())
+cs.execute("UPDATE student set name = 'Nicolas' WHERE id = '1'")
+cs.execute("SELECT id, name FROM student WHERE id = '1'")
+print('修改后--&gt;', cs.fetchall())
+conn.commit()
+cs.close()
+conn.close()
+</code></pre></div></div>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>修改前--&gt; [('1', 'Jhon')]
+修改后--&gt; [('1', 'Nicolas')]
+</code></pre></div></div>
+
+<h3 id="47-删除">4.7 删除</h3>
+
+<p>我们删除 id 为 1 这条数据，如下所示：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import sqlite3
+# 连接数据库
+conn = sqlite3.connect('test.db')
+# 创建游标
+cs = conn.cursor()
+# 删除
+cs.execute("SELECT id, name FROM student")
+print('删除前--&gt;', cs.fetchall())
+cs.execute("DELETE FROM student WHERE id = '1'")
+cs.execute("SELECT id, name FROM student")
+print('删除后--&gt;', cs.fetchall())
+conn.commit()
+cs.close()
+conn.close()
+</code></pre></div></div>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>删除前--&gt; [('2', 'Alan'), ('1', 'Jhon')]
+删除后--&gt; [('2', 'Alan')]
+</code></pre></div></div>
+
+<p>这里我们只介绍了增删改查基本操作，SQLite 的 SQL 操作与我们常用的 MySQL 等数据库基本类似。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文介绍了 SQLite 及通过 Python 操作 SQLite，对 Python 工程师使用 SQLite 提供了基本支撑。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-080">Python-100-days-day080</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p><a href="https://baike.baidu.com/item/SQLite/375020?fr=aladdin">https://baike.baidu.com/item/SQLite/375020?fr=aladdin</a></p>
+
+<p><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017801751919456">https://www.liaoxuefeng.com/wiki/1016959663602400/1017801751919456</a></p>
+
+:ET

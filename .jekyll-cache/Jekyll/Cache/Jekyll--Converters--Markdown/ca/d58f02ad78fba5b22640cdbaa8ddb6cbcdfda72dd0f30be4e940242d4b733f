@@ -1,0 +1,640 @@
+I"�x<p>by 潮汐</p>
+
+<p>本章节Python 操作 MySQL 数据库需要是使用到 PyMySQL 驱动</p>
+
+<ul>
+  <li>PyMySQL 是在 Python3.x 版本中用于连接 MySQL 服务器的一个库，Python2 中则使用 mysqldb。</li>
+  <li>PyMySQL 遵循 Python 数据库 API v2.0 规范，并包含了 pure-Python MySQL 客户端库。</li>
+</ul>
+
+<!--more-->
+
+<p>Python 操作 MySQL 前提是要安装好 MySQL 数据库并能正常连接使用，安装步骤详见下文。</p>
+
+<h2 id="操作流程">操作流程</h2>
+
+<ol>
+  <li>安装 MySQL 数据库</li>
+  <li>pymysql 模块安装与使用</li>
+  <li>获取数据库的连接</li>
+  <li>执行 sql 语句或存储过程</li>
+  <li>关闭数据库连接</li>
+</ol>
+
+<h3 id="安装-mysql-数据库">安装 MySQL 数据库</h3>
+
+<p><strong>注意：</strong>  安装过程我们需要通过开启管理员权限来安装，否则会由于权限不足导致无法安装。</p>
+
+<h3 id="一linux-上安装-mysql">一、Linux 上安装 MySQL</h3>
+
+<h4 id="1检测系统是否自带安装-mysql">1、检测系统是否自带安装 MySQL:</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  rpm <span class="nt">-qa</span> | <span class="nb">grep </span>mysql
+</code></pre></div></div>
+<h4 id="2如果查看到系统有安装-mysql那可以选择进行卸载">2、如果查看到系统有安装 MySQL，那可以选择进行卸载:</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpm -e mysql…　　# 普通删除模式
+rpm -e --nodeps mysql…　　# 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
+</code></pre></div></div>
+
+<h4 id="3安装-mysql">3、安装 MySQL</h4>
+
+<p>首先需要先下载 MySQL 安装包，<a href="https://dev.mysql.com/downloads/repo/yum/">官网下载地址</a>
+下载对应版本即可,或直接在网上拉取并安装：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm # 获取安装包
+rpm -ivh mysql-community-release-el7-5.noarch.rpm                    # 安装
+yum update
+yum install mysql-server  
+</code></pre></div></div>
+<p><strong>权限设置：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chown mysql:mysql -R /var/lib/mysql
+</code></pre></div></div>
+
+<p><strong>初始化 MySQL：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqld --initialize
+</code></pre></div></div>
+
+<p><strong>启动 MySQL：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start mysqld
+</code></pre></div></div>
+
+<p><strong>查看 MySQL 运行状态：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status mysqld
+</code></pre></div></div>
+<h4 id="4修改默认密码">4、修改默认密码</h4>
+
+<p>Mysql安装成功后，默认的root用户密码为空，你可以使用以下命令来创建root用户的密码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqladmin -u root password "new_password";
+</code></pre></div></div>
+<p><strong>登陆：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -uroot -p'new_password'
+</code></pre></div></div>
+
+<h3 id="二windows-上安装">二、Windows 上安装</h3>
+
+<h4 id="1下载">1、下载</h4>
+<p>Windows 上安装 MySQL 相对来说会较为简单，<a href="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.28-winx64.zip">5.7 版本下载地址</a></p>
+
+<p>下载完后，将 zip 包解压到自定义目录，这里我将解压后的文件夹放在 D:\Software\MySQL\mysql-5.7.28 下;</p>
+
+<h4 id="2配置">2、配置</h4>
+
+<p>接下来需要配置下 MySQL 的配置文件，打开刚刚解压的文件夹 D:\Software\MySQL\mysql-5.7.28 ，在该文件夹下创建 my.ini 配置文件，编辑 my.ini 配置以下基本信息：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[client]
+# 设置mysql客户端默认字符集
+default-character-set=utf8
+ 
+[mysqld]
+# 设置3306端口
+port = 3306
+# 设置mysql的安装目录
+basedir=D:\\Software\\MySQL\\mysql-5.7.28
+# 设置 mysql数据库的数据的存放目录，MySQL 8+ 不需要以下配置，系统自己生成即可，否则有可能报错
+datadir=D:\\Software\\MySQL\\SqlData
+# 允许最大连接数
+max_connections=20
+# 服务端使用的字符集默认为8比特编码的latin1字符集
+character-set-server=utf8
+# 创建新表时将使用的默认存储引擎
+default-storage-engine=INNODB
+</code></pre></div></div>
+<p><strong>注意</strong>：还需要创建数据库数据目录，初始化数据库的时候需要初始化数据目录
+在 Mysql 安装目录下创建数据目录 <code class="highlighter-rouge">datadir=D:\\Software\\MySQL\\SqlData</code></p>
+
+<h4 id="3启动数据库">3、启动数据库</h4>
+
+<p>以管理员身份打开 cmd 命令行工具，切换至 Mysql 安装目录：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd D:\Software\MySQL\mysql-5.7.28\bin
+</code></pre></div></div>
+
+<p><strong>初始化数据库：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqld --initialize --console
+</code></pre></div></div>
+
+<p>执行完成后，会输出 root 用户的初始默认密码，如下所示：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A temporary password is generated for root@localhost: feKm1E/-ExWM
+</code></pre></div></div>
+<p>“feKm1E/-ExWM” 即为 Mysql 初始密码</p>
+
+<p><strong>输入以下安装命令：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqld install
+</code></pre></div></div>
+
+<p><strong>初始化数据目录</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqld --initialize-insecure 
+</code></pre></div></div>
+<p><strong>启动 Mysql：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net start mysql
+</code></pre></div></div>
+
+<p><strong>登陆：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -uroot -p
+</code></pre></div></div>
+<p><img src="https://qiniu.mdnice.com/d854615570e7e56779bd213d4b881dca.png" alt="Mysql 登陆图" /></p>
+
+<p>刚安装好的数据库 默认密码是空，可根据自身需要修改。</p>
+
+<p><strong>windows 下修改 mysql 密码：</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="k">User</span> <span class="k">from</span> <span class="k">user</span><span class="p">;</span>
+<span class="o">+</span><span class="c1">---------------+</span>
+<span class="o">|</span> <span class="k">User</span>          <span class="o">|</span>
+<span class="o">+</span><span class="c1">---------------+</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="p">.</span><span class="k">session</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="p">.</span><span class="n">sys</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="n">root</span>          <span class="o">|</span>
+<span class="o">+</span><span class="c1">---------------+</span>
+<span class="mi">3</span> <span class="k">rows</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">update</span> <span class="n">mysql</span><span class="p">.</span><span class="k">user</span> <span class="k">set</span> <span class="n">authentication_string</span><span class="o">=</span><span class="n">password</span><span class="p">(</span><span class="s1">'123456'</span><span class="p">)</span> <span class="k">where</span> <span class="k">user</span><span class="o">=</span><span class="s1">'root'</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="k">row</span> <span class="n">affected</span><span class="p">,</span> <span class="mi">1</span> <span class="n">warning</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+<span class="k">Rows</span> <span class="n">matched</span><span class="p">:</span> <span class="mi">1</span>  <span class="n">Changed</span><span class="p">:</span> <span class="mi">1</span>  <span class="n">Warnings</span><span class="p">:</span> <span class="mi">1</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">flush</span> <span class="k">privileges</span><span class="p">;</span>     <span class="o">#</span> <span class="err">立即生效</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="k">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">quit</span>
+<span class="o">#</span> <span class="err">退出重新登陆即可</span>
+</code></pre></div></div>
+
+<h3 id="三创建数据库">三、创建数据库</h3>
+
+<p><strong>创建数据库：</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">create</span> <span class="k">database</span> <span class="n">test_db</span><span class="p">;</span>
+</code></pre></div></div>
+<p><strong>查看数据库：</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">databases</span><span class="p">;</span>
+<span class="o">+</span><span class="c1">--------------------+</span>
+<span class="o">|</span> <span class="k">Database</span>           <span class="o">|</span>
+<span class="o">+</span><span class="c1">--------------------+</span>
+<span class="o">|</span> <span class="n">information_schema</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span>              <span class="o">|</span>
+<span class="o">|</span> <span class="n">performance_schema</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">sys</span>                <span class="o">|</span>
+<span class="o">|</span> <span class="n">test_db</span>            <span class="o">|</span>
+<span class="o">+</span><span class="c1">--------------------+</span>
+<span class="mi">5</span> <span class="k">rows</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">use</span> <span class="n">test_db</span><span class="p">;</span>
+<span class="k">Database</span> <span class="n">changed</span>
+
+</code></pre></div></div>
+
+<h2 id="pymysql-模块安装与数据-curd">pymysql 模块安装与数据 CURD</h2>
+
+<h3 id="一安装">一、安装</h3>
+
+<p>PyMySQL 模块使用 pip命令进行安装：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip3 install PyMySQL
+</code></pre></div></div>
+<p>假如系统不支持 pip 命令，可以使用以下方式安装：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/PyMySQL/PyMySQL
+$ cd PyMySQL/
+$ python3 setup.py install
+
+</code></pre></div></div>
+
+<h3 id="二pymysql-连接数据库">二、pymysql 连接数据库</h3>
+
+<p><strong>pymysql .connect 函数：连接上数据库</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 导入模块
+</span><span class="kn">import</span> <span class="nn">pymysql</span>
+
+<span class="c1"># 打开数据库连接
+</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s">"127.0.0.1"</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s">"root"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s">"123456"</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s">"test_db"</span><span class="p">,</span>
+    <span class="n">charset</span><span class="o">=</span><span class="s">"utf8"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">conn</span><span class="p">))</span>
+ 
+</code></pre></div></div>
+
+<p>输出结果显示如下：表面数据库连接成功</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;pymysql.connections.Connection object at 0x00000000022A54A8&gt;
+&lt;class 'pymysql.connections.Connection'&gt;
+</code></pre></div></div>
+
+<p><strong>使用 pymysql 的 connect() 方法连接数据库，connect  参数解释如下：</strong></p>
+
+<ul>
+  <li>host：MySQL服务的地址，若数据库在本地上，使用 localhost 或者127.0.0.1。如果在其它的服务器上，则写对应的 IP地址</li>
+  <li>port：服务的端口号，默认为3306，不写则为默认值。</li>
+  <li>user：登录数据库的用户名</li>
+  <li>passwd：登录 MySQL 的密码</li>
+  <li>db：数据库名</li>
+  <li>charset：设置为 utf8 编码，解决存汉字乱码问题</li>
+</ul>
+
+<p><strong>conn.cursor():获取游标</strong></p>
+
+<p>如果要操作数据库，光连接数据是不够的，咱们必须拿到操作数据库的游标，才能进行后续的操作，游标的主要作用是用来接收数据库操作后的返回结果，比如读取数据、添加数据。通过获取到的数据库连接实例 conn 下的 cursor() 方法来创建游标，实例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 导入模块
+</span><span class="kn">import</span> <span class="nn">pymysql</span>
+
+<span class="c1"># 打开数据库连接
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s">"127.0.0.1"</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s">"root"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s">"123456"</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s">"test_db"</span><span class="p">,</span>
+    <span class="n">charset</span><span class="o">=</span><span class="s">"utf8"</span><span class="p">)</span>
+
+<span class="c1"># print(conn)
+# print(type(conn))
+# 获取连接下的游标
+</span><span class="n">cursor_test</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cursor_test</span><span class="p">)</span>
+</code></pre></div></div>
+<p>输出结果为：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;pymysql.cursors.Cursor object at 0x000000000A544B00&gt;
+</code></pre></div></div>
+
+<p>cursor 返回一个游标实例对象，其中包含了很多操作数据的方法，如执行sql语句，sql 执行命令：<code class="highlighter-rouge">execute()</code>和<code class="highlighter-rouge">executemany()</code></p>
+
+<p><strong>execute(query,args=None):</strong></p>
+<ul>
+  <li>函数作用：执行单条的sql语句，执行成功后返回受影响的行数</li>
+  <li>参数说明：
+    <ul>
+      <li>query：要执行的sql语句，字符串类型</li>
+      <li>args：可选的序列或映射，用于query的参数值。如果args为序列，query中必须使用%s做占位符；如果args为映射，query中必须使用%(key)s做占位符</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>executemany(query,args=None)：</strong></p>
+<ul>
+  <li>函数作用：批量执行sql语句，比如批量插入数据，执行成功后返回受影响的行数</li>
+  <li>参数说明：
+    <ul>
+      <li>query：要执行的sql语句，字符串类型</li>
+      <li>args：嵌套的序列或映射，用于query的参数值</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>其他游标对象如下表：</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>close()</td>
+      <td>关闭游标，之后游标不可用</td>
+    </tr>
+    <tr>
+      <td>fetchone()</td>
+      <td>返回一条查询结果</td>
+    </tr>
+    <tr>
+      <td>fetchall()</td>
+      <td>返回所有查询结果</td>
+    </tr>
+    <tr>
+      <td>fetchmany([size])</td>
+      <td>返回size条查询结果</td>
+    </tr>
+    <tr>
+      <td>nextset()</td>
+      <td>移动到下一条结果</td>
+    </tr>
+    <tr>
+      <td>scroll(value,mode=’relative’)</td>
+      <td>移动游标到指定行，如果mode=’relative’，则表示从当前行移动value条，如果mode=‘absolute’，则表示从结果集的第一行移动value条</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>完整数据库连接操作实例如下：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import pymysql
+
+# 打开数据库连接
+conn = pymysql.connect(
+    host="127.0.0.1",
+    user="root",
+    password="123456",
+    database="test_db",
+    charset="utf8")
+# print(conn)
+# print(type(conn))
+
+# 获取连接下的游标
+cursor_test = conn.cursor()
+print(cursor_test)
+
+# 使用 execute()  方法执行 SQL 查询，查询数据库版本
+cursor_test.execute("SELECT VERSION()")
+
+# 使用 fetchone() 方法返回一条数据.
+data = cursor_test.fetchone()
+
+print("Database version : %s " % data)
+
+# 关闭数据库连接
+conn.close()
+</code></pre></div></div>
+
+<p><strong>以上结果输出为：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Database version : 5.7.28 
+</code></pre></div></div>
+
+<h3 id="三创建表">三、创建表</h3>
+<p>创建表代码如下：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pymysql</span>
+
+<span class="c1"># 打开数据库连接
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s">"127.0.0.1"</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s">"root"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s">"123456"</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s">"test_db"</span><span class="p">,</span>
+    <span class="n">charset</span><span class="o">=</span><span class="s">"utf8"</span><span class="p">)</span>
+
+<span class="c1"># 获取连接下的游标
+</span><span class="n">cursor_test</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="c1"># 使用 execute() 方法执行 SQL，如果表存在则删除
+</span><span class="n">cursor_test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"DROP TABLE IF EXISTS EMPLOYEE"</span><span class="p">)</span>
+
+<span class="c1"># 使用预处理语句创建表
+</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"""CREATE TABLE user1 (
+         FIRST_NAME  CHAR(20) NOT NULL,
+         LAST_NAME  CHAR(20),
+         AGE INT,  
+         SEX CHAR(1),
+         INCOME FLOAT )"""</span>
+
+<span class="n">cursor_test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+
+<span class="c1"># 关闭数据库连接
+</span><span class="n">conn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>如下所示数据库表创建成功：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; desc user1;
++------------+----------+------+-----+---------+-------+
+| Field      | Type     | Null | Key | Default | Extra |
++------------+----------+------+-----+---------+-------+
+| FIRST_NAME | char(20) | NO   |     | NULL    |       |
+| LAST_NAME  | char(20) | YES  |     | NULL    |       |
+| AGE        | int(11)  | YES  |     | NULL    |       |
+| SEX        | char(1)  | YES  |     | NULL    |       |
+| INCOME     | float    | YES  |     | NULL    |       |
++------------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+</code></pre></div></div>
+
+<h3 id="三插入数据">三、插入数据</h3>
+<p>插入数据实现代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pymysql</span>
+
+<span class="c1"># 打开数据库连接
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s">"127.0.0.1"</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s">"root"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s">"123456"</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s">"test_db"</span><span class="p">,</span>
+    <span class="n">charset</span><span class="o">=</span><span class="s">"utf8"</span><span class="p">)</span>
+
+<span class="c1"># 获取连接下的游标
+</span><span class="n">cursor_test</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="c1"># 使用预处理语句创建表
+</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"""INSERT INTO user1(FIRST_NAME,
+         LAST_NAME, AGE, SEX, INCOME)
+         VALUES ('Fei', 'Fei', 20, 'M', 1000)"""</span>
+
+<span class="k">try</span><span class="p">:</span>
+   <span class="c1"># 执行sql语句
+</span>   <span class="n">cursor_test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+   <span class="c1"># 提交到数据库执行
+</span>   <span class="n">conn</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+   <span class="c1"># 如果发生错误则回滚
+</span>   <span class="n">conn</span><span class="p">.</span><span class="n">rollback</span><span class="p">()</span>
+
+<span class="c1"># 关闭数据库连接
+</span><span class="n">conn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><strong>插入数据结果：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select * from user1;
++------------+-----------+------+------+--------+
+| FIRST_NAME | LAST_NAME | AGE  | SEX  | INCOME |
++------------+-----------+------+------+--------+
+| Fei        | Fei       |   20 | M    |   1000 |
++------------+-----------+------+------+--------+
+1 row in set (0.00 sec)
+</code></pre></div></div>
+
+<h3 id="四查询数据">四、查询数据</h3>
+<p>Python查询Mysql使用 fetchone() 方法获取单条数据, 使用fetchall() 方法获取多条数据。</p>
+
+<ul>
+  <li>fetchone(): 该方法获取下一个查询结果集。结果集是一个对象</li>
+  <li>fetchall(): 接收全部的返回结果行.</li>
+  <li>rowcount: 这是一个只读属性，并返回执行 execute()方法后影响的行数。</li>
+</ul>
+
+<p><strong>查询数据代码如下：</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pymysql
+
+
+# 打开数据库连接
+conn = pymysql.connect(
+    host="127.0.0.1",
+    user="root",
+    password="123456",
+    database="test_db",
+    charset="utf8")
+
+# 获取连接下的游标
+cursor_test = conn.cursor()
+
+sql = """
+    select * from user1"""
+
+try:
+    # 执行 sql 语句
+    cursor_test.execute(sql)
+    # 显示出所有数据
+    data_result = cursor_test.fetchall()
+    for row in data_result:
+        fname = row[0]
+        lname = row[1]
+        age = row[2]
+        sex = row[3]
+        income = row[4]
+        # 打印结果
+        print("fname=%s,lname=%s,age=%s,sex=%s,income=%s" % \
+              (fname, lname, age, sex, income))
+except:
+    print("Error: unable to fetch data")
+
+# 关闭数据库连接
+conn.close()
+</code></pre></div></div>
+
+<p><strong>输出结果：</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fname=Fei,lname=Fei,age=20,sex=M,income=1000.0
+</code></pre></div></div>
+
+<h3 id="五数据库表更新操作">五、数据库表更新操作</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import pymysql
+
+# 打开数据库连接
+conn = pymysql.connect(
+    host="127.0.0.1",
+    user="root",
+    password="123456",
+    database="test_db",
+    charset="utf8")
+# print(conn)
+# print(type(conn))
+
+# 获取连接下的游标
+cursor_test = conn.cursor()
+
+sql = "UPDATE user1 SET AGE = AGE + 1 WHERE SEX = '%c'" % ('M')
+
+try:
+    # 执行SQL语句
+    cursor_test.execute(sql)
+    # 提交到数据库执行
+    conn.commit()
+except:
+    # 发生错误时回滚
+    conn.rollback()
+
+# 关闭数据库连接
+conn.close()
+</code></pre></div></div>
+<h3 id="六删除操作">六、删除操作</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 导入模块
+import pymysql
+
+# 打开数据库连接
+conn = pymysql.connect(
+    host="127.0.0.1",
+    user="root",
+    password="123456",
+    database="test_db",
+    charset="utf8")
+# print(conn)
+# print(type(conn))
+
+# 获取连接下的游标
+cursor_test = conn.cursor()
+
+sql = "DELETE * FROM user1"
+
+try:
+    # 执行SQL语句
+    cursor_test.execute(sql)
+    # 提交到数据库执行
+    conn.commit()
+except:
+    # 发生错误时回滚
+    conn.rollback()
+
+# 关闭数据库连接
+conn.close()
+</code></pre></div></div>
+
+<h3 id="七错误处理">七、错误处理</h3>
+
+<p>DB API中定义了一些数据库操作的错误及异常，下表列出了这些错误和异常:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>异 常</th>
+      <th>描 述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Warning</td>
+      <td>当有严重警告时触发，例如插入数据是被截断等等。必须是 StandardError 的子类。</td>
+    </tr>
+    <tr>
+      <td>Error</td>
+      <td>警告以外所有其他错误类。必须是 StandardError 的子类。</td>
+    </tr>
+    <tr>
+      <td>InterfaceError</td>
+      <td>当有数据库接口模块本身的错误（而不是数据库的错误）发生时触发。 必须是Error的子类。</td>
+    </tr>
+    <tr>
+      <td>DatabaseError</td>
+      <td>和数据库有关的错误发生时触发。 必须是Error的子类。</td>
+    </tr>
+    <tr>
+      <td>DataError</td>
+      <td>当有数据处理时的错误发生时触发，例如：除零错误，数据超范围等等。 必须是DatabaseError的子类。</td>
+    </tr>
+    <tr>
+      <td>OperationalError</td>
+      <td>指非用户控制的，而是操作数据库时发生的错误。例如：连接意外断开、 数据库名未找到、事务处理失败、内存分配错误等等操作数据库是发生的错误。 必须是DatabaseError的子类。</td>
+    </tr>
+    <tr>
+      <td>IntegrityError</td>
+      <td>完整性相关的错误，例如外键检查失败等。必须是DatabaseError子类。</td>
+    </tr>
+    <tr>
+      <td>InternalError</td>
+      <td>数据库的内部错误，例如游标（cursor）失效了、事务同步失败等等。 必须是DatabaseError子类。</td>
+    </tr>
+    <tr>
+      <td>ProgrammingError</td>
+      <td>程序错误，例如数据表（table）没找到或已存在、SQL语句语法错误、 参数数量错误等等。必须是DatabaseError的子类。</td>
+    </tr>
+    <tr>
+      <td>NotSupportedError</td>
+      <td>不支持错误，指使用了数据库不支持的函数或API等。例如在连接对象上 使用.rollback()函数，然而数据库并不支持事务或者事务已关闭。 必须是DatabaseError的子类。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="总结">总结</h3>
+
+<p>本文给大家介绍 Python 如何连接 Mysql 进行数据的增删改查操作，文章通过简洁的代码方式进行示例演示，给使用 Python 操作 Mysql 的工程师提供支撑。</p>
+
+<h3 id="参考">参考</h3>
+<p><a href="https://www.runoob.com/mysql/mysql-install.html">https://www.runoob.com/mysql/mysql-install.html</a>
+<a href="https://www.runoob.com/python3/python3-mysql.html">https://www.runoob.com/python3/python3-mysql.html</a></p>
+
+<blockquote>
+  <p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+</blockquote>
+:ET

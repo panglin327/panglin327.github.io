@@ -1,0 +1,267 @@
+I"F<p>by 極光</p>
+
+<p>上次给大家介绍了 Python 如何操作 Word 和 Excel ，而今天想为大家再介绍下，用 Python 如何解析 PDF ，PDF 格式不像前面两个那么规范，从它的表现来看，它更像是一张图片，在一张白纸上把内容摆放在固定的位置上，没有逻辑结构。不过还是那句话，可以先了解下都能实现什么功能，以备不时之需。</p>
+
+<!--more-->
+
+<p>正是因为 PDF 没有统一的规范，也没有逻辑结构，比如句子或段落，并且不能自适应页面大小的调整。今天要介绍的 PDFMiner 尝试通过猜测它们的布局来重建它们的结构，但是并不能保证一定能识别成功，尤其是对图片和表格的识别处理会差一些。</p>
+
+<h2 id="安装-pdfminer">安装 PDFMiner</h2>
+
+<p>解析 PDF 需要用到 pdfminer 库，目前最新版本只支持 Python3.6 及以上 ，执行如下安装命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip3 <span class="nb">install </span>pdfminer
+
+<span class="c">################# 运行结果 ################</span>
+Collecting pdfminer
+  Downloading https://files.pythonhosted.org/packages/71/a3/155c5cde5f9c0b1069043b2946a93f54a41fd72cc19c6c100f6f2f5bdc15/pdfminer-20191125.tar.gz <span class="o">(</span>4.2MB<span class="o">)</span>
+     |████████████████████████████████| 4.2MB 2.8MB/s 
+Collecting pycryptodome <span class="o">(</span>from pdfminer<span class="o">)</span>
+  Downloading https://files.pythonhosted.org/packages/cc/a6/f7e09ad45296eff20bd1db5aa14b1c9ea06826dd68eb2a7a27572c71d581/pycryptodome-3.9.4-cp37-cp37m-macosx_10_6_intel.whl <span class="o">(</span>10.1MB<span class="o">)</span>
+     |████████████████████████████████| 10.1MB 1.6MB/s 
+Building wheels <span class="k">for </span>collected packages: pdfminer
+  Building wheel <span class="k">for </span>pdfminer <span class="o">(</span>setup.py<span class="o">)</span> ... <span class="k">done
+  </span>Stored <span class="k">in </span>directory: /Users/mjg/Library/Caches/pip/wheels/e1/00/af/720a55d74ba3615bb4709a3ded6dd71dc5370a586a0ff6f326
+Successfully built pdfminer
+Installing collected packages: pycryptodome, pdfminer
+Successfully installed pdfminer-20191125 pycryptodome-3.9.4
+</code></pre></div></div>
+
+<p>OK，如果提示以上信息则安装成功。</p>
+
+<h2 id="解析概述">解析概述</h2>
+
+<p>由于PDF文件有如此大和复杂的结构，完整解析 PDF 文件很费时费力的。因此 PDFMiner 采用了一个懒惰分析的策略，就是只分析你所需要的部分。换句话就是说，根据你自己的需要只解释出你要的那部分就可以了。这里有两个核心类是必须的 <code class="highlighter-rouge">PDFParser</code> 和 <code class="highlighter-rouge">PDFDocument</code>，除了这两个模块还有以下几个模块来配合使用。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>模块名</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PDFParser</td>
+      <td>从文件中获取数据</td>
+    </tr>
+    <tr>
+      <td>PDFDocument</td>
+      <td>存储文档数据结构到内存中</td>
+    </tr>
+    <tr>
+      <td>PDFPageInterpreter</td>
+      <td>解析page内容</td>
+    </tr>
+    <tr>
+      <td>PDFDevice</td>
+      <td>把解析到的内容转化为你需要的东西</td>
+    </tr>
+    <tr>
+      <td>PDFResourceManager</td>
+      <td>存储共享资源，例如字体或图片等</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>下面这个图表示了 PDFMiner 各模块之间的关系，让我们能有个基本的认识：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_pdf_01.png" alt="" /></p>
+
+<h3 id="基本用法">基本用法</h3>
+
+<p>首先我准备了一个 pdf 格式的文档，内容基本如下图这样：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_pdf_05.png" alt="" /></p>
+
+<p>下面这段代码给出了 PDFMiner 解析 PDF 文档的基本方法，首先打开 pdf 文件，创建解析对象，存储文档结构，创建资源管理对象以及共享资源，然后再创建 device 对象，最后再创建文档解析对象，并处理文档中的每一页。是不是看起来很复杂，不过确实也挺麻烦，还是让我们直接看代码吧。</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># pdf_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">pdfminer.pdfparser</span> <span class="kn">import</span> <span class="n">PDFParser</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfdocument</span> <span class="kn">import</span> <span class="n">PDFDocument</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfpage</span> <span class="kn">import</span> <span class="n">PDFPage</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfpage</span> <span class="kn">import</span> <span class="n">PDFTextExtractionNotAllowed</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfinterp</span> <span class="kn">import</span> <span class="n">PDFResourceManager</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfinterp</span> <span class="kn">import</span> <span class="n">PDFPageInterpreter</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfdevice</span> <span class="kn">import</span> <span class="n">PDFDevice</span>
+<span class="kn">from</span> <span class="nn">pdfminer.layout</span> <span class="kn">import</span> <span class="n">LAParams</span>
+<span class="kn">from</span> <span class="nn">pdfminer.converter</span> <span class="kn">import</span> <span class="n">PDFPageAggregator</span>
+
+<span class="c1"># 设置文档密码
+</span><span class="n">password</span> <span class="o">=</span> <span class="s">''</span>
+
+<span class="c1">#打开pdf文件
+</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'pdfminer.pdf'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span>
+
+<span class="c1">#从文件句柄创建一个pdf解析对象
+</span><span class="n">parser</span> <span class="o">=</span> <span class="n">PDFParser</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+
+<span class="c1">#创建pdf文档对象，存储文档结构
+</span><span class="n">document</span> <span class="o">=</span> <span class="n">PDFDocument</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span><span class="n">password</span><span class="p">)</span>
+
+<span class="c1">#创建一个pdf资源管理对象，存储共享资源
+</span><span class="n">rsrcmgr</span> <span class="o">=</span> <span class="n">PDFResourceManager</span><span class="p">()</span>
+
+<span class="c1">#创建一个device对象
+</span><span class="n">device</span> <span class="o">=</span> <span class="n">PDFDevice</span><span class="p">(</span><span class="n">rsrcmgr</span><span class="p">)</span>
+
+<span class="c1">#创建一个解释对象
+</span><span class="n">interpreter</span> <span class="o">=</span> <span class="n">PDFPageInterpreter</span><span class="p">(</span><span class="n">rsrcmgr</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+<span class="c1">#处理包含在文档中的每一页
+</span><span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">PDFPage</span><span class="p">.</span><span class="n">create_pages</span><span class="p">(</span><span class="n">document</span><span class="p">):</span>
+    <span class="n">interpreter</span><span class="p">.</span><span class="n">process_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>这样就完成了将页面对象加载的操作，下面通过命令 <code class="highlighter-rouge">python pdf_1.py</code> 运行程序，没有报错就说明页面信息已经成功加载至内存，然后我们就得想办法分别解析各类型信息，那都有哪些类型的对象呢？</p>
+
+<h3 id="解析对象">解析对象</h3>
+
+<p>布局分析器把 pdf 文档中每一页返回为一个 <code class="highlighter-rouge">LTPage</code> 对象. 该对象包含该页面中的所有子对象，它们之间的关系大概如下图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_pdf_02.png" alt="" /></p>
+
+<p>接下来我再列出一个表格具体说明下各对象：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>对象名</th>
+      <th>对象说明</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LTPage</td>
+      <td>代表一个完整的页面，可以包含子对象</td>
+      <td>例如：LTTextBox,LTFigure,LTImage,LTRect,LTCurve和LTLine</td>
+    </tr>
+    <tr>
+      <td>LTTextBox</td>
+      <td>它包含 LTTextLine 对象的列表，代表一组被包含在矩形区域中的文本</td>
+      <td>注意：该box是根据几何学分析得到的，并不一定准确地表现为该文本的逻辑范围，get_text()方法可以返回文本内容</td>
+    </tr>
+    <tr>
+      <td>LTTextLine</td>
+      <td>包含一个LTChar对象的列表，表现为单行文本</td>
+      <td>字符表现为一行或一列，取决于文本书写方式，get_text()方法返回文本内容</td>
+    </tr>
+    <tr>
+      <td>LTChar</td>
+      <td>表示一个在文本中的真实的字母，作为一个unicode字符串</td>
+      <td>LTChar 对象有真实的分隔符</td>
+    </tr>
+    <tr>
+      <td>LTAnno</td>
+      <td>表示一个在文本中的真实的字母，作为一个unicode字符串</td>
+      <td>LTAnno 对象没有，是虚拟分隔符，按照两个字符之间的关系，布局分析器插入虚拟分隔符</td>
+    </tr>
+    <tr>
+      <td>LTFigure</td>
+      <td>表示一个被 PDF Form 对象使用的区域</td>
+      <td>pdf form适用于目前的图表(present figures)或者页面中植入的另一个pdf文档图片，LTFigure对象可以递归</td>
+    </tr>
+    <tr>
+      <td>LTImage</td>
+      <td>表示一个图形对象，可以是JPEG或者其他格式</td>
+      <td>但 PDFMiner 目前没有花太多精力在图形对象上</td>
+    </tr>
+    <tr>
+      <td>LTLine</td>
+      <td>表示一根直线</td>
+      <td>用来分割文本或图表(figures)</td>
+    </tr>
+    <tr>
+      <td>LTRect</td>
+      <td>表示一个矩形</td>
+      <td>用来框住别的图片或者图表</td>
+    </tr>
+    <tr>
+      <td>LTCurve</td>
+      <td>代表一个贝塞尔曲线</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>好了，了解以上对象都表示什么以后，现在我们写一段代码解析一个 pdf 并打印出来所解析的内容。</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># pdf_2.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">pdfminer.pdfparser</span> <span class="kn">import</span> <span class="n">PDFParser</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfdocument</span> <span class="kn">import</span> <span class="n">PDFDocument</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfpage</span> <span class="kn">import</span> <span class="n">PDFPage</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfpage</span> <span class="kn">import</span> <span class="n">PDFTextExtractionNotAllowed</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfinterp</span> <span class="kn">import</span> <span class="n">PDFResourceManager</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfinterp</span> <span class="kn">import</span> <span class="n">PDFPageInterpreter</span>
+<span class="kn">from</span> <span class="nn">pdfminer.pdfdevice</span> <span class="kn">import</span> <span class="n">PDFDevice</span>
+<span class="kn">from</span> <span class="nn">pdfminer.layout</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pdfminer.converter</span> <span class="kn">import</span> <span class="n">PDFPageAggregator</span>
+
+<span class="c1"># 提供初始密码
+</span><span class="n">password</span> <span class="o">=</span> <span class="s">''</span>
+<span class="c1"># 没有密码可以初始密码
+# document.initialize()
+</span>
+<span class="c1">#打开pdf文件
+</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'pdfminer.pdf'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span>
+
+<span class="c1">#从文件句柄创建一个pdf解析对象
+</span><span class="n">parser</span> <span class="o">=</span> <span class="n">PDFParser</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+
+<span class="c1">#创建pdf文档对象，存储文档结构
+</span><span class="n">document</span> <span class="o">=</span> <span class="n">PDFDocument</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+<span class="c1">#创建一个pdf资源管理对象，存储共享资源
+</span><span class="n">rsrcmgr</span> <span class="o">=</span> <span class="n">PDFResourceManager</span><span class="p">()</span>
+
+<span class="n">laparams</span> <span class="o">=</span> <span class="n">LAParams</span><span class="p">()</span>
+
+<span class="c1">#创建一个device对象
+</span><span class="n">device</span> <span class="o">=</span> <span class="n">PDFPageAggregator</span><span class="p">(</span><span class="n">rsrcmgr</span><span class="p">,</span> <span class="n">laparams</span><span class="o">=</span><span class="n">laparams</span><span class="p">)</span>
+
+<span class="c1">#创建一个解释对象
+</span><span class="n">interpreter</span> <span class="o">=</span> <span class="n">PDFPageInterpreter</span><span class="p">(</span><span class="n">rsrcmgr</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+<span class="c1">#处理包含在文档中的每一页
+</span><span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">PDFPage</span><span class="p">.</span><span class="n">create_pages</span><span class="p">(</span><span class="n">document</span><span class="p">):</span>
+    <span class="n">interpreter</span><span class="p">.</span><span class="n">process_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">device</span><span class="p">.</span><span class="n">get_result</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">layout</span><span class="p">:</span>
+        <span class="c1"># 获取文本对象
+</span>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LTTextBox</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">get_text</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
+        <span class="c1"># 获取图片对象
+</span>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">LTImage</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'这里获取到一张图片'</span><span class="p">)</span>
+        <span class="c1"># 获取 figure 对象
+</span>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">LTFigure</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'这里获取到一个 figure 对象'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>OK，这次我们把 pdf 文件加载到内存后，循环加载到每个页面对象，并遍历各个对象，使用 <code class="highlighter-rouge">isinstance</code> 方法判断对象的类型，将文本对象时直接打印出来，当为其他对象时打印一个字符串，返回结果如下图：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_pdf_03.png" alt="" /></p>
+
+<p>可以看出 PDFMiner 对文本的解析还是不错的，不过对图片的解析，正如官方文档所说，识别并不是很准确，这里将图片识别为了 <code class="highlighter-rouge">figure</code> 对象。另外对于表格的支持也不够好，虽然能读取出来表格内容，但完全看不出表格的样式来，后期还需要进一步处理。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文为大家介绍了 Python 中如何解析 PDF 文档，由于 PDF 并没有规范的格式，解析起来会比较复杂。当然除了 PDFMiner ，还有很多处理 pdf 的工具，各有优缺点，今天算是带大家入个门，就以 PDFMiner 为例做了一个简单介绍，如果想了解更多请参考文末官网介绍。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>python-pdfminer 官网：https://euske.github.io/pdfminer/</p>
+
+<p>Python PDF Parser：https://github.com/euske/pdfminer</p>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day</p>
+</blockquote>
+:ET

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第104天： Python 解析 XML - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 程序员野客&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/30/python-xml-104.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第104天： Python 解析 XML">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第104天： Python 解析 XML</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/30
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 程序员野客</p>
+
+<h2 id="1-简介">1 简介</h2>
+
+<p>XML 全称 Extensible Markup Language，中文译为可扩展标记语言。XML 之前有两个先行者：SGML 和 HTML，率先登场的是 SGML， 尽管它功能强大，但文档结构复杂，既不容易学也不易于使用，因此几个主要的浏览器厂商均拒绝支持 SGML，这些因素限制了 SGML 在网上的传播性；1989 年 HTML 登场，它继承了 SGML 诸多优点，去除了 SGML 复杂庞大的缺点，HTML 在数据显示上表现十分出色，但它的语法是不可扩展的，因此其无法描述数据、可读性差，没办法人们再次将目光转向 SGML，经过对 SGML 一系列改造，终于在 1998 年，XML 第一个版本问世。</p>
+
+<!--more-->
+
+<p>上面说了那么多，简单来说就是：XML 和 HTML 均由 SGML 改造而来，HTML 是一种页面技术，聚焦的是数据的显示，而 XML 易于扩展，主要用来传送和存储数据，聚焦的是数据的内容。</p>
+
+<h2 id="2-解析">2 解析</h2>
+
+<h3 id="21-解析方式">2.1 解析方式</h3>
+
+<p>Python 有三种 XML 解析方式：SAX（simple API for XML）、DOM（Document Object Model）、ElementTree。</p>
+
+<ul>
+  <li>
+    <p>DOM 方式：DOM 中文译为文档对象模型，是 W3C 组织推荐的标准编程接口，它将 XML 数据在内存中解析成一个树，通过对树的操作来操作 XML。</p>
+  </li>
+  <li>
+    <p>SAX 方式：SAX 是一个用于处理 XML 事件驱动的模型，它逐行扫描文档，一边扫描一边解析，对于大型文档的解析拥有巨大优势，尽管不是 W3C 标准，但它却得到了广泛认可。</p>
+  </li>
+  <li>
+    <p>ElementTree 方式：ElementTree 相对于 DOM 来说拥有更好的性能，与 SAX 性能差不多，API 使用也很方便。</p>
+  </li>
+</ul>
+
+<h3 id="22-具体实现">2.2 具体实现</h3>
+
+<p>在具体解析之前我们先准备一个 XML，如下所示：</p>
+
+<p>test.xml</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;list&gt;</span>
+<span class="nt">&lt;student</span> <span class="na">id=</span><span class="s">"stu1"</span> <span class="na">name=</span><span class="s">"stu"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;id&gt;</span>1001<span class="nt">&lt;/id&gt;</span>
+   <span class="nt">&lt;name&gt;</span>张三<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;age&gt;</span>22<span class="nt">&lt;/age&gt;</span>
+   <span class="nt">&lt;gender&gt;</span>男<span class="nt">&lt;/gender&gt;</span>
+<span class="nt">&lt;/student&gt;</span>
+<span class="nt">&lt;student</span> <span class="na">id=</span><span class="s">"stu2"</span> <span class="na">name=</span><span class="s">"stu"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;id&gt;</span>1002<span class="nt">&lt;/id&gt;</span>
+   <span class="nt">&lt;name&gt;</span>李四<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;age&gt;</span>21<span class="nt">&lt;/age&gt;</span>
+   <span class="nt">&lt;gender&gt;</span>女<span class="nt">&lt;/gender&gt;</span>
+<span class="nt">&lt;/student&gt;</span>
+<span class="nt">&lt;/list&gt;</span>
+</code></pre></div></div>
+
+<h4 id="dom-方式解析">DOM 方式解析</h4>
+
+<p>使用 DOM 方式，首先要对其 API 有一定了解，如果不了解，网上的教程也比较多，比如：<a href="https://www.w3school.com.cn/xmldom/index.asp">DOM 教程</a>，下面看一下使用示例。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from xml.dom.minidom import parse
+
+# 读取文件
+dom = parse('test.xml')
+# 获取文档元素对象
+data = dom.documentElement
+# 获取 student
+stus = data.getElementsByTagName('student')
+for stu in stus:
+	# 获取标签属性值
+    st_id = stu.getAttribute('id')
+    st_name = stu.getAttribute('name')
+	# 获取标签中内容
+    id = stu.getElementsByTagName('id')[0].childNodes[0].nodeValue
+    name = stu.getElementsByTagName('name')[0].childNodes[0].nodeValue
+    age = stu.getElementsByTagName('age')[0].childNodes[0].nodeValue
+    gender = stu.getElementsByTagName('gender')[0].childNodes[0].nodeValue
+    print('st_id:', st_id,  ', st_name:',st_name)
+    print('id:', id, ', name:', name, ', age:', age, ', gender:',gender)
+</code></pre></div></div>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>st_id: stu1 , st_name: stu
+id: 1001 , name: 张三 , age: 22 , gender: 男
+st_id: stu2 , st_name: stu
+id: 1002 , name: 李四 , age: 21 , gender: 女
+</code></pre></div></div>
+
+<p>通过输出结果，我们可以发现已经获取了标签属性值和标签内容了。</p>
+
+<h4 id="sax-方式解析">SAX 方式解析</h4>
+
+<p>使用 SAX 解析 XML 文档主要涉及到解析器和事件处理器，解析器负责读取 XML 文档，并向事件处理器发送事件，事件处理器负责对事件作出响应，对传递的 XML 数据进行处理。</p>
+
+<p>Python 使用 SAX 处理 XML 需要用到 xml.sax 中的 parse 函数和 xml.sax.handler 中的 ContentHandler 类，下面看一下 ContentHandler 类中的一些方法。</p>
+
+<ul>
+  <li>
+    <p>characters(content)：调用时机：从行开始，遇到标签之前，存在字符，content 的值为这些字符串；从一个标签，遇到下一个标签之前， 存在字符，content 的值为这些字符串；从一个标签，遇到行结束符之前，存在字符，content 的值为这些字符串。</p>
+  </li>
+  <li>
+    <p>startDocument()：文档启动的时候调用。</p>
+  </li>
+  <li>
+    <p>endDocument()：解析器到达文档结尾时调用。</p>
+  </li>
+  <li>
+    <p>startElement(name, attrs)：遇到 XML 开始标签时调用，name 是标签的名字，attrs 是标签的属性值字典。</p>
+  </li>
+  <li>
+    <p>endElement(name)：遇到 XML 结束标签时调用。</p>
+  </li>
+</ul>
+
+<p>下面通过示例看一下如何通过 SAX 方式解析 XML。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import xml.sax
+
+class StudentHandler(xml.sax.ContentHandler):
+    def __init__(self):
+        self.id = ""
+        self.name = ""
+        self.age = ""
+        self.gender = ""
+
+    # 元素开始调用
+    def startElement(self, tag, attributes):
+        self.CurrentData = tag
+        if tag == "student":
+            stu_name = attributes["name"]
+            print("stu_name:", stu_name)
+
+    # 元素结束调用
+    def endElement(self, tag):
+        if self.CurrentData == "id":
+            print("id:", self.id)
+        elif self.CurrentData == "name":
+            print("name:", self.name)
+        elif self.CurrentData == "age":
+            print("age:", self.age)
+        elif self.CurrentData == "gender":
+            print("gender:", self.gender)
+        self.CurrentData = ""
+
+    # 读取字符时调用
+    def characters(self, content):
+        if self.CurrentData == "id":
+            self.id = content
+        elif self.CurrentData == "name":
+            self.name = content
+        elif self.CurrentData == "age":
+            self.age = content
+        elif self.CurrentData == "gender":
+            self.gender = content
+
+if (__name__ == "__main__"):
+    # 创建 XMLReader
+    parser = xml.sax.make_parser()
+    # 关闭命名空间
+    parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+    # 重写 ContextHandler
+    Handler = StudentHandler()
+    parser.setContentHandler(Handler)
+    parser.parse("test.xml")
+</code></pre></div></div>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stu_name: stu
+id: 1001
+name: 张三
+age: 22
+gender: 男
+stu_name: stu
+id: 1002
+name: 李四
+age: 21
+gender: 女
+</code></pre></div></div>
+
+<h4 id="elementtree-方式解析">ElementTree 方式解析</h4>
+
+<p>Python 提供了两种 ElementTree 的实现方式。一个是纯 Python 实现的 xml.etree.ElementTree，另一个是 C 语言实现 xml.etree.cElementTree，使用 C 语言实现的方式速度更快且内存消耗更少。Python3.3 之后，ElemenTree 模块会自动优先使用 C 加速器，如果不存在 C 实现，则会使用 Python 实现。因此，使用 Python3.3+ 时，只需要 import xml.etree.ElementTree 即可。下面看一下示例。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import xml.etree.ElementTree as ET
+
+tree = ET.parse("test.xml")
+# 根节点
+root = tree.getroot()
+# 标签名
+print('root_tag:',root.tag)
+for stu in root:
+    # 属性值
+    print ("stu_name:", stu.attrib["name"])
+    # 标签中内容
+    print ("id:", stu[0].text)
+    print ("name:", stu[1].text)
+    print("age:", stu[2].text)
+    print("gender:", stu[3].text)
+</code></pre></div></div>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root_tag: list
+stu_name: stu
+id: 1001
+name: 张三
+age: 22
+gender: 男
+stu_name: stu
+id: 1002
+name: 李四
+age: 21
+gender: 女
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本文介绍和演示了 Python 三种 XML 解析方式，对 Python 工程师使用 Python 解析 XML 提供了支撑。</p>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day</p>
+</blockquote>
+
+<h3 id="参考">参考</h3>
+
+<p><a href="https://baike.baidu.com/item/%E5%8F%AF%E6%89%A9%E5%B1%95%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/2885849?fromtitle=xml&amp;fromid=86251&amp;fr=aladdin">https://baike.baidu.com/item/%E5%8F%AF%E6%89%A9%E5%B1%95%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/2885849?fromtitle=xml&amp;fromid=86251&amp;fr=aladdin</a></p>
+
+<p><a href="https://www.runoob.com/python3/python3-xml-processing.html">https://www.runoob.com/python3/python3-xml-processing.html</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/30/python-xml-104.html';
+        this.page.identifier = '/python/2019/12/30/python-xml-104.html';
+        this.page.title = '第104天： Python 解析 XML';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/30/python-xml-104.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

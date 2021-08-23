@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第50天： Python Queue 进阶用法 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 豆豆&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/11/06/python-queue02-050.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第50天： Python Queue 进阶用法">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第50天： Python Queue 进阶用法</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/06
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 豆豆</p>
+
+<p>上一篇文章简单介绍了 Queue 的入门操作，今天我们学习下 Queue 的进阶用法。</p>
+
+<!--more-->
+
+<h2 id="生产者消费者模型">生产者消费者模型</h2>
+
+<p>在并发编程中，比如爬虫，有的线程负责爬取数据，有的线程负责对爬取到的数据做处理（清洗、分类和入库）。假如他们是直接交互的，那么当二者的速度不匹配时势必出现等待现象，这也就产生了资源的浪费。</p>
+
+<p>抽象是一种很重要的通用能力，而生产者消费者模型是前人将一系列同类型的具体的问题抽象出来的一个一致的最佳解决方案。</p>
+
+<p>该模型有三个重要角色，容器，生产者和消费者，顾名思义，生产者就是负责生产数据或任务的，消费者就是负责消费数据或者任务的（下文统称为任务），容器是二者进行通讯的媒介。在该模型中，生产者和消费者不在直接进行通讯，而是通过引入一个第三者容器（通常都是用阻塞队列）来达到解耦的目的。这样生产者不必在因为消费者速度过慢而等待，直接将任务放入容器即可，消费者也不必因生产者生产速度过慢而等待，直接从容器中获取任务，以此达到了资源的最大利用。</p>
+
+<p>使用该模型可以解决并发编程中的绝大部分并发问题。</p>
+
+<h2 id="简易版">简易版</h2>
+
+<p>我们先写一个单生产者和单消费者的简易版生产者消费者模型。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+
+<span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"%s consume %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">product</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">produce</span><span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="s">'product-'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"%s produce %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">product</span><span class="p">))</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
+            
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">produce</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">"producer"</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">consume</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">"consumer"</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">c</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="c1"># 输出如下
+</span><span class="n">producer</span> <span class="n">produce</span> <span class="n">product</span><span class="o">-</span><span class="mi">0</span>
+<span class="n">producer</span> <span class="n">produce</span> <span class="n">product</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">consumer</span> <span class="n">consume</span> <span class="n">product</span><span class="o">-</span><span class="mi">0</span>
+<span class="n">producer</span> <span class="n">produce</span> <span class="n">product</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">consumer</span> <span class="n">consume</span> <span class="n">product</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">consumer</span> <span class="n">consume</span> <span class="n">product</span><span class="o">-</span><span class="mi">2</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>以上就是最简单的生产者消费者模型了，生产者生产三个任务供消费者消费。但是上面的写法有个问题，就是生产者将任务生产完毕之后就和主线程一起退出了，但是消费者将所有的任务消费完之后还没停止，一直处于阻塞状态。</p>
+
+<p>那可不可以将 <code class="highlighter-rouge">while True</code> 的判断改为 <code class="highlighter-rouge">while not q.empty()</code>呢，肯定是不行的。因为 empty() 返回 <code class="highlighter-rouge">False</code> ，不保证后续调用的 <code class="highlighter-rouge">get()</code>不被阻塞。同时，如果用 <code class="highlighter-rouge">empty()</code> 函数来做判断的话，那么就要保证消费者线程开启之时生产者一定至少生产了一个任务，否则消费者线程就会因条件不满足直接退出程序；同时如果生产者生产速度比较慢，一旦消费者将任务消费完且下次判断时还没有新的任务入队，那么消费者线程也会因条件不满足直接退出程序。自此以后，生产者生产的任务就永远不会被消费了。</p>
+
+<p>那我们可以做一个约定，当生产者生产完任务之后，放入一个标志，类似于 <code class="highlighter-rouge">q.put(None)</code>,一旦消费者接收到为 None 的任务时就意味着结束，直接退出程序即可。这种做法在上面的程序中是没有问题的，唯一的缺点就是有 N 个消费者线程就需要放入 N 个 None 标志，这对于多消费者类型的程序显然是很不友好的。</p>
+
+<h2 id="最佳实践">最佳实践</h2>
+
+<p>我们可以结合队列的内置函数 <code class="highlighter-rouge">task_done()</code> 和 <code class="highlighter-rouge">join()</code> 来达到我们的目的。</p>
+
+<p><code class="highlighter-rouge">join()</code> 函数是阻塞的。当消费者通过 <code class="highlighter-rouge">get()</code> 从队列获取一项任务并处理完成之后，需要调用且只可以调用一次 <code class="highlighter-rouge">task_done()</code>，该方法会给队列发送一个信号，<code class="highlighter-rouge">join()</code>函数则在监听这个信号。可以简单理解为队列内部维护了一个计数器，该计数器标识未完成的任务数，每当添加任务时，计数器会增加，调用 <code class="highlighter-rouge">task_done()</code>时计数器则会减少，直到队列为空。而 <code class="highlighter-rouge">join()</code> 就是在监听队列是否为空，一旦条件满足则结束阻塞状态。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+
+<span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"%s consume %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">product</span><span class="p">))</span>
+        <span class="n">q</span><span class="p">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">produce</span><span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="s">'product-'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"%s produce %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">thread_name</span><span class="p">,</span> <span class="n">product</span><span class="p">))</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">q</span><span class="p">.</span><span class="n">join</span><span class="p">()</span>
+            
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">produce</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">"producer"</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">consume</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">"consumer"</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">consume</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">"consumer-1"</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+
+<span class="n">c</span><span class="p">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">c1</span><span class="p">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">c</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">c1</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="c1"># 输出如下
+</span><span class="n">producer</span> <span class="n">produce</span> <span class="n">product</span><span class="o">-</span><span class="mi">0</span>
+<span class="n">producer</span> <span class="n">produce</span> <span class="n">product</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">consumer</span><span class="o">-</span><span class="mi">1</span> <span class="n">consume</span> <span class="n">product</span><span class="o">-</span><span class="mi">0</span>
+<span class="n">consumer</span> <span class="n">consume</span> <span class="n">product</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">producer</span> <span class="n">produce</span> <span class="n">product</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">consumer</span> <span class="n">consume</span> <span class="n">product</span><span class="o">-</span><span class="mi">2</span>
+</code></pre></div></div>
+
+<p>上述示例中，我们将消费者线程设置为守护线程，这样当主线程结束时消费者线程也会一并结束。然后主线程最后一句 <code class="highlighter-rouge">p.join()</code> 又表示主线程必须等待生产者线程结束后才可以结束。</p>
+
+<p>再细看生产者线程的主函数 <code class="highlighter-rouge">produce()</code>，该函数中出现了我们上面说过的 <code class="highlighter-rouge">q.join()</code> 函数。而 <code class="highlighter-rouge">task_done</code> 则是在消费者线程的主函数中调用的。故当生产者线程生产完所有任务后就会被阻塞，只有当消费者线程处理完所有任务后生产者才会阻塞结束。随着生产者线程的结束，主线程也一并结束，守护线程消费者线程也一并结束，自此所有线程均安全退出。</p>
+
+<h2 id="queue-总结">Queue 总结</h2>
+
+<p>本章节介绍了队列的高级应用，从简易版的示例到最佳实践，介绍了生产者消费者模型的基本用法，在该模型中，队列扮演了非常重要的角色，起到了解耦的目的。</p>
+
+<p>本模型有固定的步骤，其中最重要的就是通过 <code class="highlighter-rouge">task_done()</code> 和 <code class="highlighter-rouge">join()</code> 来互相通信。 <code class="highlighter-rouge">task_done()</code> 仅仅用来通知队列消费者已完成一个任务，至于任务是什么它毫不关心，它只关心队列中未完成的任务数量。</p>
+
+<p>注意：<code class="highlighter-rouge">task_done()</code> 不可以在 <code class="highlighter-rouge">put()</code> 之前调用，否则会引发 ValueError: task_done() called too many times。同时在处理完任务后只可以调用一次该函数，否则队列将不能准确计算未完成任务数量。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-050">Python-100-days-day050</a></p>
+</blockquote>
+
+<h2 id="参考资料">参考资料</h2>
+
+<p><a href="https://stackoverflow.com/questions/1593299/python-queue-get-task-done-issue">python-queue-get-task-done-issue</a></p>
+
+<p><a href="https://www.ibm.com/developerworks/cn/aix/library/au-threadingpython/index.html">使用 Python 进行线程编程</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/11/06/python-queue02-050.html';
+        this.page.identifier = '/python/2019/11/06/python-queue02-050.html';
+        this.page.title = '第50天： Python Queue 进阶用法';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/11/06/python-queue02-050.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

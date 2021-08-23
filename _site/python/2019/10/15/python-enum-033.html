@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第33天：Python 枚举 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;blockquote&gt;
+  &lt;p&gt;by 小小摸虾&lt;/p&gt;
+&lt;/blockquote&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/10/15/python-enum-033.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第33天：Python 枚举">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第33天：Python 枚举</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/15
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <blockquote>
+  <p>by 小小摸虾</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">enum</code> 是一组绑定到唯一常数值的符号名称，并且具备可迭代性和可比较性的特性。我们可以使用 <code class="highlighter-rouge">enum</code> 创建具有良好定义的标识符，而不是直接使用魔法字符串或整数，也便于开发工程师的代码维护。</p>
+
+<!--more-->
+
+<h2 id="创建枚举">创建枚举</h2>
+
+<p>我们可以使用 <code class="highlighter-rouge">class</code> 语法创建一个枚举类型，方便我们进行读写，另外，根据函数 <code class="highlighter-rouge">API</code> 的描述定义，我们可以创建一个 <code class="highlighter-rouge">enum</code> 的子类，如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">HttpStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">FORBIDDEN</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">SERVICE_UNAVAILABLE</span> <span class="o">=</span> <span class="mi">500</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意： 枚举属性值可以是任何东西: <code class="highlighter-rouge">int</code>, <code class="highlighter-rouge">str</code> 等。如果确切的值不重要，您可以使用 <code class="highlighter-rouge">auto</code> 实例，并为您选择适当的值。如果您将 <code class="highlighter-rouge">auto</code> 与其他值混合，则必须小心。
+<strong>枚举类型中，不可以设置相同名称的 name，可以有相同的 value</strong>。</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">enum</code> 自带属性 <code class="highlighter-rouge">name</code> 和 <code class="highlighter-rouge">value</code>，日常工作中使用最多的也是这两个属性，我们打印看看结果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'Member: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">))</span>               <span class="c1"># Member: HttpStatus.OK
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Member name: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">.</span><span class="n">name</span><span class="p">))</span>     <span class="c1"># Member name: OK
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Member value: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">.</span><span class="n">value</span><span class="p">))</span>   <span class="c1"># Member value: 200
+</span><span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">))</span>                              <span class="c1"># &lt;enum 'HttpStatus'&gt;
+</span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">))</span>                              <span class="c1"># &lt;HttpStatus.OK: 200&gt;
+</span><span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">,</span> <span class="n">HttpStatus</span><span class="p">))</span>            <span class="c1"># True
+</span></code></pre></div></div>
+
+<h2 id="枚举迭代">枚举迭代</h2>
+
+<p>枚举支持迭代和遍历顺序。举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+<span class="c1"># 创建
+</span><span class="k">class</span> <span class="nc">HttpStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">FORBIDDEN</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">SERVICE_UNAVAILABLE</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">.</span><span class="n">value</span>
+
+<span class="c1"># 迭代
+</span><span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">HttpStatus</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{} : {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="p">.</span><span class="n">value</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>打印结果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">OK</span> <span class="p">:</span> <span class="mi">200</span>
+<span class="n">BAD_REQUEST</span> <span class="p">:</span> <span class="mi">400</span>
+<span class="n">FORBIDDEN</span> <span class="p">:</span> <span class="mi">403</span>
+<span class="n">NOT_FOUND</span> <span class="p">:</span> <span class="mi">404</span>
+<span class="n">REQUEST_TIMEOUT</span> <span class="p">:</span> <span class="mi">408</span>
+<span class="n">SERVICE_UNAVAILABLE</span> <span class="p">:</span> <span class="mi">500</span>
+<span class="n">OTHER</span> <span class="p">:</span> <span class="o">&lt;</span><span class="nb">object</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x000002863E1D7B10</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>可以看出，遍历的每一个 <code class="highlighter-rouge">status</code> 是一个独立的枚举成员，拥有 <code class="highlighter-rouge">name</code> 和 <code class="highlighter-rouge">value</code> 属性。</p>
+
+<p>另外，我们也可以使用如下形式来进行枚举遍历：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">__members__</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{} : {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">member</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="枚举成员与属性访问">枚举成员与属性访问</h2>
+
+<ul>
+  <li>通过枚举 <code class="highlighter-rouge">value</code> 进行访问，访问需要使用元组<code class="highlighter-rouge">()</code>的形式</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>      <span class="c1"># HttpStatus.OK
+</span></code></pre></div></div>
+
+<ul>
+  <li>通过枚举 <code class="highlighter-rouge">name</code> 进行访问，访问需要使用列表<code class="highlighter-rouge">[]</code>的形式</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">[</span><span class="s">'OK'</span><span class="p">])</span>     <span class="c1"># HttpStatus.OK
+</span></code></pre></div></div>
+
+<ul>
+  <li>将属性赋予另一个 <code class="highlighter-rouge">enum</code> 成员</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">number</span> <span class="o">=</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">OK</span>
+<span class="k">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>               <span class="c1"># HttpStatus.OK
+</span></code></pre></div></div>
+
+<h2 id="枚举值唯一">枚举值唯一</h2>
+
+<p>上面我们创建的枚举类中，<code class="highlighter-rouge">value</code> 值是可以重复的，如果我们不想枚举类中的值重复可以是用装饰器 <code class="highlighter-rouge">@unique</code>，举例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">unique</span>
+
+<span class="c1"># 创建
+</span><span class="o">@</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">HttpStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">FORBIDDEN</span> <span class="o">=</span> <span class="mi">403</span>
+    <span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">REQUEST_TIMEOUT</span> <span class="o">=</span> <span class="mi">408</span>
+    <span class="n">SERVICE_UNAVAILABLE</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="mi">200</span>
+</code></pre></div></div>
+
+<p>我们运行后，报如下异常：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ValueError: duplicate values found in &lt;enum 'HttpStatus'&gt;: OTHER -&gt; OK
+</code></pre></div></div>
+
+<p>我们查看源代码，发现加入此装饰器的枚举类型，<code class="highlighter-rouge">unique</code> 方法会将其 <code class="highlighter-rouge">__members__.items()</code> 进行遍历，追加到 <code class="highlighter-rouge">duplicates</code> 列表中，如果发现列表不为空，则抛出如上异常信息。</p>
+
+<h2 id="枚举自动赋值">枚举自动赋值</h2>
+
+<p>此功能用于我们在使用枚举时，只在意枚举的标识符的含义而不在意值的情况下，但是如果需要与字符串或整数混合使用就要额外注意。下面贴上官方的示例：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">auto</span><span class="p">,</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">TestEnum</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">test_auto_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="n">red</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">blue</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">green</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Color</span><span class="p">),</span> <span class="p">[</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">test_auto_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">_generate_next_value_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span>
+    
+            <span class="n">red</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">blue</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+            <span class="n">green</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Color</span><span class="p">),</span> <span class="p">[</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="s">'red'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">blue</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="s">'green'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>可以发现，使用 <code class="highlighter-rouge">auto()</code> 得到的是整数自增型，如果我们需要别的方式，只需要在我们的枚举类中，重写 <code class="highlighter-rouge">_generate_next_value_</code> 方法。</p>
+
+<h2 id="枚举比较">枚举比较</h2>
+
+<p>枚举对象可以进行比较，但是不能进行值比较，如果需要进行值比较则需要枚举对象继承 <code class="highlighter-rouge">IntEnum</code> 对象，举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">IntEnum</span>
+
+<span class="k">class</span> <span class="nc">TestEnum</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Season</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+        <span class="n">SPRING</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">SUMMER</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">AUTUMN</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">WINTER</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="k">def</span> <span class="nf">test_comparisons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">season</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Season</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">season</span><span class="p">.</span><span class="n">SPRING</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">class</span> <span class="nc">Part</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="n">SPRING</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">CLIP</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">BARREL</span> <span class="o">=</span> <span class="mi">3</span>
+            
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">Part</span><span class="p">.</span><span class="n">SPRING</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">Part</span><span class="p">.</span><span class="n">SPRING</span><span class="p">,</span> <span class="n">season</span><span class="p">.</span><span class="n">SPRING</span><span class="p">)</span>
+
+<span class="n">TestEnum</span><span class="p">().</span><span class="n">test_comparisons</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>上面的测试例子当中，我们创建了两个继承类型不一样的枚举类，可以看到继承了 <code class="highlighter-rouge">IntEnum</code> 的 <code class="highlighter-rouge">Season</code> 可以进行值的比较，而继承了 <code class="highlighter-rouge">Enum</code> 的 <code class="highlighter-rouge">Part</code> 则不能进行值比较，并且 <code class="highlighter-rouge">IntEnum</code> 类型与 <code class="highlighter-rouge">Enum</code> 类型也不能进行比较，即使属性和值一样。</p>
+
+<h2 id="枚举方法">枚举方法</h2>
+
+<p>枚举中可以定义枚举类自身特有的方法，也可以复写一些已经在基类中定义好的方法，比如: <code class="highlighter-rouge">__init__</code>, <code class="highlighter-rouge">__str__</code>,<code class="highlighter-rouge">__repr__</code>,<code class="highlighter-rouge">__hash__</code>,<code class="highlighter-rouge">__format__</code> 等。举个例子：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">Mood</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">FUNKY</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">)</span>
+    <span class="n">HAPPY</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">"world"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">nice</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">num</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">nice</span> <span class="o">=</span> <span class="n">nice</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'my custom str! {0}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="o">@</span><span class="nb">classmethod</span>
+    <span class="k">def</span> <span class="nf">favorite_mood</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">.</span><span class="n">HAPPY</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">testValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">nice</span> <span class="o">+</span> <span class="s">':'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>上面我们定义了一个枚举类，其中 <code class="highlighter-rouge">value</code> 是一个枚举类型，我们可以定义 <code class="highlighter-rouge">__init__</code> 方法去对应元组中的值，我们也复写了 <code class="highlighter-rouge">__str__</code> 方法。</p>
+
+<p>打印方法看看效果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">favorite_mood</span><span class="p">())</span>     <span class="c1"># my custom str! (3, 'world')
+</span><span class="k">print</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">HAPPY</span><span class="p">.</span><span class="n">describe</span><span class="p">())</span>    <span class="c1"># ('HAPPY', (3, 'world'))
+</span><span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">FUNKY</span><span class="p">))</span>          <span class="c1"># my custom str! (1, 'hello')
+</span><span class="k">print</span><span class="p">(</span><span class="n">Mood</span><span class="p">.</span><span class="n">FUNKY</span><span class="p">.</span><span class="n">testValue</span><span class="p">)</span>     <span class="c1"># hello:1
+</span></code></pre></div></div>
+
+<p>从输出结果看，我们自定义和复写的方法都已经成功的应用到了 <code class="highlighter-rouge">Mood</code> 类中。</p>
+
+<h2 id="枚举继承">枚举继承</h2>
+
+<p>不同于 <code class="highlighter-rouge">java</code> 中的枚举类, <code class="highlighter-rouge">python</code> 中的枚举类是可以被继承的，但是被继承的枚举类规定其不能定义任何成员，但可以定义抽象方法。举例如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EnumExtend</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_extending</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Shade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Shade</span><span class="p">):</span>
+            <span class="n">red</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">green</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">blue</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="nb">TypeError</span><span class="p">):</span>
+            <span class="k">class</span> <span class="nc">MoreColor</span><span class="p">(</span><span class="n">Color</span><span class="p">):</span>
+                <span class="n">cyan</span> <span class="o">=</span> <span class="mi">4</span>
+                <span class="n">magenta</span> <span class="o">=</span> <span class="mi">5</span>
+                <span class="n">yellow</span> <span class="o">=</span> <span class="mi">6</span>
+
+    <span class="k">def</span> <span class="nf">test_extending2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Shade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span>
+
+        <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Shade</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s">'%s nice!'</span> <span class="o">%</span> <span class="bp">self</span><span class="p">.</span><span class="n">value</span>
+
+        <span class="k">class</span> <span class="nc">MoreColor</span><span class="p">(</span><span class="n">Color</span><span class="p">):</span>
+            <span class="n">cyan</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">magenta</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">yellow</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">MoreColor</span><span class="p">.</span><span class="n">magenta</span><span class="p">.</span><span class="n">shade</span><span class="p">(),</span> <span class="s">'magenta'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">MoreColor</span><span class="p">.</span><span class="n">magenta</span><span class="p">.</span><span class="nb">hex</span><span class="p">(),</span> <span class="s">'5 nice!'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>测试用例可以完美运行，我们可以发现：第一个方法中，抛出了 <code class="highlighter-rouge">TypeError</code> 的异常；第二个测试方法中，<code class="highlighter-rouge">MoreColor</code> 继承了 <code class="highlighter-rouge">Color</code>， <code class="highlighter-rouge">Color</code> 继承了 <code class="highlighter-rouge">Shade</code>, 并且我们可以通过子类调用父类中的方法。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节主要介绍了 <code class="highlighter-rouge">enum</code> 模块的基础知识，包含枚举的创建、枚举成员和属性的访问、枚举方法的创建、枚举的继承等。其中新版中的 <code class="highlighter-rouge">_ignore_</code>、<code class="highlighter-rouge">_order_</code>、<code class="highlighter-rouge">_missing_</code> 等可以学习官网的例子，另外 <code class="highlighter-rouge">enum</code> 的子类 <code class="highlighter-rouge">IntEnum</code>、<code class="highlighter-rouge">IntFlag</code>等也是我们比较常用的枚举基类，本文中简单的介绍了 <code class="highlighter-rouge">IntEnum</code>， 而 <code class="highlighter-rouge">IntFlag</code> 相比与 <code class="highlighter-rouge">IntEnum</code> 多了 <code class="highlighter-rouge">&amp;, |, ^, ~</code> 的操作，其他的子类大家感兴趣也可以了解。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-033">Python-100-days-day036</a></p>
+</blockquote>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/10/15/python-enum-033.html';
+        this.page.identifier = '/python/2019/10/15/python-enum-033.html';
+        this.page.title = '第33天：Python 枚举';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/10/15/python-enum-033.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

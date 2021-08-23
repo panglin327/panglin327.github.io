@@ -1,0 +1,142 @@
+I"�)<p>by 豆豆</p>
+
+<h2 id="简介">简介</h2>
+
+<p>随着互联网的普及，整个互联网每天都会产生海量的数据，如何有效地处理这些数据成为了互联网人的必备技能，而 Python 内置的 statistics 模块提供了基本的数据统计操作。</p>
+
+<!--more-->
+
+<h2 id="常用功能">常用功能</h2>
+
+<h3 id="meandata">mean(data)</h3>
+
+<p>mean(data) 用于求给定序列或者迭代器的算术平均数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">statistics</span>
+<span class="n">example_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">example_list</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mf">3.5</span>
+</code></pre></div></div>
+
+<h3 id="harmonic_meandata">harmonic_mean(data)</h3>
+
+<p>harmonic_mean(data) 用于计算数据的调和均值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">harmonic_mean</span><span class="p">(</span><span class="n">example_list</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">])</span><span class="o">*</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mf">2.4489795918367347</span>
+<span class="mf">2.448979591836735</span>
+</code></pre></div></div>
+
+<h3 id="mediandata">median(data)</h3>
+
+<p>median(data) 计算数据的中位数。如果有两个中位数，则返回其平均值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">example_list</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mf">3.5</span>
+</code></pre></div></div>
+
+<h3 id="median_lowdata">median_low(data)</h3>
+
+<p>median_low(data) 也是用于计算中位数的，如果有两个中位数，返回较小的那个。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">median_low</span><span class="p">(</span><span class="n">example_list</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mi">3</span>
+</code></pre></div></div>
+
+<h3 id="median_highdata">median_high(data)</h3>
+
+<p>median_high(data) 也是用于计算中位数的，如果有两个中位数，返回较大的那个。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">median_high</span><span class="p">(</span><span class="n">example_list</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mi">4</span>
+</code></pre></div></div>
+
+<h3 id="modedata">mode(data)</h3>
+
+<p>mode(data) 计算众数，也就是序列中出现次数最多的元素。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">mode</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">mode</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span><span class="s">"b"</span><span class="p">,</span><span class="s">"c"</span><span class="p">,</span><span class="s">"d"</span><span class="p">,</span><span class="s">"d"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,</span><span class="s">"a"</span><span class="p">,])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mi">3</span>
+<span class="n">a</span>
+</code></pre></div></div>
+
+<h3 id="pstdevdata-munone">pstdev(data, mu=None)</h3>
+
+<p>pstdev(data, mu=None) 用于计算数据的总体标准差。其中 mu 是序列的均值，如果你已经知道了该序列的均值，可传入该参数以减少计算量，当然该函数不会去验证你传入的均值是否合法，使用错误的均值可能会产生无效的结果。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">pstdev</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mf">1.7320508075688772</span>
+</code></pre></div></div>
+
+<h3 id="pvariancedata-munone">pvariance(data, mu=None)</h3>
+
+<p>pvariance(data, mu=None) 用于计算数据的总体方差。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">pvariance</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mi">3</span>
+</code></pre></div></div>
+
+<h3 id="stdevdata-xbarnone">stdev(data, xbar=None)</h3>
+
+<p>stdev(data, xbar=None) 用于计算数据的样本标准差。其中 xbar 是序列的均值，如果你已经知道了该序列的均值，可传入该参数以减少计算量，当然该函数不会去验证你传入的均值是否合法，使用错误的均值可能会产生无效的结果。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">stdev</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mf">2.0</span>
+</code></pre></div></div>
+
+<h3 id="variancedata-xbarnone">variance(data, xbar=None)</h3>
+
+<p>variance(data, xbar=None) 用于计算数据的样本方差。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">statistics</span><span class="p">.</span><span class="n">variance</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="mi">4</span>
+</code></pre></div></div>
+
+<h2 id="statistics-总结">statistics 总结</h2>
+
+<p>本文总结了 statistics 模块的常规操作，对于数据分析还是非常有益处的。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-040">Python-100-days-day040</a></p>
+</blockquote>
+
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://docs.python.org/zh-cn/3.7/library/statistics.html">Python 文档 statistics</a></p>
+
+:ET

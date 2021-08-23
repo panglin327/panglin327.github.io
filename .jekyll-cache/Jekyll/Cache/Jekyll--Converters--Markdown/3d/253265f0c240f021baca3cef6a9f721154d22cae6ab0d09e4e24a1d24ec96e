@@ -1,0 +1,390 @@
+I"K[<p>by 極光</p>
+
+<p>今天来为大家介绍一个有意思的开源微信个人号 API，它是基于 Python 调用微信网页版实现，只需要编写少量的代码，就可以完成一个能够处理所有信息的微信机器人。那它到底能实现了什么功能，接下来为大家一一介绍。</p>
+
+<!--more-->
+
+<h2 id="安装">安装</h2>
+
+<p>想要使用它，首先得安装 itchat 模块：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip3 <span class="nb">install </span>itchat
+</code></pre></div></div>
+
+<h2 id="登陆">登陆</h2>
+
+<p>想要通过 itchat 操作微信接收、发送信息等，第一步需要先登陆微信网页版，为此 itchat 提供了 <code class="highlighter-rouge">auto_login</code> 方法，调用这个方法就能实现微信登陆。首先新建 <code class="highlighter-rouge">mychat1.py</code> 文件，代码如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># mychat1.py
+</span><span class="kn">import</span> <span class="nn">itchat</span>
+<span class="kn">from</span> <span class="nn">itchat.content</span> <span class="kn">import</span> <span class="n">TEXT</span>
+
+<span class="o">@</span><span class="n">itchat</span><span class="p">.</span><span class="n">msg_register</span><span class="p">(</span><span class="n">TEXT</span><span class="p">)</span>   <span class="c1"># 注册处理文本信息
+</span><span class="k">def</span> <span class="nf">simple_reply</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="n">itchat</span><span class="p">.</span><span class="n">auto_login</span><span class="p">(</span><span class="n">hotReload</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># hotReload=True表示短时间关闭程序后可重连
+</span><span class="n">itchat</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>然后通过执行命令 <code class="highlighter-rouge">python mychat1.py</code> 运行代码，这时会生成一个名为 <code class="highlighter-rouge">QR.png</code> 的二维码图片文件，通过扫描这个二维码就可以登陆微信网页版了，这时将会显示如下信息：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Login successfully as 你的微信昵称
+Start auto replying.
+</code></pre></div></div>
+
+<p>如果你向这个登陆后的微信发送文本消息，则会直接把你发送的消息内容在终端打印出来。</p>
+
+<p><strong>关于登陆这里还有几点要说明下：</strong></p>
+
+<ol>
+  <li>itchat提供了登陆状态暂存，关闭程序后一定时间内不需要扫码即可登录。只需要在 <code class="highlighter-rouge">auto_login</code> 方法中传入 <code class="highlighter-rouge">hotReload=True</code> 即可。</li>
+  <li>为了方便在无图形界面使用itchat，程序内置了命令行二维码的显示。只需要在 <code class="highlighter-rouge">auto_login</code> 方法中传入 <code class="highlighter-rouge">enableCmdQR=True</code> 即可。</li>
+  <li>可以自定义登陆，比如更改提示语、二维码出现后邮件发送等。</li>
+</ol>
+
+<p><strong>关于自定义登陆所需要的方法，登陆的过程按顺序为：</strong></p>
+
+<ul>
+  <li>获取二维码uuid，方法名称：<code class="highlighter-rouge">get_QRuuid</code></li>
+  <li>获取二维码，方法名称：<code class="highlighter-rouge">get_QR</code></li>
+  <li>判断是否已经登陆成功，方法名称：<code class="highlighter-rouge">check_login</code></li>
+  <li>获取初始化数据，方法名称：<code class="highlighter-rouge">web_init</code></li>
+  <li>更新微信相关信息（通讯录、手机登陆状态），方法名称：<code class="highlighter-rouge">get_friends</code>、<code class="highlighter-rouge">show_mobile_login</code></li>
+  <li>循环扫描新信息（开启心跳），方法名称：<code class="highlighter-rouge">start_receiving</code></li>
+</ul>
+
+<p>以上简单介绍了下关于登陆相关的内容，如果想了解更详细信息请查看官方文档。</p>
+
+<h2 id="注册消息方法">注册消息方法</h2>
+
+<p>itchat 将根据接收到的消息类型寻找对应的已经注册的方法，如果一个消息类型没有对应的注册方法，该消息将会被舍弃，就像我们上面代码只注册了 <code class="highlighter-rouge">TEXT</code> 类型的消息才会被打印出来。当然在运行过程当中也可以动态注册方法，注册方式与结果不变。</p>
+
+<h3 id="消息类型">消息类型</h3>
+
+<p>itchat 支持多种类型的消息处理，具体类型和参数详见下表：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>参数</th>
+      <th>类型</th>
+      <th>Text键值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TEXT</td>
+      <td>文本</td>
+      <td>文本内容</td>
+    </tr>
+    <tr>
+      <td>MAP</td>
+      <td>地图</td>
+      <td>位置文本</td>
+    </tr>
+    <tr>
+      <td>CARD</td>
+      <td>名片</td>
+      <td>推荐人字典</td>
+    </tr>
+    <tr>
+      <td>NOTE</td>
+      <td>通知</td>
+      <td>通知文本</td>
+    </tr>
+    <tr>
+      <td>SHARING</td>
+      <td>分享</td>
+      <td>分享名称</td>
+    </tr>
+    <tr>
+      <td>PICTURE</td>
+      <td>图片/表情</td>
+      <td>下载方法</td>
+    </tr>
+    <tr>
+      <td>RECORDING</td>
+      <td>语音</td>
+      <td>下载方法</td>
+    </tr>
+    <tr>
+      <td>ATTACHMENT</td>
+      <td>附件</td>
+      <td>下载方法</td>
+    </tr>
+    <tr>
+      <td>VIDEO</td>
+      <td>小视频</td>
+      <td>下载方法</td>
+    </tr>
+    <tr>
+      <td>FRIENDS</td>
+      <td>好友邀请</td>
+      <td>添加好友所需参数</td>
+    </tr>
+    <tr>
+      <td>SYSTEM</td>
+      <td>系统消息</td>
+      <td>更新内容的用户或群聊的UserName组成的列表</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="注册消息">注册消息</h3>
+
+<p>注册消息有两种方法：</p>
+
+<ol>
+  <li>不带具体对象注册，将注册为普通消息的回复方法</li>
+  <li>带对象参数注册，对应消息对象将调用该方法</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># mychat2.py
+</span><span class="kn">import</span> <span class="nn">itchat</span>
+<span class="kn">from</span> <span class="nn">itchat.content</span> <span class="kn">import</span> <span class="n">TEXT</span>
+
+<span class="c1"># 不带具体对象注册，将注册为普通消息的回复方法
+</span><span class="o">@</span><span class="n">itchat</span><span class="p">.</span><span class="n">msg_register</span><span class="p">(</span><span class="n">TEXT</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">simple_reply</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">'I received: %s'</span> <span class="o">%</span> <span class="n">msg</span><span class="p">[</span><span class="s">'Text'</span><span class="p">]</span>
+
+<span class="c1"># 带对象参数注册，对应消息对象将调用该方法
+</span><span class="o">@</span><span class="n">itchat</span><span class="p">.</span><span class="n">msg_register</span><span class="p">(</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">isFriendChat</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">isGroupChat</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">isMpChat</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">text_reply</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">msg</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">'%s: %s'</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="nb">type</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">text</span><span class="p">))</span>
+
+<span class="n">itchat</span><span class="p">.</span><span class="n">auto_login</span><span class="p">(</span><span class="n">hotReload</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">itchat</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>然后通过执行命令 <code class="highlighter-rouge">python mychat2.py</code> 运行代码，扫码登陆并向该微信号发消息，这时你会发现你向它发什么消息，它会同样回复什么消息，而控制台并没有打印消息，很明显它只调用了带参数对象注册的方法，那么为什么不调用第一个不带对象注册的方法，下面我们就说说注册消息的优先级。</p>
+
+<h3 id="注册消息优先级">注册消息优先级</h3>
+
+<p>多次注册同一类型消息时，遵循以下规则：</p>
+
+<ul>
+  <li>后注册消息先于先注册消息</li>
+  <li>带参数消息先于不带参数消息</li>
+</ul>
+
+<p>依据这两个规则，上例代码只执行第二个带参数注册的方法就很正常了，另外 itchat 还支持动态注册消息，一种方法是生成一个守护线程动态注册消息，另一种是使用 <code class="highlighter-rouge">configured_reply</code> 方法，具体如何实现请参考官方文档 。</p>
+
+<h2 id="消息回复">消息回复</h2>
+
+<p>itchat 提供了五种消息回复的方法：</p>
+
+<p><strong>1. send方法</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itchat</span>
+
+<span class="c1"># 可发送多种类型消息
+</span><span class="n">itchat</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s">'文本消息'</span><span class="p">,</span> <span class="n">toUserName</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">itchat</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">'@img@%s'</span> <span class="o">%</span> <span class="s">'表情图片.gif'</span><span class="p">)</span>
+<span class="n">itchat</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">'@fil@%s'</span> <span class="o">%</span> <span class="s">'文件.docx'</span><span class="p">)</span>
+<span class="n">itchat</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">'@vid@%s'</span> <span class="o">%</span> <span class="s">'测试.mp4'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>参数说明：</strong></p>
+  <ul>
+    <li>msg：消息内容。<code class="highlighter-rouge">'@fil@文件地址'</code>将会被识别为传送文件，<code class="highlighter-rouge">'@img@图片地址'</code>将会被识别为传送图片，<code class="highlighter-rouge">'@vid@视频地址'</code>将会被识别为小视频。</li>
+    <li>toUserName：发送对象，如果留空将会发送给自己。</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p><strong>返回值：</strong></p>
+  <ul>
+    <li>发送成功：True</li>
+    <li>失败：False</li>
+  </ul>
+</blockquote>
+
+<p><strong>2. send_msg方法</strong></p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">send_msg</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s">'文本消息'</span><span class="p">,</span> <span class="n">toUserName</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>参数说明：</strong></p>
+  <ul>
+    <li>msg：消息内容，仅文本</li>
+    <li>toUserName：发送对象，如果留空将会发送给自己</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p><strong>返回值：</strong></p>
+  <ul>
+    <li>发送成功：True</li>
+    <li>失败：False</li>
+  </ul>
+</blockquote>
+
+<p><strong>3. send_file、send_img、send_video方法</strong></p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">send_file</span><span class="p">(</span><span class="n">fileDir</span><span class="p">,</span> <span class="n">toUserName</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">send_img</span><span class="p">(</span><span class="n">fileDir</span><span class="p">,</span> <span class="n">toUserName</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">send_video</span><span class="p">(</span><span class="n">fileDir</span><span class="p">,</span> <span class="n">toUserName</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>参数说明：</strong></p>
+  <ul>
+    <li>fileDir：文件路径（不存在该文件时将打印无此文件的提醒）</li>
+    <li>toUserName：发送对象，如果留空将会发送给自己</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p><strong>返回值：</strong></p>
+  <ul>
+    <li>发送成功：True</li>
+    <li>失败：False</li>
+  </ul>
+</blockquote>
+
+<p>通过以上几种可以看出，几种方法各有特点，可以随自己喜好使用，不过官方推荐直接使用 <code class="highlighter-rouge">send</code> 方法。</p>
+
+<h2 id="消息内容">消息内容</h2>
+
+<p>在上面介绍注册消息时，我们知道了 itchat 支持微信回复的以下几种类型的消息，包括：微信初始化消息、文本消息、图片消息、小视频消息、地理位置消息、名片消息、 语音消息、动画表情、普通链接和应用分享、音乐链接、群消息、红包消息、系统消息。接下来我们选几种常见消息和大家简单介绍下。</p>
+
+<h3 id="文本消息">文本消息</h3>
+
+<p>文本消息是最常见的消息，基本格式如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MsgType: 1   # 消息类型 
+FromUserName: 发送方ID
+ToUserName: 接收方ID
+Content: 消息内容
+</code></pre></div></div>
+
+<h3 id="图片消息">图片消息</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MsgType: 3   # 消息类型 
+FromUserName: 发送方ID
+ToUserName: 接收方ID
+MsgId: 用于获取图片
+Content:
+    &lt;msg&gt;
+        &lt;img length="6503" hdlength="0" /&gt;
+        &lt;commenturl&gt;&lt;/commenturl&gt;
+    &lt;/msg&gt;
+</code></pre></div></div>
+
+<h3 id="小视频消息">小视频消息</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MsgType: 62   # 小视频消息
+FromUserName: 发送方ID
+ToUserName: 接收方ID
+MsgId: 用于获取小视频
+Content:
+    &lt;msg&gt;
+        &lt;img length="6503" hdlength="0" /&gt;
+        &lt;commenturl&gt;&lt;/commenturl&gt;
+    &lt;/msg&gt;
+</code></pre></div></div>
+
+<p>篇幅有限，先展示这几种消息结构，有个大概的认识，更多的消息结构请参考官网文档。</p>
+
+<h2 id="账号类型">账号类型</h2>
+
+<p>我们平时使用微信中，经常接触的三种账号，分别为好友、公众号、群聊。 itchat 为这三种类型的账号分别提供了整体获取和根据条件搜索的方法，接下来我们分别介绍下每种类型的使用方式。</p>
+
+<h3 id="好友">好友</h3>
+
+<p>1、好友的获取方法为 <code class="highlighter-rouge">get_friends</code>，将会返回完整的好友列表：</p>
+
+<ul>
+  <li>其中每个好友为一个字典</li>
+  <li>列表的第一项为本人的账号信息</li>
+  <li>传入 <code class="highlighter-rouge">update</code> 键为 <code class="highlighter-rouge">True</code> 将可以更新好友列表并返回</li>
+</ul>
+
+<p>2、好友的搜索方法为 <code class="highlighter-rouge">search_friends</code>，目前有如下四种搜索方式：</p>
+
+<ul>
+  <li>仅获取自己的用户信息： <code class="highlighter-rouge">search_friends()</code></li>
+  <li>获取特定 <code class="highlighter-rouge">UserName</code> 的用户信息： <code class="highlighter-rouge">search_friends(userName='好友昵称')</code></li>
+  <li>获取备注、微信号、昵称中的任何一项等于name键值的用户：<code class="highlighter-rouge">search_friends(name='搜索名称')</code></li>
+  <li>获取备注、微信号、昵称分别等于相应键值的用户：<code class="highlighter-rouge">search_friends(wechatAccount='搜索名称')</code></li>
+  <li>以上第3和4项功能可以一同使用：<code class="highlighter-rouge">itchat.search_friends(name='小白', wechatAccount='littleboy')</code></li>
+</ul>
+
+<p>3、更新用户信息的方法为 <code class="highlighter-rouge">update_friend</code>，该方法需要传入用户的 <code class="highlighter-rouge">UserName</code>，返回指定用户的最新信息。当然也可以传入 <code class="highlighter-rouge">UserName</code> 组成的列表，那么相应的也会返回指定用户的最新信息组成的列表。</p>
+
+<h3 id="公众号">公众号</h3>
+
+<p>1、公众号的获取方法为 <code class="highlighter-rouge">get_mps</code>，将会返回完整的公众号列表:</p>
+
+<ul>
+  <li>其中每个公众号为一个字典</li>
+  <li>传入 <code class="highlighter-rouge">update</code> 键为 <code class="highlighter-rouge">True</code> 将可以更新公众号列表并返回</li>
+</ul>
+
+<p>2、公众号的搜索方法为 <code class="highlighter-rouge">search_mps</code>，有两种搜索方法:</p>
+
+<ul>
+  <li>获取特定 <code class="highlighter-rouge">UserName</code> 的公众号：<code class="highlighter-rouge">search_mps(userName='公众号名')</code></li>
+  <li>获取名字中含有特定字符的公众号，返回值为一个字典的列表：<code class="highlighter-rouge">search_mps(name='littleboy')</code></li>
+</ul>
+
+<h3 id="群聊">群聊</h3>
+
+<p>1、群聊的获取方法为 <code class="highlighter-rouge">get_chatrooms</code>，将会返回完整的群聊列表：</p>
+
+<ul>
+  <li>其中每个群聊为一个字典</li>
+  <li>传入 <code class="highlighter-rouge">update</code> 键为 <code class="highlighter-rouge">True</code> 将可以更新群聊列表并返回通讯录中保存的群聊列表</li>
+  <li>群聊列表为后台自动更新，如果中途意外退出存在极小的概率产生本地群聊消息与后台不同步</li>
+  <li>为了保证群聊信息在热启动中可以被正确的加载，即使不需要持续在线的程序也需要运行 <code class="highlighter-rouge">itchat.run()</code></li>
+  <li>如果不想要运行上述命令，请在退出程序前调用 <code class="highlighter-rouge">itchat.dump_login_status()</code>，更新热拔插需要的信息</li>
+</ul>
+
+<p>2、群聊的搜索方法为 <code class="highlighter-rouge">search_chatrooms</code>，有两种搜索方法，分别是通过传参 <code class="highlighter-rouge">userName</code> 和 <code class="highlighter-rouge">name</code> 进行搜索，方式同公众号搜索相似。</p>
+
+<p>3、群聊用户列表的获取方法为 <code class="highlighter-rouge">update_chatroom</code>，同时需要关注以下几点：</p>
+
+<ul>
+  <li>如果想要更新该群聊的其他信息也可以用该方法</li>
+  <li>群聊在首次获取中不会获取群聊的用户列表，所以需要调用该命令才能获取群聊的成员</li>
+  <li>该方法需要传入群聊的 <code class="highlighter-rouge">UserName</code>，返回特定群聊的详细信息</li>
+  <li>同样也可以传入 <code class="highlighter-rouge">UserName</code> 组成的列表，那么相应的也会返回指定用户的最新信息组成的列表</li>
+</ul>
+
+<p>4、创建、增加、删除群聊用户的方法如下所示：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">memberList</span> <span class="o">=</span> <span class="n">itchat</span><span class="p">.</span><span class="n">get_friends</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="c1"># 创建群聊，topic键值为群聊名
+</span><span class="n">chatroomName</span> <span class="o">=</span> <span class="n">itchat</span><span class="p">.</span><span class="n">create_chatroom</span><span class="p">(</span><span class="n">memberList</span><span class="p">,</span> <span class="s">'测试群聊'</span><span class="p">)</span>
+<span class="c1"># 删除群聊内的群友
+</span><span class="n">itchat</span><span class="p">.</span><span class="n">delete_member_from_chatroom</span><span class="p">(</span><span class="n">chatroomName</span><span class="p">,</span> <span class="n">memberList</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># 增加好友进入群聊
+</span><span class="n">itchat</span><span class="p">.</span><span class="n">add_member_into_chatroom</span><span class="p">(</span><span class="n">chatroomName</span><span class="p">,</span> <span class="n">memberList</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">useInvitation</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>不过还需要注意以下几点：</p>
+
+<ul>
+  <li>由于之前通过群聊检测是否被好友拉黑的程序，目前这三个方法都被严格限制了使用频率</li>
+  <li>删除群聊需要本账号为群管理员，否则会失败</li>
+  <li>将用户加入群聊有直接加入与发送邀请，通过 <code class="highlighter-rouge">useInvitation</code> 设置</li>
+  <li>超过40人的群聊无法使用直接加入的加入方式，特别注意</li>
+</ul>
+
+<h2 id="总结">总结</h2>
+
+<p>本文为大家简单介绍了 itchat 所提供的大部分功能，通过这些功能我们完全可以非常方便的开发出一个微信聊天机器人。还有目前微信对新账号有限制，即不能登陆微信网页版，所以这种账号也不能通过 itchat 登陆。另外 GitHub 上也有很多基于 itchat 做的开源机器人项目，有兴趣可以去搜索，再次感谢各位开源作者的贡献。</p>
+
+<p>参考</p>
+
+<ul>
+  <li><a href="https://itchat.readthedocs.io/zh/latest/">itchat 文档：https://itchat.readthedocs.io/zh/latest/</a></li>
+</ul>
+
+<p><a href="https://github.com/JustDoPython/python-100-day">示例代码：https://github.com/JustDoPython/python-100-day</a></p>
+
+:ET

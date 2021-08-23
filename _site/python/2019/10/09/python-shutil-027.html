@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第27天：Python shutil 模块 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;blockquote&gt;
+  &lt;p&gt;by 程序员野客&lt;/p&gt;
+&lt;/blockquote&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/10/09/python-shutil-027.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第27天：Python shutil 模块">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第27天：Python shutil 模块</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/09
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <blockquote>
+  <p>by 程序员野客</p>
+</blockquote>
+
+<p>shutil 可以看作 sh + util，即 shell 工具之意，该模块提供了一些针对文件和文件夹的高级操作，如：拷贝、删除、移动等，shutil 模块是对 os 模块的补充。</p>
+
+<!--more-->
+
+<h2 id="1-文件和文件夹操作">1 文件和文件夹操作</h2>
+
+<p><strong>1）copyfileobj(fsrc, fdst, length=16*1024)</strong></p>
+
+<p>复制对象 fsrc 的内容到 fdst，如果 fdst 不存在则自动创建，length 表示缓冲大小，如果是负数表示直接复制，默认为值为 16*1024。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s = open('folder1/fsrc.txt','r')
+d = open('folder1/fdst.txt','w')
+shutil.copyfileobj(s,d,16*1024)
+</code></pre></div></div>
+
+<p><strong>2）shutil.copyfile(src, dst, *, follow_symlinks=True)</strong></p>
+
+<p>复制文件 src 的内容到 dst 并返回 dst，如果 dst 不存在则自动创建，src 和 dst 是字符串类型的路径名，如果 src 和 dst 指向同一个文件，抛出 SameFileError。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.copyfile('folder1/fsrc.txt','folder1/fdst.txt')
+</code></pre></div></div>
+
+<p><strong>3）copymode(src, dst, *, follow_symlinks=True)</strong></p>
+
+<p>复制文件 src 的权限到 dst，src 和 dst 是字符串类型的路径名，如果 follow_symlinks 为 False 且 src 和 dst 都是符号链接，将修改 dst 符号链接文件而非源文件的权限。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.copymode('folder1/fsrc.txt','folder1/fdst.txt')
+</code></pre></div></div>
+
+<blockquote>
+  <p>注：符号链接（软链接）是一类特殊的文件， 其包含有一条以绝对路径或者相对路径的形式指向其它文件或者目录的引用。</p>
+</blockquote>
+
+<p><strong>4）copystat(src, dst, *, follow_symlinks=True)</strong></p>
+
+<p>复制 src 的权限、最后访问时间、最后修改时间以及标志到 dst，src 和 dst 是字符串类型的路径名，可以是文件或目录，在Linux平台上还会复制扩展属性。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.copystat('folder1/fsrc.txt','folder1/fdst.txt')
+</code></pre></div></div>
+
+<blockquote>
+  <p>扩展文件属性是文件系统的一个功能，它允许用户将计算机文件与未被文件系统所解释的元数据关联起来。</p>
+</blockquote>
+
+<p><strong>5）copy(src, dst, *, follow_symlinks=True)</strong></p>
+
+<p>复制文件 src 的内容和权限到 dst，dst 可以是文件或文件夹，如果是文件，函数的返回值就是 dst，如果是文件夹，函数的返回值就是 src 的文件名与 dst 的路径拼接，src 和 dst 都是字符串类型，如果 dst 指向一个文件夹，则创建与 src 同名的新文件。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dst 为文件
+shutil.copy('folder1/fsrc.txt','folder1/fdst.txt')
+
+# dst 为文件夹
+shutil.copy('folder1/fsrc.txt', 'tmp/')
+</code></pre></div></div>
+
+<p><strong>6）copy2(src, dst, *, follow_symlinks=True)</strong></p>
+
+<p>该方法会保留 src 的所有元数据(如创建时间、修改时间等)，其他与 copy() 相同，当 follow_symlinks 为 False 且 src 为软链接时，dst 将作为软链接被创建并拷贝 src 的所有元数据到 dst。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.copy2('folder1/fsrc.txt','folder1/fdst.txt')
+</code></pre></div></div>
+
+<p><strong>7）ignore_patterns(*patterns)</strong></p>
+
+<p>创建并返回一个函数，可传递到 copytree() 中作为 ignore 参数的值，忽略满足匹配模式的文件和目录。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.ignore_patterns('tmp*')
+</code></pre></div></div>
+
+<p><strong>8）copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2, ignore_dangling_symlinks=False)</strong></p>
+
+<p>递归复制以 src 为根目录的整个目录树，返回目标目录 dst，dst 必须是不存在的目录，它和它不存在的父目录都将被创建，使用 copystat() 复制目录元数据，使用 copy2() 复制文件内容和元数据。</p>
+
+<ul>
+  <li>symlinks：是否复制软链接；</li>
+  <li>ignore：指定不参与复制的文件，其值应该是一个 ignore_patterns() 方法；</li>
+  <li>copy_function：指定复制的模式。</li>
+</ul>
+
+<p>示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.copytree('folder1', 'folder2', ignore=shutil.ignore_patterns( 'tmp*'))
+</code></pre></div></div>
+
+<p><strong>9）rmtree(path, ignore_errors=False, onerror=None)</strong></p>
+
+<p>删除目录，path 必须指定一个目录。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.rmtree('rm')
+</code></pre></div></div>
+
+<p><strong>10）move(src, dst, copy_function=copy2)</strong></p>
+
+<p>移动文件或目录到目标位置，如果目标位置 dst 是一个存在的目录，将 src 移动到 dst 路径下。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shutil.move('folder1/', 'folder2/')
+</code></pre></div></div>
+
+<p><strong>11）disk_usage(path)</strong></p>
+
+<p>检测磁盘使用信息，返回值为元组。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(shutil.disk_usage('folder1/'))
+
+# 输出结果
+# usage(total=107375226880, used=69274427392, free=38100799488)
+</code></pre></div></div>
+
+<p><strong>12）which(cmd, mode=os.F_OK | os.X_OK, path=None)</strong></p>
+
+<p>返回 cmd 调用的可执行文件路径，没有返回 None。mode：用于判断文件是否存在或可执行，path：cmd 的查找路径。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(shutil.which('python'))
+
+# 输出结果
+# E:\Python3\python.EXE
+</code></pre></div></div>
+
+<p><strong>13）chown(path, user=None, group=None)</strong></p>
+
+<p>改变指定 path 的所有者和所属组，user 和 group 参数，可以是系统上的用户名、组名或 uid/gid，至少需要传递其中一个参数。</p>
+
+<h2 id="2-归档操作">2 归档操作</h2>
+
+<p><strong>1）make_archive(base_name, format, root_dir=None, base_dir=None, verbose=0, dry_run=0, owner=None, group=None, logger=None)</strong></p>
+
+<p>创建归档文件，并返回归档文件的名称。</p>
+
+<ul>
+  <li>base_name：要创建的归档文件的名称，可以包含路径表示归档文件的目标位置；</li>
+  <li>format：归档文件的格式(zip、tar、 gztar、bztar、xztar)；</li>
+  <li>root_dir：归档文件的根目录(默认当前目录)；</li>
+  <li>base_dir：归档文件中所有文件和目录的前缀路径(默认当前目录)；</li>
+  <li>dry_run：如果为 True，不创建归档文件。</li>
+  <li>owner/group：归档文件中所有文件和目录的所属用户和组，如果 format 为 zip，owner 和 group 的配置不生效；</li>
+  <li>logger：通常使用 logging.Logger 对象；</li>
+  <li>verbose：已弃用。</li>
+</ul>
+
+<p>看下示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># zipfile:生成文件名；归档 tmp 目录下文件和文件夹
+shutil.make_archive('zipfile', 'zip', 'tmp')
+</code></pre></div></div>
+
+<p><strong>2）get_archive_formats()</strong></p>
+
+<p>返回支持的归档格式列表，列表中的每个元素是 (name, description) 形式的元组。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(shutil.get_archive_formats())
+
+# 输出结果
+# [('bztar', "bzip2'ed tar-file"), ('gztar', "gzip'ed tar-file"), ('tar', 'uncompressed tar file'), ('xztar', "xz'ed tar-file"), ('zip', 'ZIP file')]
+</code></pre></div></div>
+
+<p><strong>3）register_archive_format(name, function, extra_args=None, description=’’)</strong></p>
+
+<p>注册一个格式名并绑定到一个压缩时使用的程序，function 是用于解包存档文件的可调用函数。</p>
+
+<p><strong>4）unregister_archive_format(name)</strong></p>
+
+<p>从支持的归档格式中移除 name。</p>
+
+<p><strong>5）unpack_archive(filename, extract_dir=None, format=None)</strong></p>
+
+<p>解压归档文件。filename：归档文件名称；extract_dir：归档文件解压的目标位置；format：使用指定格式的解压器解压归档文件。</p>
+
+<p><strong>6）register_unpack_format(name, extensions, function, extra_args=None, description=’’)</strong></p>
+
+<p>注册格式为 name 的解压器。</p>
+
+<p><strong>7）unregister_unpack_format(name)</strong></p>
+
+<p>从支持的解压格式中移除 name。</p>
+
+<p><strong>8）get_unpack_formats()</strong></p>
+
+<p>返回支持的解压格式列表，列表中的每个元素是 (name, extensions, description) 形式的元组。</p>
+
+<h2 id="3-查询终端大小">3 查询终端大小</h2>
+
+<p><strong>get_terminal_size()</strong></p>
+
+<p>查询终端大小。示例如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(shutil.get_terminal_size())
+
+# 输出结果
+# os.terminal_size(columns=80, lines=24)
+</code></pre></div></div>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-027">Python-100-days-day027</a></p>
+</blockquote>
+
+<p>参考：</p>
+
+<p><a href="https://docs.python.org/3.3/library/shutil.html">https://docs.python.org/3.3/library/shutil.html</a></p>
+
+<p><a href="http://liujiangblog.com/course/python/61">http://liujiangblog.com/course/python/61</a></p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/10/09/python-shutil-027.html';
+        this.page.identifier = '/python/2019/10/09/python-shutil-027.html';
+        this.page.title = '第27天：Python shutil 模块';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/10/09/python-shutil-027.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

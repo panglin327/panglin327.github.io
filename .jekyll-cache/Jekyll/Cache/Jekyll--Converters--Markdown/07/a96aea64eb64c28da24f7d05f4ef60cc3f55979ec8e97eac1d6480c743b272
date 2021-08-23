@@ -1,0 +1,188 @@
+I"WP<blockquote>
+  <p>by 豆豆</p>
+</blockquote>
+
+<h2 id="1简介">1.简介</h2>
+
+<p>collections 是 python 的内置模块，提供了很多方便且高性能的关于集合的操作，掌握这些知识有助于提高代码的性能和可读性。</p>
+
+<!--more-->
+
+<h2 id="2常用功能">2.常用功能</h2>
+
+<h3 id="21-namedtuple-功能详解">2.1 namedtuple 功能详解</h3>
+
+<p>namedtuple() 返回一个新的元组子类，且规定了元组的元素的个数，同时除了使用下标获取元素之外，还可以通过属性直接获取。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="n">User</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">"User"</span><span class="p">,[</span><span class="s">"name"</span><span class="p">,</span> <span class="s">"age"</span><span class="p">,</span> <span class="s">"weight"</span><span class="p">])</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s">"admin"</span><span class="p">,</span> <span class="s">"20"</span><span class="p">,</span> <span class="s">"60"</span><span class="p">)</span>
+<span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="n">user</span>
+<span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">age</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">weight</span><span class="p">)</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="n">admin</span>
+<span class="n">admin</span> <span class="mi">20</span> <span class="mi">60</span>
+<span class="n">admin</span> <span class="mi">20</span> <span class="mi">60</span>
+</code></pre></div></div>
+
+<p>由以上代码可以看出，namedtuple() 相当于直接定义了一个新的类，但是这个类跟传统的定义 class 的方式又有着巨大的区别。该方式会比直接定义 class 的方式省很多空间，其次其返回值是一个 tuple，支持 tuple 的各种操场。</p>
+
+<p>同时，namedtuple() 还自带两个非常好用的方法。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 将序列直接转换为新的 tuple 对象
+</span><span class="n">user</span> <span class="o">=</span> <span class="p">[</span><span class="s">"root"</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">65</span><span class="p">]</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">_make</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> 
+<span class="c1"># 输出 User(name='root', age=32, weight=65)
+</span>
+<span class="c1"># 返回一个 dict
+</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s">"admin"</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">_asdict</span><span class="p">())</span> 
+<span class="c1"># 输出 OrderedDict([('name', 'admin'), ('age', 20), ('weight', 60)])
+</span></code></pre></div></div>
+
+<h3 id="22-chainmap-功能讲解">2.2 ChainMap 功能讲解</h3>
+
+<p>ChainMap() 可以将多个字典集合到一个字典中去，对外提供一个统一的视图。注意：该操作并是不将所有字典做了一次拷贝，实际上是在多个字典的上层又进行了一次封装而已。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">ChainMap</span>
+
+<span class="n">user1</span> <span class="o">=</span> <span class="p">{</span><span class="s">"name"</span><span class="p">:</span><span class="s">"admin"</span><span class="p">,</span> <span class="s">"age"</span><span class="p">:</span><span class="s">"20"</span><span class="p">}</span>
+<span class="n">user2</span> <span class="o">=</span> <span class="p">{</span><span class="s">"name"</span><span class="p">:</span><span class="s">"root"</span><span class="p">,</span> <span class="s">"weight"</span><span class="p">:</span> <span class="mi">65</span><span class="p">}</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">(</span><span class="n">user1</span><span class="p">,</span> <span class="n">user2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">maps</span><span class="p">)</span>
+
+<span class="n">users</span><span class="p">.</span><span class="n">maps</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">"name"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"tiger"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">maps</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">users</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="c1"># 输出如下
+</span><span class="p">[{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'admin'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="s">'20'</span><span class="p">},</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'root'</span><span class="p">,</span> <span class="s">'weight'</span><span class="p">:</span> <span class="mi">65</span><span class="p">}]</span>
+<span class="p">[{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'tiger'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="s">'20'</span><span class="p">},</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'root'</span><span class="p">,</span> <span class="s">'weight'</span><span class="p">:</span> <span class="mi">65</span><span class="p">}]</span>
+<span class="n">name</span> <span class="n">tiger</span>
+<span class="n">weight</span> <span class="mi">65</span>
+<span class="n">age</span> <span class="mi">20</span>
+</code></pre></div></div>
+
+<p>由此可见，如果 ChainMap() 中的多个字典有重复 key，查看的时候可以看到所有的 key，但遍历的时候却只会遍历 key 第一次出现的位置，其余的忽略。同时，我们可以通过返回的新的视图来更新原来的的字典数据。进一步验证了该操作不是做的拷贝，而是直接指向原字典。</p>
+
+<h3 id="23-deque-功能详解">2.3 deque 功能详解</h3>
+
+<p>dqueue 是 ”double-ended queue” 的简称，是一种类似列表(list)的容器，实现了在两端快速添加(append)和弹出(pop)操作。大大加快了遍历速度</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">q</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">'4'</span><span class="p">)</span>
+<span class="n">q</span><span class="p">.</span><span class="n">appendleft</span><span class="p">(</span><span class="s">'0'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">popleft</span><span class="p">())</span>
+
+<span class="c1"># 输出如下
+</span><span class="n">deque</span><span class="p">([</span><span class="s">'0'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'4'</span><span class="p">])</span>
+<span class="mi">0</span>
+</code></pre></div></div>
+
+<h3 id="24-counter-功能详解">2.4 Counter 功能详解</h3>
+
+<p>Counter 可以简单理解为一个计数器，可以统计每个元素出现的次数，同样 Counter() 是需要接受一个可迭代的对象的。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s">"cat"</span><span class="p">,</span> <span class="s">"dog"</span><span class="p">,</span> <span class="s">"cat"</span><span class="p">,</span> <span class="s">"bird"</span><span class="p">,</span> <span class="s">"horse"</span><span class="p">,</span> <span class="s">"tiger"</span><span class="p">,</span> <span class="s">"horse"</span><span class="p">,</span> <span class="s">"cat"</span><span class="p">]</span>
+<span class="n">animals_counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">animals_counter</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">animals_counter</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">Counter</span><span class="p">({</span><span class="s">'cat'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'horse'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'dog'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'bird'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'tiger'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="p">[(</span><span class="s">'cat'</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s">'horse'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+
+<span class="c1"># 输出如下
+</span><span class="n">Counter</span><span class="p">({</span><span class="s">'cat'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'horse'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'dog'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'bird'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'tiger'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="p">[(</span><span class="s">'cat'</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s">'horse'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>其实一个 Counter 就是一个字典，其额外提供的 <code class="highlighter-rouge">most_common()</code> 函数通常用于求 Top k 问题。</p>
+
+<h3 id="25-ordereddict-功能详解">2.5 OrderedDict 功能详解</h3>
+
+<p>OrderedDict 是字典的子类，保证了元素的插入顺序。在 3.7 版本下，字典同样也保证了元素的插入顺序。那相比内置字典 OrderedDict 有哪些升级呢。</p>
+
+<ul>
+  <li>算法上， OrderedDict 可以比 dict <strong>更好地处理频繁的重新排序操作</strong>。在跟踪最近的访问这种场景（例如在 LRU cache）下非常适用。</li>
+  <li>OrderedDict 类有一个 move_to_end() 方法，可以有效地将元素移动到任一端。</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">user</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"admin"</span>
+<span class="n">user</span><span class="p">[</span><span class="s">"age"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span>
+<span class="n">user</span><span class="p">[</span><span class="s">"weight"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">65</span>
+<span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span> <span class="c1"># 将元素移动至末尾
+</span><span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+<span class="n">user</span><span class="p">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span> <span class="c1"># 将元素移动至开头
+</span><span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="c1"># 输出如下
+</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="s">'name'</span><span class="p">,</span> <span class="s">'admin'</span><span class="p">),</span> <span class="p">(</span><span class="s">'age'</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span> <span class="p">(</span><span class="s">'weight'</span><span class="p">,</span> <span class="mi">65</span><span class="p">)])</span>
+<span class="n">OrderedDict</span><span class="p">([(</span><span class="s">'age'</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span> <span class="p">(</span><span class="s">'weight'</span><span class="p">,</span> <span class="mi">65</span><span class="p">),</span> <span class="p">(</span><span class="s">'name'</span><span class="p">,</span> <span class="s">'admin'</span><span class="p">)])</span>
+<span class="n">OrderedDict</span><span class="p">([(</span><span class="s">'name'</span><span class="p">,</span> <span class="s">'admin'</span><span class="p">),</span> <span class="p">(</span><span class="s">'age'</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span> <span class="p">(</span><span class="s">'weight'</span><span class="p">,</span> <span class="mi">65</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<h3 id="26-defaultdict-功能详解">2.6 defaultdict 功能详解</h3>
+
+<p>defaultdict 是内置 dict 类的子类。它实现了当 key 不存在是返回默认值的功能，除此之外，与内置 dict 功能完全一样。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="n">default_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">default_dict</span><span class="p">[</span><span class="s">"x"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">print</span><span class="p">(</span><span class="n">default_dict</span><span class="p">[</span><span class="s">"x"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">default_dict</span><span class="p">[</span><span class="s">"y"</span><span class="p">])</span>
+
+<span class="c1"># 输出如下
+</span><span class="mi">10</span>
+<span class="mi">0</span>
+</code></pre></div></div>
+
+<p>注意，defaultdict 的参数必须是可操作的。比如 python 内置类型，或者无参的可调用的函数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">getUserInfo</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s">"name"</span> <span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+        <span class="s">"age"</span> <span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+
+<span class="n">default_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">getUserInfo</span><span class="p">)</span>
+<span class="n">admin</span> <span class="o">=</span> <span class="n">default_dict</span><span class="p">[</span><span class="s">"admin"</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">admin</span><span class="p">)</span>
+
+<span class="n">admin</span><span class="p">[</span><span class="s">"age"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">34</span>
+<span class="k">print</span><span class="p">(</span><span class="n">admin</span><span class="p">)</span>
+
+<span class="c1"># 输出如下
+</span><span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">34</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>上述示例我们给 defaultdict 传了一个自定义函数，当字典中不存在所取 key 时返回默认的用户信息。</p>
+
+<h2 id="collections-总结">collections 总结</h2>
+
+<p>本文总结了 collections 提供的便利的操作，掌握这些知识将大大提高你的编程效率。</p>
+
+<h2 id="4-代码地址">4. 代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-030">Python-100-days-day030</a></p>
+</blockquote>
+
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://docs.python.org/zh-cn/3/library/collections.html">Python 文档</a></p>
+:ET

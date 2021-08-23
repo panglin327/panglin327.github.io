@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         我体验了一把自由职业，比996苦多了！ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="继续折腾！">
+
+    <link rel="canonical" href="http://localhost:4000/life/2020/05/08/ziyouzhiye.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="我体验了一把自由职业，比996苦多了！">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>我体验了一把自由职业，比996苦多了！</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2020/05/08
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p><img src="http://favorites.ren/assets/images/2020/it/ziyouzhiye01.jpg" alt="" /></p>
+
+<p>2019年4月25日，我选择裸辞成为一名自由职业者。</p>
+
+<p>在这之前我是一家第三方支付公司的研发副总，在职场上混迹了10年。</p>
+
+<h2 id="1好多问题">1.好多问题</h2>
+
+<p>当我告诉大家，我不准备上班了，我想自己做点事情，很多同事或者朋友表示不能够理解，于是他们问了好多问题。</p>
+
+<p><strong>问题1：</strong>你靠什么养活你呀？</p>
+
+<p>我：我在网上有一些课程，自己也在尝试做自媒体，还有其它方式可以尝试，应该可以养活我自己吧。</p>
+
+<p><strong>问题2：</strong>现在国家经济形势不好，创业风险很大的！</p>
+
+<p>我：我不是创业（感觉这个字有点大），我只是想去做一些自己想做的事情。并且我想问一下，你觉得我现在出来风险大，还是再过10后出来风险大。</p>
+
+<p>回复：应该是10年后出来风险大。</p>
+
+<p>我：那既然要出来，早总比晚要好一点，不行也可以再回去上班呀，也不是没有可能，我不给自己设限！</p>
+
+<p><strong>朋友A：</strong>我觉得你应该在职场在好好历练一下，再出去创业什么的，我给你介绍一个公司，薪资各方面条件很好的。</p>
+
+<p>我：真的暂时不打算上班了。</p>
+
+<p><strong>同事B：</strong>强哥，发财了一定不要忘记我。</p>
+
+<p>我：….，先活下来再说吧。</p>
+
+<p><strong>网友C：</strong>相信我，1年后你会自己去上班的。—一个过来人的忠告。</p>
+
+<p>….</p>
+
+<p>总之，自由职业在中国还是少数人的选择，所以大家难免会有些好奇或者担心也正常，我也是摸索着往前走。</p>
+
+<p><strong>未来，谁知道呢？</strong></p>
+
+<h2 id="2做了些什么">2.做了些什么？</h2>
+
+<p>到现在为止我刚好做自由职业1年了，自我感觉还算比较良好，偶尔也会想念职场，但一想到通勤之苦就立刻放弃了。</p>
+
+<p>用一句话总结就是：<strong>我过的很好，至少要比上班更好！</strong></p>
+
+<p><strong>搬家：</strong></p>
+
+<p>离职之后先搬了一次家，换了一个更好的居住环境，因为不用通勤从三环内搬家到北京五环外，居住舒适度提高1倍。</p>
+
+<p><strong>旅游：</strong></p>
+
+<p>紧接着安排了一场旅游，从9月底到10月底，从美国的内陆城市到东海岸城市，从东海城市到西海岸城市，1个月的时间背包、自驾玩遍美国。</p>
+
+<p><strong>保险：</strong></p>
+
+<p>回来后，我竟然干了一个月的保险，尝试着去了解保险的整个行业和产品，一个月的时间，基本上对整个行业有了一定的了解。</p>
+
+<p>通过保险我也了解到中国保险现状，也见识到保险行业中很多牛X闪闪的人物，讲一节课几千人现场听讲，讲师1小时课时费 20 万。</p>
+
+<p>当然，也确认我不适合走这条路线，果断放弃了。</p>
+
+<p><strong>淘客：</strong></p>
+
+<p>到了2019年底，经过朋友介绍让我认识到了社交电商，其实之前一直对淘宝客的模式很感兴趣，但一直没有切入点。</p>
+
+<p>因此当朋友介绍之后，没有犹豫立刻全身心投入到其中，用了3个月的时间升级到社交电商最高级，到整个体系有近2万多人。</p>
+
+<p>经过这3个月的高强度投入，又重新打开了我另外一个认知圈，培训、营销、社群、管理、营销等等，挣的涨了眼界。</p>
+
+<p><strong>漫画：</strong></p>
+
+<p>和朋友一起合作创建了一个漫画方向的自媒体：不会笑青年，程序员搞漫画外行的不能在外行了，但就这样我们也照样玩了起来。</p>
+
+<p>当然现在这个漫画方向的探索还在亏钱，但慢慢我们已经找到方向，相信接下来会有更骚的作品，更大的脑洞。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/ziyouzhiye02.jpg" alt="" /></p>
+
+<p><strong>视频号：</strong></p>
+
+<p>最近又开始玩起了视频号，在这之前我从来都没有尝试过视频，也是视频号给我这个中年大叔一次露脸的机会，所以我很乐在其中。</p>
+
+<p>目前视频号已经玩了一个多月，几乎每个视频的播放量都在1万以上，同时也慢慢学会了如何去面对镜头。</p>
+
+<p><strong>演技还需修炼，脸皮已经到位！</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/ziyouzhiye03.jpg" alt="" /></p>
+
+<p>还有很多其他事情，这里就不一一介绍了。可以用一个词来形容我自由职业的第1年：<strong>继续折腾！</strong></p>
+
+<h2 id="3计划赶不上变化">3.计划赶不上变化</h2>
+
+<p>其实本来计划，2020年春节过后去菲律宾呆上半年：旅游+学英语，但是人算不如天算，遇到了这么大的疫情，基本上今年是出不去了。</p>
+
+<p>于是我过了一个最长的春节，过完春节过十五，过完十五过龙抬头，过完龙抬头过完春分，过完春分过清明。</p>
+
+<p>直到清明节后，我才发现不能再在老家待下去了，农村的生活琐碎太多不太适合工作，于是又跑到了西安。</p>
+
+<p>我是一个对新鲜事物比较好奇的人，自由职业之后，刚好有大把的时间可以让我来尝试、探索，去折腾。</p>
+
+<p><strong>这世界唯一不变的是变化！</strong></p>
+
+<p>既然我们不能改变变化，那就去适应变化，不让去外面了就好好呆在国内搞事情，自由职业对地点无要求，到哪里都一样。</p>
+
+<p>当然自由职业也没有我当初想象的那么好，拥有绝对的自由就像没有自由一样，天天都是工作日，完全没有什么休假的快感。</p>
+
+<p>有读者给我说，你可以自己给自己放假呀！</p>
+
+<p>好像是可以，但一想到有那么多想做的事情都没有做，顿时觉得休假也没那么爽，真的有时候感觉比 996 辛苦多了！</p>
+
+<h2 id="4自由是什么">4.自由是什么？</h2>
+
+<p>慢慢的无意间，工作已经成为了生活的一部分，很难分得清边界。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/ziyouzhiye04.jpg" alt="" /></p>
+
+<p>所以有时候我也在想：</p>
+
+<p><strong>自由是什么？</strong></p>
+
+<p>我这样算是自由了吗？为什么越来越忙了。</p>
+
+<p>其实我也没有搞懂，只是还在坚持做自己喜欢做的事情。</p>
+
+<p>等我真的搞明白了，写文章告诉你。</p>
+
+<p>好吗？</p>
+
+<p>突然想起来</p>
+
+<p>前2天有读者问我</p>
+
+<p>为啥要在职场上升期选择自由</p>
+
+<p>我回答是：</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/ziyouzhiye05.jpg" alt="" /></p>
+
+<blockquote>
+  <p><strong>PS:</strong></p>
+
+  <p>①更多大佬解读，公号内回复对应关键字：</p>
+
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>周鸿祎</strong></td>
+        <td><strong>大衣哥</strong></td>
+        <td><strong>刘强东</strong></td>
+        <td><strong>傅盛</strong></td>
+        <td><strong>古天乐</strong></td>
+        <td><strong>科比</strong></td>
+        <td><strong>34岁</strong></td>
+        <td><strong>马斯克</strong></td>
+        <td><strong>传奇黑客</strong></td>
+        <td><strong>张一鸣</strong></td>
+        <td><strong>雷军</strong></td>
+        <td><strong>求伯君</strong></td>
+        <td><strong>张小龙</strong></td>
+        <td><strong>罗永浩</strong></td>
+        <td><strong>王思聪</strong></td>
+        <td><strong>孙宇晨</strong></td>
+        <td><strong>陆奇</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>②更多公司发家史解读，公号内回复对应关键字：<strong>拼多多</strong></td>
+        <td><strong>soul</strong></td>
+        <td><strong>sun</strong></td>
+        <td><strong>兄弟连</strong></td>
+        <td><strong>谷歌</strong></td>
+        <td><strong>百度</strong></td>
+        <td><strong>沃尔玛</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>③更多精彩故事挖掘，公号内回复对应关键字：<strong>删库跑路</strong></td>
+        <td><strong>黑暗法则</strong></td>
+        <td><strong>男女手册</strong></td>
+        <td><strong>非典奇迹</strong></td>
+        <td><strong>韩国邪教</strong></td>
+        <td><strong>被抢身亡</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>④更多内部匿名爆料，公号内回复对应关键：<strong>006</strong></td>
+        <td><strong>007</strong></td>
+        <td><strong>008</strong></td>
+        <td><strong>009</strong></td>
+        <td><strong>013</strong></td>
+        <td><strong>014</strong></td>
+        <td><strong>015</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/life/2020/05/08/ziyouzhiye.html';
+        this.page.identifier = '/life/2020/05/08/ziyouzhiye.html';
+        this.page.title = '我体验了一把自由职业，比996苦多了！';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/life/2020/05/08/ziyouzhiye.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

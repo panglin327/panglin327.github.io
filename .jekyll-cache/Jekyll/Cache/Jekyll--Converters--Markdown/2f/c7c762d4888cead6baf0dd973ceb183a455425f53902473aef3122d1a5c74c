@@ -1,0 +1,135 @@
+I"m<p>函数是组织好的，可重复使用的，用来实现单一，或相关联功能的代码段，所以我经常说函数是程序员规模化使用的基础。</p>
+
+<p>函数能提高应用的模块性，和代码的重复利用率。在程序设计中，常将一些常用的功能模块编写成函数，放在函数库中供公共选用。善于利用函数，可以减少重复编写程序段的工作量。</p>
+
+<!--more-->
+
+<h2 id="如何定义一个函数">如何定义一个函数</h2>
+
+<p>定义一个函数有如下几个步骤</p>
+
+<ul>
+  <li>函数代码块以 def 关键词开头，后接函数标识符名称和圆括号()。</li>
+  <li>任何传入参数和自变量必须放在圆括号中间。圆括号之间可以用于定义参数。</li>
+  <li>函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明。</li>
+  <li>函数内容以冒号起始，并且缩进。</li>
+  <li>return [表达式] 结束函数，选择性地返回一个值给调用方。不带表达式的return相当于返回 None。</li>
+</ul>
+
+<p>语法</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def 函数名（参数列表）:
+    函数体
+</code></pre></div></div>
+
+<p>默认情况下，参数值和参数名称是按函数声明中定义的顺序匹配起来的。</p>
+
+<h2 id="简单示例">简单示例</h2>
+
+<p>一个最简单的函数示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#定义一个函数
+def hello() :
+   print("Hello World!")
+
+#调用函数
+hello()
+</code></pre></div></div>
+
+<p>再来一个代参数的示例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#定义一个函数
+def helloN(name) :
+   print("Hello World!", name)
+
+#调用函数
+helloN('neo')
+</code></pre></div></div>
+
+<h2 id="加减乘除示例">加减乘除示例</h2>
+
+<p>我们使用函数实现一个基本的加减乘除运算。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#定义函数
+def add(a,b) :
+   return a+b
+
+def reduce(a,b) :
+   return a-b
+
+def multiply(a,b) :
+   return a*b
+
+def divide(a,b) :
+   return a/b
+
+#调用函数
+print(add(1,2))
+print(reduce(12,2))
+print(multiply(6,3))
+print(divide(12,6))
+</code></pre></div></div>
+
+<p>发现定义函数可以实现代码的多次复用。</p>
+
+<h2 id="多个返回值">多个返回值</h2>
+
+<p>某些情况下，我们需要一个函数返回多个值，Python 也是支持的。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#定义多个返回值函数
+def more(x, y):
+    nx = x + 2
+    ny = y - 2
+    return nx, ny
+
+#调用函数
+x, y = more(10, 10)
+print(x, y)  
+</code></pre></div></div>
+
+<h2 id="递归函数">递归函数</h2>
+
+<p>有时候我们需要反复调用某个函数得到一个最后的值，这个时候使用递归函数是最好的解决方案。</p>
+
+<p>编程语言中，函数Func(Type a,……)直接或间接调用函数本身，则该函数称为递归函数。递归函数不能定义为内联函数</p>
+
+<p>举个例子，我们来计算阶乘<code class="highlighter-rouge">n! = 1 x 2 x 3 x ... x n</code>，用函数fact(n)表示，可以看出：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fact(n) = n! = 1 x 2 x 3 x ... x (n-1) x n = (n-1)! x n = fact(n-1) x n
+</code></pre></div></div>
+
+<p>所以，fact(n)可以表示为<code class="highlighter-rouge">n x fact(n-1)</code>，只有<code class="highlighter-rouge">n=1</code>时需要特殊处理。</p>
+
+<p>于是，fact(n)用递归的方式写出来就是：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def fact(n):
+    if n==1:
+        return 1
+    return n * fact(n - 1)
+</code></pre></div></div>
+
+<p>这样一个递归函数就定义完了。</p>
+
+<p>我们试着调用一下 6 的阶乘是多少，可以这样调用：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(fact(6)) 
+# 输出内容
+# 720
+</code></pre></div></div>
+
+<p>类似的需要都可以按照这样的方式来实现。</p>
+
+<p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍了 Python  函数的使用。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-005">Python-100-days-day005</a></p>
+</blockquote>
+
+<p>参考：<br />
+https://www.runoob.com/python/python-functions.html<br />
+https://www.liaoxuefeng.com/wiki/1016959663602400/1017105145133280</p>
+:ET

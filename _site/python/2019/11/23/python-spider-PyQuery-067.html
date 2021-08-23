@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第67天：PyQuery 详解 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 闲欢&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/11/23/python-spider-PyQuery-067.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第67天：PyQuery 详解">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第67天：PyQuery 详解</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/23
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 闲欢</p>
+
+<p>PyQuery 库是一个非常强大又灵活的网页解析库，如果你有前端开发经验，那么你应该接触过 jQuery ,那么 PyQuery 就是你非常绝佳的选择，PyQuery 是 Python 仿照 jQuery 的严格实现，语法与 jQuery 几乎完全相同。
+<!--more--></p>
+
+<h2 id="安装">安装</h2>
+
+<p>跟安装其他库一样：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; pip3 install pyquery
+</code></pre></div></div>
+
+<p>安装了之后，在程序里面就可以引用了，引用方法跟其他库类似：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from pyquery import PyQuery as pq
+</code></pre></div></div>
+
+<h2 id="初始化">初始化</h2>
+
+<p>PyQuery 可以将 HTML 字符串初始化为对象，也可以将 HTML 文件初始化为对象，甚至可以将请求的响应初始化为对象。下面我们一个个来介绍。</p>
+
+<h3 id="初始化字符串">初始化字符串</h3>
+
+<p>对于一个标准的 HTML 字符串，PyQuery 可以直接初始化为对象：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>html = """
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        我爱我的祖国
+        <span class="nt">&lt;title&gt;</span>China<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li1"</span><span class="nt">&gt;</span>五星<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li2"</span><span class="nt">&gt;</span>红旗<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li3"</span><span class="nt">&gt;</span>迎风飘扬<span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+"""
+
+doc = pq(html)
+print(type(doc))
+print(doc)
+
+# 输出结果
+<span class="nt">&lt;class</span> <span class="err">'</span><span class="na">pyquery.pyquery.PyQuery</span><span class="err">'</span><span class="nt">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        我爱我的祖国
+        <span class="nt">&lt;title&gt;</span>China<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li1"</span><span class="nt">&gt;</span>五星<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li2"</span><span class="nt">&gt;</span>红旗<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li3"</span><span class="nt">&gt;</span>迎风飘扬<span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>我们可以看到，HTML 字符串初始化后，打印出来的是一个 PyQuery 对象。</p>
+
+<p>如果我们的字符串不是 HTML 格式内容，PyQuery 会自动加上段落标签将字符串内容包装成 HTML 内容。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test = '''
+this is a string
+this is second row
+'''
+
+doc = pq(test)
+print(type(doc))
+print(doc)
+
+# 输出结果
+&lt;class 'pyquery.pyquery.PyQuery'&gt;
+&lt;p&gt;this is a string
+this is second row
+&lt;/p&gt;
+</code></pre></div></div>
+
+<h3 id="初始化-html-文件">初始化 HTML 文件</h3>
+
+<p>初始化文件，只需要加个 filename 参数，指明 文件路径即可：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#filename参数为html文件路径
+test_html = pq(filename='test.html')
+print(type(test_html))
+print(test_html)
+
+# 输出结果
+<span class="nt">&lt;class</span> <span class="err">'</span><span class="na">pyquery.pyquery.PyQuery</span><span class="err">'</span><span class="nt">&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>如果文件不是 HTML 文件，那么初始化的时候会自动加上 HTML 标签。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#filename参数为html文件路径
+test_txt = pq(filename='test.txt')
+print(type(test_txt))
+print(test_txt)
+
+# 输出结果
+<span class="nt">&lt;class</span> <span class="err">'</span><span class="na">pyquery.pyquery.PyQuery</span><span class="err">'</span><span class="nt">&gt;</span>
+<span class="nt">&lt;html&gt;&lt;body&gt;&lt;p&gt;</span>this is a txt<span class="nt">&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>我的 test.txt 文件中只有一行内容： this is a txt。初始化完后，自动添加了 HTML 标签。</p>
+
+<h3 id="初始化请求响应">初始化请求响应</h3>
+
+<p>我们可以把请求的网址内容初始化为 PyQuery 对象，只需要加个参数 url ，将网址赋值给它即可。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>response = pq(url='https://www.baidu.com')
+print(type(response))
+print(response)
+
+# 输出结果
+<span class="nt">&lt;class</span> <span class="err">'</span><span class="na">pyquery.pyquery.PyQuery</span><span class="err">'</span><span class="nt">&gt;</span>
+<span class="nt">&lt;html&gt;</span> <span class="nt">&lt;head&gt;&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"content-type"</span> <span class="na">content=</span><span class="s">"text/html;charset=utf-8"</span><span class="nt">/&gt;&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=Edge"</span><span class="nt">/&gt;&lt;meta</span> <span class="na">content=</span><span class="s">"always"</span> <span class="na">name=</span><span class="s">"referrer"</span><span class="nt">/&gt;&lt;link</span>
+<span class="err">...</span>
+</code></pre></div></div>
+
+<p>我们请求百度的首页，然后初始化为对象，后面内容较多，因此省略。</p>
+
+<h2 id="常用-css-选择器">常用 CSS 选择器</h2>
+
+<p>PyQuery 里面 CSS 选择器的用法跟 jQuery 里面是一样的，例如，针对上面的 HTML 字符串内容，我们获取 id 为 container 的标签，然后打印出来：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>doc = pq(html)
+print(type(doc('#container')))
+print(doc('#container'))
+
+# 输出结果
+&lt;class 'pyquery.pyquery.PyQuery'&gt;
+&lt;ul id="container"&gt;
+            &lt;li class="li1"&gt;五星&lt;/li&gt;
+            &lt;li class="li2"&gt;红旗&lt;/li&gt;
+            &lt;li class="li3"&gt;迎风飘扬&lt;/li&gt;
+        &lt;/ul&gt;
+</code></pre></div></div>
+
+<p>我们也可以用 class 选择器，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(type(doc('.li2')))
+print(doc('.li2'))
+
+# 输出结果
+&lt;class 'pyquery.pyquery.PyQuery'&gt;
+&lt;li class="li2"&gt;红旗&lt;/li&gt;
+</code></pre></div></div>
+
+<p>再复杂一点，我们可以使用多层选择器，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(doc('html #container'))
+
+# 输出结果
+&lt;ul id="container"&gt;
+            &lt;li class="li1"&gt;五星&lt;/li&gt;
+            &lt;li class="li2"&gt;红旗&lt;/li&gt;
+            &lt;li class="li3"&gt;迎风飘扬&lt;/li&gt;
+        &lt;/ul&gt;
+</code></pre></div></div>
+
+<p>当然，我们同样可以根据 CSS 选择器修改 HTML 标签的内容：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>li2 = doc('.li2')
+li2.css('font-size', '18px')
+print(li2)
+
+# 输出结果
+&lt;li class="li2" style="font-size: 18px"&gt;红旗&lt;/li&gt;
+</code></pre></div></div>
+
+<p>这里我们给 class 为“li2”的标签加了字体的大小，可以看到返回的内容中有了 style 属性。</p>
+
+<p>虽然 PyQuery 有修改 HTML 内容的方法，但是我们一般不会用到，因为我们一般是解析 HTML 内容，而不是去修改它，大家了解一下即可。</p>
+
+<h2 id="伪类选择器">伪类选择器</h2>
+
+<p>伪类（Pseudo-classes）是指在 HTML 中，同一个标签，根据其不同的状态，有不同的显示样式。详细的用法可以参考： https://www.runoob.com/css/css-pseudo-classes.html ，里面有详细的介绍。</p>
+
+<p>我们主要应用伪类选择器来解析 HTML，获取我们所需的数据。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pseudo_doc = pq(html)
+print(pseudo_doc('li:nth-child(2)'))
+#打印第一个li标签
+print(pseudo_doc('li:first-child'))
+#打印最后一个标签
+print(pseudo_doc('li:last-child'))
+
+# 输出结果
+&lt;li class="li2"&gt;红旗&lt;/li&gt;
+            
+&lt;li class="li1"&gt;五星&lt;/li&gt;
+            
+&lt;li class="li3"&gt;迎风飘扬&lt;/li&gt;
+
+</code></pre></div></div>
+
+<p>我们也可以用 contains 方法来筛选内容，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>html = """
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        我爱我的祖国
+        <span class="nt">&lt;title&gt;</span>China<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li1"</span><span class="nt">&gt;</span>五星啊<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li2"</span><span class="nt">&gt;</span>红旗<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li3"</span><span class="nt">&gt;</span>迎风飘扬啊<span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+"""
+
+pseudo_doc = pq(html)
+
+#找到含有Python的li标签
+print(pseudo_doc("li:contains('五星')"))
+
+#找到含有好的li标签
+print(pseudo_doc("li:contains('红')"))
+
+#找到含有啊的li标签
+print(pseudo_doc("li:contains('啊')"))
+
+# 输出结果
+<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li1"</span><span class="nt">&gt;</span>五星啊<span class="nt">&lt;/li&gt;</span>
+            
+<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li2"</span><span class="nt">&gt;</span>红旗<span class="nt">&lt;/li&gt;</span>
+
+<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li1"</span><span class="nt">&gt;</span>五星啊<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"li3"</span><span class="nt">&gt;</span>迎风飘扬啊<span class="nt">&lt;/li&gt;</span>
+</code></pre></div></div>
+
+<p>我们可以看到，如果查找的结果有多条记录，那么结果会将多条记录拼在一起。当然，如果查找的内容不存在，就会返回空。</p>
+
+<h2 id="查找标签">查找标签</h2>
+
+<p>我们可以按照条件在 Pyquery 对象中查找符合条件的标签，类似于 BeautifulSoup 中的 find 方法。
+例如，我要查找 id 为 container 的标签：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#打印id为container的标签
+print(doc.find('#container'))
+
+# 输出结果
+&lt;ul id="container"&gt;
+            &lt;li class="li1"&gt;五星啊&lt;/li&gt;
+            &lt;li class="li2"&gt;红旗&lt;/li&gt;
+            &lt;li class="li3"&gt;迎风飘扬啊&lt;/li&gt;
+        &lt;/ul&gt;
+</code></pre></div></div>
+
+<p>我要查找 id 为 container 的标签的子标签，使用 children 方法就可以实现：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#打印id为container的标签的子标签
+container = doc.find('#container')
+print(container.children())
+
+# 输出结果
+&lt;li class="li1"&gt;五星啊&lt;/li&gt;
+            &lt;li class="li2"&gt;红旗&lt;/li&gt;
+            &lt;li class="li3"&gt;迎风飘扬啊&lt;/li&gt;
+</code></pre></div></div>
+
+<p>查找父标签，我们可以用 parent 方法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#打印id为container的标签的父标签
+container = doc.find('#container')
+print(container.parent())
+
+# 输出结果
+&lt;body&gt;
+        &lt;ul id="container"&gt;
+            &lt;li class="li1"&gt;五星啊&lt;/li&gt;
+            &lt;li class="li2"&gt;红旗&lt;/li&gt;
+            &lt;li class="li3"&gt;迎风飘扬啊&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/body&gt;
+</code></pre></div></div>
+
+<p>查找兄弟标签，我们用 siblings 方法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#打印class为li2的标签的兄弟标签
+li2 = doc.find('.li2')
+print(li2.siblings())
+
+# 输出结果
+&lt;li class="li1"&gt;五星啊&lt;/li&gt;
+            &lt;li class="li3"&gt;迎风飘扬啊&lt;/li&gt;
+</code></pre></div></div>
+
+<h2 id="标签信息的提取">标签信息的提取</h2>
+
+<p>前面我们讲的都是怎么定位到标签，这只是我们解析数据的第一步，接下来我们需要从标签中提取我们需要的信息。</p>
+
+<p>如果你需要提取标签的属性值，可以用 .attr() 方法，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#获取li2的class属性值
+print(doc('.li2').attr('class'))
+
+# 输出结果
+li2
+</code></pre></div></div>
+
+<p>如果你细腰提取标签内的文本，我们可以用 .text() 方法，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#获取li2的文本
+print(doc('.li2').text())
+
+# 输出结果
+红旗
+</code></pre></div></div>
+
+<p>如果要获取某个标签下面的所有文本（包含子标签的），怎么做？我们来看下个例子：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#获取html标签下面的所有文本
+print(doc('html').text())
+
+# 输出结果
+我爱我的祖国
+China
+五星啊
+红旗
+迎风飘扬啊
+</code></pre></div></div>
+
+<p>很简单，我们只需要找到这个标签，使用 .text() 方法。</p>
+
+<p>如果我们要获取某个标签下面的所有文本，但是要排除某些标签的文本，该怎么做？我们来看下个例子：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#排除部分标签文本
+tag = doc('html')
+tag.remove('title')
+print(tag.text())
+
+# 输出结果
+我爱我的祖国
+五星啊
+红旗
+迎风飘扬啊
+</code></pre></div></div>
+
+<p>我们可以用 .remove() 来删除某些标签，上面例子中可以看到，我们把 title 标签去掉了，title 标签对应的内容 China 也就去掉了。</p>
+
+<h2 id="pyquery-处理复杂的网址请求">PyQuery 处理复杂的网址请求</h2>
+
+<p>前面我们介绍了 PyQuery 可以获取网址请求的 HTML 内容，并转化为对象。我们在请求 URL 时，或许会遇到需要附带一些参数的情况，这些自定义的参数在 PyQuery 请求时也是支持的，例如 cookies 和 headers，我们看例子：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cookies = {'Cookie':'cookie'}
+headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
+
+response = pq(url='https://www.baidu.com',headers=headers,cookies=cookies)
+print(response)
+
+#返回(省略)
+
+&lt;head&gt;
+    
+    &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"/&gt;
+...
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>这篇文章给大家介绍了 PyQuery 的常见使用方法，大家如果用的熟练的话，还是可以极大地节约我们解析 HTML 网页内容的时间的。PyQuery 可以称得上是爬虫神器，还有一些用法由于篇幅有限，没有进行介绍。大家可以去官网详细查看，官网地址： https://pythonhosted.org/pyquery/ 。</p>
+
+<blockquote>
+  <p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-067">Python-100-days-day067</a></p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/11/23/python-spider-PyQuery-067.html';
+        this.page.identifier = '/python/2019/11/23/python-spider-PyQuery-067.html';
+        this.page.title = '第67天：PyQuery 详解';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/11/23/python-spider-PyQuery-067.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

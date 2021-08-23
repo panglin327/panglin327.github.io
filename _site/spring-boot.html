@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+        
+        spring-boot - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="Spring Boot 教程,Spring Boot 示例,Spring Boot 学习,Spring Boot 资源,Spring Boot 2.0">
+    <meta name="description"
+          content="本站是纯洁的微笑的技术分享博客。内容涵盖生活故事、Java后端技术、Spring Boot、Spring Cloud、微服务架构、大数据演进、高可用架构、中间件使用、系统监控等相关的研究与知识分享。">
+
+    <link rel="canonical" href="http://localhost:4000/spring-boot">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/blog-page.css">
+    
+
+    <!-- CSS set in layout -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Spring Boot 系列文章">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Spring Boot 系列文章</h1>
+            <span class="meta-info">
+                
+                    <span class="mega-octicon octicon-cloud-download"></span>&nbsp;&nbsp; <a href ="https://github.com/ityouknow/spring-boot-leaning">更多 Spring Boot 2.0 精选课程 ， <font color="#EB9439">点我</font>查看！</a><br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href ="http://www.ityouknow.com/assets/images/keeppuresmile.jpg">关注公众号：<font color="#00FF00">纯洁的微笑</font>，回复"springboot" 进群交流。</a>
+                
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container">
+
+    <div class="row">
+    <div class="col-md-12">
+        <ul id="posts-list">
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/08/16/Goodbye-Spring-Boot-1.x.html">再见 Spring Boot 1.X ，Spring Boot 2.X 走向舞台中心</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-24</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/07/24/springboot-interview.html">Spring Boot 面试，一个问题就干趴下了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-06-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/06/03/spring-boot-hot.html">Spring Boot 为什么这么火？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-28</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/05/28/one-million.html">3年，阅读量100万+, Github Star 15000+</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-14</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/05/14/spring-boot-mybatis-plus.html">Spring Boot 2 (十一)：如何优雅的使用 MyBatis 之 MyBatis-Plus</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-02-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/02/27/most-star-spring-boot.html">Github 上 Star 最多的个人 Spring Boot 开源学习项目</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-02-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/02/12/spring-boot-webflux.html">Spring Boot 2 (十)：Spring Boot 中的响应式编程和 WebFlux 入门</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-01-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2019/01/03/spring-pivotal.html">是时候给大家介绍 Spring Boot/Cloud 背后豪华的研发团队了。</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-11-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/11/03/spring-boot-2.1.html">Spring Boot 2 (九)：【重磅】Spring Boot 2.1.0 权威发布</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-09-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/09/01/spring-boot-memcached.html">Spring Boot 2 (八)：Spring Boot 集成 Memcached</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-06-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/06/12/spring-boo-java-simple.html">为什么说 Java 程序员到了必须掌握 Spring Boot 的时候？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-06-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/06/03/favorites-spring-boot-2.0.html">Spring Boot 2 版的开源项目云收藏来了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-05-15</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/05/15/spring-boot-micro-service-data.html">一文读懂 Spring Boot、微服务架构和大数据治理三者之间的故事</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-05-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/05/03/spring-boot-commandLineRunner.html">Spring Boot 2 (七)：Spring Boot 如何解决项目启动时初始化资源</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-04-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/04/02/docker-favorites.html">Spring Boot 2 (六)：使用 Docker 部署 Spring Boot 开源软件云收藏</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-03-28</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/03/28/dockercompose-springboot-mysql-nginx.html">Spring Boot 2 (五)：Docker Compose + Spring Boot + Nginx + Mysql 实践</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-03-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/03/19/spring-boot-docker.html">Spring Boot 2 (四)：使用 Docker 部署 Spring Boot</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-03-05</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/03/05/spring-boot-open-source.html">Spring Boot 2 (三)：Spring Boot 开源软件都有哪些？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-03-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/03/03/spring-boot-banner.html">Spring Boot 2 (二)：Spring Boot 2 尝鲜-动态 Banner</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-03-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/03/01/spring-boot-2.0.html">Spring Boot 2(一)：【重磅】Spring Boot 2.0权威发布</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-02-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/02/11/spring-boot-admin.html">Spring Boot(二十)：使用 spring-boot-admin 对 Spring Boot 服务进行监控</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-02-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/02/06/spring-boot-actuator.html">Spring Boot (十九)：使用 Spring Boot Actuator 监控应用</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-01-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/01/16/spring-boot-fastdfs.html">Spring Boot(十八)：使用 Spring Boot 集成 FastDFS</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-01-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2018/01/12/spring-boot-upload-file.html">Spring Boot(十七)：使用 Spring Boot 上传文件</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-11-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/11/11/spring-boot-jenkins.html">Spring Boot(十六)：使用 Jenkins 部署 Spring Boot</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-09-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/09/23/spring-boot-jpa-thymeleaf-curd.html">Spring Boot (十五)： Spring Boot + Jpa + Thymeleaf 增删改查示例</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-06-26</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/06/26/spring-boot-shiro.html">Spring Boot (十四)： Spring Boot 整合 Shiro-登录认证和权限管理</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-06-22</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/06/22/spring-boot-tips.html">Spring Boot (十三)： Spring Boot 小技巧</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-06-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/06/19/cloudfavorites-build.html">如何构建云收藏项目</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/05/09/spring-boot-deploy.html">Spring Boot(十二)：Spring Boot 如何测试打包部署</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-08</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/05/08/spring-boot-mongodb.html">Spring Boot(十一)：Spring Boot 中 MongoDB 的使用</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2017-05-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2017/05/06/spring-boot-mail.html">Spring Boot (十)：邮件服务</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-12-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/12/02/spring-boot-scheduler.html">Spring Boot(九)：定时任务</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-11-30</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/11/30/spring-boot-rabbitMQ.html">Spring Boot(八)：RabbitMQ 详解</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-11-25</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/11/25/spring-boot-multi-mybatis.html">Spring Boot(七)：Mybatis 多数据源最简解决方案</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-11-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/11/06/spring-boot-mybatis.html">Spring Boot(六)：如何优雅的使用 Mybatis</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-09-26</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/09/26/spring-boot-opensource-favorites.html">Spring Boot 实战：我们的第一款开源软件</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-08-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/08/20/spring-boot-jpa.html">Spring Boot(五)：Spring Boot Jpa 的使用</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-05-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/05/01/spring-boot-thymeleaf.html">Spring Boot(四)：Thymeleaf 使用详解</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-03-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/03/06/spring-boot-redis.html">Spring Boot(三)：Spring Boot 中 Redis 的使用</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-02-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/02/03/spring-boot-web.html">Spring Boot(二)：Web 综合开发</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2016-01-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2016/01/06/spring-boot-quick-start.html">Spring Boot(一)：入门篇</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2015-12-30</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/springboot/2015/12/30/springboot-collect.html">Spring Boot 学习资料汇总</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+
+        <!-- Pagination -->
+        
+
+
+        <!-- Comments -->
+       <div class="comment">
+         
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/spring-boot';
+        this.page.identifier = '/spring-boot';
+        this.page.title = 'Spring Boot 系列文章';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/spring-boot',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+       </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function(){
+        // Enable bootstrap tooltip
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    });
+</script>
+
+
+
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

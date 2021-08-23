@@ -1,0 +1,184 @@
+I"B1<p>上一篇文章<a href="http://www.ityouknow.com/springboot/2018/02/06/spring-boot-actuator.html">《Spring Boot(十九)：使用 Spring Boot Actuator 监控应用》</a>介绍了 Spring Boot Actuator 的使用，Spring Boot Actuator 提供了对单个 Spring Boot 的监控，信息包含：应用状态、内存、线程、堆栈等等，比较全面的监控了 Spring Boot 应用的整个生命周期。</p>
+
+<p>但是这样监控也有一些问题：第一，所有的监控都需要调用固定的接口来查看，如果全面查看应用状态需要调用很多接口，并且接口返回的 Json 信息不方便运营人员理解；第二，如果 Spring Boot 应用集群非常大，每个应用都需要调用不同的接口来查看监控信息，操作非常繁琐低效。在这样的背景下，就诞生了另外一个开源软件：<strong>Spring Boot Admin</strong>。</p>
+
+<h2 id="什么是-spring-boot-admin">什么是 Spring Boot Admin?</h2>
+
+<p>Spring Boot Admin 是一个管理和监控 Spring Boot 应用程序的开源软件。每个应用都认为是一个客户端，通过 HTTP 或者使用 Eureka 注册到 admin server 中进行展示，Spring Boot Admin UI 部分使用 VueJs 将数据展示在前端。</p>
+
+<p>这篇文章给大家介绍如何使用 Spring Boot Admin 对 Spring Boot 应用进行监控。</p>
+
+<h2 id="监控单体应用">监控单体应用</h2>
+
+<p>这节给大家展示如何使用 Spring Boot Admin 监控单个 Spring Boot 应用。</p>
+
+<h3 id="admin-server-端">Admin Server 端</h3>
+
+<p><strong>项目依赖</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+  <span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>de.codecentric<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-admin-starter-server<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.1.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<p><strong>配置文件</strong></p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">server.port</span><span class="p">=</span><span class="s">8000</span>
+</code></pre></div></div>
+<p>服务端设置端口为：8000。</p>
+
+<p><strong>启动类</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableAutoConfiguration</span>
+<span class="nd">@EnableAdminServer</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdminServerApplication</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">AdminServerApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>完成上面三步之后，启动服务端，浏览器访问<code class="highlighter-rouge">http://localhost:8000</code>可以看到以下界面：</p>
+
+<p><img src="http://favorites.ren/assets/images/2018/springboot/admin21.png" alt="" /></p>
+
+<h3 id="admin-client-端">Admin Client 端</h3>
+
+<p><strong>项目依赖</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>de.codecentric<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-admin-starter-client<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2.1.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<p><strong>配置文件</strong></p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">server.port</span><span class="p">=</span><span class="s">8001</span>
+<span class="py">spring.application.name</span><span class="p">=</span><span class="s">Admin Client</span>
+<span class="py">spring.boot.admin.client.url</span><span class="p">=</span><span class="s">http://localhost:8000  </span>
+<span class="py">management.endpoints.web.exposure.include</span><span class="p">=</span><span class="s">*</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">spring.boot.admin.client.url</code> 配置 Admin Server 的地址</li>
+  <li><code class="highlighter-rouge">management.endpoints.web.exposure.include=*</code> 打开客户端 Actuator 的监控。</li>
+</ul>
+
+<p><strong>启动类</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdminClientApplication</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">AdminClientApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>配置完成之后，启动 Client 端，Admin 服务端会自动检查到客户端的变化，并展示其应用</p>
+
+<p><img src="http://favorites.ren/assets/images/2018/springboot/admin22.png" alt="" /></p>
+
+<p>页面会展示被监控的服务列表，点击详项目名称会进入此应用的详细监控信息。</p>
+
+<p><img src="http://favorites.ren/assets/images/2018/springboot/admin23.png" alt="" /></p>
+
+<p>通过上图可以看出，Spring Boot Admin 以图形化的形式展示了应用的各项信息，这些信息大多都来自于 Spring Boot Actuator 提供的接口。</p>
+
+<h2 id="监控微服务">监控微服务</h2>
+
+<p>如果我们使用的是单个 Spring Boot 应用，就需要在每一个被监控的应用中配置 Admin Server 的地址信息；如果应用都注册在 Eureka 中就不需要再对每个应用进行配置，Spring Boot Admin 会自动从注册中心抓取应用的相关信息。</p>
+
+<p>如果我们使用了 Spring Cloud 的服务发现功能，就不需要在单独添加 Admin Client 客户端，仅仅需要 Spring Boot Server ,其它内容会自动进行配置。</p>
+
+<p>接下来我们以 Eureka 作为服务发现的示例来进行演示，实际上也可以使用 Consul 或者 Zookeeper。</p>
+
+<p>1、服务端和客户端添加 spring-cloud-starter-eureka 到包依赖中</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>2、启动类添加注解</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableAutoConfiguration</span>
+<span class="nd">@EnableDiscoveryClient</span>
+<span class="nd">@EnableAdminServer</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringBootAdminApplication</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">SpringBootAdminApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Configuration</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">SecurityPermitAllConfig</span> <span class="kd">extends</span> <span class="nc">WebSecurityConfigurerAdapter</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+            <span class="n">http</span><span class="o">.</span><span class="na">authorizeRequests</span><span class="o">().</span><span class="na">anyRequest</span><span class="o">().</span><span class="na">permitAll</span><span class="o">()</span>  
+                <span class="o">.</span><span class="na">and</span><span class="o">().</span><span class="na">csrf</span><span class="o">().</span><span class="na">disable</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>使用类 SecurityPermitAllConfig 关闭了安全验证。</p>
+
+<p>3、在客户端中配置服务发现的地址</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eureka:   
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}    #needed to trigger info and endpoint update after restart
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+  endpoint:
+    health:
+      show-details: ALWAYS
+</code></pre></div></div>
+
+<p>Spring Cloud 提供了示例代码可以参考这里：<a href="https://github.com/codecentric/spring-boot-admin/tree/master/spring-boot-admin-samples/spring-boot-admin-sample-eureka/">spring-boot-admin-sample-eureka</a></p>
+
+<p>重启启动服务端和客户端之后，访问服务端的相关地址就可以看到监控页面了。</p>
+
+<blockquote>
+  <p>文章内容已经升级到 Spring Boot 2.x</p>
+</blockquote>
+
+<p><strong><a href="https://github.com/ityouknow/spring-boot-examples/tree/master/spring-boot-admin-simple">示例代码-github</a></strong></p>
+
+<p><strong><a href="https://gitee.com/ityouknow/spring-boot-examples/tree/master/spring-boot-admin-simple">示例代码-码云</a></strong></p>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="http://codecentric.github.io/spring-boot-admin/1.5.6/#getting-started">Spring Boot Admin Reference Guide</a></p>
+
+:ET

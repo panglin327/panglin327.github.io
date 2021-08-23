@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第101天： Python asyncio - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 某某白米饭&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/27/python-asyncio-101.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第101天： Python asyncio">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第101天： Python asyncio</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/27
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 某某白米饭</p>
+
+<h2 id="异步io之asyncio">异步IO之asyncio</h2>
+
+<p>异步IO：当发起一个 IO 操作时，并不需要等待它的结束，程序可以去做其他事情，当这个 IO 操作结束时，会发起一个通知。</p>
+
+<p>在 Python 中可以使用 asyncio 模块异步编程，用于协程、网络爬虫、同步等。</p>
+
+<!--more-->
+
+<h3 id="asyncio-中的概念">asyncio 中的概念</h3>
+
+<h4 id="event_loop-事件循环">event_loop 事件循环</h4>
+
+<p>事件循环是 asyncio 应用的核心，管理所有的事件。</p>
+
+<ol>
+  <li>创建新的事件循环</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>获取当前线程中正在执行的事件循环</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">get_running_loop</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>并发运行任务</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">gather</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>向指定的事件添加一个任务</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>返回没有执行的事件</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">all_tasks</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="future-对象">Future 对象</h4>
+
+<p>一个 Future 代表一个异步运算的结果，线程不安全。</p>
+
+<h4 id="task-对象">Task 对象</h4>
+
+<p>Task 对象的作用是在运行某个任务的同时可以并发的运行其他任务</p>
+
+<p>Task 对象可以使用 asyncio.create_task() 函数创建，也可以使用 loop.create_task() 和 asyncio.ensure_future() 函数创建，不建议实例化 Task对象</p>
+
+<ol>
+  <li>取消 Task 对象</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cancel</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Task 任务是否被取消</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cancelled</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Task 对象是否完成</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">done</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>返回结果</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Task 对象被完成，则返回结果</li>
+  <li>Task 对象被取消，则引发 CancelledError 异常</li>
+  <li>Task 对象的结果不可用，则引发 InvalidStateError 异常</li>
+</ul>
+
+<ol>
+  <li>添加回调，任务完成时触发
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">add_done_callback</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>所有任务列表</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">all_tasks</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ol>
+  <li>返回当前任务</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asyncio</span><span class="p">.</span><span class="n">current_task</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="运行协程">运行协程</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">do_work</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Hello...."</span><span class="p">)</span>
+    <span class="c1"># 模拟阻塞1秒
+</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"world..."</span><span class="p">)</span>
+
+<span class="n">coroutine</span> <span class="o">=</span> <span class="n">do_work</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span>
+
+<span class="c1"># 创建一个事件event_loop
+</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="c1"># 将协程加入到event_loop中，并运行
+</span><span class="n">loop</span><span class="p">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;coroutine object do_work at 0x1108c50c8&gt;
+Hello....
+# 这里会暂停1秒
+world...
+</code></pre></div></div>
+
+<p>在 Python 中使用 async def 定义一个协程（ coroutine ），它并不能直接运行，需要加入到事件循环（ event_loop ）中</p>
+
+<h3 id="运行-task">运行 Task</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">do_work</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"这是一个Task例子...."</span><span class="p">)</span>
+    <span class="c1"># 模拟阻塞1秒
+</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"Task任务完成"</span>
+
+<span class="c1"># 创建一个事件event_loop
+</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="c1"># 创建一个task
+</span><span class="n">task</span> <span class="o">=</span> <span class="n">loop</span><span class="p">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">do_work</span><span class="p">())</span>
+<span class="c1"># 第一次打印task
+</span><span class="k">print</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+<span class="c1"># 将task加入到event_loop中
+</span><span class="n">loop</span><span class="p">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+<span class="c1"># 再次打印task
+</span><span class="k">print</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">task</span><span class="p">.</span><span class="n">result</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Task pending coro=&lt;do_work() running at /Users/imeng/Documents/Interview/Python/asyncio_test.py:5&gt;&gt;
+这是一个Task例子....
+&lt;Task finished coro=&lt;do_work() done, defined at /Users/imeng/Documents/Interview/Python/asyncio_test.py:5&gt; result='Task任务完成'&gt;
+Task任务完成
+</code></pre></div></div>
+
+<p>使用 EventLoop 对象的 create_task 函数创建一个 Task 对象，在第一次打印 Task 对象时，状态为 pending，完成执行函数后的状态为 finished</p>
+
+<p>Task 对象的 result() 函数可以获取 do_work() 函数的返回值</p>
+
+<h3 id="task-任务回调">Task 任务回调</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">do_work</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"这是一个Task例子...."</span><span class="p">)</span>
+    <span class="c1"># 模拟阻塞1秒
+</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"Task任务完成"</span>
+
+<span class="c1"># 任务完成后的回调函数
+</span><span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+    <span class="c1"># 打印参数
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="c1"># 打印返回的结果
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">task</span><span class="p">.</span><span class="n">result</span><span class="p">())</span>
+
+<span class="c1"># 创建一个事件event_loop
+</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="c1"># 创建一个task
+</span><span class="n">task</span> <span class="o">=</span> <span class="n">loop</span><span class="p">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">do_work</span><span class="p">())</span>
+<span class="n">task</span><span class="p">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+
+<span class="c1"># 将task加入到event_loop中
+</span><span class="n">loop</span><span class="p">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">这是一个Task例子</span><span class="p">....</span>
+<span class="o">&lt;</span><span class="n">Task</span> <span class="n">finished</span> <span class="n">coro</span><span class="o">=&lt;</span><span class="n">do_work</span><span class="p">()</span> <span class="n">done</span><span class="p">,</span> <span class="n">defined</span> <span class="n">at</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">imeng</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">Interview</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">asyncio_test</span><span class="p">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">=</span><span class="s">'Task任务完成'</span><span class="o">&gt;</span>
+<span class="n">Task任务完成</span>
+</code></pre></div></div>
+
+<p>定义回调函数时必须有一个参数，参数和 Task 任务时同一个对象，使用 add_done_callback() 函数为 Task 任务添加一个完成后的回调函数</p>
+
+<h3 id="并发任务">并发任务</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">do_work</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"暂停"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="s">"秒"</span><span class="p">)</span>
+    <span class="c1"># 模拟阻塞1秒
+</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"暂停了"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="s">"秒"</span>
+
+
+<span class="c1"># 任务完成后的回调函数
+</span><span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">future</span><span class="p">):</span>
+    <span class="c1"># 打印返回的结果
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="n">result</span><span class="p">())</span>
+
+
+<span class="c1"># 创建一个事件event_loop
+</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">loop</span><span class="p">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">do_work</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">task</span><span class="p">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+    <span class="n">tasks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+
+<span class="c1"># 计时
+</span><span class="n">now</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">now</span><span class="p">()</span>
+<span class="c1"># 将task加入到event_loop中
+</span><span class="n">loop</span><span class="p">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">asyncio</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">))</span>
+
+<span class="n">end</span> <span class="o">=</span> <span class="n">now</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"总共用时间:"</span><span class="p">,</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>示例结果：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">暂停0秒</span>
+<span class="n">暂停1秒</span>
+<span class="n">暂停2秒</span>
+<span class="n">暂停3秒</span>
+<span class="n">暂停4秒</span>
+<span class="n">暂停了0秒</span>
+<span class="n">暂停了1秒</span>
+<span class="n">暂停了2秒</span>
+<span class="n">暂停了3秒</span>
+<span class="n">暂停了4秒</span>
+<span class="n">总共用时间</span><span class="p">:</span> <span class="mf">4.003800868988037</span>
+</code></pre></div></div>
+<p>使用 asyncio.wait() 函数将 Task 任务列表添加到 event_loop 中，也可以使用 asyncio.gather() 函数</p>
+
+<p>在示例中可以看出多个协程总共用时4秒多，如果是同步任务将需要花费10秒多，asyncio 实现了程序的并发</p>
+
+<h3 id="同一个回调">同一个回调</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">do_work</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"暂停"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="s">"秒"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"暂停了"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="s">"秒"</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">gatheringFuture</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">gatheringFuture</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"多个Task任务完成后的回调"</span><span class="p">)</span>
+    <span class="n">loop</span><span class="p">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="n">gather</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">gather</span><span class="p">(</span><span class="n">do_work</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">do_work</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">gather</span><span class="p">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">functools</span><span class="p">.</span><span class="n">partial</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">loop</span><span class="p">))</span>
+
+<span class="n">loop</span><span class="p">.</span><span class="n">run_forever</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>示例结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>暂停1秒
+暂停3秒
+&lt;_GatheringFuture finished result=['暂停了1秒', '暂停了3秒']&gt;
+多个Task任务完成后的回调
+</code></pre></div></div>
+
+<p>loop.run_forever() 函数 和 loop.run_until_complete() 函数 并不相同，run_until_complete() 函数在执行后事件循环被停止，run_forever() 函数在 Task 任务执行完成后事件循环并没有被终止，在回调函数 callback() 中使用 loop.stop() 函数将事件循环停止</p>
+
+<h3 id="总结">总结</h3>
+
+<p>asyncio 在协程、网络爬虫等多种耗时操作时程序不再需要等待其他任务完成，节约大量的时间。</p>
+
+<h3 id="代码地址">代码地址</h3>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-101">Python-100-days-day101</a></p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/27/python-asyncio-101.html';
+        this.page.identifier = '/python/2019/12/27/python-asyncio-101.html';
+        this.page.title = '第101天： Python asyncio';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/27/python-asyncio-101.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

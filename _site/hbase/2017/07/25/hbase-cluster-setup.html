@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         hbase分布式集群搭建 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;hbase和hadoop一样也分为单机版、伪分布式版和完全分布式集群版本，这篇文件介绍如何搭建完全分布式集群环境搭建。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/hbase/2017/07/25/hbase-cluster-setup.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="hbase分布式集群搭建">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>hbase分布式集群搭建</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/07/25
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>hbase和hadoop一样也分为单机版、伪分布式版和完全分布式集群版本，这篇文件介绍如何搭建完全分布式集群环境搭建。</p>
+
+<p>hbase依赖于hadoop环境，搭建habase之前首先需要搭建好hadoop的完全集群环境，因此看这篇文章之前需要先看我的上一篇文章：<a href="http://www.ityouknow.com/hadoop/2017/07/24/hadoop-cluster-setup.html">hadoop分布式集群搭建</a>。本文中没有按照独立的zookeeper，使用了hbase自带的zookeeper。</p>
+
+<h2 id="环境准备">环境准备</h2>
+
+<ul>
+  <li>hbase软件包: http://mirror.bit.edu.cn/apache/hbase/1.3.1/hbase-1.3.1-bin.tar.gz</li>
+  <li>完成hadoop集群环境搭建</li>
+</ul>
+
+<h2 id="安装hbase">安装hbase</h2>
+
+<blockquote>
+  <p>首先在hadoop-master安装配置好之后，在复制到从节点</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://mirror.bit.edu.cn/apache/hbase/1.3.1/hbase-1.3.1-bin.tar.gz
+<span class="c">#解压</span>
+<span class="nb">tar</span> <span class="nt">-xzvf</span> hbase-1.3.1-bin.tar.gz  <span class="nt">-C</span> /usr/local/
+<span class="c">#重命名 </span>
+<span class="nb">mv </span>hbase-1.3.1 hbase
+</code></pre></div></div>
+
+<p>配置环境变量<code class="highlighter-rouge">vim /etc/profile</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#内容</span>
+<span class="nb">export </span><span class="nv">HBASE_HOME</span><span class="o">=</span>/usr/local/hbase
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HBASE_HOME</span>/bin:<span class="nv">$PATH</span>
+<span class="c">#使立即生效</span>
+<span class="nb">source</span> /etc/profile
+</code></pre></div></div>
+
+<p>修改系统变量ulimit</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ulimit</span> <span class="nt">-n</span> 10240
+</code></pre></div></div>
+
+<h2 id="配置文件">配置文件</h2>
+
+<p>hbase 相关的配置主要包括hbase-env.sh、hbase-site.xml、regionservers三个文件，都在 /usr/local/hbase/conf目录下面：</p>
+
+<p>配置hbase-env.sh</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim hbase-env.sh
+<span class="c">#内容</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/jre-1.7.0-openjdk.x86_64
+<span class="nb">export </span><span class="nv">HBASE_CLASSPATH</span><span class="o">=</span>/usr/local/hbase/conf
+<span class="c"># 此配置信息，设置由hbase自己管理zookeeper，不需要单独的zookeeper。</span>
+<span class="nb">export </span><span class="nv">HBASE_MANAGES_ZK</span><span class="o">=</span><span class="nb">true
+export </span><span class="nv">HBASE_HOME</span><span class="o">=</span>/usr/local/hbase
+<span class="nb">export </span><span class="nv">HADOOP_HOME</span><span class="o">=</span>/usr/local/hadoop
+<span class="c">#Hbase日志目录</span>
+<span class="nb">export </span><span class="nv">HBASE_LOG_DIR</span><span class="o">=</span>/usr/local/hbase/logs
+</code></pre></div></div>
+
+<p>配置 hbase-site.xml</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;configuration&gt;</span>
+	<span class="nt">&lt;property&gt;</span>
+		<span class="nt">&lt;name&gt;</span>hbase.rootdir<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;value&gt;</span>hdfs://hadoop-master:9000/hbase<span class="nt">&lt;/value&gt;</span>
+	<span class="nt">&lt;/property&gt;</span>
+	<span class="nt">&lt;property&gt;</span>
+		<span class="nt">&lt;name&gt;</span>hbase.cluster.distributed<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+	<span class="nt">&lt;/property&gt;</span>
+	<span class="nt">&lt;property&gt;</span>
+		<span class="nt">&lt;name&gt;</span>hbase.master<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;value&gt;</span>hadoop-master:60000<span class="nt">&lt;/value&gt;</span>
+	<span class="nt">&lt;/property&gt;</span>
+	<span class="nt">&lt;property&gt;</span>
+		<span class="nt">&lt;name&gt;</span>hbase.zookeeper.quorum<span class="nt">&lt;/name&gt;</span>
+		<span class="nt">&lt;value&gt;</span>hadoop-master,hadoop-slave1,hadoop-slave2,hadoop-slave3<span class="nt">&lt;/value&gt;</span>
+	<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div></div>
+
+<p>配置regionservers</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /usr/local/hbase/conf/regionservers
+hadoop-slave1
+hadoop-slave2
+hadoop-slave3
+</code></pre></div></div>
+
+<p>复制hbase到从节点中</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp <span class="nt">-r</span> /usr/local/hbase hadoop-slave1:/usr/local/
+scp <span class="nt">-r</span> /usr/local/hbase hadoop-slave2:/usr/local/
+scp <span class="nt">-r</span> /usr/local/hbase hadoop-slave3:/usr/local/
+</code></pre></div></div>
+
+<h2 id="启动hbase">启动hbase</h2>
+
+<blockquote>
+  <p>启动仅在master节点上执行即可</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/hbase/bin/start-hbase.sh
+</code></pre></div></div>
+
+<p>启动后，master上进程和slave进程列表</p>
+
+<p>master中的信息</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>hadoop@master ~]<span class="nv">$ </span>jps
+6225 Jps
+2897 SecondaryNameNode   <span class="c"># hadoop进程</span>
+2710 NameNode            <span class="c"># hadoop master进程</span>
+3035 ResourceManager     <span class="c"># hadoop进程</span>
+5471 HMaster             <span class="c"># hbase master进程</span>
+2543 HQuorumPeer         <span class="c"># zookeeper进程</span>
+</code></pre></div></div>
+
+<p>salve中的信息</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>hadoop@slave1 ~]<span class="nv">$ </span>jps
+4689 Jps
+2533 HQuorumPeer          <span class="c"># zookeeper进程</span>
+2589 DataNode             <span class="c"># hadoop slave进程</span>
+4143 HRegionServer        <span class="c"># hbase slave进程</span>
+</code></pre></div></div>
+
+<p>因为hbase依赖于hadoop，因此启动和停止都是需要按照顺序进行</p>
+
+<p>如果安装了独立的zookeeper</p>
+
+<p>启动顺序: <code class="highlighter-rouge">hadoop-&gt; zookeeper-&gt; hbase</code><br />
+停止顺序：<code class="highlighter-rouge">hbase-&gt; zookeeper-&gt; hadoop</code></p>
+
+<p>使用自带的zookeeper</p>
+
+<p>启动顺序: <code class="highlighter-rouge">hadoop-&gt; hbase</code><br />
+停止顺序：<code class="highlighter-rouge">hbase-&gt;  hadoop</code></p>
+
+<p>重启hbase</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/hbase/bin/stop-hbase.sh
+~/hadoop/sbin/stop-all.sh
+~/hadoop/sbin/start-all.sh
+~/hbase/bin/start-hbase.sh
+</code></pre></div></div>
+
+<h2 id="错误处理">错误处理</h2>
+
+<p>在搭建的过程中，报了这么一个错误，错误信息如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Unhandled: org.apache.hadoop.hbase.ClockOutOfSyncException: Server hadoop-slave3,16020,1500526355333
+
+Caused by: org.apache.hadoop.hbase.ipc.RemoteWithExtrasException<span class="o">(</span>org.apache.hadoop.hbase.ClockOutOfSyncException<span class="o">)</span>:   
+ org.apache.hadoop.hbase.ClockOutOfSyncException:       
+ Server hadoop-slave3,16020,1500526355333 has been rejected<span class="p">;</span> Reported <span class="nb">time </span>is too far out of <span class="nb">sync </span>with  
+ master.  Time difference of 77348ms <span class="o">&gt;</span> max allowed of 30000ms
+</code></pre></div></div>
+
+<p>看大概的意思是主节点连接从节点超时了。可能有两方面的原因，第一、linux服务器时间不一致导致，第二、由于网络其它原因导致连接的时间超长。</p>
+
+<p>解决方案：</p>
+
+<p>第一个原因，修改各服务器时间保持一致。最终的解决方案是：设置一个定时使用ntp从某个服务器定时同步时间</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>查看定时 
+crontab <span class="nt">-l</span>
+编辑
+crontab <span class="nt">-e</span> 
+<span class="c"># 内容</span>
+0 <span class="k">*</span>/1 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>  /usr/sbin/ntpdate 192.168.0.12<span class="p">;</span>/sbin/hwclock <span class="nt">-w</span>
+</code></pre></div></div>
+
+<p>手动执行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#从 0.12同步时间</span>
+/usr/sbin/ntpdate 192.168.0.12
+</code></pre></div></div>
+
+<p>第二个原因，可以修改hbase默认的最大链接时间长一些。</p>
+
+<p>HBase配置文件hbase-siter.xml中添加连接时长的属性</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hbase.master.maxclockskew<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>120000<span class="nt">&lt;/value&gt;</span>
+ <span class="nt">&lt;/property&gt;</span>
+</code></pre></div></div>
+
+<p>参考:<br />
+<a href="http://www.ixirong.com/2015/05/25/how-to-install-hbase-cluster/">centos 6.4下hbase 1.0.1 分布式集群搭建</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/hbase/2017/07/25/hbase-cluster-setup.html';
+        this.page.identifier = '/hbase/2017/07/25/hbase-cluster-setup.html';
+        this.page.title = 'hbase分布式集群搭建';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/hbase/2017/07/25/hbase-cluster-setup.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

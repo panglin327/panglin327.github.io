@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Jvm 系列(五):Java GC 分析 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;Java GC就是JVM记录仪，书画了JVM各个分区的表演。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/jvm/2017/09/18/GC-Analysis.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Jvm 系列(五):Java GC 分析">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Jvm 系列(五):Java GC 分析</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/09/18
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>Java GC就是JVM记录仪，书画了JVM各个分区的表演。</p>
+
+<h2 id="什么是-java-gc">什么是 Java GC</h2>
+
+<p>Java GC（Garbage Collection，垃圾收集，垃圾回收）机制，是Java与C++/C的主要区别之一，作为Java开发者，一般不需要专门编写内存回收和垃圾清理代码，对内存泄露和溢出的问题，也不需要像C程序员那样战战兢兢。这是因为在Java虚拟机中，存在自动内存管理和垃圾清扫机制。概括地说，该机制对JVM（Java Virtual Machine）中的内存进行标记，并确定哪些内存需要回收，根据一定的回收策略，自动的回收内存，永不停息（Nerver Stop）的保证JVM中的内存空间，防止出现内存泄露和溢出问题。</p>
+
+<p>在Java语言出现之前，就有GC机制的存在，如Lisp语言），Java GC机制已经日臻完善，几乎可以自动的为我们做绝大多数的事情。然而，如果我们从事较大型的应用软件开发，曾经出现过内存优化的需求，就必定要研究Java GC机制。</p>
+
+<p>简单总结一下，Java GC就是通过GC收集器回收不在存活的对象，保证JVM更加高效的运转。如果不了解GC算法和垃圾回收器可以参考这篇文章：<a href="http://www.ityouknow.com/jvm/2017/08/29/GC-garbage-collection.html">jvm系列(三):GC算法 垃圾收集器</a>。</p>
+
+<h2 id="如何获取-java-gc日志">如何获取 Java GC日志</h2>
+
+<p>一般情况可以通过两种方式来获取GC日志，一种是使用命令动态查看，一种是在容器中设置相关参数打印GC日志。</p>
+
+<h3 id="命令动态查看">命令动态查看</h3>
+
+<p>Java 自动的工具行命令，jstat可以用来动态监控JVM内存的使用，统计垃圾回收的各项信息。</p>
+
+<p>比如常用命令，<code class="highlighter-rouge">jstat -gc</code> 统计垃圾回收堆的行为</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jstat <span class="nt">-gc</span> 1262
+ S0C    S1C     S0U     S1U   EC       EU        OC         OU        PC       PU         YGC    YGCT    FGC    FGCT     GCT   
+26112.0 24064.0 6562.5  0.0   564224.0 76274.5   434176.0   388518.3  524288.0 42724.7    320    6.417   1      0.398    6.815
+</code></pre></div></div>
+
+<p>也可以设置间隔固定时间来打印：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jstat <span class="nt">-gc</span> 1262 2000 20
+</code></pre></div></div>
+
+<p>这个命令意思就是每隔2000ms输出1262的gc情况，一共输出20次</p>
+
+<p>更详细的内容参考这篇文章：<a href="http://www.ityouknow.com/jvm/2017/09/03/jvm-command.html">jvm系列(四):jvm调优-命令篇</a></p>
+
+<h3 id="gc参数">GC参数</h3>
+
+<p>JVM的GC日志的主要参数包括如下几个：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-XX:+PrintGC</code> 输出GC日志</li>
+  <li><code class="highlighter-rouge">-XX:+PrintGCDetails</code> 输出GC的详细日志</li>
+  <li><code class="highlighter-rouge">-XX:+PrintGCTimeStamps</code> 输出GC的时间戳（以基准时间的形式）</li>
+  <li><code class="highlighter-rouge">-XX:+PrintGCDateStamps</code> 输出GC的时间戳（以日期的形式，如 2017-09-04T21:53:59.234+0800）</li>
+  <li><code class="highlighter-rouge">-XX:+PrintHeapAtGC</code> 在进行GC的前后打印出堆的信息</li>
+  <li><code class="highlighter-rouge">-Xloggc:../logs/gc.log</code> 日志文件的输出路径</li>
+</ul>
+
+<p>在生产环境中，根据需要配置相应的参数来监控JVM运行情况。</p>
+
+<h3 id="tomcat-设置示例">Tomcat 设置示例</h3>
+
+<p>我们经常在tomcat的启动参数中添加JVM相关参数，这里有一个典型的示例：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">"-server -Xms2000m -Xmx2000m -Xmn800m -XX:PermSize=64m -XX:MaxPermSize=256m -XX:SurvivorRatio=4
+-verbose:gc -Xloggc:</span><span class="nv">$CATALINA_HOME</span><span class="s2">/logs/gc.log 
+-Djava.awt.headless=true 
+-XX:+PrintGCTimeStamps -XX:+PrintGCDetails 
+-Dsun.rmi.dgc.server.gcInterval=600000 -Dsun.rmi.dgc.client.gcInterval=600000
+-XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=15"</span>
+</code></pre></div></div>
+
+<p>根据上面的参数我们来做一下解析：</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">-Xms2000m -Xmx2000m -Xmn800m -XX:PermSize=64m -XX:MaxPermSize=256m</code><br />
+Xms，即为jvm启动时得JVM初始堆大小,Xmx为jvm的最大堆大小，xmn为新生代的大小，permsize为永久代的初始大小，MaxPermSize为永久代的最大空间。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-XX:SurvivorRatio=4</code><br />
+SurvivorRatio为新生代空间中的Eden区和救助空间Survivor区的大小比值，默认是8，则两个Survivor区与一个Eden区的比值为2:8,一个Survivor区占整个年轻代的1/10。调小这个参数将增大survivor区，让对象尽量在survitor区呆长一点，减少进入年老代的对象。去掉救助空间的想法是让大部分不能马上回收的数据尽快进入年老代，加快年老代的回收频率，减少年老代暴涨的可能性，这个是通过将-XX:SurvivorRatio 设置成比较大的值（比如65536)来做到。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-verbose:gc -Xloggc:$CATALINA_HOME/logs/gc.log</code><br />
+将虚拟机每次垃圾回收的信息写到日志文件中，文件名由file指定，文件格式是平文件，内容和-verbose:gc输出内容相同。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-Djava.awt.headless=true</code> 
+Headless模式是系统的一种配置模式。在该模式下，系统缺少了显示设备、键盘或鼠标。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-XX:+PrintGCTimeStamps -XX:+PrintGCDetails</code><br />
+设置gc日志的格式</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-Dsun.rmi.dgc.server.gcInterval=600000 -Dsun.rmi.dgc.client.gcInterval=600000</code><br />
+指定rmi调用时gc的时间间隔</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=15</code> 
+采用并发gc方式，经过15次minor gc 后进入年老代</p>
+  </li>
+</ul>
+
+<h2 id="如何分析gc日志">如何分析GC日志</h2>
+
+<p>摘录GC日志一部分</p>
+
+<p>Young GC回收日志:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2016-07-05T10:43:18.093+0800: 25.395: <span class="o">[</span>GC <span class="o">[</span>PSYoungGen: 274931K-&gt;10738K<span class="o">(</span>274944K<span class="o">)]</span> 371093K-&gt;147186K<span class="o">(</span>450048K<span class="o">)</span>, 0.0668480 secs] <span class="o">[</span>Times: <span class="nv">user</span><span class="o">=</span>0.17 <span class="nv">sys</span><span class="o">=</span>0.08, <span class="nv">real</span><span class="o">=</span>0.07 secs]
+</code></pre></div></div>
+
+<p>Full GC回收日志:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2016-07-05T10:43:18.160+0800: 25.462: <span class="o">[</span>Full GC <span class="o">[</span>PSYoungGen: 10738K-&gt;0K<span class="o">(</span>274944K<span class="o">)]</span> <span class="o">[</span>ParOldGen: 136447K-&gt;140379K<span class="o">(</span>302592K<span class="o">)]</span> 147186K-&gt;140379K<span class="o">(</span>577536K<span class="o">)</span> <span class="o">[</span>PSPermGen: 85411K-&gt;85376K<span class="o">(</span>171008K<span class="o">)]</span>, 0.6763541 secs] <span class="o">[</span>Times: <span class="nv">user</span><span class="o">=</span>1.75 <span class="nv">sys</span><span class="o">=</span>0.02, <span class="nv">real</span><span class="o">=</span>0.68 secs]
+</code></pre></div></div>
+
+<p>通过上面日志分析得出，PSYoungGen、ParOldGen、PSPermGen属于Parallel收集器。其中PSYoungGen表示gc回收前后年轻代的内存变化；ParOldGen表示gc回收前后老年代的内存变化；PSPermGen表示gc回收前后永久区的内存变化。young gc 主要是针对年轻代进行内存回收比较频繁，耗时短；full gc 会对整个堆内存进行回城，耗时长，因此一般尽量减少full gc的次数</p>
+
+<p>通过两张图非常明显看出gc日志构成：</p>
+
+<p>Young GC日志:
+<img src="http://favorites.ren/assets/images/2017/jvm/Young GC.png" alt="" /></p>
+
+<p>Full GC日志:
+<img src="http://favorites.ren/assets/images/2017/jvm/Full GC.png" alt="" /></p>
+
+<h2 id="gc分析工具">GC分析工具</h2>
+
+<h3 id="gchisto">GChisto</h3>
+
+<p>GChisto是一款专业分析gc日志的工具，可以通过gc日志来分析：Minor GC、full gc的时间、频率等等，通过列表、报表、图表等不同的形式来反应gc的情况。虽然界面略显粗糙，但是功能还是不错的。</p>
+
+<p>配置好本地的jdk环境之后，双击GChisto.jar,在弹出的输入框中点击 add 选择gc.log日志</p>
+
+<p><img src="http://favorites.ren/assets/images/2017/jvm/g1.jpg" alt="" /></p>
+
+<ul>
+  <li>GC Pause Stats:可以查看GC 的次数、GC的时间、GC的开销、最大GC时间和最小GC时间等，以及相应的柱状图</li>
+</ul>
+
+<p><img src="http://favorites.ren/assets/images/2017/jvm/g2.jpg" alt="" /></p>
+
+<ul>
+  <li>
+    <p>GC Pause Distribution:查看GC停顿的详细分布，x轴表示垃圾收集停顿时间，y轴表示是停顿次数。</p>
+  </li>
+  <li>
+    <p>GC Timeline：显示整个时间线上的垃圾收集</p>
+  </li>
+</ul>
+
+<p><img src="http://favorites.ren/assets/images/2017/jvm/g3.jpg" alt="" /></p>
+
+<p>不过这款工具已经不再维护</p>
+
+<h3 id="gc-easy">GC Easy</h3>
+
+<p>这是一个web工具,在线使用非常方便.</p>
+
+<p>地址: <a href="http://gceasy.io">http://gceasy.io</a></p>
+
+<p>进入官网，讲打包好的zip或者gz为后缀的压缩包上传，过一会就会拿到分析结果。</p>
+
+<p><img src="http://favorites.ren/assets/images/2017/jvm/gceasy1.png" alt="" /></p>
+
+<p><img src="http://favorites.ren/assets/images/2017/jvm/gceasy2.png" alt="" /></p>
+
+<p>推荐使用此工具进行gc分析。</p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/jvm/2017/09/18/GC-Analysis.html';
+        this.page.identifier = '/jvm/2017/09/18/GC-Analysis.html';
+        this.page.title = 'Jvm 系列(五):Java GC 分析';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/jvm/2017/09/18/GC-Analysis.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

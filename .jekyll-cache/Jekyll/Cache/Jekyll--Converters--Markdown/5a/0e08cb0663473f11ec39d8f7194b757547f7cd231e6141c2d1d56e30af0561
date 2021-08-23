@@ -1,0 +1,263 @@
+I"�4<p>其实 Python 已经是一个很老的编程语言了，到现在（2019年） Python 已经高龄 28 岁，比很多程序员的年龄都大。现在之所以这么流行和社区、人工智能的发展，有很大的关系。</p>
+
+<p>千里之行始于足下，今天我们先来学习 Python 环境搭建。</p>
+
+<!--more-->
+
+<h2 id="python-介绍">Python 介绍</h2>
+
+<p>Python（英国发音：/ˈpaɪθən/ 美国发音：/ˈpaɪθɑːn/）是一种广泛使用的解释型、高级编程、通用型编程语言，由吉多·范罗苏姆创造，第一版发布于1991年。可以视之为一种改良（加入一些其他编程语言的优点，如面向对象）的 LISP。</p>
+
+<p>Python 的设计哲学强调代码的可读性和简洁的语法（尤其是使用空格缩进划分代码块，而非使用大括号或者关键词）。相比于 C++ 或 Java，Python 让开发者能够用更少的代码表达想法。不管是小型还是大型程序，该语言都试图让程序的结构清晰明了。</p>
+
+<p>与 Scheme、Ruby、Perl、Tcl 等动态类型编程语言一样，Python 拥有动态类型系统和垃圾回收功能，能够自动管理内存使用，并且支持多种编程范式，包括面向对象、命令式、函数式和过程式编程。其本身拥有一个巨大而广泛的标准库。</p>
+
+<p>Python 解释器本身几乎可以在所有的操作系统中运行。Python 的其中一个解释器 CPython是用 C 语言编写的、是一个由社群驱动的自由软件，当前由 Python 软件基金会管理。</p>
+
+<p>1989年的圣诞节期间，由 Python 的创始人为吉多·范罗苏姆，业余时间开发。 Python 的历史参考：<a href="http://www.ityouknow.com/python/2019/02/21/python-history.html">人生苦短，我用 Python
+</a>。</p>
+
+<p><strong>注意：本系列教程基于 Python 3.X</strong></p>
+
+<h2 id="python-环境搭建">Python 环境搭建</h2>
+
+<h3 id="win-安装">Win 安装</h3>
+
+<p>打开 Python 官网 <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>选择最新版本下载，或者直接打开对应的版本<a href="https://www.python.org/downloads/release/python-374/">python-374</a>。</p>
+
+<p>打开页面会看到有一个列表，如下图：</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-01.png" alt="" /></p>
+
+<p>x86是32位，x86-64是64位。</p>
+
+<p>可以通过下面3种途径获取 python：</p>
+
+<ul>
+  <li>web-based installer 是需要通过联网完成安装的</li>
+  <li>executable installer 是可执行文件(*.exe)方式安装</li>
+  <li>embeddable zip file 嵌入式版本，可以集成到其它应用中。</li>
+</ul>
+
+<p>Windows x86 选择下载 ：[Windows executable installer(https://www.python.org/ftp/python/3.7.4/python-3.7.4.exe)</p>
+
+<p>下载完成，双击 exe 文件进行安装，如下图，并按照圈中区域进行设置，切记要勾选打钩的框，然后再点击 Customize installation 进入到下一步：</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-02.png" alt="" /></p>
+
+<p>一路选择 Next，直至安装成功。</p>
+
+<h3 id="mac-os-python-安装">Mac OS Python 安装</h3>
+
+<blockquote>
+  <p>说明：1. Mac 本身自带 Python2.7。2. 允许两个版本共存。</p>
+</blockquote>
+
+<p>Mac OS 下安装 Python 主要方式有两种：</p>
+
+<p>1、安装 Homebrew</p>
+
+<p>使用了 Homebrew 安装 Python3 ，首先需要安装 Homebrew。</p>
+
+<p>打开终端执行以下命名：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+</code></pre></div></div>
+
+<p>执行过程中会自动安装 Xcode ，时间比较久可以等待一会。</p>
+
+<p>2、homebrew 安装 python3</p>
+
+<p>如果权限问题出错，请加上 sudo，如果需要安装 Python 3.X 版本，可以直接输入以下命令:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install python3
+</code></pre></div></div>
+
+<p>手动执行</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew link python
+</code></pre></div></div>
+
+<p>安装完成之后，系统将自动拥有了 python2.7 和 python 3.x ，可以使用 which 命名来查看 python 的安装路径</p>
+
+<p>查看 Python 2个版本的安装路径：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 系统自带的 python2.7，目录为/usr/bin/python
+which python
+//brew 安装的 python3.7.4,目录为 /usr/local/Cellar/python/3.7.4
+which python3
+</code></pre></div></div>
+
+<p>我本机之前安装过 3.5 的版本，因此需要修改本地环境变量：</p>
+
+<ul>
+  <li>1、打开 Terminal（终端）</li>
+  <li>2、输入：<code class="highlighter-rouge">vi ~/.bash_profile</code></li>
+  <li>3、设置 PATH</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PATH="/usr/local/Cellar/python/3.7.4/bin:${PATH}"
+export PATH
+</code></pre></div></div>
+
+<ul>
+  <li>4、输入：:wq    //保存并退出vi (注意在vi下 :)</li>
+  <li>5、修改立即生效：<code class="highlighter-rouge">source ~/.bash_profile</code></li>
+  <li>6、查看环境变量的值：<code class="highlighter-rouge">echo $PATH</code></li>
+</ul>
+
+<p>3、如果上面安装不成功也可以在官网下载安装</p>
+
+<p>参考上面图一，根据 Mac OS 的系统版本好选择下载最新的安装包，比如我的 Mac os 系统 for OS X 10.9 and later。</p>
+
+<p>Mac os（for OS X 10.9 and later）  选择下载 ：<a href="https://www.python.org/ftp/python/3.7.4/python-3.7.4-macosx10.9.pkg">macOS 64-bit installer</a></p>
+
+<h3 id="验证是否安装成功">验证是否安装成功</h3>
+
+<p>Win 下面打开 cmd 窗口（win 键+ R，输入 cmd 回车），在 cmd 窗口中输入 python 命令，回车后显示如下结果：</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-03.png" alt="" /></p>
+
+<p>证明安装成功。</p>
+
+<p>也可以使用命令： <code class="highlighter-rouge">python3 --version</code> 来查看</p>
+
+<h3 id="第一个-python-程序">第一个 Python 程序</h3>
+
+<p>我们在上面一步的基础上，来写我们使用的第一个 python 程序，命令行中输入如下语法：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("hello world!")
+</code></pre></div></div>
+
+<p>输入完后执行回车键，命令行就会输出 hello world!，如下图：</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-05.png" alt="" /></p>
+
+<p>这样我们第一个 Python 程序就完成了，是不是很简单。</p>
+
+<h2 id="python-开发工具">Python 开发工具</h2>
+
+<p>Python 的开发工具有很多，推荐比较多的有：</p>
+
+<ul>
+  <li>PyCharm，PyCharm 是最好的一个（也是唯一一个）专门面向于Python的全功能集成开发环境。</li>
+  <li>Sublime3，Sublime Text 是一款非常流行的代码编辑器，其开发者是一名谷歌的工程师，其梦想是使之成为更好的文本编辑器。Sublime Text 支持 Python 代码编辑同时兼容所有平台，并且丰富的插件（称之为“包”）扩展了语法和编辑功能。</li>
+  <li>Eclipse + PyDev，Eclispe + 插件 PyDev，它支持 Python 调试、代码补全和交互式 Python 控制台。</li>
+  <li>Atom 是由 GitHub 的程序员们打造的称为“属于21世纪”的代码编辑器，Atom 支持各种编程语言的代码高亮(HTML / CSS / Javascript / PHP / Python / C / C++ / Objective C / Java / JSON / Perl / CoffeeScript / Go / Sass / YAML / Markdown 等等)</li>
+</ul>
+
+<p>我选择使用 Sublime Text ，因为它轻量级，并且我一直使用这个工具写文章，感觉很不错，关于 Sublime Text 3 的快捷键可以查看此文章<a href="http://www.ityouknow.com/other/2015/11/12/sublime3-summary.html">Sublime3 使用总结</a>。</p>
+
+<h2 id="sublime-3-安装">Sublime 3 安装</h2>
+
+<h3 id="下载安装">下载安装</h3>
+
+<p>点击官网下载页面<a href="http://www.sublimetext.com/3">http://www.sublimetext.com/3</a>，会发现如下图所示不同的版本，根据各位系统的不同选择下载。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-06.png" alt="" /></p>
+
+<p>下载好安装包之后，根据提示一步一步的安装好 Sublime 3.</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-07.png" alt="" /></p>
+
+<p>安装时需要注意 Sublime 的安装目录，安装完成后进入目录下，将文件 sublime_text.exe 发送到桌面快捷方式，后续启动只需要在桌面点击 sublime_text.exe 快捷图标即可。（Mac 忽略这部操作）</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/python/day001-08.png" alt="" /></p>
+
+<h3 id="安装插件">安装插件</h3>
+
+<p>Sublime Text 通过 Package Control 来浏览、安装和卸载插件，安装 Package Control 有两种方案。</p>
+
+<p>1、使用 [Ctrl + `] (或 View &gt; Show Console menu) 打开 Sublime Text 控制台，将下面的 Python 代码粘贴到控制台里:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+</code></pre></div></div>
+
+<p>安装完成后重启 Sublime Text 3，在 Perferences-&gt; 中看到 Package Setting 和 Package Control 则表示安装成功。</p>
+
+<p>2、手动安装</p>
+
+<p>可能由于各种原因，无法使用代码安装，那可以通过以下步骤手动安装 Package Control：</p>
+
+<ul>
+  <li>点击 Preferences &gt; Browse Packages 菜单</li>
+  <li>进入打开的目录的上层目录，然后再进入 Installed Packages/ 目录</li>
+  <li>下载 Package Control.sublime-package 并复制到 Installed Packages/ 目录</li>
+  <li>重启 Sublime Text。</li>
+</ul>
+
+<h3 id="配置-python-环境">配置 Python 环境</h3>
+
+<p>Sumbline text 3 中默认使用 Ctrl+B 就可以编译器来编译 Python 文件。</p>
+
+<p>我们创建一个 hello.py 文件，文件中输入如下代码：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("hello world!")
+</code></pre></div></div>
+
+<p>使用快捷 Ctrl+B 执行，控制台输出信息如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'python' �����ڲ����ⲿ���Ҳ���ǿ����еĳ���
+���������ļ���
+[Finished in 0.1s with exit code 1]
+[shell_cmd: python -u "E:\opensource\python-100-days\day-001\hello.py"]
+[dir: E:\opensource\python-100-days\day-001]
+[path: ...]
+</code></pre></div></div>
+
+<p>打印英文也乱码，所以不是中文的原因，配置一下 Python 编译环境就好</p>
+
+<p>1、打开 Tools -&gt; Build System -&gt; New Build System 在打开的文件中粘贴一下代码。注意 cmd 标签的 python.exe 的地址要换成 Python 安装地址</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+"cmd": ["C:\\yourpath\\Python\\Python37\\python.exe", "-u", "$file"],
+"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+"selector": "source.python",
+"encoding": "utf-8"
+}
+</code></pre></div></div>
+
+<p>保存为 py.sublime-build</p>
+
+<p>2、设置编译环境 Tools -&gt; Build System -&gt; py 运行就通过了</p>
+
+<p>再次回到 hello.py 文件，使用快捷键 Ctrl+B 执行，控制台输出:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hello world!
+[Finished in 0.1s]
+</code></pre></div></div>
+
+<p>证明开发环境搭建成功。</p>
+
+<h3 id="sublime-text3-中无法运行-python-中-input解决方法">sublime text3 中无法运行 Python 中 input（）解决方法</h3>
+
+<p>1、Ctrl + shift + P ，在弹出的输入框中输入install package control；</p>
+
+<p>2、Ctrl + shift +p, 输入/选择 Package Control: Install Package，然后在新的输入框中输入SublimeREPL，回车</p>
+
+<p>3、依次点击 Preferences—Key Buildings，输入以下内容，然后保存，设置按键 F5（可以随意修改）为运行程序快捷键</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+    { "keys": ["f5"], "caption": "SublimeREPL:Python", 
+                      "command": "run_existing_window_command", "args":
+                      {
+                           "id": "repl_python_run",
+                           "file": "config/Python/Main.sublime-menu"
+                      } 
+    },
+]
+</code></pre></div></div>
+
+<p>4、配置完毕，需要运行有 input（）的程序时，按 F5 即可。</p>
+
+<p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+
+<h2 id="总结">总结</h2>
+
+<p>这篇文章我们简单了解了 Python 的特性，以及如何在不同环境中按照 Python 环境，安装配置 Python 的开发工具，学会使用 Python 写出第一个 Python 程序。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-001">Python-100-days-day001</a></p>
+</blockquote>
+
+:ET

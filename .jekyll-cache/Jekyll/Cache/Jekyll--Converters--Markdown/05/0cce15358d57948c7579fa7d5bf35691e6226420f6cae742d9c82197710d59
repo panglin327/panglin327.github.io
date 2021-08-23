@@ -1,0 +1,382 @@
+I"�W<p>by 某某白米饭</p>
+
+<h2 id="operator-模块">operator 模块</h2>
+
+<p>operator 模块提供了一套与 Python 的内置运算符对应的高效率函数。</p>
+
+<h3 id="函数的种类">函数的种类</h3>
+
+<p>函数包含的种类有：对象的比较运算、逻辑运算、数学运算和序列运算
+<!--more--></p>
+
+<h3 id="比较运算">比较运算</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算</th>
+      <th>函数</th>
+      <th>语法</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>小于</td>
+      <td>lt(a, b)</td>
+      <td>a &lt; b</td>
+    </tr>
+    <tr>
+      <td>小于等于</td>
+      <td>le(a, b)</td>
+      <td>a &lt;= b</td>
+    </tr>
+    <tr>
+      <td>大于</td>
+      <td>gt(a, b)</td>
+      <td>a &gt; b</td>
+    </tr>
+    <tr>
+      <td>大于等于</td>
+      <td>ge(a, b)</td>
+      <td>a &gt;= b</td>
+    </tr>
+    <tr>
+      <td>等于</td>
+      <td>eq(a, b)</td>
+      <td>a == b</td>
+    </tr>
+    <tr>
+      <td>不等于</td>
+      <td>ne(a, b)</td>
+      <td>a != b</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="实例">实例：</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">lt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>     
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">le</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>    
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">le</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>   
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ge</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ge</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>  
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">eq</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> 
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ne</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> 
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ne</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<h3 id="逻辑运算">逻辑运算</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算</th>
+      <th>函数</th>
+      <th>语法</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>与</td>
+      <td>and_(a, b)</td>
+      <td>a &amp; b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>或</td>
+      <td>or_(a, b)</td>
+      <td>a</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <td>异或</td>
+      <td>xor(a, b)</td>
+      <td>a ^ b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>取反</td>
+      <td>invert(a, b)</td>
+      <td>~ a</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>对象是否相等</td>
+      <td>is_(a, b)</td>
+      <td>a is b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>对象是否不相等</td>
+      <td>is_not(a, b)</td>
+      <td>a is not b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>真值</td>
+      <td>truth(obj)</td>
+      <td>obj</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="实例-1">实例：</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">and_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">or_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">xor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">invert</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">invert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">invert</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">is_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">is_not</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">truth</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<h3 id="数学运算">数学运算</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算</th>
+      <th>函数</th>
+      <th>语法</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>加</td>
+      <td>add(a ,b)</td>
+      <td>a + b</td>
+    </tr>
+    <tr>
+      <td>除</td>
+      <td>truediv(a, b)</td>
+      <td>a / b</td>
+    </tr>
+    <tr>
+      <td>乘</td>
+      <td>mul(a, b)</td>
+      <td>a * b</td>
+    </tr>
+    <tr>
+      <td>减</td>
+      <td>sub(a, b)</td>
+      <td>a - b</td>
+    </tr>
+    <tr>
+      <td>幂</td>
+      <td>pow(a, b)</td>
+      <td>a ** b</td>
+    </tr>
+    <tr>
+      <td>负数</td>
+      <td>neg(a)</td>
+      <td>- a</td>
+    </tr>
+    <tr>
+      <td>正数</td>
+      <td>pos(a)</td>
+      <td>+ a</td>
+    </tr>
+    <tr>
+      <td>取模</td>
+      <td>mod(a, b)</td>
+      <td>a % b</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="实例-2">实例：</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">truediv</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mf">1.5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mul</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sub</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="mi">256</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">neg</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">neg</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pos</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pos</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mod</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="序列运算">序列运算</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算</th>
+      <th>函数</th>
+      <th>语法</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>字符串拼接</td>
+      <td>concat(seq1, seq2)</td>
+      <td>seq1 + seq2</td>
+    </tr>
+    <tr>
+      <td>包含</td>
+      <td>contains(seq, obj)</td>
+      <td>obj in seq</td>
+    </tr>
+    <tr>
+      <td>索引赋值</td>
+      <td>setitem(obj, i, v)</td>
+      <td>obj[i] = v</td>
+    </tr>
+    <tr>
+      <td>索引删除</td>
+      <td>delitem(obj, i)</td>
+      <td>del obj[i]</td>
+    </tr>
+    <tr>
+      <td>索引取值</td>
+      <td>getitem(obj, i)</td>
+      <td>obj[i]</td>
+    </tr>
+    <tr>
+      <td>切片赋值</td>
+      <td>setitem(seq, slice(i, j), values)</td>
+      <td>seq[i:j] = values</td>
+    </tr>
+    <tr>
+      <td>切片删除</td>
+      <td>delitem(seq, slice(i, j))</td>
+      <td>del seq[i:j]</td>
+    </tr>
+    <tr>
+      <td>切片取值</td>
+      <td>getitem(seq, slice(i, j))</td>
+      <td>seq[i:j]</td>
+    </tr>
+    <tr>
+      <td>格式化</td>
+      <td>mod(s, obj)</td>
+      <td>s % obj</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="实例-3">实例：</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">concat</span><span class="p">(</span><span class="s">'hello'</span><span class="p">,</span> <span class="s">' Python'</span><span class="p">)</span>
+<span class="s">'hello Python'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">contains</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">setitem</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">delitem</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">getitem</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">setitem</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s">'ijk'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">'i'</span><span class="p">,</span> <span class="s">'j'</span><span class="p">,</span> <span class="s">'k'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">delitem</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">'i'</span><span class="p">,</span> <span class="s">'k'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">mod</span><span class="p">(</span><span class="s">'str %s'</span><span class="p">,</span> <span class="s">'value'</span><span class="p">)</span>
+<span class="s">'str value'</span>
+</code></pre></div></div>
+
+<h3 id="attrgetter类">attrgetter类</h3>
+
+<p>operator 模块的 attrgetter 类可以获取对象的属性用于 map(), stored() 操作</p>
+
+<h4 id="attrgetter实例">attrgetter实例:</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'%s(name=%r,score=%r)'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__class__</span><span class="p">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">students</span> <span class="o">=</span> <span class="p">[</span><span class="n">Student</span><span class="p">(</span><span class="s">"zhangSan"</span><span class="p">,</span> <span class="mi">89</span><span class="p">),</span>
+                <span class="n">Student</span><span class="p">(</span><span class="s">"liSi"</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span>
+                <span class="n">Student</span><span class="p">(</span><span class="s">"wangWu"</span><span class="p">,</span> <span class="mi">70</span><span class="p">),</span>
+                <span class="n">Student</span><span class="p">(</span><span class="s">"xiaoMing"</span><span class="p">,</span> <span class="mi">100</span><span class="p">)]</span>
+
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"按照【分数】排序: "</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">students</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s">'score'</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s">"score"</span><span class="p">)</span> <span class="c1"># 获取【分数】属性
+</span>    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">students</span><span class="p">]</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'获取分数属性：'</span> <span class="o">+</span> <span class="n">vals</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h3 id="itemgetter类">itemgetter类</h3>
+
+<p>operator 模块的 itemgetter 类会返回一个可调用对象，传入多个对象则返回元组</p>
+
+<h4 id="itemgetter实例">itemgetter实例:</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">itemgetter</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="s">'abcdefg'</span><span class="p">)</span>
+<span class="s">'d'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)(</span><span class="s">'abcdefg'</span><span class="p">)</span>
+<span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">itemgetter</span><span class="p">(</span><span class="s">'name'</span><span class="p">)({</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'liSi'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">18</span><span class="p">})</span>
+<span class="s">'liSi'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">soldier</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s">'captain'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'dotterbart'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">itemgetter</span><span class="p">(</span><span class="s">'rank'</span><span class="p">)(</span><span class="n">soldier</span><span class="p">)</span>
+<span class="s">'captain'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">inventory</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'apple'</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s">'banana'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">'pear'</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">getCount</span> <span class="o">=</span> <span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">getCount</span><span class="p">,</span> <span class="n">inventory</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">inventory</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">getCount</span><span class="p">)</span>
+<span class="p">[(</span><span class="s">'banana'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">'pear'</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s">'apple'</span><span class="p">,</span> <span class="mi">8</span><span class="p">)]</span>
+</code></pre></div></div>
+:ET

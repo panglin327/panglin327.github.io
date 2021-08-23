@@ -1,0 +1,2937 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+        
+        it - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="本站是纯洁的微笑的技术分享博客。内容涵盖生活故事、Java后端技术、Spring Boot、Spring Cloud、微服务架构、大数据演进、高可用架构、中间件使用、系统监控等相关的研究与知识分享。">
+
+    <link rel="canonical" href="http://localhost:4000/it">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/blog-page.css">
+    
+
+    <!-- CSS set in layout -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="互联网那些事">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>互联网那些事</h1>
+            <span class="meta-info">
+                
+                    <span class="mega-octicon octicon-organization"></span>&nbsp;&nbsp; IT行业大佬，知名互联网公司的那些故事...
+                
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container">
+
+    <div class="row">
+
+    <div class="col-md-12">
+
+        <ul id="posts-list">
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2021-01-22</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2021/01/22/jihuo.html">​永久激活~支持2020 3以下</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2021-01-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2021/01/04/cw.html">阿里云盘正式上架，速度15MB/s！（附下载链接+阿里云盘邀请码）</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-11-30</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/11/30/boss.html">Boss 被曝情色招聘。。。</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-11-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/11/29/tengxun.html">腾讯，搞了一个大事！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-11-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/11/19/gongsi.html">1000 亿！华为成立新公司！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-11-17</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/11/17/rongyao.html">定了，荣耀卖身 1000 亿！内部人士：很多华为员工想去荣耀！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-11-05</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/11/05/chaoguo.html">历史首次，Python 超过 Java</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-10-13</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/10/13/caodain.html">支持北斗、5G 的 Iphone12 来了，最大的槽点竟然是...</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-10-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/10/12/shengji.html">删库跑路升级版，著名大厂员工离职为报复公司，直接删虚拟机！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-10-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/10/02/suoshui.html">有百度网盘的赶紧做这事，不然空间要缩水，还剩12天...</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-09-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/09/27/beohou.html">华为鸿蒙背后：中国首个自己的开源基金会来了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-09-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/09/10/hongmeng.html">华为鸿蒙，告别 PPT，代码全部开源！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-09-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/09/06/wordpress-wechat.html">Wordpress 实现关注微信公众号后，才可下载特定资源</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-09-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/09/03/dail.html">那些在一家公司呆了10年的程序员，最后都怎么了？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-24</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/24/qixi.html">七夕青蛙孤寡服务：送你好朋友最好的七夕礼物！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/16/wangzhan.html">这几个奇奇怪怪的网站，看完震到腰疼！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/16/huangdu.html">周末，给大家爆一个圈内投“黄”毒的大瓜！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/12/shengya.html">我的十年程序员生涯（终结版）</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/12/mifen.html">我和小米的10年，从米粉到米黑，再到米粉的故事...</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/10/shenjia.html">从高中缀学到身价过亿，这个80后值得喝彩！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-08</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/08/sanzhe.html">TikTOK事件，真是一波又三折！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-08-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/08/01/renshe.html">阿里副总裁"人设"翻车：30岁成AI顶尖科学家，但我很懒</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-07-31</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/07/31/douyin.html">打不过明抢？特朗普要求字节跳动放弃 TikTok 所有权，美国为何容不下 TikTOK?</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-07-28</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/07/28/biantian.html">互联网圈又变天了</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-07-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/07/23/tiaolou.html">成都天府软件园，一个程序员跳楼了……</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-07-22</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/07/22/zhangzhongmou.html">再见，台积电张忠谋！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-07-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/07/20/yaotong.html">这波程序员血赚到腰疼...</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-07-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/07/20/shice.html">裂墙推荐！国产Java代码补全神器，aiXcoder 2.0实测</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-06-24</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/06/24/huangzheng.html">黄峥身家超马云：财富高达3200亿：他是怎么做到的？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-06-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/06/04/baidu.html">为百度说几句话！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-06-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/06/02/zhangnujing.html">中国芯片之父张汝京： 一生传奇，电影都不敢这么拍！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-05-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/05/29/wuguojie.html">给大家讲一个笑话：技术是无国界的！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-05-25</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/05/25/fengwang.html">疯王，任正非！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-05-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/05/18/liguoqing.html">李国庆是一匹野马，但俞渝不是草原！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-05-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/05/11/jiangfan.html">再见，“阿里三代掌门人”蒋凡！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/29/situzhengmei.html">泪目，司徒正美知乎最后回答，“猝死”距离程序员究竟有多远？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-28</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/28/zhouhongyi.html">周鸿祎，谁与争锋！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/23/mianshi.html">面试就像谈恋爱，“一见钟情”很重要！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-17</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/17/mailian.html">明明可以靠才华，现在却非要卖脸！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/16/pandownload.html">如何看待第三方百度云 Pandownload 作者被捕？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-14</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/14/liebao.html">猎豹移动被谷歌全部下架，活该吗？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-13</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/13/liuqiangdong.html">再见，刘强东！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/09/needcoder.html">美国确诊超46万！美国州长竟然抢起高龄程序员了，什么情况？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/09/jiufen.html">看了一份数据，顿时心情有点不太好了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-04-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/04/04/aidaori.html">今天，互联网人在行动！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/29/fusheng.html">曾遭周鸿祎全网封杀的360猛将 ：草根打工到36岁身家上亿的逆袭！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/27/huangzheng.html">市值2000亿，被骂假货的拼多多：黄峥3招创业利刃！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/23/soultwo.html">发黄图、泼脏水，为了搞垮对手，Soul 到底有多努力，他们到底是如何发展起来的呢？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-21</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/21/gaoxin.html">一文讲透高薪的本质！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-17</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/17/baiducoder.html">百度工程师，获利10万，判刑3年！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/16/soul.html">竞争不过你，就弄死你！中国互联网黑暗法则！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-13</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/13/ruishi.html">瑞士被领国“德”、“意”骑在头上拉屎！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/11/yuanyou.html">趁你病，要你命！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/10/xiejiao.html">韩国为什么有那么多“邪教”？没人管吗？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/09/luqi.html">陆奇最近在忙什么？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-05</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/05/yiqingzhihou.html">疫情过后：表面一切照旧，暗里风起云涌！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/04/sougou.html">搜狗输入法也在挑战国人的智商！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-03-01</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/03/01/sars.html">当年，非典SARS真的是我们战胜的吗？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/27/weimeng.html">创始人回应，员工删库跑路，公司市值暴跌10亿始末！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-26</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/26/sun.html">狂赚1200亿，差点收购苹果，影响千万程序员，那个叫做太阳的公司却陨落了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-24</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/24/caiyuan.html">某互联网企业：研发人员要么无薪转销售岗！要么主动辞退！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/19/dashi.html">鲁大师已经彻底沦为一款垃圾流氓软件！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/18/tmd.html">我只能说，都 TM 太骚了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-17</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/17/taolu.html">程序员威客平台找副业，被套路 30000 元！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-15</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/15/shanku.html">“删库跑路”这件事情真的发生了 ，还是技术总监干的！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-14</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/14/zuanshi.html">日本钻石公主号：已确诊174人!</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/11/gutianle.html">坐过牢洗过蛇，每年赚4亿：古天乐，香港最后的少侠</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/10/xiongdilian.html">成立13年，营收破亿，挂牌新三板，这家喊着“无兄弟，不编程”的公司倒闭了</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-02-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/02/09/kebi.html">拿"科比"死和疫情伤亡人数对比，不是蠢就是坏！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-01-31</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/01/31/pheic.html">疫情被定性为“PHEIC”，但天没有塌下来!</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-01-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/01/29/japan.html">日本确诊11例，但面对疫情他们竟然对中国做了这多事！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-01-13</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/01/13/shadiao.html">我为什么起这么沙雕的网名？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-01-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/01/10/ibmshenwang.html">34岁IBM工程师电脑被抢身亡：以命相争背后，是无处安放的生活</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-01-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/01/09/pingtaizhapian.html">我被骗子从“美团借钱”、“滴滴出行”、“借呗”和“微粒贷”等多个平台诈骗了11万元!</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2020-01-07</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2020/01/07/masike.html">埃隆·马斯克：别人笑我太疯癫，我笑他人看不穿</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-31</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/31/yinian.html">2019，我这奇幻的一年！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/29/zhapian.html">只因接了一个电话，程序员被骗 30 万！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/27/bufu.html">不服就干！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/23/mcafee.html">作死的传奇黑客McAfee：史上第一位嗑药、酗酒、做嫌犯的总统候选人</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/19/zhangyiming.html">张一鸣：每个逆袭的年轻人，都具备的底层能力</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-15</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/15/php.html">TIOBE 编程语言排行榜是什么，它是如何计算编程语言排行的？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-12</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/12/leijun.html">雷军：何以英雄背骂名！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/04/wangsicong.html">王思聪很混蛋，但就像他的熊猫一样，稀有！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/04/sunyuchen.html">孙宇晨也许会迟到，但永远不会缺席！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-12-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/12/03/lindao.html">代码写不好，却能当领导！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-29</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/29/wangyi.html">网易裁员事件，我给大家挖了这些法律知识，建议收藏！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-26</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/26/idcard.html">4.68亿个人信息泄露：2 块钱就可以查你的身份证，还能带照片！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-23</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/23/violent-layoffs.html">有态度的网易（暴力裁员），难道这就是网易的“态度”？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/10/chuanxiao.html">程序员被空姐骗到香港做传销</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/09/photoresolution.html">我怎么就被一张照片出卖了</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-05</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/05/photoleak.html">女明星因自拍瞳孔倒影暴露住址惨遭跟踪，一张照片是怎么出卖你？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/03/zhangxiaolong.html">微信之父：张小龙并不孤独</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-11-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/11/02/fraud.html">脑残骗局，为什么总有人上当？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/27/qiubojun.html">我在热搜里，从来看不到这个封神的男人</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-24</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/24/interview.html">都9012年了，怎么还会有人不会面试？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-22</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/22/zalie.html">又一知名公司炸雷，大量公司员工被带走调查</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/10/fupan10w.html">深度复盘：人生第一个10W+爆文背后</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/09/pythonlaw.html">爬虫究竟是合法还是违法的？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-07</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/07/beizhua.html">只因写了一段爬虫，公司200多人被抓！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-05</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/05/luoyonghao.html">锤子卖身！罗永浩：草莽英雄还是闹剧小丑？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/04/techreply.html">关于深夜技术事故纪实录的若干问题回复</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-10-03</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/10/03/zhenghun.html">年入170W的阿里P8程序员，微博征婚被群嘲</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-09-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/09/18/richcoder.html">中国最顶级的一批程序员，从首富到首负！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-09-17</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/09/17/topcoder.html">中国顶级程序员图鉴</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-09-15</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/09/15/qinghua.html">国之骄傲，清华IT大牛带领一群年青程序员叫板美国！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-09-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/09/10/itrich.html">互联网人炫富有多野！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-21</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/08/21/bat.html">互联网从此没有 BAT</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/08/20/mayun.html">马云:下辈子要做个女人！背后原因离不开三个人！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-19</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/08/19/pass-the-buck.html">程序员，职场上请远离这种人！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/08/18/5g.html">5G来了，普通人看热闹，程序员看颠覆</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/08/11/walmart.html">关闭门店，纵向发展，“铁王座”上的沃尔玛风波不断！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-08-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/08/04/google.html">谷歌，被尘封的过去！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/27/southeast-asia.html">东南亚痴狂诈骗的背后，意外暴露一个大型“围猎”程序员的现场</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-25</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/25/faceapp.html">一键变老，一键还童，一键变性！这个全球霸屏的 FaceApp 到底是个啥？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-20</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/20/code-gc.html">程序员垃圾代码分类指南</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-15</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/15/digital-nomad.html">数字游民，一边工作一边旅行？（自由职业和创业者进）</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-14</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/14/programmer-refuse-classification.html">程序员垃圾分类图鉴</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/11/garbage-collection.html">垃圾分类能否成下一个创业风口?</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-07-02</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/07/02/talk-libra.html">马化腾谈 Facebook Libra 币：不看技术看监管</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-06-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/06/27/facebook-Libra.html">Libra 加密稳定币：Facebook的"野心"？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-06-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/06/18/stay-up-late.html">报复性熬夜：熬夜一时爽，一直熬夜一直爽</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-06-10</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/06/10/write-blog.html">你为什么有那么多时间写博客？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-06-04</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/06/04/tech-leader.html">技术总监到底要不要写代码？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-27</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/05/27/ai-xcode.html">推荐一款基于 AI 开发的 IDE 插件，帮助提升编码效率</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-18</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/05/18/early-and-superiority.html">早，就是优势吗？从公号和比特币说起</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-13</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/05/13/oracle-layoffs.html">N+6 裁员裁出幸福感的背后</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-11</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/05/11/cookie-session.html">你真的了解 Cookie 和 Session 吗</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-05-05</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/05/05/koalas-rpc.html">百亿级企业级 RPC 框架开源了！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-04-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/04/16/hypocrite.html">要直接，不要怂，谈钱才不伤感情</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-03-28</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/03/28/Raise.html">程序员该不该主动提加薪？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-03-16</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/03/16/old-new-programmer.html">老程序员被新程序员拍在沙滩上?</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-03-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/03/09/huawei-yun.html">华为云开放日游记</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-03-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/03/06/Vamei.html">博客园知名博主 Vamei 英年早逝！</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-02-09</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/02/09/li-xinag.html">李想的创业史和感悟</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2019-01-06</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2019/01/06/knowledge-payment.html">谈谈 IT 行业的知识付费</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                <li class="posts-list-item">
+                    <div class="posts-content">
+                        <span class="posts-list-meta">2018-10-15</span>
+                        <a class="posts-list-name bubble-float-left" href="http://localhost:4000/it/2018/10/15/crossroads.html">小米从北京迁往武汉南京，一线大厂逃离或为新常态？</a>
+                        <span class="circle"></span>
+                    </div>
+                </li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul> 
+
+        <!-- Pagination -->
+        
+
+
+        <!-- Comments -->
+       <div class="comment">
+         
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it';
+        this.page.identifier = '/it';
+        this.page.title = '互联网那些事';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+       </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function(){
+
+        // Enable bootstrap tooltip
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
+    });
+</script>
+
+
+
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,251 @@
+I"z<p>by 豆豆</p>
+
+<h2 id="简介">简介</h2>
+
+<p>在 Python 中，迭代器是一种非常好用的数据结构，其最大的优势就是延迟生成，按需使用，从而大大提高程序的运行效率。而 itertools 作为 Python 的内置模块，就为我们提供了一套非常有用的用于操作可迭代对象的函数。</p>
+
+<!--more-->
+
+<h2 id="常用功能">常用功能</h2>
+
+<h3 id="count-功能详解">count 功能详解</h3>
+
+<p>count(start=0,step=1) 函数有两个参数，其中 step 是默认参数，可选的，默认值为 1。 该函数返回一个新的迭代器，从 start 开始，返回以 step 为步长的均匀间隔的值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">", "</span><span class="p">)</span>
+
+<span class="c1"># 输出结果如下 无穷无尽
+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<h3 id="cycle-功能详解">cycle 功能详解</h3>
+
+<p>cycle(iterable) 该函数会把接收到的序列无限重复下去。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">cycle</span><span class="p">(</span><span class="s">"XYZ"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s">", "</span><span class="p">)</span>
+  
+<span class="c1"># 输出结果如下 无穷无尽
+</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<p>注意，该函数可能需要相当大的辅助空间（取决于 iterable 的长度）。</p>
+
+<h3 id="repeat-功能详解">repeat 功能详解</h3>
+
+<p>repeat(object, times) 该函数创建一个迭代器，不断的重复 object，当然如果指定 times 的话，则只会重复 times 次。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="s">"XYZ"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s">", "</span><span class="p">)</span>
+  
+<span class="c1"># 输出结果如下 无穷无尽
+</span><span class="n">XYZ</span><span class="p">,</span> <span class="n">XYZ</span><span class="p">,</span> <span class="n">XYZ</span><span class="p">,</span> <span class="n">XYZ</span><span class="p">,</span> <span class="n">XYZ</span><span class="p">,</span> <span class="n">XYZ</span><span class="p">,</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="s">"XYZ"</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下 只会输出三次
+</span><span class="p">[</span><span class="s">'XYZ'</span><span class="p">,</span> <span class="s">'XYZ'</span><span class="p">,</span> <span class="s">'XYZ'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>注意：无限循环迭代器只有在 for 循环中才会不断的生成元素，如果只是创建一个迭代器对象，则不会事先生成无限个元素。</p>
+
+<h3 id="chain-功能详解">chain 功能详解</h3>
+
+<p>chain(*iterables) 该函数创建一个新的迭代器，会将参数中的所有迭代器全包含进去。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">chain</span><span class="p">(</span><span class="s">"abc"</span><span class="p">,</span> <span class="s">"xyz"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">,</span> <span class="s">'z'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="groupby-功能详解">groupby 功能详解</h3>
+
+<p>groupby(iterable, key=None) 分组函数，将 key 函数作用于序列的各个元素。根据 key 函数的返回值将拥有相同返回值的元素分到一个新的迭代器。类似于 SQL 中的 GROUP BY 操作，唯一不同的是该函数对序列的顺序有要求，因为当 key 函数的返回值改变时，迭代器就会生成一个新的分组。因此在使用该函数之前需要先使用同一个排序函数对该序列进行排序操作。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">def</span> <span class="nf">sortBy</span><span class="p">(</span><span class="n">score</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s">"A"</span>
+	<span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s">"B"</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s">"C"</span>
+
+<span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">89</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sortBy</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="n">A</span> <span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">84</span><span class="p">]</span>
+<span class="n">B</span> <span class="p">[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">78</span><span class="p">]</span>
+<span class="n">C</span> <span class="p">[</span><span class="mi">59</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+<span class="n">A</span> <span class="p">[</span><span class="mi">89</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>我们可以看到，该函数根据我们自定义的排序函数 sortBy 将列表中的元素进行了分组操作，只是我们发现最后一个怎么多了一个 A 的分组呢，这就是我们上面说所得「当 key 函数的返回值改变时，迭代器就会生成一个新的分组」。所以，我们需要事先对列表用 sortBy 函数排一下序。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">89</span><span class="p">]</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sortBy</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sortBy</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="n">A</span> <span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">84</span><span class="p">]</span>
+<span class="n">B</span> <span class="p">[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">78</span><span class="p">]</span>
+<span class="n">C</span> <span class="p">[</span><span class="mi">59</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+<span class="n">A</span> <span class="p">[</span><span class="mi">89</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="compress-功能详解">compress 功能详解</h3>
+
+<p>compress(data, selectors) 该函数功能很简单，就是根据 selectors 中的值判断是否保留 data 中对应位置的值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">78</span><span class="p">]</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tf</span><span class="p">)))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="dropwhile-功能详解">dropwhile 功能详解</h3>
+
+<p>dropwhile(predicate, iterable) 创建一个迭代器，从 predicate 首次为 false 时开始迭代元素。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+<p>由以上得知，即使 predicate 首次为 false 后面的元素不满足 predicate 也同样会被迭代。</p>
+
+<h3 id="filterfalse-功能详解">filterfalse 功能详解</h3>
+
+<p>filterfalse(predicate, iterable) 创建一个迭代器，返回 iterable 中 predicate 为 false 的元素。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">filterfalse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="islice-功能详解">islice 功能详解</h3>
+
+<p>islice(iterable, start, stop[, step]) 对 iterable 进行切片操作。从 start 开始到 stop 截止，同时支持以步长为 step 的跳跃。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">islice</span><span class="p">(</span><span class="s">'123456789'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">islice</span><span class="p">(</span><span class="s">'123456789'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">islice</span><span class="p">(</span><span class="s">'123456789'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">None</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">islice</span><span class="p">(</span><span class="s">'123456789'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="s">'1'</span><span class="p">,</span> <span class="s">'2'</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'3'</span><span class="p">,</span> <span class="s">'4'</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'3'</span><span class="p">,</span> <span class="s">'4'</span><span class="p">,</span> <span class="s">'5'</span><span class="p">,</span> <span class="s">'6'</span><span class="p">,</span> <span class="s">'7'</span><span class="p">,</span> <span class="s">'8'</span><span class="p">,</span> <span class="s">'9'</span><span class="p">]</span>
+<span class="p">[</span><span class="s">'1'</span><span class="p">,</span> <span class="s">'3'</span><span class="p">,</span> <span class="s">'5'</span><span class="p">,</span> <span class="s">'7'</span><span class="p">,</span> <span class="s">'9'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="starmap-功能详解">starmap 功能详解</h3>
+
+<p>starmap(function, iterable) 从可迭代对象中获取参数来执行该函数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">starmap</span><span class="p">(</span><span class="nb">pow</span><span class="p">,[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)])))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="takewhile-功能详解">takewhile 功能详解</h3>
+
+<p>takewhile(predicate, iterable) 创建一个迭代器，遇到 predicate 为 false 则停止迭代元素。与 dropwhile 完全相反。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">itertools</span><span class="p">.</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="product-功能详解">product 功能详解</h3>
+
+<p>product(*iterables, repeat=1) 输出可迭代对象的笛卡尔积，有点类似于嵌套循环。其中 repeat 可以设置循环次数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="s">"ab"</span><span class="p">,</span> <span class="s">"12"</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="s">"ab"</span><span class="p">,</span> <span class="s">"ab"</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="s">"ab"</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'1'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'2'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'1'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'2'</span><span class="p">)]</span>
+<span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">)]</span>
+<span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h3 id="permutations-功能详解">permutations 功能详解</h3>
+
+<p>permutations(iterable, r=None) 返回 iterable 中长度为 r 的所有排列。默认值 r 为 iterable 的长度。即使元素的值相同，不同位置的元素也被认为是不同的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">permutations</span><span class="p">(</span><span class="s">"aba"</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h3 id="combinations-功能详解">combinations 功能详解</h3>
+
+<p>combinations(iterable, r=None) 返回 iterable 中长度为 r 的有序排列。默认值 r 为 iterable 的长度。 与 permutations 操作不同的是该函数严格按照 iterable 中元素的顺序进行排列。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">combinations</span><span class="p">(</span><span class="s">"abc"</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h3 id="combinations_with_replacement-功能详解">combinations_with_replacement 功能详解</h3>
+
+<p>combinations_with_replacement(iterable, r=None) 返回 iterable 中长度为 r 的有序排列。默认值 r 为 iterable 的长度。 与 combinations 操作不同的是该函数允许每个元素重复出现。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="s">"abc"</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># 输出结果如下
+</span><span class="p">[(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">),</span> <span class="p">(</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">),</span> <span class="p">(</span><span class="s">'c'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h2 id="itertools-总结">itertools 总结</h2>
+
+<p>本文总结了 itertools 模块的常规操作，学习并掌握这些极为便利的操作非常有助于提高自己的编码效率。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-039">Python-100-days-day039</a></p>
+</blockquote>
+
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://docs.python.org/zh-cn/3/library/itertools.html">Python 文档 itertools</a></p>
+
+:ET

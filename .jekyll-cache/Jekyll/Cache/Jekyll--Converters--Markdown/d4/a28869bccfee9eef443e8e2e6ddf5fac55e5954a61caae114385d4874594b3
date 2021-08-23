@@ -1,0 +1,189 @@
+I"3j<p>by 戴景波</p>
+
+<h2 id="爬虫编写流程">爬虫编写流程</h2>
+
+<p>首先明确 Python 爬虫代码编写的流程：先直接打开网页，找到你想要的数据，就是走一遍流程。比如这个项目我要爬取历史某一天所有比赛的赔率数据、每场比赛的比赛结果等。</p>
+
+<p>那么我就先打开这个网址：https://live.leisu.com/wanchang?date=20190606 然后点击“竞彩”，再点击“指数”，跳转到另一个网址：https://live.leisu.com/3in1-2674547，然后就看到了想要的数据：各公司主队获胜赔率1.61、1.65等。</p>
+
+<p>到此为止，开始动手通过代码实现这个过程。</p>
+
+<!--more-->
+
+<h2 id="解析爬虫主程序py-主程序包括四个函数">解析“爬虫主程序.py” ：（主程序包括四个函数）</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## -*- coding: utf-8 -*-
+</span><span class="n">ls_url</span> <span class="o">=</span> <span class="s">'https://live.leisu.com/wanchang?date='</span><span class="c1">#ls历史https://live.leisu.com/wanchang?date=20190606
+</span><span class="k">class</span> <span class="nc">LiveJiangSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="p">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'FBP'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">'leisu.com'</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">d1</span><span class="o">=</span><span class="s">'20190606'</span> <span class="c1">#历史的比赛
+</span>            <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">ls_url</span> <span class="o">+</span> <span class="n">d1</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parseLs</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'d1'</span><span class="p">:</span> <span class="n">d1</span><span class="p">})</span> <span class="c1">#历史的比赛
+</span>            <span class="c1"># request = scrapy.http.FormRequest(wl_url + d1,callback=self.parseWl, meta={'d1': d1})#未来的比赛
+</span>            <span class="k">yield</span> <span class="n">request</span>
+    <span class="k">def</span> <span class="nf">parseLs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">response</span><span class="p">):</span>
+        <span class="n">d2</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'d1'</span><span class="p">]</span>
+        <span class="n">sel</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">racelist</span><span class="o">=</span><span class="p">[</span><span class="n">e5</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"'"</span><span class="p">)</span> <span class="k">for</span> <span class="n">e5</span> <span class="ow">in</span> <span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-status="8"]/@data-id'</span><span class="p">).</span><span class="n">extract</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">raceid</span> <span class="ow">in</span> <span class="n">racelist</span><span class="p">:</span><span class="c1">#raceid=['2674547'];raceid[0]=2674547
+</span>            <span class="n">item</span> <span class="o">=</span> <span class="n">PeilvItem</span><span class="p">()</span>
+            <span class="n">sel_div</span><span class="o">=</span><span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-id='</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s">']/div[@class="find-table layout-grid-tbody hide"]/div[@class="clearfix-row"]'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span> <span class="o">==</span> <span class="s">"[]"</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="s">""</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s">"周"</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]:</span><span class="c1">#取竞彩-周一001等
+</span>                <span class="n">plurl</span><span class="o">=</span><span class="s">'https://live.leisu.com/3in1-'</span><span class="o">+</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">plurl</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parse</span><span class="p">,</span><span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'item'</span><span class="p">:</span><span class="n">item</span><span class="p">})</span>
+                <span class="k">yield</span> <span class="n">request</span> <span class="c1">#并非return，yield压队列，parse函数将会被当做一个生成器使用。scrapy会逐一获取parse方法中生成的结果，并没有直接执行parse，循环完成后，再执行parse
+</span>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'--------------into parse----------------------'</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'item'</span><span class="p">]</span>
+        <span class="n">pv</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">pl_str</span> <span class="o">=</span> <span class="s">'/td[@class="bd-left"]/div[@class="begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"]/span[@class="float-left col-3"]/text()'</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">item</span><span class="c1">#程序在取得各个页面的items前，会先处理完之前所有的request队列里的请求，然后再提取items
+</span></code></pre></div></div>
+
+<p>首先导入我们需要的包:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">scrapy.http</span>
+<span class="kn">from</span> <span class="nn">peilv.items</span> <span class="kn">import</span> <span class="n">PeilvItem</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+</code></pre></div></div>
+
+<p>name = ‘FBP’是定义爬取项目名称，以便通过命令scrapy crawl FBP -o BaseData.csv获取数据。</p>
+
+<h2 id="start_requests">start_requests</h2>
+
+<p>向 https://live.leisu.com/wanchang?date=20190606 发送请求。（你可以打开这个网址，里边是爬虫程序爬取数据的最外层网站）
+scrapy.http.FormRequest 方法：
+第一个参数是请求的具体网址；
+第二个参数是下一步调用的函数；
+第三个参数 meta 是向调用函数传递的参数。</p>
+
+<h2 id="parsels-parsewl-同理不再重复讲解">parseLs （parseWl 同理，不再重复讲解）</h2>
+
+<p>主要用于解析次外层网页数据。这里用 XPath 解析，也是比较容易掌握的解析方式。网页结构如下：（通过 Google 浏览器打开https://live.leisu.com/wanchang?date=20190606 然后右键点击网页空白处点击“查看网页源代码”，找到你需要爬取的核心数据部分，这里我要找每场比赛的信息，那么拷贝下来，然后以易于查看的规整方式列出，如下：）</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-item list-item-2674547 list-day-6-6 finished "</span> <span class="na">data-id=</span><span class="s">"2674547"</span> <span class="na">data-status=</span><span class="s">"8"</span> <span class="na">data-eventid=</span><span class="s">"2906"</span> <span class="na">data-status-name=</span><span class="s">"finished"</span> <span class="na">data-nowtime=</span><span class="s">"1559760300"</span> <span class="na">data-realtime=</span><span class="s">"1559764089"</span> <span class="na">data-eventlevels=</span><span class="s">"1"</span> <span class="na">data-halftime=</span><span class="s">"45,15"</span> <span class="na">data-lottery=</span><span class="s">"周三001,北单018,"</span> <span class="na">data-asian-name=</span><span class="s">"name-0.25"</span> <span class="na">data-daxiao-name=</span><span class="s">"name-2.5"</span> <span class="na">data-asian=</span><span class="s">"1.125,0.25,0.78,0"</span> <span class="na">data-daxiao=</span><span class="s">"0.99,2.5,0.91,0"</span> <span class="na">data-home-icon=</span><span class="s">"8863b9e186e3580aa6dec29f19155d3a.png"</span> <span class="na">data-away-icon=</span><span class="s">"f84be480c54f0ff871b91fab14a36b36.png"</span> <span class="na">style=</span><span class="s">"height:41px;"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"find-table layout-grid-tbody hide"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"clearfix-row"</span><span class="nt">&gt;</span>
+...
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"lab-round"</span><span class="nt">&gt;</span> 0<span class="nt">&lt;/span&gt;</span> 
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"lab-lottery"</span><span class="nt">&gt;</span> 
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-jc"</span><span class="nt">&gt;</span>周三001<span class="nt">&lt;/span&gt;</span> 
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-bd"</span><span class="nt">&gt;</span>北单018<span class="nt">&lt;/span&gt;</span> 
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-zc"</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/span&gt;</span> 
+......
+</code></pre></div></div>
+
+<p>parseLS函数里的下边代码，用sel代表response.xpath，结合上表中 xml 中的元素：获取了比赛场次，存储到item[‘cc’]。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parseLs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">response</span><span class="p">):</span>
+	<span class="n">sel</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+	<span class="n">sel_div</span><span class="o">=</span><span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-id='</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s">']/div[@class="find-table layout-grid-tbody hide"]/div[@class="clearfix-row"]'</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span> <span class="o">==</span> <span class="s">"[]"</span><span class="p">:</span>
+	    <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="s">""</span>
+	<span class="k">else</span><span class="p">:</span>
+	    <span class="n">item</span><span class="p">[</span><span class="s">'cc'</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sel_div</span><span class="p">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'span[@class="lab-lottery"]/span[@class="text-jc"]/text()'</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+    	
+</code></pre></div></div>
+
+<p>此外，还要获取比赛的赔率信息，但并不在当前这个网页，而在更内层的网页中，需要从当前网页跳转。
+存储赔率的内层网页为 https://live.leisu.com/3in1-2674547，不同场次的比赛只有-后边的数字是变化的，那么程序中只要循环构造对应的数字2674547就好了。发现这个数字刚好是 data-id。通过以下代码实现获取：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">racelist</span><span class="o">=</span><span class="p">[</span><span class="n">e5</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"'"</span><span class="p">)</span> <span class="k">for</span> <span class="n">e5</span> <span class="ow">in</span> <span class="n">sel</span><span class="p">(</span><span class="s">'//li[@data-status="8"]/@data-id'</span><span class="p">).</span><span class="n">extract</span><span class="p">()]</span>
+<span class="k">for</span> <span class="n">raceid</span> <span class="ow">in</span> <span class="n">racelist</span><span class="p">:</span>
+    <span class="n">plurl</span><span class="o">=</span><span class="s">'https://live.leisu.com/3in1-'</span><span class="o">+</span><span class="n">raceid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="p">.</span><span class="n">http</span><span class="p">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">plurl</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">parse</span><span class="p">,</span><span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'item'</span><span class="p">:</span><span class="n">item</span><span class="p">})</span>
+    <span class="k">yield</span> <span class="n">request</span>
+</code></pre></div></div>
+
+<p>在Request中加入meta，即可将meta传递给response。再提交该网页请求到下一个函数parse。这里需要注意：parse中既返回item又生成新的request。</p>
+
+<p>平时在parse中return item即可返回item，return request则生成新的request请求。如果我们将return换为yield的话即可既返回item又生成新的request。注意一旦使用了yield，那么parse方法中就不能有return了。</p>
+
+<h2 id="parse">parse</h2>
+
+<p>网页结构如下：（通过Google浏览器打开https://live.leisu.com/3in1-2674547 然后右键点击网页空白处点击“查看网页源代码”，拷贝需要赔率的部分到文本文档，换行操作后如下：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"td-data td-pd-8 f-s-12 color-666 bd-top "</span> <span class="na">data-id=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;td&gt;</span> 
+......
+<span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">"bd-left"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"float-left col-3"</span><span class="nt">&gt;</span> 1.620 <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"float-left col-3"</span><span class="nt">&gt;</span> 3.600 <span class="nt">&lt;/span&gt;</span> 
+<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"float-left col-3"</span><span class="nt">&gt;</span> 5.250 <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+......
+</code></pre></div></div>
+
+<p>通过以下代码获取赔率，首先由上一个函数parseLs通过scrapy.http.FormRequest(plurl,callback=self.parse,meta={‘item’:item})调用到下边的parse方法，传入plurl链接对应的网页内容response，
+同样用response.xpath取出td中class为”bd-left”下边div中class为”begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8”再下边span中class为”float-left col-3”的值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'--------------into parse----------------------'</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'item'</span><span class="p">]</span>
+        <span class="n">pv</span><span class="o">=</span><span class="n">response</span><span class="p">.</span><span class="n">xpath</span>
+        <span class="n">pl_str</span> <span class="o">=</span> <span class="s">'/td[@class="bd-left"]/div[@class="begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"]/span[@class="float-left col-3"]/text()'</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'li'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="5"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span><span class="o">+</span><span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">())</span><span class="o">==</span><span class="s">"[]"</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span> <span class="o">=</span>  <span class="s">''</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">'b5'</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="p">(</span><span class="s">'//*[@data-id="2"]'</span> <span class="o">+</span> <span class="n">pl_str</span><span class="p">).</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">item</span><span class="c1">#程序在取得各个页面的items前，会先处理完之前所有的request队列里的请求，然后再提取items
+</span></code></pre></div></div>
+
+<p>再通过//*判断所有data-id为5下边的pl_str是否为空，若不为空则将其赋值给item[‘li’]，其他的item赋值同理。</p>
+
+<p>这里重点讲一下parse方法工作机制：因为使用的yield，而不是return。parse函数将会被当做一个生成器使用。</p>
+
+<p>scrapy会逐一获取parse方法中生成的结果，如果是request则加入爬取队列，如果是item类型则使用pipeline处理，其他类型则返回错误信息。</p>
+
+<p>scrapy取到第一部分的request不会立马就去发送这个request，只是把这个request放到队列里，然后接着从生成器里获取；</p>
+
+<p>取尽第一部分的request，然后再获取第二部分的item，取到item了，就会放到对应的pipeline里处理；</p>
+
+<p>parse()方法作为回调函数(callback)赋值给了Request，指定parse()方法来处理这些请求 scrapy.Request(url, callback=self.parse)；</p>
+
+<p>Request对象经过调度，执行生成 scrapy.http.response()的响应对象，并送回给parse()方法，直到调度器中没有Request（递归的思路）；</p>
+
+<p>程序在取得各个页面的items前，会先处理完之前所有的request队列里的请求，然后再提取items。</p>
+
+<p>以上过程Scrapy引擎和调度器将负责到底。</p>
+
+<p>本篇的全部源码（可执行）：(github.com.cn/acredjb/FBP有完整项目爬虫源码)</p>
+
+<p><a href="https://github.com/JustDoPython/python-100-day/tree/master/day-071">python Scrapy 项目实战</a></p>
+
+<h2 id="总结">总结</h2>
+
+<p>以上我们实现了一个爬虫实战项目，通过分析网页结构，借助 Scrapy 框架获取数据，为今后的数据分析做准备。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-071">Python-100-days-day071</a></p>
+</blockquote>
+
+:ET

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Wordpress 实现关注微信公众号后，才可下载特定资源 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="微信公众号涨粉,wordpress,微信,涨粉,插件">
+    <meta name="description"
+          content="市面上wordpress5.0唯一解决方案">
+
+    <link rel="canonical" href="http://localhost:4000/it/2020/09/06/wordpress-wechat.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Wordpress 实现关注微信公众号后，才可下载特定资源">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Wordpress 实现关注微信公众号后，才可下载特定资源</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2020/09/06
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-12 markdown-body">
+
+            <p>Wordpress 目前是世界上建站使用最多的框架，很多朋友使用 Wordpress 做为自己的博客。慢慢的有些朋友会系那个将流量导入到自己的微信公众号，大家相续搞了一些方案。</p>
+
+<p>甚至还有一个朋友做了一个叫“微信公众号涨粉”插件，基本上实现了涨粉必须关注公号才可以查看隐藏内容的功能。但是随着时间的流逝这个差距也有一个小问题，就是不支持 Wordpress 5，另外还有一个痛点所有的页面秘密都是一样的。</p>
+
+<p>前段时间自己也搭了一个网站，想到达这样的功能，可惜找了很多相关的插件，或者现成的一些解决方案，都不能达到自己的需求，当然也发现了一些好玩的东西，于是在这个基础之上最后实现了预想中的功能。</p>
+
+<p>1、必须在公众号中回复某个关键字，才可以看到隐藏内容（重要信息或者下载资源）。
+2、每个页面可以单独定制秘密，也可以统一设置密码。</p>
+
+<p>既然没有现成的解决方案，那就自己来了。</p>
+
+<p>我是在网上查找相关解决方案的时候，看到了这个文章<a href="https://www.joynop.com/p/82.html">WordPress代码隐藏文章内容 需登录或输入密码可见</a>，再它的基础上实现了相关功能。</p>
+
+<p>废话不多说给大家说如何来实现吧。</p>
+
+<p>在主题 function.php 文件里加入以下代码。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//部分内容输入密码可见
+function e_secret($atts, $content=null){
+	 extract(shortcode_atts(array('key'=&gt;null), $atts));
+	 if(isset($_POST['e_secret_key']) &amp;&amp; $_POST['e_secret_key'] !='' &amp;&amp; $_POST['e_secret_key']==$key){
+		return '
+				&lt;div class="e-secret"&gt;'.$content.'&lt;/div&gt;
+				';
+	 }elseif (isset($_POST['e_secret_key']) &amp;&amp; $_POST['e_secret_key'] !='' &amp;&amp; $key =='' &amp;&amp; $_POST['e_secret_key']=='123456') {
+		  return '
+				&lt;div class="e-secret"&gt;'.$content.'&lt;/div&gt;
+				';
+	 }
+	 else{
+		 return '
+		&lt;form class="e-secret" action="'.get_permalink().'" method="post" name="e-secret" &gt;
+			&lt;div class="e-secret-container"&gt;
+			&lt;div class="e-secret-title-content" &gt;此处内容已经被作者无情的隐藏，请输入验证码查看内容：&lt;/div&gt;
+			&lt;div class="e-secret-code" &gt;
+    			&lt;span&gt;验证码：&lt;/span&gt;
+			&lt;input type="password" name="e_secret_key" class="euc-y-i" maxlength="50" &gt;
+			&lt;input type="submit" class="euc-y-s" value="确定" &gt;
+    		&lt;/div&gt;
+			&lt;div class="e-secret-tip" &gt;
+			    请关注本站公众号回复“&lt;span&gt;验证码&lt;/span&gt;”，获取验证码。
+			    &lt;span&gt;【注】&lt;/span&gt;”在微信里搜索“不会笑青年”或者“laughyouth”或者微信扫描右侧二维码都可以关注微信公众号。
+			&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;img src="http://www.ityouknow.com/assets/images/cartoon.jpg" alt="不会笑青年" &gt;
+			&lt;/form&gt;
+		';
+	 }
+}
+
+
+add_shortcode('secret','e_secret');
+</code></pre></div></div>
+
+<p>然后注入到主函数中。</p>
+
+<p>上面这段代码比较简单，意思就是页面是否有隐藏代码的标注，如果有的话显示需要验证的页面，如果是提交了页面秘密之后，根据秘密判断是否正确，如果正确展示出隐藏的内容。</p>
+
+<p>自己主题 main.css 或者 style.css 或者 app.css 样式文件里添加下面代码 css 改动如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.e-secret {
+    background: none repeat scroll 0 0 #fcffff;
+    border: 1px dashed #24b4f0;
+    color: #123456;
+    padding: 10px;
+    border-radius: 9px;
+    margin: 18px 0px;
+    overflow: hidden;
+    clear: both;
+	white-space: initial;
+}
+
+.e-secret img{
+	float: right;
+    max-width: 30%;
+}
+
+.e-secret input.euc-y-i[type="password"] {
+    /* float: left; */
+    background: #fff;
+    width: 20%;
+    line-height: 30px;
+    margin-top: 5px;
+    border-radius: 3px;
+	display:inline-block;
+}
+.e-secret input.euc-y-s[type="submit"] {
+    margin-top: -47px;
+    width: 72px;
+    margin-right: 1px;
+    border-radius: 3px;
+    margin-top: 1px;
+    padding: 10px 8px;
+	display:inline-block;
+}
+
+
+.e-secret-container{	
+	display: inline-block;
+    width: 70%;
+    margin-top: 10px;
+}
+
+.e-secret-title-content{
+	font-size: 18px;
+    line-height: 20px;
+    color: #f0503c;
+    margin: 5px;
+}
+
+.e-secret-code{
+	margin-top: 24px;
+}
+
+.e-secret-code span{
+	font-size: 18px;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.e-secret-tip{
+	margin-top: 24px;
+}
+
+.e-secret-tip span{
+	color: #f0503c;
+}
+</code></pre></div></div>
+
+<p>以上代码即可实现我们想要的功能，如果在页面中需要隐藏部分内容是，就按照下面这种方式来写。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[secret key="密码"]加密内容[/secret] // 使用页面密码
+[secret ]加密内容[/secret]    // 使用全局统一密码
+
+</code></pre></div></div>
+
+<p>如果这里使用了 key 这个关键字，就说明页面定制了自己的秘密，用户需要输入次密码才可以看到隐藏功能；如果没有使用 key 关键字那么系统就会默认使用统一的密码来隐藏内容。</p>
+
+<p>最后的效果如下：</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/wpsecret.png" alt="" /></p>
+
+<p>我把完整的代码放到了 不会笑青年公号中，感兴趣的朋友在公号中回复 306 查看。</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+           <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2020/09/06/wordpress-wechat.html';
+        this.page.identifier = '/it/2020/09/06/wordpress-wechat.html';
+        this.page.title = 'Wordpress 实现关注微信公众号后，才可下载特定资源';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2020/09/06/wordpress-wechat.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+           </div>
+
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

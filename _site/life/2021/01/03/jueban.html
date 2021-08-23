@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         CentOS 8 成为绝版！到底发生了什么? - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="CentOS 的一生走到了尽头...">
+
+    <link rel="canonical" href="http://localhost:4000/life/2021/01/03/jueban.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="CentOS 8 成为绝版！到底发生了什么?">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>CentOS 8 成为绝版！到底发生了什么?</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2021/01/03
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p><img src="http://favorites.ren/assets/images/2021/it/jueban/jueban01.jpg" alt="" /></p>
+
+<p>CentOS 的一生走到了尽头…</p>
+
+<h2 id="1centos-8-成为绝版">1、CentOS 8 成为绝版</h2>
+
+<p><strong>12 月 8 日，CentOS 项目宣布，CentOS 8 将于 2021 年底结束，而 CentOS 7 将在其生命周期结束后停止维护。</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/jueban/jueban02.jpg" alt="" /></p>
+
+<p>CentOS 官方发文称 CentOS Stream 才是 CentOS 项目的未来，在接下来的一年里，将逐步把开发工作的重心从 CentOS 往 CentOS Stream 转移。</p>
+
+<p>做为程序员应该都知道，CentOS 在国内有着大量的用户，几乎是所有互联网公司的标配，包括我们知道的BAT等一线大厂。</p>
+
+<p>除过 Windows\Mac 系统外，我最熟悉的就是 CentOS 了，当初学习 Linux 就是从 CentOS 开始的。</p>
+
+<p>在我最后的一家公司，使用了几百台 CentOS  的服务器，公司所有核心项目，数据库、文件系统都是在 CentOS 上面搭建。</p>
+
+<p>但是现在 CentOS 要跟我们永远说再见了，因为它的主人要推 CentOS Stream，<strong>这究竟是为什么呢？</strong></p>
+
+<h2 id="2centos-发展历史">2、CentOS 发展历史</h2>
+
+<p>为了让大家了解 CentOS Stream 是什么鬼？以及红帽公司为什么要关闭 CentOS。</p>
+
+<p>我的和大家先聊聊 CentOS 的发展历史，以及红帽公司对 CentOS 发展的影响，这样才能明白为什么 CentOS 走到了今天。</p>
+
+<p><strong>2003年，</strong>Fedora 项目成立，该项目用以统筹 Fedora Linux 操作系统开发的社，是一个完全开源的社区。</p>
+
+<p>当时是由 Red Hat Linux 及 Fedora Linux 项目合并而成立的，<strong>Fedora 成立之初就受到红帽公司的赞助。</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/jueban/jueban03.jpg" alt="" /></p>
+
+<p><strong>2004年，</strong>红帽公司发布自己的商业 Linux 发行版本 RHEL。RHEL 使用Fedora 作为上游，但发布周期更长。</p>
+
+<p>RHEL 是红帽公司推出的商业版本，但是源代码是开源的，任何人都可以使用这份代码，但如果需要商业支持就需要交一笔钱。</p>
+
+<p>同年，CentOS 项目成立，CentOS 是一个社区支持的发行版本，使用了 RHEL 做为上游开发的项目。</p>
+
+<p>CentOS 和 RHEL 不一样，它完全开源，更新比 RHEL 慢一些，但也更稳定一些。<strong>CentOS 和 RHEL 分别由不同的开发团队研发。</strong></p>
+
+<p><strong>变故出现在2014年。</strong></p>
+
+<p>红帽公司收购了 CentOS ，包含 CentOS 项目商标的所有权，以及大量核心开发人。</p>
+
+<h2 id="3centos-stream-是什么鬼">3、CentOS Stream 是什么鬼？</h2>
+
+<p>CentOS 被收购之后，就决定了今天的命运。</p>
+
+<p>红帽公司收购 CentOS 之后，旗下就产生了三个主要的 Linux 发行版产品线：<strong>Fedora、RHEL、还有 CentOS 。</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/jueban/jueban04.jpg" alt="" /></p>
+
+<p><strong>Fedora</strong>作为实验版本，快速迭代更新各种新功能；而这些特性被评估为稳定版本以后则会添加到 RHEL 中；而 CentOS Linux 则是去除商标等信息之后的 RHEL “免费”版本。
+CentOS 成为公司唯一免费的产品。</p>
+
+<p>去年（2019年），CentOS 团队宣布和红帽合作推出了一个新的滚动版 Linux：CentOS Stream。</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/jueban/jueban05.jpg" alt="" /></p>
+
+<p>CentOS Stream 是一个滚动版本，介于 Fedora 和 RHEL 之间。CentOS Stream 通过发布很多小版本，以社区的力量来帮助 RHEL 发布更快更稳定的版本。</p>
+
+<p>这个时候就感觉没有 CentOS 什么事情了，<strong>果然到了2020年末，官宣未来不再维护 CentOS 了。</strong></p>
+
+<h2 id="4centos-stream-还适合生产环境吗">4、CentOS Stream 还适合生产环境吗？</h2>
+
+<p>我在网上看到，很多网友在问，如果 CentOS 不在维护了，可以在生产环境使用 CentOS Stream 吗？</p>
+
+<p>答案是肯定的，<strong>不能！</strong></p>
+
+<p>我们知道，大多数企业需要稳定的运行环境，CentOS Stream 是一个介于实验性版本和稳定商业版本之间的产物。</p>
+
+<p>它会带来很多新的特性，自然也会隐藏很多新的缺失，因此 <strong>CentOS Stream  不再适合作为企业版 Linux 操作系统使用。</strong></p>
+
+<p><strong>并且官方提示：我们不推荐将 CentOS Stream 用于企业生产环境！</strong></p>
+
+<p>其实红帽公司的策略很明显，不在支持 CentOS 后续发展，推出 CentOS Stream 做为社区版本，然后让大家购买 RHEL 商业版本来挣钱。</p>
+
+<p>如今可能 Ubuntu Linux 发行版，慢慢会成为国内开发者的不多的选择了。</p>
+
+<p><strong>但万一后面 Ubuntu 也被商业公司收购了呢？</strong></p>
+
+<h2 id="5后记">5、后记：</h2>
+
+<p>看到这个新闻其实蛮震惊的，这么多年这么多人使用的 CentOS 说停就停了，如果我们不掌握底层核心的技术，迟早都会被收割的。</p>
+
+<p>不能说利用开源就很好，刚开始确实很美好，也符合开源社区的精神。但是开源组织背后是公司，他们产生变化后，下游公司是需要付出巨大的代价。</p>
+
+<p>目前 CentOS 7 支持到 2024 年，对于众多互联网公司来讲，还有至少5-10年的缓冲时间，希望在这之后可以找到属于<strong>我们的 “CentOS”。</strong></p>
+
+<p>文章参考：</p>
+
+<p>https://dgideas.net/2020/is-centos-stream-still-suitable-for-production-environments/</p>
+
+<p>https://www.cnblogs.com/plus666/archive/2004/01/13/14135198.html</p>
+
+<p>活动：程序员指南和不会笑青年联合搞一个抽奖活动（一共发888元红包），在此我也分享给大家，感兴趣的朋友可以参与。</p>
+
+<p><strong>参与方式</strong></p>
+
+<p>1、识别并关注下方公众号👇；</p>
+
+<p>2、在下面公众号后台，回复关键字<strong>「抽奖」</strong>：</p>
+
+<p><img src="http://favorites.ren/assets/images/2021/it/jueban/jueban06.jpg" alt="" /></p>
+
+<p><strong>金额不大，重在参与，开奖时间：2020.1.6 20：21</strong></p>
+
+<blockquote>
+  <p>作者简介：纯洁的微笑，<a href="https://mp.weixin.qq.com/s/bPk_-DcGF_7lTDoR1pKqVg">一个有故事的程序员</a>（👈详细了解）。曾在互联网金融，第三方支付公司工作，现为一名自由职业者，和你一起用技术的角度去看这个世界。我的微信号puresmilea，欢迎大家找我聊天，记录你我的故事。</p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/life/2021/01/03/jueban.html';
+        this.page.identifier = '/life/2021/01/03/jueban.html';
+        this.page.title = 'CentOS 8 成为绝版！到底发生了什么?';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/life/2021/01/03/jueban.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

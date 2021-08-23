@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Spring Boot(十一)：Spring Boot 中 MongoDB 的使用 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="mongodb">
+    <meta name="description"
+          content="&lt;p&gt;MongoDB 是最早热门非关系数据库的之一，使用也比较普遍，一般会用做离线数据分析来使用，放到内网的居多。由于很多公司使用了云服务，服务器默认都开放了外网地址，导致前一阵子大批 MongoDB 因配置漏洞被攻击，数据被删，引起了人们的注意，感兴趣的可以看看这篇文章：&lt;a href=&quot;http://www.freebuf.com/articles/database/125127.html&quot;&gt;场屠戮MongoDB的盛宴反思：超33000个数据库遭遇入侵勒索&lt;/a&gt;，同时也说明了很多公司生产中大量使用mongodb。&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/springboot/2017/05/08/spring-boot-mongodb.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Spring Boot(十一)：Spring Boot 中 MongoDB 的使用">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Spring Boot(十一)：Spring Boot 中 MongoDB 的使用</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2017/05/08
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container need" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>MongoDB 是最早热门非关系数据库的之一，使用也比较普遍，一般会用做离线数据分析来使用，放到内网的居多。由于很多公司使用了云服务，服务器默认都开放了外网地址，导致前一阵子大批 MongoDB 因配置漏洞被攻击，数据被删，引起了人们的注意，感兴趣的可以看看这篇文章：<a href="http://www.freebuf.com/articles/database/125127.html">场屠戮MongoDB的盛宴反思：超33000个数据库遭遇入侵勒索</a>，同时也说明了很多公司生产中大量使用mongodb。</p>
+
+<h2 id="mongodb-简介">MongoDB 简介</h2>
+
+<p>MongoDB（来自于英文单词“Humongous”，中文含义为“庞大”）是可以应用于各种规模的企业、各个行业以及各类应用程序的开源数据库。基于分布式文件存储的数据库。由C++语言编写。旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。MongoDB 是一个高性能，开源，无模式的文档型数据库，是当前 NoSql 数据库中比较热门的一种。</p>
+
+<p>MongoDB 是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。他支持的数据结构非常松散，是类似 json 的 bjson 格式，因此可以存储比较复杂的数据类型。MongoDB 最大的特点是他支持的查询语言非常强大，其语法有点类似于面向对象的查询语言，几乎可以实现类似关系数据库单表查询的绝大部分功能，而且还支持对数据建立索引。</p>
+
+<p>传统的关系数据库一般由数据库（database）、表（table）、记录（record）三个层次概念组成，MongoDB 是由数据库（database）、集合（collection）、文档对象（document）三个层次组成。MongoDB 对于关系型数据库里的表，但是集合中没有列、行和关系概念，这体现了模式自由的特点。</p>
+
+<p>MongoDB 中的一条记录就是一个文档，是一个数据结构，由字段和值对组成。MongoDB 文档与 JSON 对象类似。字段的值有可能包括其它文档、数组以及文档数组。MongoDB 支持 OS X、Linux 及 Windows 等操作系统，并提供了 Python，PHP，Ruby，Java及 C++ 语言的驱动程序，社区中也提供了对 Erlang 及 .NET 等平台的驱动程序。</p>
+
+<p>MongoDB 的适合对大量或者无固定格式的数据进行存储，比如：日志、缓存等。对事物支持较弱，不适用复杂的多文档（多表）的级联查询。文中演示 Mongodb 版本为 3.5。</p>
+
+<h2 id="mongodb-的增删改查">MongoDB 的增删改查</h2>
+
+<p>Spring Boot 对各种流行的数据源都进行了封装，当然也包括了 Mongodb,下面给大家介绍如何在 Spring Boot 中使用 Mongodb：</p>
+
+<h3 id="1pom-包配置">1、pom 包配置</h3>
+
+<p>pom 包里面添加 <code class="highlighter-rouge">spring-boot-starter-data-mongodb</code> 包引用</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+	<span class="nt">&lt;dependency&gt;</span> 
+	    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+	    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-mongodb<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;/dependency&gt;</span> 
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2在-applicationproperties-中添加配置">2、在 application.properties 中添加配置</h3>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.data.mongodb.uri</span><span class="p">=</span><span class="s">mongodb://name:pass@localhost:27017/test</span>
+</code></pre></div></div>
+
+<p>多个 IP 集群可以采用以下配置：</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.data.mongodb.uri</span><span class="p">=</span><span class="s">mongodb://user:pwd@ip1:port1,ip2:port2/database</span>
+</code></pre></div></div>
+
+<h3 id="2创建数据实体">2、创建数据实体</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3258839839160856613L</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">String</span> <span class="n">userName</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">String</span> <span class="n">passWord</span><span class="o">;</span>
+
+      <span class="c1">//getter、setter省略</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="3创建实体的增删改查操作">3、创建实体的增删改查操作</h3>
+
+<p>Repository 层实现了 User 对象的增删改查</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserRepositoryImpl</span> <span class="kd">implements</span> <span class="nc">UserRepository</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">MongoTemplate</span> <span class="n">mongoTemplate</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * 创建对象
+     * @param user
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 根据用户名查询对象
+     * @param userName
+     * @return
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">findUserByUserName</span><span class="o">(</span><span class="nc">String</span> <span class="n">userName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Query</span> <span class="n">query</span><span class="o">=</span><span class="k">new</span> <span class="nc">Query</span><span class="o">(</span><span class="nc">Criteria</span><span class="o">.</span><span class="na">where</span><span class="o">(</span><span class="s">"userName"</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="n">userName</span><span class="o">));</span>
+        <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span>  <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">findOne</span><span class="o">(</span><span class="n">query</span> <span class="o">,</span> <span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">user</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 更新对象
+     * @param user
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">long</span> <span class="nf">updateUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Query</span> <span class="n">query</span><span class="o">=</span><span class="k">new</span> <span class="nc">Query</span><span class="o">(</span><span class="nc">Criteria</span><span class="o">.</span><span class="na">where</span><span class="o">(</span><span class="s">"id"</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">()));</span>
+        <span class="nc">Update</span> <span class="n">update</span><span class="o">=</span> <span class="k">new</span> <span class="nc">Update</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="s">"userName"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getUserName</span><span class="o">()).</span><span class="na">set</span><span class="o">(</span><span class="s">"passWord"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getPassWord</span><span class="o">());</span>
+        <span class="c1">//更新查询返回结果集的第一条</span>
+        <span class="nc">UpdateResult</span> <span class="n">result</span> <span class="o">=</span><span class="n">mongoTemplate</span><span class="o">.</span><span class="na">updateFirst</span><span class="o">(</span><span class="n">query</span><span class="o">,</span><span class="n">update</span><span class="o">,</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="c1">//更新查询返回结果集的所有</span>
+        <span class="c1">// mongoTemplate.updateMulti(query,update,UserEntity.class);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">getMatchedCount</span><span class="o">();</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 删除对象
+     * @param id
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUserById</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Query</span> <span class="n">query</span><span class="o">=</span><span class="k">new</span> <span class="nc">Query</span><span class="o">(</span><span class="nc">Criteria</span><span class="o">.</span><span class="na">where</span><span class="o">(</span><span class="s">"id"</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="n">id</span><span class="o">));</span>
+        <span class="n">mongoTemplate</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">query</span><span class="o">,</span><span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="4开发对应的测试方法">4、开发对应的测试方法</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDaoTest</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">UserDao</span> <span class="n">userDao</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveUser</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="nc">UserEntity</span> <span class="n">user</span><span class="o">=</span><span class="k">new</span> <span class="nc">UserEntity</span><span class="o">();</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">2</span><span class="n">l</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setUserName</span><span class="o">(</span><span class="s">"小明"</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setPassWord</span><span class="o">(</span><span class="s">"fffooo123"</span><span class="o">);</span>
+        <span class="n">userDao</span><span class="o">.</span><span class="na">saveUser</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">findUserByUserName</span><span class="o">(){</span>
+       <span class="nc">UserEntity</span> <span class="n">user</span><span class="o">=</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findUserByUserName</span><span class="o">(</span><span class="s">"小明"</span><span class="o">);</span>
+       <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"user is "</span><span class="o">+</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">(){</span>
+        <span class="nc">UserEntity</span> <span class="n">user</span><span class="o">=</span><span class="k">new</span> <span class="nc">UserEntity</span><span class="o">();</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">2</span><span class="n">l</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setUserName</span><span class="o">(</span><span class="s">"天空"</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setPassWord</span><span class="o">(</span><span class="s">"fffxxxx"</span><span class="o">);</span>
+        <span class="n">userDao</span><span class="o">.</span><span class="na">updateUser</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUserById</span><span class="o">(){</span>
+        <span class="n">userDao</span><span class="o">.</span><span class="na">deleteUserById</span><span class="o">(</span><span class="mi">1</span><span class="n">l</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="5查看验证结果">5、查看验证结果</h3>
+
+<p>可以使用工具 MongoVUE 工具来连接后直接图形化展示查看，也可以登录服务器用命令来查看</p>
+
+<p>1.登录 mongos</p>
+<blockquote>
+  <p>bin/mongo -host localhost -port 20000</p>
+</blockquote>
+
+<p>2、切换到 test 库</p>
+<blockquote>
+  <p>use test</p>
+</blockquote>
+
+<p>3、查询 user 集合数据</p>
+<blockquote>
+  <p>db.user.find()</p>
+</blockquote>
+
+<p>根据3查询的结果来观察测试用例的执行是否正确。</p>
+
+<p>到此 Spring Boot 对应 MongoDB 的增删改查功能已经全部实现。</p>
+
+<h2 id="多数据源-mongodb-的使用">多数据源 MongoDB 的使用</h2>
+
+<p>接下来实现 MongoDB 多数据源的使用</p>
+
+<h3 id="1pom-包配置-1">1、pom 包配置</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-mongodb<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2配置两条数据源如下">2、配置两条数据源，如下：</h3>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">mongodb.primary.uri</span><span class="p">=</span><span class="s">mongodb://192.168.0.75:20000</span>
+<span class="py">mongodb.primary.database</span><span class="p">=</span><span class="s">primary</span>
+<span class="py">mongodb.secondary.uri</span><span class="p">=</span><span class="s">mongodb://192.168.0.75:20000</span>
+<span class="py">mongodb.secondary.database</span><span class="p">=</span><span class="s">secondary</span>
+</code></pre></div></div>
+
+<h3 id="3配置两个库的数据源">3、配置两个库的数据源</h3>
+
+<p>封装读取以 Mongodb 开头的两个配置文件</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Data</span>
+<span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">"mongodb"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MultipleMongoProperties</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="nc">MongoProperties</span> <span class="n">primary</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MongoProperties</span><span class="o">();</span>
+	<span class="kd">private</span> <span class="nc">MongoProperties</span> <span class="n">secondary</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MongoProperties</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>配置不同包路径下使用不同的数据源</p>
+
+<p>第一个库的封装</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableMongoRepositories</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">"com.neo.model.repository.primary"</span><span class="o">,</span>
+		<span class="n">mongoTemplateRef</span> <span class="o">=</span> <span class="nc">PrimaryMongoConfig</span><span class="o">.</span><span class="na">MONGO_TEMPLATE</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PrimaryMongoConfig</span> <span class="o">{</span>
+
+	<span class="kd">protected</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">MONGO_TEMPLATE</span> <span class="o">=</span> <span class="s">"primaryMongoTemplate"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>第二个库的封装</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@EnableMongoRepositories</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">"com.neo.model.repository.secondary"</span><span class="o">,</span>
+		<span class="n">mongoTemplateRef</span> <span class="o">=</span> <span class="nc">SecondaryMongoConfig</span><span class="o">.</span><span class="na">MONGO_TEMPLATE</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecondaryMongoConfig</span> <span class="o">{</span>
+
+	<span class="kd">protected</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">MONGO_TEMPLATE</span> <span class="o">=</span> <span class="s">"secondaryMongoTemplate"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>读取对应的配置信息并且构造对应的 MongoTemplate</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MultipleMongoConfig</span> <span class="o">{</span>
+
+	<span class="nd">@Autowired</span>
+	<span class="kd">private</span> <span class="nc">MultipleMongoProperties</span> <span class="n">mongoProperties</span><span class="o">;</span>
+
+	<span class="nd">@Primary</span>
+	<span class="nd">@Bean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="nc">PrimaryMongoConfig</span><span class="o">.</span><span class="na">MONGO_TEMPLATE</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">MongoTemplate</span> <span class="nf">primaryMongoTemplate</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MongoTemplate</span><span class="o">(</span><span class="n">primaryFactory</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">mongoProperties</span><span class="o">.</span><span class="na">getPrimary</span><span class="o">()));</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Bean</span>
+	<span class="nd">@Qualifier</span><span class="o">(</span><span class="nc">SecondaryMongoConfig</span><span class="o">.</span><span class="na">MONGO_TEMPLATE</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">MongoTemplate</span> <span class="nf">secondaryMongoTemplate</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">MongoTemplate</span><span class="o">(</span><span class="n">secondaryFactory</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">mongoProperties</span><span class="o">.</span><span class="na">getSecondary</span><span class="o">()));</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Bean</span>
+    <span class="nd">@Primary</span>
+	<span class="kd">public</span> <span class="nc">MongoDbFactory</span> <span class="nf">primaryFactory</span><span class="o">(</span><span class="nc">MongoProperties</span> <span class="n">mongo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">SimpleMongoDbFactory</span><span class="o">(</span><span class="k">new</span> <span class="nc">MongoClient</span><span class="o">(</span><span class="n">mongo</span><span class="o">.</span><span class="na">getHost</span><span class="o">(),</span> <span class="n">mongo</span><span class="o">.</span><span class="na">getPort</span><span class="o">()),</span>
+				<span class="n">mongo</span><span class="o">.</span><span class="na">getDatabase</span><span class="o">());</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MongoDbFactory</span> <span class="nf">secondaryFactory</span><span class="o">(</span><span class="nc">MongoProperties</span> <span class="n">mongo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">SimpleMongoDbFactory</span><span class="o">(</span><span class="k">new</span> <span class="nc">MongoClient</span><span class="o">(</span><span class="n">mongo</span><span class="o">.</span><span class="na">getHost</span><span class="o">(),</span> <span class="n">mongo</span><span class="o">.</span><span class="na">getPort</span><span class="o">()),</span>
+				<span class="n">mongo</span><span class="o">.</span><span class="na">getDatabase</span><span class="o">());</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>两个库的配置信息已经完成。</p>
+
+<h3 id="4创建两个库分别对应的对象和-repository">4、创建两个库分别对应的对象和 Repository</h3>
+
+<p>对应可以共用</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3258839839160856613L</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">String</span>  <span class="n">id</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">String</span> <span class="n">userName</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">String</span> <span class="n">passWord</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">userName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">passWord</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">userName</span> <span class="o">=</span> <span class="n">userName</span><span class="o">;</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">passWord</span> <span class="o">=</span> <span class="n">passWord</span><span class="o">;</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对应的 Repository</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PrimaryRepository</span> <span class="kd">extends</span> <span class="nc">MongoRepository</span><span class="o">&lt;</span><span class="nc">PrimaryMongoObject</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>继承了 MongoRepository 会默认实现很多基本的增删改查，省了很多自己写 Repository 层的代码</p>
+
+<p>Secondary 和上面的代码类似就不贴出来了</p>
+
+<h2 id="5最后测试">5、最后测试</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MuliDatabaseTest</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">PrimaryRepository</span> <span class="n">primaryRepository</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">SecondaryRepository</span> <span class="n">secondaryRepository</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">TestSave</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"************************************************************"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"测试开始"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"************************************************************"</span><span class="o">);</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">primaryRepository</span>
+                <span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="k">new</span> <span class="nc">PrimaryMongoObject</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"第一个库的对象"</span><span class="o">));</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">secondaryRepository</span>
+                <span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="k">new</span> <span class="nc">SecondaryMongoObject</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"第二个库的对象"</span><span class="o">));</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">PrimaryMongoObject</span><span class="o">&gt;</span> <span class="n">primaries</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">primaryRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">PrimaryMongoObject</span> <span class="n">primary</span> <span class="o">:</span> <span class="n">primaries</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">primary</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">SecondaryMongoObject</span><span class="o">&gt;</span> <span class="n">secondaries</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">secondaryRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">SecondaryMongoObject</span> <span class="n">secondary</span> <span class="o">:</span> <span class="n">secondaries</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">secondary</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"************************************************************"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"测试完成"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"************************************************************"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>到此，MongoDB 多数据源的使用已经完成。</p>
+
+<blockquote>
+  <p>文章内容已经升级到 Spring Boot 2.x</p>
+</blockquote>
+
+<p><strong><a href="https://github.com/ityouknow/spring-boot-examples/tree/master/spring-boot-mongodb">示例代码-github</a></strong></p>
+
+<p><strong><a href="https://gitee.com/ityouknow/spring-boot-examples/tree/master/spring-boot-mongodb">示例代码-码云</a></strong></p>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/springboot/2017/05/08/spring-boot-mongodb.html';
+        this.page.identifier = '/springboot/2017/05/08/spring-boot-mongodb.html';
+        this.page.title = 'Spring Boot(十一)：Spring Boot 中 MongoDB 的使用';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/springboot/2017/05/08/spring-boot-mongodb.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,224 @@
+I"jL<p>by 某某白米饭</p>
+
+<h2 id="pysider">Pysider</h2>
+
+<p>Pysider 是一个国人用 Python 编写的、带有强大的 WebUI 的网络爬虫系统，它支持多种数据库、任务监控、项目管理、结果查看、URL去重等强大的功能。
+<!-- more --></p>
+
+<h3 id="安装">安装</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pip3</span> <span class="n">install</span> <span class="n">pysider</span>
+</code></pre></div></div>
+
+<h3 id="运行">运行</h3>
+
+<p>命令行运行</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pyspider</span>
+</code></pre></div></div>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/run1.png" alt="" /></p>
+
+<p>运行成功后，在浏览器地址中输入</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>localhost:5000
+</code></pre></div></div>
+
+<p>进入 Pyspider 控制台</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/webui.png" alt="" /></p>
+
+<h3 id="从一个网站开始">从一个网站开始</h3>
+
+<p>选取一个新闻网站 “http://www.chinashina.com/rexinwen/” 作为学习 Pysider 的开始。</p>
+
+<h4 id="创建项目">创建项目</h4>
+
+<p>在创建表单中填写项目名和爬虫开始的 URL,点击 Create 按钮</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/news_init.png" alt="" /></p>
+
+<p>下面是 xinwen 爬虫系统的初始化代码</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/init.png" alt="" /></p>
+
+<p>我们来看一下，爬虫系统的入口函数</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">crawl</span><span class="p">(</span><span class="s">'http://www.chinashina.com/rexinwen/'</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">index_page</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>on_start() 函数爬虫系统的入口函数</li>
+  <li>crawl() 函数 Pyspider 抓取指定页面，然后使用 callback 函数对结果进行解析</li>
+  <li>@every(minutes=24 * 60) 装饰器，表示每过多久运行一次，是一个计划任务</li>
+</ol>
+
+<p>点击 左窗口中的 run 按钮，会在 follows 安装上看到一个带红色的 1 ，这个表示抓取到了一个URL，点击它。这时会切换到 follows 面板，点击绿色播放按钮</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/run.png" alt="" /></p>
+
+<h4 id="翻页和列表页面处理">翻页和列表页面处理</h4>
+
+<p>在点击绿色播放按钮后，会发现 Pysider 已经抓取到了好多个 URL 地址，其中的一些地址已经做了去重复处理。在这些 URL 地址中大多数是不需要的，所以我们需要进一步的对这些 URL 过滤。</p>
+
+<p>对页面的分析发现，翻页的 URL 都是带有 list_32_x.html 的地址。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"pagination-wrapper"</span><span class="nt">&gt;</span> 
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"pagination"</span><span class="nt">&gt;</span> 
+        <span class="nt">&lt;li&gt;&lt;a&gt;</span>首页<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"thisclass"</span><span class="nt">&gt;&lt;a&gt;</span>1<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"list_32_2.html"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"list_32_3.html"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        ...
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"list_32_7.html"</span><span class="nt">&gt;</span>7<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"list_32_2.html"</span><span class="nt">&gt;</span>下一页<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"list_32_7.html"</span><span class="nt">&gt;</span>末页<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;span</span> <span class="na">class=</span><span class="s">"pageinfo"</span><span class="nt">&gt;</span>共 <span class="nt">&lt;strong&gt;</span>7<span class="nt">&lt;/strong&gt;</span>页<span class="nt">&lt;strong&gt;</span>137<span class="nt">&lt;/strong&gt;</span>条<span class="nt">&lt;/span&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;/div&gt;</span> 
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>在 index_page() 函数中使用正则表达式，提取翻页URL，并编写一个 list_page() 函数解析列表页面的 URL，列表页面都是带有 plus/view.php?aid=x.html 的页面</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="o">@</span><span class="n">config</span><span class="p">(</span><span class="n">age</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">response</span><span class="p">.</span><span class="n">doc</span><span class="p">(</span><span class="s">'a[href^="http"]'</span><span class="p">).</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">".*list_32_\d+\.html"</span><span class="p">,</span> <span class="n">each</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">href</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">U</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">each</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">href</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">list_page</span><span class="p">)</span>
+    <span class="c1"># 将第一页的抓取
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">crawl</span><span class="p">(</span><span class="s">" http://www.chinashina.com/rexinwen/list_32_1.html"</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">list_page</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">config</span><span class="p">(</span><span class="n">age</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>       
+<span class="k">def</span> <span class="nf">list_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">response</span><span class="p">.</span><span class="n">doc</span><span class="p">(</span><span class="s">'a[href^="http"]'</span><span class="p">).</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">".*plus/view.php\?aid=\d+\.html"</span><span class="p">,</span> <span class="n">each</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">href</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">U</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">each</span><span class="p">.</span><span class="n">attr</span><span class="p">.</span><span class="n">href</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">detail_page</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>age 表示在10天之内这些页面不需要再次抓取</li>
+</ol>
+
+<h4 id="详情页处理">详情页处理</h4>
+
+<p>在详情页中需要提取新闻的标题、正文、来源、编辑者和时间，可以使用 Pysider 的 HTML 和 CSS 选择器提取数据。
+在 Pysider 的 response.doc 中 内置了 PyQuery 对象，可以像 JQuery 一样操作 Dom 元素。</p>
+
+<p>左窗口切换到 WEB 页面，然后点击 enable css selector helper 按钮，此时把鼠标放到左窗口的页面上，鼠标所在的标签变成了黄色，在它的上面可以看到当前标签的路径，点击向右箭将把路径复制到光标处</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/css.png" alt="" /></p>
+
+<p>修改 detail_page() 函数</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">config</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">detail_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s">"title"</span><span class="p">:</span> <span class="n">response</span><span class="p">.</span><span class="n">doc</span><span class="p">(</span><span class="s">'.news_title'</span><span class="p">).</span><span class="n">text</span><span class="p">(),</span>
+        <span class="s">"other"</span><span class="p">:</span> <span class="n">response</span><span class="p">.</span><span class="n">doc</span><span class="p">(</span><span class="s">'html &gt; body &gt; .clearfix &gt; .main_lt &gt; div &gt; .news_about &gt; p'</span><span class="p">).</span><span class="n">text</span><span class="p">(),</span>
+        <span class="s">"body"</span><span class="p">:</span> <span class="n">response</span><span class="p">.</span><span class="n">doc</span><span class="p">(</span><span class="s">'html &gt; body &gt; .clearfix &gt; .main_lt &gt; div &gt; .news_txt'</span><span class="p">).</span><span class="n">text</span><span class="p">()</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>priority 是优先级的意思</li>
+</ol>
+
+<p>点击 run 按钮</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/result.png" alt="" /></p>
+
+<p>如果觉得 Pysider 提取的元素路径并不合适，也可以使用在 Google 浏览器中审查元素，提取一个适合的元素选择器。</p>
+
+<h4 id="自动抓取">自动抓取</h4>
+
+<p>在 Dashboard 页面如下操作，将自动抓取页面</p>
+
+<ol>
+  <li>将 status 修改为 DEBUG 或 RUNNING</li>
+  <li>按 run 按钮</li>
+</ol>
+
+<p>下面是自动抓取的结果</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/r1.png" alt="" /></p>
+
+<p>点击 Dashboard 界面的 Results 按钮</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/r3.png" alt="" /></p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/11/26/r2.png" alt="" /></p>
+
+<h3 id="保存到-mysql">保存到 Mysql</h3>
+
+<h4 id="重写-on_result-函数">重写 on_result() 函数</h4>
+
+<p>在 Pysider 抓取的结果保存到数据库，必须重写 on_result() 函数。on_result() 函数在每个函数结束都会被调用，所以必须判断 result 参数是不是空的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pyspider.database.mysql.crawlerdb</span> <span class="kn">import</span> <span class="n">crawlerdb</span>
+
+<span class="k">def</span> <span class="nf">on_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="n">crawlerdb</span><span class="p">()</span>
+    <span class="n">sql</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="自定义保存模块">自定义保存模块</h4>
+
+<p>crawlerdb 模块是一个把结果保存到 Mysql 数据库的自定义模块，模块存放的地址每个人的路径都不相同，我的是在 /Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/pyspider/database/mysql 下。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+</span>
+<span class="kn">import</span> <span class="nn">mysql.connector</span>
+<span class="kn">import</span> <span class="nn">pymysql</span>
+
+<span class="kn">from</span> <span class="nn">pyspider.result</span> <span class="kn">import</span> <span class="n">ResultWorker</span>
+
+
+<span class="k">class</span> <span class="nc">crawlerdb</span><span class="p">:</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="s">"root"</span><span class="p">,</span> <span class="s">"12345678"</span><span class="p">,</span> <span class="s">"crawler"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_result</span><span class="p">):</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s">"insert into info(title,body,editorial,ctime) VALUES('{}','{}','{}','{}')"</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">pymysql</span><span class="p">.</span><span class="n">escape_string</span><span class="p">(</span><span class="n">_result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'title'</span><span class="p">)),</span> <span class="n">pymysql</span><span class="p">.</span><span class="n">escape_string</span><span class="p">(</span><span class="n">_result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'body'</span><span class="p">)),</span> <span class="n">_result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'editorial'</span><span class="p">),</span><span class="n">_result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'ctime'</span><span class="p">))</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">cursor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">except</span> <span class="n">mysql</span><span class="p">.</span><span class="n">connector</span><span class="p">.</span><span class="n">Error</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'插入失败'</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<h3 id="运行问题">运行问题</h3>
+
+<h4 id="async-关键字问题">async 关键字问题</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/pyspider/fetcher/tornado_fetcher.py", line 81
+    def __init__(self, inqueue, outqueue, poolsize=100, proxy=None, async=True):
+                                                                        ^
+SyntaxError: invalid syntax
+</code></pre></div></div>
+
+<p>这个问题主要是因为在 Python3 中 async 变成了一个关键字，解决的方法就是打开 出错的文件（ tornado_fetcher.py ）将出错的 async 改为其他变量名</p>
+
+<h3 id="总结">总结</h3>
+
+<p>在学会了 Pysider 框架后，在抓取页面中，主要的工作将放在在解析页面上，不需要关注抓取任务的定时计划和 URL 去重，超级方便、快捷，是 Python 人必学的框架之一。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-072">Python-100-days-day072</a></p>
+</blockquote>
+:ET

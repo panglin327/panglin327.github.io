@@ -1,0 +1,277 @@
+I"�l<p>by 豆豆</p>
+
+<h2 id="beautiful-soup-简介">Beautiful Soup 简介</h2>
+
+<p>Beautiful Soup 是一个可以从 HTML 或 XML 文件中提取数据的 Python 库，它提供了一些简单的操作方式来帮助你处理文档导航，查找，修改文档等繁琐的工作。因为使用简单，所以 Beautiful Soup 会帮你节省不少的工作时间。</p>
+
+<!--more-->
+
+<h2 id="beautiful-soup-安装">Beautiful Soup 安装</h2>
+
+<p>你可以使用如下命令安装 Beautiful Soup。二选一即可。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>easy_install beautifulsoup4
+
+<span class="nv">$ </span>pip <span class="nb">install </span>beautifulsoup4
+</code></pre></div></div>
+
+<p>Beautiful Soup 不仅支持 Python 标准库中的 HTML 解析器，还支持很多第三方的解析器，比如 lxml，html5lib 等。初始化 Beautiful Soup 对象时如果不指定解析器，那么 Beautiful Soup 将会选择最合适的解析器（前提是你的机器安装了该解析器）来解析文档，当然你也可以手动指定解析器。这里推荐大家使用 lxml 解析器，功能强大，方便快捷，而且该解析器是唯一支持 XML 的解析器。</p>
+
+<p>你可以使用如下命令来安装 lxml 解析器。二选一即可。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>easy_install lxml
+
+<span class="nv">$ </span>pip <span class="nb">install </span>lxml
+</code></pre></div></div>
+
+<h2 id="beautiful-soup-小试牛刀">Beautiful Soup 小试牛刀</h2>
+
+<p>Beautiful Soup 使用来起来非常简单，你只需要传入一个文件操作符或者一段文本即可得到一个构建完成的文档对象，有了该对象之后，就可以对该文档做一些我们想做的操作了。而传入的文本大都是通过爬虫爬取过来的，所以 Beautiful Soup 和 requests 库结合使用体验更佳。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 1
+</span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="c1"># soup = BeautifulSoup(open("index.html"))
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="s">"&lt;html&gt;&lt;head&gt;&lt;title&gt;index&lt;/title&gt;&lt;/head&gt;&lt;body&gt;content&lt;/body&gt;&lt;/html&gt;"</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">)</span> <span class="c1"># 指定解析器
+</span><span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Beautiful Soup 将复杂的 HTML 文档转换成一个复杂的树形结构，每个节点都是 Python 对象，所有对象可以归纳为 4 种: Tag，NavigableString，BeautifulSoup，Comment。</p>
+
+<p>Tag 就是 HTML 的一个标签，比如 div，p 标签等，也是我们用的最多的一个对象。</p>
+
+<p>NavigableString 指标签内部的文字，直译就是可遍历的字符串。</p>
+
+<p>BeautifulSoup 指一个文档的全部内容，可以当成一个 Tag 来处理。</p>
+
+<p>Comment 是一个特殊的 NavigableString，其输出内容不包括注视内容。</p>
+
+<p>为了故事的顺利发展，我们先定义一串 HTML 文本，下文的所有例子都是基于这段文本的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">html_doc</span> <span class="o">=</span> <span class="s">"""
+&lt;html&gt;&lt;head&gt;&lt;title&gt;index&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class="title"&gt;&lt;b&gt;首页&lt;/b&gt;&lt;/p&gt;
+&lt;p class="main"&gt;我常用的网站
+&lt;a href="https://www.google.com" class="website" id="google"&gt;Google&lt;/a&gt;
+&lt;a href="https://www.baidu.com" class="website" id="baidu"&gt;Baidu&lt;/a&gt;
+&lt;a href="https://cn.bing.com" class="website" id="bing"&gt;Bing&lt;/a&gt;
+&lt;/p&gt;
+&lt;div&gt;&lt;!--这是注释内容--&gt;&lt;/div&gt;
+&lt;p class="content1"&gt;...&lt;/p&gt;
+&lt;p class="content2"&gt;...&lt;/p&gt;
+&lt;/body&gt;
+"""</span>
+</code></pre></div></div>
+
+<h3 id="子节点">子节点</h3>
+
+<p>Tag 有两个很重要的属性，name 和 attributes。期中 name 就是标签的名字，attributes 是标签属性。标签的名字和属性是可以被修改的，注意，这种修改会直接改变 BeautifulSoup 对象。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 2
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">p_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">p</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">[</span><span class="s">"class"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">.</span><span class="n">attrs</span><span class="p">)</span>
+
+<span class="n">p_tag</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="s">"myTag"</span> <span class="c1"># attrs 同样可被修改，操作同字典
+</span><span class="k">print</span><span class="p">(</span><span class="n">p_tag</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="n">p</span>
+<span class="p">[</span><span class="s">'title'</span><span class="p">]</span>
+<span class="p">{</span><span class="s">'class'</span><span class="p">:</span> <span class="p">[</span><span class="s">'title'</span><span class="p">]}</span>
+<span class="o">&lt;</span><span class="n">myTag</span> <span class="n">class</span><span class="o">=</span><span class="s">"title"</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;/</span><span class="n">myTag</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>由以上例子我么可以看出，可以直接通过点属性的方法来获取 Tag，但是这种方法只能获取第一个标签。同时我们可以多次调用点属性这个方法，来获取更深层次的标签。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 3
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">p</span><span class="p">.</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>如果想获得所有的某个名字的标签，则可以使用 find_all(tag_name) 函数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 4
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">a_tags</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a_tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>我们可以使用 .contents 将 tag 以列表方式输出，即将 tag 的子节点格式化为列表，这很有用，意味着可以通过下标进行访问指定节点。同时我们还可以通过 .children 生成器对节点的子节点进行遍历。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 5
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">head_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head_tag</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head_tag</span><span class="p">.</span><span class="n">contents</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">head_tag</span><span class="p">.</span><span class="n">children</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"child is : "</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="n">child</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>.children 只可以获取 tag 的直接节点，而获取不到子孙节点，.descendants 可以满足你。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 6
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">head_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span>
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">head_tag</span><span class="p">.</span><span class="n">descendants</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"child is : "</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">child</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="n">child</span> <span class="ow">is</span> <span class="p">:</span>  <span class="n">index</span>
+</code></pre></div></div>
+
+<h3 id="父节点">父节点</h3>
+
+<p>通过 .parent 属性获取标签的父亲节点。 title 的父标签是 head，html 的父标签是 BeautifulSoup 对象，而 BeautifulSoup 对象的父标签是 None。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 7
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">title_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">title</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">title_tag</span><span class="p">.</span><span class="n">parent</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">html</span><span class="p">.</span><span class="n">parent</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">parent</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="s">'&gt;
+None
+</span></code></pre></div></div>
+
+<p>同时，我们可以通过 parents 得到指定标签的所有父亲标签。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 8
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">a_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">a</span>
+
+<span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">a_tag</span><span class="p">.</span><span class="n">parents</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">p</span>
+<span class="n">body</span>
+<span class="n">html</span>
+<span class="p">[</span><span class="n">document</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="兄弟节点">兄弟节点</h3>
+
+<p>通过 .next_sibling 和 .previous_sibling 来获取下一个标签和上一个标签。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 9
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">div_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">div</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">div_tag</span><span class="p">.</span><span class="n">next_sibling</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">div_tag</span><span class="p">.</span><span class="n">next_sibling</span><span class="p">.</span><span class="n">next_sibling</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span>
+<span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"content1"</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>你可能会纳闷，调用了两次 next_sibling 怎么只有一个输出呢，这方法是不是有 bug 啊。事实上是 div 的第一个 next_sibling 是<strong>div 和 p 之间的换行符</strong>。这个规则对于 previous_sibling 同样适用。</p>
+
+<p>另外，我们可以通过 .next_siblings 和 .previous_siblings 属性可以对当前节点的兄弟节点迭代输出。在该例子中，我们在每次输出前加了前缀，这样就可以更直观的看到 dib 的第一个 previous_sibling 是换行符了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 10
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">div_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">div</span>
+
+<span class="k">for</span> <span class="n">pre_tag</span> <span class="ow">in</span> <span class="n">div_tag</span><span class="p">.</span><span class="n">previous_siblings</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"pre_tag is : "</span><span class="p">,</span> <span class="n">pre_tag</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"main"</span><span class="o">&gt;</span><span class="n">我常用的网站</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"title"</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">pre_tag</span> <span class="ow">is</span> <span class="p">:</span>  
+</code></pre></div></div>
+
+<h3 id="前进和后退">前进和后退</h3>
+
+<p>通过 .next_element 和 .previous_element 获取指定标签的前一个或者后一个被解析的对象，注意这个和兄弟节点是有所不同的，兄弟节点是指有相同父亲节点的子节点，而这个前一个或者后一个是按照文档的解析顺序来计算的。</p>
+
+<p>比如在我们的文本 html_doc 中，head 的兄弟节点是 body（不考虑换行符），因为他们具有共同的父节点 html，但是 head 的下一个节点是 title。即<code class="highlighter-rouge">soup.head.next_sibling=title soup.head.next_element=title</code>。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 11
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+
+<span class="n">head_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">head</span>
+<span class="k">print</span><span class="p">(</span><span class="n">head_tag</span><span class="p">.</span><span class="n">next_element</span><span class="p">)</span>
+
+<span class="n">title_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">title</span>
+<span class="k">print</span><span class="p">(</span><span class="n">title_tag</span><span class="p">.</span><span class="n">next_element</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">index</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="n">index</span>
+</code></pre></div></div>
+
+<p>同时这里还需要注意的是 title 下一个解析的标签不是 body，而是 title 标签内的内容，因为 html 的解析顺序是打开 title 标签，然后解析内容，最后关闭 title 标签。</p>
+
+<p>另外，我们同样可以通过 .next_elements 和 .previous_elements 来迭代文档树。由遗下例子我们可以看出，换行符同样会占用解析顺序，与迭代兄弟节点效果一致。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 12
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">);</span>
+<span class="n">div_tag</span><span class="o">=</span><span class="n">soup</span><span class="p">.</span><span class="n">div</span>
+<span class="k">for</span> <span class="n">next_element</span> <span class="ow">in</span> <span class="n">div_tag</span><span class="p">.</span><span class="n">next_elements</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"next_element is : "</span><span class="p">,</span> <span class="n">next_element</span><span class="p">)</span>
+
+<span class="c1"># 输出结果
+</span><span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="n">这是注释内容</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"content1"</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="p">...</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"content2"</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  <span class="p">...</span>
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+<span class="n">next_element</span> <span class="ow">is</span> <span class="p">:</span>  
+
+</code></pre></div></div>
+
+<h2 id="beautiful-soup-总结">Beautiful Soup 总结</h2>
+
+<p>本章节介绍了 Beautiful Soup 的使用场景以及操作文档树节点的基本操作，看似很多东西其实是有规律可循的，比如函数的命名，兄弟节点或者下一个节点的迭代函数都是获取单个节点函数的复数形式。</p>
+
+<p>同时由于 HTML 或者 XML 这种循环嵌套的复杂文档结构，致使操作起来甚是麻烦，掌握了本文对节点的基本操作，将有助于提高你写爬虫程序的效率。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day/tree/master/day-065</p>
+</blockquote>
+
+<h2 id="参考内容">参考内容</h2>
+
+<p>https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html#</p>
+:ET

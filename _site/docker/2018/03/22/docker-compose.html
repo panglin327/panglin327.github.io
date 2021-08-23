@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Docker(四)：Docker 三剑客之 Docker Compose - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="docker,Docker Compose,使用,介绍">
+    <meta name="description"
+          content="Docker-Compose 是 Docker 的一种编排服务，是一个用于在 Docker 上定义并运行复杂应用的工具，可以让用户在集群中部署分布式应用。">
+
+    <link rel="canonical" href="http://localhost:4000/docker/2018/03/22/docker-compose.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Docker(四)：Docker 三剑客之 Docker Compose">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Docker(四)：Docker 三剑客之 Docker Compose</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2018/03/22
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>Docker-Compose 是 Docker 的一种编排服务，是一个用于在 Docker 上定义并运行复杂应用的工具，可以让用户在集群中部署分布式应用。</p>
+
+<p>前两篇文章我们介绍了 Dockerfile 的使用<a href="http://www.ityouknow.com/docker/2018/03/12/docker-use-dockerfile.html">Docker(二)：Dockerfile 使用介绍</a>，我们知道使用一个 Dockerfile 模板文件可以定义一个单独的应用容器，如果需要定义多个容器就需要服务编排。服务编排有很多种技术方案，今天给大家介绍 Docker 官方产品 Docker Compose 。</p>
+
+<p>Dockerfile 可以让用户管理一个单独的应用容器；而 Compose 则允许用户在一个模板（YAML 格式）中定义一组相关联的应用容器（被称为一个 project，即项目），例如一个 Web 服务容器再加上后端的数据库服务容器等。</p>
+
+<h2 id="docker-compose-介绍">Docker Compose 介绍</h2>
+
+<p>通过 Docker-Compose 用户可以很容易地用一个配置文件定义一个多容器的应用，然后使用一条指令安装这个应用的所有依赖，完成构建。Docker-Compose 解决了容器与容器之间如何管理编排的问题。</p>
+
+<p>Docker Compose 工作原理图</p>
+
+<p><img src="http://favorites.ren/assets/images/2018/docker/docker-compose.png" alt="" /></p>
+
+<p>Compose 中有两个重要的概念：</p>
+
+<ul>
+  <li>服务 (service) ：一个应用的容器，实际上可以包括若干运行相同镜像的容器实例。</li>
+  <li>项目 (project) ：由一组关联的应用容器组成的一个完整业务单元，在 docker-compose.yml 文件中定义。</li>
+</ul>
+
+<p>一个项目可以由多个服务（容器）关联而成，Compose 面向项目进行管理，通过子命令对项目中的一组容器进行便捷地生命周期管理。</p>
+
+<p>Compose 项目由 Python 编写，实现上调用了 Docker 服务提供的 API 来对容器进行管理。因此，只要所操作的平台支持 Docker API，就可以在其上利用 Compose 来进行编排管理。</p>
+
+<h2 id="docker-compose-安装">Docker Compose 安装</h2>
+
+<p>Docker Compose 是 Docker 的独立产品，因此需要安装 Docker 之后在单独安装  Docker Compose .</p>
+
+<p><strong>方法一：</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#下载</span>
+<span class="nb">sudo </span>curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/1.20.0/docker-compose-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="nt">-o</span> /usr/local/bin/docker-compose
+<span class="c">#安装</span>
+<span class="nb">chmod</span> +x /usr/local/bin/docker-compose
+<span class="c">#查看版本</span>
+docker-compose version
+</code></pre></div></div>
+
+<p><strong>方法二：</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#安装pip</span>
+yum <span class="nt">-y</span> <span class="nb">install </span>epel-release
+yum <span class="nt">-y</span> <span class="nb">install </span>python-pip
+<span class="c">#确认版本</span>
+pip <span class="nt">--version</span>
+<span class="c">#更新pip</span>
+pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+<span class="c">#安装docker-compose</span>
+pip <span class="nb">install </span>docker-compose 
+<span class="c">#查看版本</span>
+docker-compose version
+</code></pre></div></div>
+
+<p>推荐使用方法一进行安装，安装成功后输入<code class="highlighter-rouge">docker-compose version</code>会返回 docker-compose 的版本信息，如下：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost ~]# docker-compose version
+docker-compose version 1.19.0, build 9e633ef
+docker-py version: 2.7.0
+CPython version: 2.7.13
+OpenSSL version: OpenSSL 1.0.1t  3 May 2016
+</code></pre></div></div>
+
+<p>出现以上信息，表明 docker-compose 安装成功</p>
+
+<p><strong>安装补全工具(可选)</strong></p>
+
+<p>为了方便我们输入命令，也可以安装 Docker 的补全提示工具帮忙我们快速输入命令</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#安装</span>
+yum <span class="nb">install </span>bash-completion
+
+<span class="c">#下载docker-compose脚本</span>
+curl <span class="nt">-L</span> https://raw.githubusercontent.com/docker/compose/<span class="si">$(</span>docker-compose version <span class="nt">--short</span><span class="si">)</span>/contrib/completion/bash/docker-compose <span class="o">&gt;</span> /etc/bash_completion.d/docker-compose
+</code></pre></div></div>
+
+<h2 id="快速上手">快速上手</h2>
+
+<p>没有什么比来一个小例子练练手更好的学习方法了，我们以官网上的简单示例来看看 docker compose 的使用方法。</p>
+
+<p>我们设计这么一个场景，使用 Python 启动一个 Web 服务，输出一个<code class="highlighter-rouge">hello()</code>方法，每次访问的时候在 Redis 缓存中进行计数，并且将统计的结果打印到页面中。</p>
+
+<h3 id="第一步创建-python-服务">第一步，创建 Python 服务</h3>
+
+<p>创建项目路径:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>composetest
+<span class="nb">cd </span>composetest
+</code></pre></div></div>
+
+<p>在目录下创建<code class="highlighter-rouge">app.py</code>文件</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">redis</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'redis'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_hit_count</span><span class="p">():</span>
+    <span class="n">retries</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cache</span><span class="p">.</span><span class="n">incr</span><span class="p">(</span><span class="s">'hits'</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">redis</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="nb">ConnectionError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">retries</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">exc</span>
+            <span class="n">retries</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">get_hit_count</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s">'Hello World! I have been seen {} times.</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">"0.0.0.0"</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>在这个例子中, redis 使用了容器内的网络默认端口是6379。这段 Python 程序的内容就是，启动后连接 Redis 并且输出 <code class="highlighter-rouge">hello()</code>方法，当每次访问的时候累计访问次数并且将结果放回到页面。</p>
+
+<p>在同目录下创建<code class="highlighter-rouge">requirements.txt</code>文件，添加项目依赖的python包：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flask
+redis
+</code></pre></div></div>
+
+<blockquote>
+  <p>Flask 是 Python 中一个微型的 Web 开发框架。</p>
+</blockquote>
+
+<h3 id="第二步创建--dockerfile">第二步，创建  Dockerfile</h3>
+
+<p>我们来写一个 Dockerfile 来定义 Docker 镜像，此镜像包含了 Python 的依赖包和 Python 环境。</p>
+
+<p>同样在此目录下，我们创建一个 Dockerfile 文件。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM python:3.4-alpine
+ADD <span class="nb">.</span> /code
+WORKDIR /code
+RUN pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+CMD <span class="o">[</span><span class="s2">"python"</span>, <span class="s2">"app.py"</span><span class="o">]</span>
+</code></pre></div></div>
+
+<p>这段代码表示:</p>
+
+<ul>
+  <li>使用基础镜像 Python 3.4</li>
+  <li>将当前目录映射到镜像<code class="highlighter-rouge">/code</code>目录下</li>
+  <li>设置工作目录为 <code class="highlighter-rouge">/code</code></li>
+  <li>安装 Python 依赖包</li>
+  <li>启动 <code class="highlighter-rouge">app.py</code> 程序</li>
+</ul>
+
+<h3 id="第三步使用-compose-文件定义一个服务">第三步，使用 Compose 文件定义一个服务</h3>
+
+<p>在当期目录下，我们创建一个 docker-compose.yml 文件，内容如下：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>version: <span class="s1">'2'</span>
+services:
+  web:
+    build: <span class="nb">.</span>
+    ports:
+     - <span class="s2">"5000:5000"</span>
+  redis:
+    image: <span class="s2">"redis:alpine"</span>
+</code></pre></div></div>
+
+<p>这个 Compose 文件定义了两个服务, 一个 Pyhon Web 服务和 redis 服务。</p>
+
+<ul>
+  <li>Pyhon Web 服务：使用 Dockerfile 构建了当前镜像。将 Web 容器内部的5000端口映射到 host 的5000端口；并将 Web 容器与 redis 容器连接。</li>
+  <li>redis服务：该容器直接由官方的 redis 镜像创建。</li>
+</ul>
+
+<h3 id="第四步使用-compose-编译启动应用">第四步，使用 Compose 编译启动应用</h3>
+
+<p>使用命令<code class="highlighter-rouge">docker-compose up</code>启动</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>version: <span class="s1">'2'</span>
+services:
+  web:
+    build: <span class="nb">.</span>
+    <span class="nb">command</span>: python app.py
+    ports:
+     - <span class="s2">"5000:5000"</span>
+    volumes:
+     - .:/code
+  redis:
+    image: <span class="s2">"redis:alpine"</span>
+</code></pre></div></div>
+
+<p>启动成功之后，在浏览器访问：<code class="highlighter-rouge">http://ipaddress:5000/</code> ，返回如下：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World! I have been seen 1 times.
+</code></pre></div></div>
+
+<p><img src="http://favorites.ren/assets/images/2018/docker/quick-hello-world-1.png" alt="" /></p>
+
+<p>刷新再次访问返回</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World! I have been seen 2 times.
+</code></pre></div></div>
+
+<p><img src="http://favorites.ren/assets/images/2018/docker/quick-hello-world-2.png" alt="" /></p>
+
+<p>不断的刷新数字会不断的增长。</p>
+
+<h2 id="docker-compose-常用命令">Docker Compose 常用命令</h2>
+
+<p>使用<code class="highlighter-rouge">docker-compose up -d</code>在后台启动服务</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost composetest]# docker-compose up <span class="nt">-d</span>
+Starting composetest_web_1 ... 
+Starting composetest_web_1 ... <span class="k">done</span>
+</code></pre></div></div>
+
+<p>使用<code class="highlighter-rouge">docker-compose ps</code>命令查看启动的服务</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost composetest]# docker-compose ps
+       Name                      Command               State           Ports         
+<span class="nt">-------------------------------------------------------------------------------------</span>
+composetest_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp              
+composetest_web_1     python app.py                    Up      0.0.0.0:5000-&gt;5000/tcp
+</code></pre></div></div>
+
+<p>使用<code class="highlighter-rouge">docker-compose stop</code>停止服务。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost composetest]# docker-compose stop
+Stopping composetest_web_1   ... <span class="k">done
+</span>Stopping composetest_redis_1 ... <span class="k">done</span>
+</code></pre></div></div>
+
+<p><strong>其它常用命令</strong></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#查看帮助</span>
+docker-compose <span class="nt">-h</span>
+
+<span class="c"># -f  指定使用的 Compose 模板文件，默认为 docker-compose.yml，可以多次指定。</span>
+docker-compose <span class="nt">-f</span> docker-compose.yml up <span class="nt">-d</span> 
+
+<span class="c">#启动所有容器，-d 将会在后台启动并运行所有的容器</span>
+docker-compose up <span class="nt">-d</span>
+
+<span class="c">#停用移除所有容器以及网络相关</span>
+docker-compose down
+
+<span class="c">#查看服务容器的输出</span>
+docker-compose logs
+
+<span class="c">#列出项目中目前的所有容器</span>
+docker-compose ps
+
+<span class="c">#构建（重新构建）项目中的服务容器。服务容器一旦构建后，将会带上一个标记名，例如对于 web 项目中的一个 db 容器，可能是 web_db。可以随时在项目目录下运行 docker-compose build 来重新构建服务</span>
+docker-compose build
+
+<span class="c">#拉取服务依赖的镜像</span>
+docker-compose pull
+
+<span class="c">#重启项目中的服务</span>
+docker-compose restart
+
+<span class="c">#删除所有（停止状态的）服务容器。推荐先执行 docker-compose stop 命令来停止容器。</span>
+docker-compose <span class="nb">rm</span> 
+
+<span class="c">#在指定服务上执行一个命令。</span>
+docker-compose run ubuntu ping docker.com
+
+<span class="c">#设置指定服务运行的容器个数。通过 service=num 的参数来设置数量</span>
+docker-compose scale <span class="nv">web</span><span class="o">=</span>3 <span class="nv">db</span><span class="o">=</span>2
+
+<span class="c">#启动已经存在的服务容器。</span>
+docker-compose start
+
+<span class="c">#停止已经处于运行状态的容器，但不删除它。通过 docker-compose start 可以再次启动这些容器。</span>
+docker-compose stop
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="https://docs.docker.com/compose/gettingstarted/">Get started with Docker Compose</a><br />
+<a href="https://www.hi-linux.com/posts/12554.html">使用Docker-Compose编排容器</a></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/docker/2018/03/22/docker-compose.html';
+        this.page.identifier = '/docker/2018/03/22/docker-compose.html';
+        this.page.title = 'Docker(四)：Docker 三剑客之 Docker Compose';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/docker/2018/03/22/docker-compose.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         Java 极客技术， 专业生产 Java 原创干货 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="正式给大家介绍一下">
+
+    <link rel="canonical" href="http://localhost:4000/java/2019/04/25/java-geek-tech.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Java 极客技术， 专业生产 Java 原创干货">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>Java 极客技术， 专业生产 Java 原创干货</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/04/25
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-12 markdown-body">
+
+            <p>可能大家也发现了，这段时间我在推一个 Java 极客技术小社区，它是一个专注分享原创、高质量的技术文章的小组织，并且运营了才一个多月，就已经有 13000+ 的用户关注它，超出预期，对就是下面这个公众号。</p>
+
+<p><img src="http://favorites.ren/assets/images/java.jpg" alt="" /></p>
+
+<p>从2016年开始写博客的时候，我就给自己定义了一个 slogan ，一直挂在个人博客的首页：<strong>分享技术，品味人生</strong>。我并不想天天给大家讲技术，生活中也有很多有趣的事情和大家聊，所以大家也看到了，除过技术文章，我的文章经常也会聊聊职场、人生、故事等一些话题。</p>
+
+<p>同时为了让自己更有动力去运营这个公众号，平时会接一点软广（广告一般都进行了删选，大家可能看到这个公号的推广，几乎都是和技术相关的，其实是拒绝了很多其它的推广）。为了接触到更多的技术人，也会有一些赠书、互推等活动，在这个过程中断断续续的会有一些读者给我反馈，能不能开一个只分享技术的公众号？</p>
+
+<p>那段时间我比较忙，也没来的及考虑这个事情，直到最近闲了下来。另外知识星球的朋友一直给我说，能不能一起做一些有意思的事情，让大家共同成长。于是我就琢磨着干点啥，我是 Java 出身，那就和大家一起做一个相对比较纯粹的，只分享 Java 技术的公号吧。</p>
+
+<p>说干就干，在星球内发布了召集计划，很快就有一些小伙伴跟着响应了起来，注册公众号就实验性的做了起来。搞了一段时间后，发现还不错，大家挺喜欢这个公号的，于是创建了对应的博客网站：<a href="http://www.justdojava.com">http://www.justdojava.com</a>。</p>
+
+<p>现在公号每天有1000多个阅读量，从 CNZZ 来看网站每天也有 800、900 的访问量，博客才搭建了一个月。从这些数据来看小伙伴们还做的很不错。初始的作者团队全部来自我的知识星球，现在也对外开放，如果你感兴趣也可以加入我们，发邮件给 ityouknow@126.com 即可。</p>
+
+<p>大家对这个组织感兴趣的话，可以打开这个页面 <a href="http://www.justdojava.com/about/">http://www.justdojava.com/about/</a> 继续了解，这里就不多做介绍了。主要给大家晒一下，这个一个多月团队都写了哪些干货文章，每个系列找出几个分享给大家：</p>
+
+<p><strong>面试系列</strong></p>
+
+<ul>
+  <li><a href="https://mp.weixin.qq.com/s/7M66smtt_pTlRNtfGMS2kQ">记一次蚂蚁金服的面试经历</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/5Z3lph09pzjhZ79w1LsQzw">记录一次成都阿里一面的经历</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/F5w7WxX5S21UhmjmjBCBwg">面试必备的分布式事务方案</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/zcO-n55-LDEjqEJfC3_fXw">JAVA中的树(二叉树AND红黑树)</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/lwpUl28I68eKZ8h3Z3Hkgw">试必问：HashMap 底层实现原理</a></li>
+  <li>…</li>
+</ul>
+
+<p><strong>Java 干货</strong></p>
+
+<ul>
+  <li><a href="https://mp.weixin.qq.com/s/srja5a59WjFat4LhJOwRxQ">今天来聊 Java ClassLoader</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/y0cGrnqFLcRUOTLM-9WOzw">内存结构和垃圾回收算法</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/jzLt20drb7xiwuimfXes4w">老年代的垃圾回收算法</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/t_LbgQfpKf86AC3EJHgmiw">别傻傻不知道 == 和 equals 的区别</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/aONU3YVop774r2iuKkAY1A">接口和抽象类，傻傻分不清楚？</a></li>
+  <li>…</li>
+</ul>
+
+<p><strong>Spring Boot&amp;微服务</strong></p>
+
+<ul>
+  <li><a href="https://mp.weixin.qq.com/s/XS3jp8EoqobRXQhNeZbacg">微服务异步架构—MQ之RocketMQ</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/6PB2avQt8Vo9AeIttYvUpQ">Spring Boot(一)：入门篇</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/nZL4k6iJiIl3Lq5C_guuOQ">Spring Boot(二)：Web 综合开发</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/AfoSvql8hZ7YuRNgRbgL7A">Spring Boot(四)：Thymeleaf 使用详解</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/G5wFa8nF0mJYKo2GBZQaYg">Spring Boot(五)：Spring Boot Jpa 的使用</a></li>
+  <li>…</li>
+</ul>
+
+<p><strong>计算机基础</strong></p>
+
+<ul>
+  <li><a href="https://mp.weixin.qq.com/s/cw0Tk_NbkYusTFwgJQdDEw">你想知道计算机的启动过程吗？</a></li>
+  <li><a href="https://mp.weixin.qq.com/s/GjBSJDNDxzvt0GKOY_QO5w">计算机内存管理介绍</a></li>
+</ul>
+
+<p>刚开始的时候，我将曾经的 Spring Boot 2.X 系列文章升级后同步到此公号，后面的日常发文运营基本上都靠团队，我参与很少，并且感觉大家做的都比我好很多。目前团队没有一分钱的收入，但大家热情很足，一起讨论技术、一起分享技术、一起成长，这种感觉很好。2019年这个公号不会考虑任何的广告、互推或者技术以外的其它内容，大家可以放心关注。</p>
+
+<p>我个人对这个公号没有什么收益上的期望，后期为了提高团队分享技术的热情，可能会在其它方面来激励团队，原则是不影响读者的阅读体验，对于这个小组织大家有什么好的想法，也欢迎提出建议来。</p>
+
+<p>最后想说一句：如果你想学习技术，请关注它，如果你想分享技术，请加入！关注公号后回复：java，送你一份 Java 干货大礼。</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+           <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/java/2019/04/25/java-geek-tech.html';
+        this.page.identifier = '/java/2019/04/25/java-geek-tech.html';
+        this.page.title = 'Java 极客技术， 专业生产 Java 原创干货';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/java/2019/04/25/java-geek-tech.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+           </div>
+
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

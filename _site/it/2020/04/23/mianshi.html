@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         面试就像谈恋爱，“一见钟情”很重要！ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="没有天生信心，只有不断培养信心。">
+
+    <link rel="canonical" href="http://localhost:4000/it/2020/04/23/mianshi.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="面试就像谈恋爱，“一见钟情”很重要！">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>面试就像谈恋爱，“一见钟情”很重要！</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2020/04/23
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>从毕业到现在，大大小小面试过有60次左右，不得不说我的面试成功率一般都挺高的，比较都在30%以上。</p>
+
+<p>毕业5年后走上了技术管理岗位，后面5年多大概面试过600多位求职者，包括开发工程师、运维工程师、测试工程师、架构、技术经理，甚至研发总监。</p>
+
+<p>5年的求职生涯和5年面试官经验，让我突然有个感悟，面试就像谈恋爱一样，“一见钟情”很重要！</p>
+
+<h2 id="1你相信一见钟情吗">1、你相信一见钟情吗</h2>
+
+<p>在学生时代，经常会被同学们问到这个问题：你相信一见钟情吗？</p>
+
+<p>做为一个技术男，而不是一个情感博主和大家聊这个话题怪不好意思的，但我觉得这个理论是相同的。</p>
+
+<p>首先说自己的观点：我相信一见钟情！</p>
+
+<p>但这里的相信一见钟情是一个大概率问题，也有很多我们一见却没有钟情的情况，我们这里只探讨大多数情况。</p>
+
+<p>我们在见到一个人的时候，基本上在见面的那一秒就对那个人有了直观的印象，比如她的举止、穿着、谈吐和表情。</p>
+
+<p>也就是我们俗称的气场一样，会让你对这个人有一个最直观的印象，这个印象对我们来讲是非常重要的。</p>
+
+<p>当我们一旦对一个人有了自己的固有印象之后，后面是很难被改变的，后面的交流只是为了验证自己对固有印象的对与错。</p>
+
+<h2 id="2面试的一见钟情">2、面试的“一见钟情”</h2>
+
+<p>回过头来我们继续讨论面试的一见钟情，我觉得和谈恋爱时期的一见钟情是一样的道理。</p>
+
+<p>面试官在看到面试者的那一瞬间，基本上就会对面试者有一个最直观的印象，这个印象非常的重要。</p>
+
+<p>虽然我们说程序员大都不注意穿着，但并不是完全不注意的，同样都是穿衬衫和短裤，但每个人穿出来的气质是不一样的。</p>
+
+<p>比如，面试时看到一个程序员，第一印象是这个小伙子不错，看起来像一个技术大牛，后面的面试基本上就在不断验证这个观点。</p>
+
+<p>比如，在面试时觉得面试者可能技术不太行，在面试过程中就会不断潜意识的验证自己，果然技术不太行吧！</p>
+
+<p>那怕技术不错，但也会因为气场不同，感觉融入不到一个团队内，被 Pass 掉。</p>
+
+<p>甚至可以这样下结论：面试第一印象决定了50%以上的成功率。</p>
+
+<h2 id="3这公平吗">3、这公平吗</h2>
+
+<p>有朋友说，程序员都不着重看待技术，这样面试公平吗？</p>
+
+<p>先给大家聊聊团队这个事情。</p>
+
+<p>团队并不是每个人都是技术大牛就越好，团队是每个人都尽量做好自己的工作，大家一起去干一件牛逼的事情。</p>
+
+<p>并不是说，技术团队里面招聘了一个大牛，整个公司的技术水平立刻就提升了一个档次，他需要结合公司情况来搭配。</p>
+
+<p>一个不合群的技术大牛，不但对技术团队带来不了提升，甚至会对整个技术团队产生维护，破坏整体的工作氛围。</p>
+
+<p>现在这个社会，没有哪个事情是一个人可以干完的，特别是互联网公司需要几百甚至几千人来协同工作，如果个体不服从团队会出大问题。</p>
+
+<p>在平时大家肯定遇到过这种情况，见到一个人，他也没有做什么对不起自己的事情，但就会感觉到这个人不合气场！</p>
+
+<p>后面果然，你们大概率是不能相处到一起的。</p>
+
+<p>面试也是一样，当你看一个人不太顺眼的时候，你会问最难的问题，给与最极端的考验，最后还可以拿团队不融洽说事！</p>
+
+<h2 id="4如何应对">4、如何应对？</h2>
+
+<p>客观现实就是这样，那我们如何应对呢？</p>
+
+<p>以上只是为了给大家说明，面试第一印象对我们有多么的重要，为了提升面试通过率需要做一些提前的准备。</p>
+
+<p>1、穿着，穿的衣服不用是正装，但至少要显得比较精神干练，并且不要给面试官留下脏兮兮的感觉。</p>
+
+<p>胡子剃光一点，头发剪短一些，衣服洗的干净一些，至少不要带着味道走向面试官。</p>
+
+<p>2、自信，不管是遇到什么样的面试场景，自信是提升面试成功率最佳能力之一，当然不要自信的过了头。</p>
+
+<p>自信体现在2方面，第一，对自己的穿着形象自信，第二，对自己的能力自信。自信会悄然出现在你行动的方方面面，包括第一印象。</p>
+
+<p>3、守时尊重靠谱，时间留充分不至于赶路狼狈，尊重礼貌待人可以赢得好感，靠谱不要撒谎会让自己反应更正面。</p>
+
+<p>最后，可以多给面试官展示一下<strong>纯洁的微笑</strong>。</p>
+
+<blockquote>
+  <p>作者简介：纯洁的微笑，<a href="http://www.ityouknow.com/life/2020/03/25/fengkou-10year.html">一个有故事的程序员</a>。曾在互联网金融，第三方支付公司工作，现为一名自由职业者，和你一起用技术的角度去看这个世界。我的微信号puresmilea，欢迎大家找我聊天，记录你我的故事。</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>PS:</strong></p>
+
+  <p>①更多大佬解读，公号内回复对应关键字：</p>
+
+  <table>
+    <tbody>
+      <tr>
+        <td><strong>刘强东</strong></td>
+        <td><strong>傅盛</strong></td>
+        <td><strong>古天乐</strong></td>
+        <td><strong>科比</strong></td>
+        <td><strong>34岁</strong></td>
+        <td><strong>马斯克</strong></td>
+        <td><strong>传奇黑客</strong></td>
+        <td><strong>张一鸣</strong></td>
+        <td><strong>雷军</strong></td>
+        <td><strong>求伯君</strong></td>
+        <td><strong>张小龙</strong></td>
+        <td><strong>罗永浩</strong></td>
+        <td><strong>王思聪</strong></td>
+        <td><strong>孙宇晨</strong></td>
+        <td><strong>陆奇</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>②更多公司发家史解读，公号内回复对应关键字：<strong>拼多多</strong></td>
+        <td><strong>soul</strong></td>
+        <td><strong>sun</strong></td>
+        <td><strong>兄弟连</strong></td>
+        <td><strong>谷歌</strong></td>
+        <td><strong>百度</strong></td>
+        <td><strong>沃尔玛</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>③更多精彩故事挖掘，公号内回复对应关键字：<strong>删库跑路</strong></td>
+        <td><strong>黑暗法则</strong></td>
+        <td><strong>男女手册</strong></td>
+        <td><strong>非典奇迹</strong></td>
+        <td><strong>韩国邪教</strong></td>
+        <td><strong>被抢身亡</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>④更多内部匿名爆料，公号内回复对应关键：<strong>006</strong></td>
+        <td><strong>007</strong></td>
+        <td><strong>008</strong></td>
+        <td><strong>009</strong></td>
+        <td><strong>013</strong></td>
+        <td><strong>014</strong></td>
+        <td><strong>015</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2020/04/23/mianshi.html';
+        this.page.identifier = '/it/2020/04/23/mianshi.html';
+        this.page.title = '面试就像谈恋爱，“一见钟情”很重要！';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2020/04/23/mianshi.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

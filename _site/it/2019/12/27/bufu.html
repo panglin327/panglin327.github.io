@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         不服就干！ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="前怕狼后怕虎，你能干成什么事！">
+
+    <link rel="canonical" href="http://localhost:4000/it/2019/12/27/bufu.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="不服就干！">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>不服就干！</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/27
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container need" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>小时候我想养只兔子，但是家里根本没有笼子养，于是我计划<strong>搞起一个大工程。</strong></p>
+
+<p>我叔叔家刚盖完房子，家里留下了什么一堆没有用完的木料，我以养兔子后生下小兔子为由，让我弟弟把他们家剩余的木料都给我偷偷运了过来。</p>
+
+<p>我在家里还发现了很多没有用的钉子，还有一个比较大的铁丝网可以做为笼子的背面，看起来万事俱备，于是我就动手了。</p>
+
+<p>没干了两天就发现<strong>我低估了做一个兔笼的难度，</strong>兔笼需要设计距离地面10 cm ，这样兔子的排泄物可以掉到地下不至于笼子很脏，笼子的正面需要设计一个木门，方便把兔子拿进去拿出来。</p>
+
+<p>除了设计门以外，还要设计一个可以喂食的槽，一方面可以在槽里面放一些粮食给兔子吃，一方面喂食不用频繁打开前面设计的门。</p>
+
+<p>还有很多很多细节，比如钉钉子的时候木头就直接裂了不能用，比如钉子的硬度不够，盯着盯着就歪了，为了固定笼子的整体结构需要用大量的铁丝来固定架构，盖房子用的木料有大有小不一定都合适还需要自己去二次加工。</p>
+
+<p>我<strong>开工了一周，每天工作 10 小时</strong>才把整个笼子的整体框架给搞出来，胳膊手上<strong>全是伤</strong>（钉钉子或者扭铁丝划的），远远超出了一个小孩的预期，于是我就<strong>扔在了一边不想搞了。</strong></p>
+
+<p>这个时候，我的母亲看不下去了。</p>
+
+<p>拉起我来就是一顿痛批，搞了这么大的阵仗没搞到一半就要放弃了，整整批判了一天，<strong>训我是一个一事无成之人，</strong>为了和母亲赌气，就坚持要自己搞出来证明自己。</p>
+
+<p>于是那个夏天基本报废了，没有和小朋友出去玩也没有到处浪，一个人在小屋奋斗，终于把兔子笼建了起来，<strong>到了现在我还记得这件事情。</strong></p>
+
+<p><strong>如果你不坚持，真的会一无所成！</strong></p>
+
+<h2 id="1从深圳工厂到美国纽约">1、从深圳工厂到美国纽约</h2>
+
+<p>我在纽约旅游的时候专门去见了一个女孩，她叫孙玲。我相信很多人都已经看过她的故事，从一个高中毕业去深圳打工的厂妹，到一个成为在纽约谷歌工作的程序员。</p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/bufu01.jpg" alt="" /></p>
+
+<p><strong>为了完成这段路，她用了 10 年。</strong></p>
+
+<p>我家里也是农村的，村里有很多朋友初中、高中毕业去南方打工，同时我也在流水线工厂工作过 2 个月。</p>
+
+<p>所以我能<strong>深度的明白，</strong>一个农村孩子是需要付出多大的努力，才能一步一步的冲破家庭原因禁锢，走向更宽广的世界。</p>
+
+<p>和她聊天之后，才知道她背后的<strong>每一步走得有多凶险。</strong></p>
+
+<p>第一是家庭非常保守，<strong>认为女生不应该读书，</strong>小学毕业后她的哥哥不愿意读书，她的父亲就让她也不读了，她在外面晃荡了一年才又重新上学。</p>
+
+<p>中考考试高中，家里因为农忙让帮忙种地，竟然<strong>错过了报名。</strong>最后忙完了，让她<strong>上了一个民办高中</strong>，高考的时候399分在应届毕业生中排名第一。</p>
+
+<p><strong>2009年高考后就去了深圳工厂工作，</strong>我知道我的很多家乡朋友也走的是这条路，就这样打工了一辈子。</p>
+
+<p>孙玲是<strong>攒够了钱，</strong>就直接出来<strong>辞职报 IT 培训班了。</strong></p>
+
+<p>在培训机构培训的时候没有钱了，就继续打工挣钱，一边培训一边挣钱，<strong>最高的时候打了三份零工。</strong>还<strong>办了一个 3000 元额度的信用卡来支撑。</strong></p>
+
+<p><strong>工作后刚还完培训的钱，</strong>紧接着就报名了远程教育课程<strong>来完成专科、本科学历和学位，</strong>这些事宜还没完全搞定的时候，又把自己<strong>剩余的钱拿出来学习英语。</strong></p>
+
+<p><strong>2016年</strong>她在换工作的时候，<strong>无意中发现了一个海外招聘信息</strong>，当时看了一下条件自己英语太差，同时报名费也不够。</p>
+
+<p>又开始了<strong>疯狂学习继续攒钱</strong>的模式中，<strong>2017年</strong>她终于攒够了钱，就把所有的钱打给了美国那所学校，<strong>又一次</strong>把自己完全<strong>清零重新开始。</strong></p>
+
+<p>不知道大家看完她的经历有什么感受，可能不是农村出身的孩子很难理解这背后有多不容易。和她聊天的时候，感觉很有<strong>力量感。</strong></p>
+
+<p>她从毕业到美国的这10年，每一步都是<strong>用尽了自己的所有能量</strong>来选择，每一步都几乎<strong>不给自己留任何后路，</strong>所以她才能从流水线工厂到谷歌程序员。</p>
+
+<p><strong>每次选择都拼尽全力！</strong></p>
+
+<h2 id="2生死看淡不服就干">2、生死看淡、不服就干</h2>
+
+<p>我是小米的忠实用户，家里买了很多小米的产品，虽然当初被小米1坑得很惨，但这并没有妨碍我后面继续购买小米，我现在使用的手机是 MI Note。</p>
+
+<p>我相信雷军带领的小米，还会产生更多<strong>物美价廉的产品来。</strong></p>
+
+<p>1月10日，小米在北京发布999元起售的Redmi Note 7手机，这是其独立新品牌Redmi的首款新机。</p>
+
+<p>雷军在发布会现场放出狠话<strong>“生死看淡、不服就干”。</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2019/it/bufu02.jpg" alt="" /></p>
+
+<p>在 IT 圈的所有大佬中，<strong>我最佩服的人也是雷军。</strong></p>
+
+<p>之前公号中发过一篇雷军的文章<a href="https://mp.weixin.qq.com/s/m1LA3cnQpwmDf0UvMMNUYQ">《雷军：何以英雄背骂名！》</a>，从 WPS 到创办小米大家都一致称雷军为：拼命三郎。</p>
+
+<p>我相信对于雷军来讲，财富的积累早已经让他花不完了，但是到了现在依然是“生死看淡、不服就干”的精神搞事业。</p>
+
+<p>曾经有人问雷军，这么多年打拼，究竟为了什么？</p>
+
+<p>雷军说：“乔布斯说活着是为了改变世界，<strong>我说我活着是为了科技报国，你信吗？”</strong></p>
+
+<p><strong>我信了。</strong></p>
+
+<p>他们这代人还是有信仰的。</p>
+
+<h2 id="3试错的成本真的不高错过的成本真的很高">3、试错的成本真的不高，错过的成本真的很高</h2>
+
+<p>这些年我尝试了很多的东西，其中<strong>绝大部分都失败了，但其实对我没有任何影响。</strong></p>
+
+<p>但是回头想想：</p>
+
+<p>如果大学没有去搞数学建模竞赛，我不会知道什么是程序。</p>
+
+<p>如果我没有去培训机构学习，我不会成为一名程序员。</p>
+
+<p>如果我没有来北京，我可能仍然在默默的 996 。</p>
+
+<p>如果2016年我没有尝试去写博客，那大部分读者应该都不知道我是谁…</p>
+
+<p><strong>试一试真的不难，错过的成本真的很大。</strong></p>
+
+<p>可能大家还不知道，刚来北京的时候尝试着去 BAT 大厂，失败了；来北京的第一年，我和朋友甚至尝试去创业，失败了。</p>
+
+<p>还有很多很多的尝试都失败了，但正是因为这么多的尝试，才让我找到了今天适合我走的方向。</p>
+
+<p>现在很多人挣不到钱，觉得职场没有机会，找不到生活的方向，那是因为<strong>选择太多，而不是选择太少！</strong></p>
+
+<p>当你<strong>只有一个选择</strong>的时候，<strong>你自然会拼尽全力</strong>，极大的发挥出自己的潜能。有时候不把自己逼一把，可能<strong>你都不知道你有多优秀！</strong></p>
+
+<p>不要在选择中迷失，<strong>应该在绝境中求生！</strong></p>
+
+<p><strong>逼自己一把，生死看淡、不服就干！</strong></p>
+
+<blockquote>
+  <p>作者简介：纯洁的微笑，<strong>一个有故事的程序员</strong>（👈详细了解）。曾在互联网金融，第三方支付公司工作，现为一名自由职业者，和你一起用技术的角度去看这个世界。我的微信号<strong>puresmilea</strong>，欢迎大家找我聊天，记录你我的故事。</p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2019/12/27/bufu.html';
+        this.page.identifier = '/it/2019/12/27/bufu.html';
+        this.page.title = '不服就干！';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2019/12/27/bufu.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

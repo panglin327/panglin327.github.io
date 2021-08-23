@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第34天：python json&amp;pickle - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;blockquote&gt;
+  &lt;p&gt;by 千阳&lt;/p&gt;
+&lt;/blockquote&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/10/18/python-json&pickle-034.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第34天：python json&pickle">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第34天：python json&pickle</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/18
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <blockquote>
+  <p>by 千阳</p>
+</blockquote>
+
+<p>在日常开发中，对数据进行序列化和反序列化是常见的数据操作，Python提供了两个模块方便开发者实现数据的序列化操作，即 json 模块和 pickle 模块。这两个模块主要区别如下：</p>
+
+<ul>
+  <li>json 是一个文本序列化格式，而 pickle 是一个二进制序列化格式；</li>
+  <li>json 是我们可以直观阅读的，而 pickle 不可以；</li>
+  <li>json 是可互操作的，在 Python 系统之外广泛使用，而 pickle 则是 Python 专用的；</li>
+  <li>默认情况下，json 只能表示 Python 内置类型的子集，不能表示自定义的类；但 pickle 可以表示大量的 Python 数据类型。</li>
+</ul>
+
+<!--more-->
+
+<h2 id="json-模块">Json 模块</h2>
+
+<p>Json 是一种轻量级的数据交换格式，由于其具有传输数据量小、数据格式易解析等特点，它被广泛应用于各系统之间的交互操作，作为一种数据格式传递数据。它包含多个常用函数，具体如下：</p>
+
+<h3 id="dumps函数">dumps()函数</h3>
+
+<p><code class="highlighter-rouge">dumps()</code>函数可以将 Python 对象编码成 Json 字符串。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#字典转成json字符串 加上ensure_ascii=False以后，可以识别中文， indent=4是间隔4个空格显示   
+
+import json         
+d={'小明':{'sex':'男','addr':'上海','age':26},'小红':{ 'sex':'女','addr':'上海', 'age':24},}
+print(json.dumps(d,ensure_ascii=False,indent=4)) 
+
+#执行结果：
+{
+    "小明": {
+        "sex": "男",
+        "addr": "上海",
+        "age": 26
+    },
+    "小红": {
+        "sex": "女",
+        "addr": "上海",
+        "age": 24
+    }
+}
+</code></pre></div></div>
+
+<h3 id="dump函数">dump()函数</h3>
+
+<p><code class="highlighter-rouge">dump()</code>函数可以将 Python对象编码成 json 字符串，并自动写入到文件中，不需要再单独写文件。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#字典转成json字符串,不需要写文件，自动转成的json字符串写入到‘users.json’的文件中 
+import json                                                                         
+d={'小明':{'sex':'男','addr':'上海','age':26},'小红':{ 'sex':'女','addr':'上海', 'age':24},}
+#打开一个名字为‘users.json’的空文件
+fw =open('users.json','w',encoding='utf-8')
+
+json.dump(d,fw,ensure_ascii=False,indent=4)
+</code></pre></div></div>
+
+<h3 id="loads函数">loads()函数</h3>
+
+<p><code class="highlighter-rouge">loads()</code>函数可以将 json 字符串转换成 Python 的数据类型。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#这是users.json文件中的内容
+{
+    "小明":{
+        "sex":"男",
+        "addr":"上海",
+        "age":26
+    },
+    "小红":{
+        "sex":"女",
+        "addr":"上海",
+        "age":24
+    }
+}
+
+#!/usr/bin/python3
+#把json串变成python的数据类型   
+import json  
+#打开‘users.json’的json文件
+f =open('users.json','r',encoding='utf-8')
+#读文件
+res=f.read()
+print(json.loads(res))   
+
+#执行结果：
+{'小明': {'sex': '男', 'addr': '上海', 'age': 26}, '小红': {'sex': '女', 'addr': '上海', 'age': 24}}
+</code></pre></div></div>
+
+<h3 id="load函数">load()函数</h3>
+
+<p><code class="highlighter-rouge">load()</code>跟<code class="highlighter-rouge">loads()</code>功能相似，<code class="highlighter-rouge">load()</code>函数可以将 json 字符串转换成 Python 数据类型，不同的是前者的参数是一个文件对象，不需要再单独读此文件。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#把json串变成python的数据类型：字典，传一个文件对象，不需要再单独读文件 
+import json   
+#打开文件
+f =open('users.json','r',encoding='utf-8') 
+print(json.load(f))
+
+#执行结果：
+{'小明': {'sex': '男', 'addr': '上海', 'age': 26}, '小红': {'sex': '女', 'addr': '上海', 'age': 24}}
+
+</code></pre></div></div>
+
+<h2 id="pickle-模块">Pickle 模块</h2>
+
+<p>Pickle 模块与 Json 模块功能相似，也包含四个函数，即 dump()、dumps()、loads() 和 load()，它们的主要区别如下：</p>
+
+<ul>
+  <li>
+    <p>dumps 和 dump 的区别在于前者是将对象序列化，而后者是将对象序列化并保存到文件中。</p>
+  </li>
+  <li>
+    <p>loads 和 load 的区别在于前者是将序列化的字符串反序列化，而后者是将序列化的字符串从文件读取并反序列化。</p>
+  </li>
+</ul>
+
+<h3 id="dumps函数-1">dumps()函数</h3>
+
+<p><code class="highlighter-rouge">dumps()</code>函数可以将数据通过特殊的形式转换为只有python语言认识的字符串，例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pickle
+# dumps功能
+import pickle
+data = ['A', 'B', 'C','D']  
+print(pickle.dumps(data))
+
+b'\x80\x03]q\x00(X\x01\x00\x00\x00Aq\x01X\x01\x00\x00\x00Bq\x02X\x01\x00\x00\x00Cq\x03X\x01\x00\x00\x00Dq\x04e.'
+</code></pre></div></div>
+
+<h3 id="dump函数-1">dump()函数</h3>
+
+<p><code class="highlighter-rouge">dump()</code>函数可以将数据通过特殊的形式转换为只有python语言认识的字符串，并写入文件。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># dump功能
+with open('test.txt', 'wb') as f:
+    pickle.dump(data, f)
+print('写入成功')
+
+写入成功
+</code></pre></div></div>
+
+<h3 id="loads函数-1">loads()函数</h3>
+
+<p><code class="highlighter-rouge">loads()</code>函数可以将pickle数据转换为python的数据结构。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># loads功能
+msg = pickle.loads(datastr)
+print(msg)
+
+['A', 'B', 'C', 'D']
+</code></pre></div></div>
+
+<h3 id="load函数-1">load()函数</h3>
+
+<p><code class="highlighter-rouge">load()</code>函数可以从数据文件中读取数据，并转换为python的数据结构。例如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># load功能
+with open('test.txt', 'rb') as f:
+   data = pickle.load(f)
+print(data)
+
+['A', 'B', 'C', 'D']
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>本节给大家介绍 Python 中 json&amp;pickle 模块的常用操作，对于实现数据的序列化和反序列化提供了支撑。</p>
+
+<blockquote>
+  <p>示例代码：<a href="https://github.com/JustDoPython/python-100-day/tree/master/day-034">Python-100-days-day034</a></p>
+</blockquote>
+
+<p>参考
+[1] https://docs.python.org/3.7/library/pickle.html
+[2] https://docs.python.org/3.7/library/json.html</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/10/18/python-json&pickle-034.html';
+        this.page.identifier = '/python/2019/10/18/python-json&pickle-034.html';
+        this.page.title = '第34天：python json&pickle';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/10/18/python-json&pickle-034.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

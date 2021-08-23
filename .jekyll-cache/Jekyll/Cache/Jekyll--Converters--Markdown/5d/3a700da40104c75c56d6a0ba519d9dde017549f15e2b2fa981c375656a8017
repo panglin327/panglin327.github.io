@@ -1,0 +1,303 @@
+I"]j<p>这两天启动了一个新项目因为项目组成员一直都使用的是 Mybatis，虽然个人比较喜欢 Jpa 这种极简的模式，但是为了项目保持统一性技术选型还是定了 Mybatis 。到网上找了一下关于 Spring Boot 和 Mybatis 组合的相关资料，各种各样的形式都有，看的人心累，结合了 Mybatis 的官方 Demo 和文档终于找到了最简的两种模式，花了一天时间总结后分享出来。</p>
+
+<p>Orm 框架的本质是简化编程中操作数据库的编码，发展到现在基本上就剩两家了，一个是宣称可以不用写一句 Sql 的 Hibernate，一个是可以灵活调试动态 Sql 的 Mybatis ,两者各有特点，在企业级系统开发中可以根据需求灵活使用。发现一个有趣的现象：传统企业大都喜欢使用 Hibernate ,互联网行业通常使用 Mybatis 。</p>
+
+<p>Hibernate 特点就是所有的 Sql 都用 Java 代码来生成，不用跳出程序去写（看） Sql ，有着编程的完整性，发展到最顶端就是 Spring Data Jpa 这种模式了，基本上根据方法名就可以生成对应的 Sql 了，有不太了解的可以看我的上篇文章<a href="http://www.ityouknow.com/springboot/2016/08/20/spring-boot-jpa.html">Spring Boot(五)： Spring Data Jpa 的使用</a>。</p>
+
+<p>Mybatis 初期使用比较麻烦，需要各种配置文件、实体类、Dao 层映射关联、还有一大推其它配置。当然 Mybatis 也发现了这种弊端，初期开发了<a href="https://github.com/mybatis/generator">generator</a>可以根据表结果自动生产实体类、配置文件和 Dao 层代码，可以减轻一部分开发量；后期也进行了大量的优化可以使用注解了，自动管理 Dao 层和配置文件等，发展到最顶端就是今天要讲的这种模式了，<code class="highlighter-rouge">mybatis-spring-boot-starter</code> 就是 Spring Boot+ Mybatis 可以完全注解不用配置文件，也可以简单配置轻松上手。</p>
+
+<blockquote>
+  <p>现在想想 Spring Boot  就是牛逼呀，任何东西只要关联到 Spring Boot 都是化繁为简。</p>
+</blockquote>
+
+<h2 id="mybatis-spring-boot-starter">mybatis-spring-boot-starter</h2>
+
+<p>官方说明：<code class="highlighter-rouge">MyBatis Spring-Boot-Starter will help you use MyBatis with Spring Boot</code><br />
+其实就是 Mybatis 看 Spring Boot 这么火热也开发出一套解决方案来凑凑热闹，但这一凑确实解决了很多问题，使用起来确实顺畅了许多。<code class="highlighter-rouge">mybatis-spring-boot-starter</code>主要有两种解决方案，一种是使用注解解决一切问题，一种是简化后的老传统。</p>
+
+<p>当然任何模式都需要首先引入<code class="highlighter-rouge">mybatis-spring-boot-starter</code>的 Pom 文件，现在最新版本是 2.0.0</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>好了下来分别介绍两种开发模式</p>
+
+<h2 id="无配置文件注解版">无配置文件注解版</h2>
+
+<p>就是一切使用注解搞定。</p>
+
+<h3 id="1-添加相关-maven-文件">1 添加相关 Maven 文件</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+	<span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+	<span class="nt">&lt;dependency&gt;</span>
+		<span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+		<span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+		<span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+	<span class="nt">&lt;/dependency&gt;</span>
+     <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<p>完整的 Pom 包这里就不贴了，大家直接看源码</p>
+
+<h3 id="2applicationproperties-添加相关配置">2、<code class="highlighter-rouge">application.properties</code> 添加相关配置</h3>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">mybatis.type-aliases-package</span><span class="p">=</span><span class="s">com.neo.model</span>
+
+<span class="py">spring.datasource.url</span><span class="p">=</span><span class="s">jdbc:mysql://localhost:3306/test?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true</span>
+<span class="py">spring.datasource.username</span><span class="p">=</span><span class="s">root</span>
+<span class="py">spring.datasource.password</span><span class="p">=</span><span class="s">root</span>
+<span class="py">spring.datasource.driver-class-name</span><span class="p">=</span><span class="s">com.mysql.cj.jdbc.Driver</span>
+</code></pre></div></div>
+
+<p>Spring Boot 会自动加载 <code class="highlighter-rouge">spring.datasource.*</code> 相关配置，数据源就会自动注入到 sqlSessionFactory 中，sqlSessionFactory 会自动注入到 Mapper 中，对了，你一切都不用管了，直接拿起来使用就行了。</p>
+
+<p>在启动类中添加对 mapper 包扫描<code class="highlighter-rouge">@MapperScan</code></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="nd">@MapperScan</span><span class="o">(</span><span class="s">"com.neo.mapper"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MybatisAnnotationApplication</span> <span class="o">{</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">MybatisAnnotationApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>或者直接在 Mapper 类上面添加注解<code class="highlighter-rouge">@Mapper</code>，建议使用上面那种，不然每个 mapper 加个注解也挺麻烦的</p>
+
+<h3 id="3开发-mapper">3、开发 Mapper</h3>
+
+<p>第三步是最关键的一块， Sql 生产都在这里</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="o">{</span>
+	
+	<span class="nd">@Select</span><span class="o">(</span><span class="s">"SELECT * FROM users"</span><span class="o">)</span>
+	<span class="nd">@Results</span><span class="o">({</span>
+		<span class="nd">@Result</span><span class="o">(</span><span class="n">property</span> <span class="o">=</span> <span class="s">"userSex"</span><span class="o">,</span>  <span class="n">column</span> <span class="o">=</span> <span class="s">"user_sex"</span><span class="o">,</span> <span class="n">javaType</span> <span class="o">=</span> <span class="nc">UserSexEnum</span><span class="o">.</span><span class="na">class</span><span class="o">),</span>
+		<span class="nd">@Result</span><span class="o">(</span><span class="n">property</span> <span class="o">=</span> <span class="s">"nickName"</span><span class="o">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s">"nick_name"</span><span class="o">)</span>
+	<span class="o">})</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="nc">UserEntity</span><span class="o">&gt;</span> <span class="nf">getAll</span><span class="o">();</span>
+	
+	<span class="nd">@Select</span><span class="o">(</span><span class="s">"SELECT * FROM users WHERE id = #{id}"</span><span class="o">)</span>
+	<span class="nd">@Results</span><span class="o">({</span>
+		<span class="nd">@Result</span><span class="o">(</span><span class="n">property</span> <span class="o">=</span> <span class="s">"userSex"</span><span class="o">,</span>  <span class="n">column</span> <span class="o">=</span> <span class="s">"user_sex"</span><span class="o">,</span> <span class="n">javaType</span> <span class="o">=</span> <span class="nc">UserSexEnum</span><span class="o">.</span><span class="na">class</span><span class="o">),</span>
+		<span class="nd">@Result</span><span class="o">(</span><span class="n">property</span> <span class="o">=</span> <span class="s">"nickName"</span><span class="o">,</span> <span class="n">column</span> <span class="o">=</span> <span class="s">"nick_name"</span><span class="o">)</span>
+	<span class="o">})</span>
+	<span class="nc">UserEntity</span> <span class="nf">getOne</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">);</span>
+
+	<span class="nd">@Insert</span><span class="o">(</span><span class="s">"INSERT INTO users(userName,passWord,user_sex) VALUES(#{userName}, #{passWord}, #{userSex})"</span><span class="o">)</span>
+	<span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="nc">UserEntity</span> <span class="n">user</span><span class="o">);</span>
+
+	<span class="nd">@Update</span><span class="o">(</span><span class="s">"UPDATE users SET userName=#{userName},nick_name=#{nickName} WHERE id =#{id}"</span><span class="o">)</span>
+	<span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="nc">UserEntity</span> <span class="n">user</span><span class="o">);</span>
+
+	<span class="nd">@Delete</span><span class="o">(</span><span class="s">"DELETE FROM users WHERE id =#{id}"</span><span class="o">)</span>
+	<span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">);</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong>为了更接近生产我特地将 user_sex、nick_name 两个属性在数据库加了下划线和实体类属性名不一致，另外 user_sex 使用了枚举</strong></p>
+
+<blockquote>
+  <ul>
+    <li>@Select 是查询类的注解，所有的查询均使用这个</li>
+    <li>@Result 修饰返回的结果集，关联实体类属性和数据库字段一一对应，如果实体类属性和数据库属性名保持一致，就不需要这个属性来修饰。</li>
+    <li>@Insert 插入数据库使用，直接传入实体类会自动解析属性到对应的值</li>
+    <li>@Update 负责修改，也可以直接传入对象</li>
+    <li>@delete 负责删除</li>
+  </ul>
+</blockquote>
+
+<p><a href="http://www.mybatis.org/mybatis-3/zh/java-api.html">了解更多属性参考这里</a></p>
+
+<blockquote>
+  <p><strong>注意，使用#符号和$符号的不同：</strong></p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// This example creates a prepared statement, something like select * from teacher where name = ?;
+@Select("Select * from teacher where name = #{name}")
+Teacher selectTeachForGivenName(@Param("name") String name);
+
+// This example creates n inlined statement, something like select * from teacher where name = 'someName';
+@Select("Select * from teacher where name = '${name}'")
+Teacher selectTeachForGivenName(@Param("name") String name);
+</code></pre></div></div>
+
+<h3 id="4使用">4、使用</h3>
+
+<p>上面三步就基本完成了相关 Mapper 层开发，使用的时候当作普通的类注入进入就可以了</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@SpringBootTest</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserMapperTest</span> <span class="o">{</span>
+
+	<span class="nd">@Autowired</span>
+	<span class="kd">private</span> <span class="nc">UserMapper</span> <span class="n">userMapper</span><span class="o">;</span>
+
+	<span class="nd">@Test</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testInsert</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="n">userMapper</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="k">new</span> <span class="nc">User</span><span class="o">(</span><span class="s">"aa1"</span><span class="o">,</span> <span class="s">"a123456"</span><span class="o">,</span> <span class="nc">UserSexEnum</span><span class="o">.</span><span class="na">MAN</span><span class="o">));</span>
+		<span class="n">userMapper</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="k">new</span> <span class="nc">User</span><span class="o">(</span><span class="s">"bb1"</span><span class="o">,</span> <span class="s">"b123456"</span><span class="o">,</span> <span class="nc">UserSexEnum</span><span class="o">.</span><span class="na">WOMAN</span><span class="o">));</span>
+		<span class="n">userMapper</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="k">new</span> <span class="nc">User</span><span class="o">(</span><span class="s">"cc1"</span><span class="o">,</span> <span class="s">"b123456"</span><span class="o">,</span> <span class="nc">UserSexEnum</span><span class="o">.</span><span class="na">WOMAN</span><span class="o">));</span>
+
+		<span class="nc">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">userMapper</span><span class="o">.</span><span class="na">getAll</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Test</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testQuery</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">userMapper</span><span class="o">.</span><span class="na">getAll</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">users</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+	<span class="o">}</span>
+	
+	
+	<span class="nd">@Test</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testUpdate</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">userMapper</span><span class="o">.</span><span class="na">getOne</span><span class="o">(</span><span class="mi">30</span><span class="n">l</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+		<span class="n">user</span><span class="o">.</span><span class="na">setNickName</span><span class="o">(</span><span class="s">"neo"</span><span class="o">);</span>
+		<span class="n">userMapper</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+		<span class="nc">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">((</span><span class="s">"neo"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">userMapper</span><span class="o">.</span><span class="na">getOne</span><span class="o">(</span><span class="mi">30</span><span class="n">l</span><span class="o">).</span><span class="na">getNickName</span><span class="o">())));</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>源码中 Controller 层有完整的增删改查，这里就不贴了</p>
+
+<h2 id="极简-xml-版本">极简 xml 版本</h2>
+
+<p>极简 xml 版本保持映射文件的老传统，接口层只需要定义空方法，系统会自动根据方法名在映射文件中找对应的 Sql .</p>
+
+<h3 id="1配置">1、配置</h3>
+
+<p>pom 文件和上个版本一样，只是<code class="highlighter-rouge">application.properties</code>新增以下配置</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">mybatis.config-location</span><span class="p">=</span><span class="s">classpath:mybatis/mybatis-config.xml</span>
+<span class="py">mybatis.mapper-locations</span><span class="p">=</span><span class="s">classpath:mybatis/mapper/*.xml</span>
+</code></pre></div></div>
+
+<p>指定了 Mybatis 基础配置文件和实体类映射文件的地址</p>
+
+<p>mybatis-config.xml 配置</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;configuration&gt;</span>
+	<span class="nt">&lt;typeAliases&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">alias=</span><span class="s">"Integer"</span> <span class="na">type=</span><span class="s">"java.lang.Integer"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">alias=</span><span class="s">"Long"</span> <span class="na">type=</span><span class="s">"java.lang.Long"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">alias=</span><span class="s">"HashMap"</span> <span class="na">type=</span><span class="s">"java.util.HashMap"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">alias=</span><span class="s">"LinkedHashMap"</span> <span class="na">type=</span><span class="s">"java.util.LinkedHashMap"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">alias=</span><span class="s">"ArrayList"</span> <span class="na">type=</span><span class="s">"java.util.ArrayList"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">alias=</span><span class="s">"LinkedList"</span> <span class="na">type=</span><span class="s">"java.util.LinkedList"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/typeAliases&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div></div>
+
+<p>这里也可以添加一些 Mybatis 基础的配置</p>
+
+<h3 id="2添加-user-的映射文件">2、添加 User 的映射文件</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.neo.mapper.UserMapper"</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">"BaseResultMap"</span> <span class="na">type=</span><span class="s">"com.neo.entity.UserEntity"</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;id</span> <span class="na">column=</span><span class="s">"id"</span> <span class="na">property=</span><span class="s">"id"</span> <span class="na">jdbcType=</span><span class="s">"BIGINT"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"userName"</span> <span class="na">property=</span><span class="s">"userName"</span> <span class="na">jdbcType=</span><span class="s">"VARCHAR"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"passWord"</span> <span class="na">property=</span><span class="s">"passWord"</span> <span class="na">jdbcType=</span><span class="s">"VARCHAR"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"user_sex"</span> <span class="na">property=</span><span class="s">"userSex"</span> <span class="na">javaType=</span><span class="s">"com.neo.enums.UserSexEnum"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"nick_name"</span> <span class="na">property=</span><span class="s">"nickName"</span> <span class="na">jdbcType=</span><span class="s">"VARCHAR"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/resultMap&gt;</span>
+    
+    <span class="nt">&lt;sql</span> <span class="na">id=</span><span class="s">"Base_Column_List"</span> <span class="nt">&gt;</span>
+        id, userName, passWord, user_sex, nick_name
+    <span class="nt">&lt;/sql&gt;</span>
+
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"getAll"</span> <span class="na">resultMap=</span><span class="s">"BaseResultMap"</span>  <span class="nt">&gt;</span>
+       SELECT 
+       <span class="nt">&lt;include</span> <span class="na">refid=</span><span class="s">"Base_Column_List"</span> <span class="nt">/&gt;</span>
+	   FROM users
+    <span class="nt">&lt;/select&gt;</span>
+
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"getOne"</span> <span class="na">parameterType=</span><span class="s">"java.lang.Long"</span> <span class="na">resultMap=</span><span class="s">"BaseResultMap"</span> <span class="nt">&gt;</span>
+        SELECT 
+       <span class="nt">&lt;include</span> <span class="na">refid=</span><span class="s">"Base_Column_List"</span> <span class="nt">/&gt;</span>
+	   FROM users
+	   WHERE id = #{id}
+    <span class="nt">&lt;/select&gt;</span>
+
+    <span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">"insert"</span> <span class="na">parameterType=</span><span class="s">"com.neo.entity.UserEntity"</span> <span class="nt">&gt;</span>
+       INSERT INTO 
+       		users
+       		(userName,passWord,user_sex) 
+       	VALUES
+       		(#{userName}, #{passWord}, #{userSex})
+    <span class="nt">&lt;/insert&gt;</span>
+    
+    <span class="nt">&lt;update</span> <span class="na">id=</span><span class="s">"update"</span> <span class="na">parameterType=</span><span class="s">"com.neo.entity.UserEntity"</span> <span class="nt">&gt;</span>
+       UPDATE 
+       		users 
+       SET 
+       	<span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"userName != null"</span><span class="nt">&gt;</span>userName = #{userName},<span class="nt">&lt;/if&gt;</span>
+       	<span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"passWord != null"</span><span class="nt">&gt;</span>passWord = #{passWord},<span class="nt">&lt;/if&gt;</span>
+       	nick_name = #{nickName}
+       WHERE 
+       		id = #{id}
+    <span class="nt">&lt;/update&gt;</span>
+    
+    <span class="nt">&lt;delete</span> <span class="na">id=</span><span class="s">"delete"</span> <span class="na">parameterType=</span><span class="s">"java.lang.Long"</span> <span class="nt">&gt;</span>
+       DELETE FROM
+       		 users 
+       WHERE 
+       		 id =#{id}
+    <span class="nt">&lt;/delete&gt;</span>
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></div></div>
+
+<p>其实就是把上个版本中 Mapper 的 Sql 搬到了这里的 xml 中了</p>
+
+<h3 id="3编写-mapper-层的代码">3、编写 Mapper 层的代码</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="o">{</span>
+	
+	<span class="nc">List</span><span class="o">&lt;</span><span class="nc">UserEntity</span><span class="o">&gt;</span> <span class="nf">getAll</span><span class="o">();</span>
+	
+	<span class="nc">UserEntity</span> <span class="nf">getOne</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">);</span>
+
+	<span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="nc">UserEntity</span> <span class="n">user</span><span class="o">);</span>
+
+	<span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="nc">UserEntity</span> <span class="n">user</span><span class="o">);</span>
+
+	<span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">);</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对比上一步，这里只需要定义接口方法</p>
+
+<h3 id="4使用-1">4、使用</h3>
+
+<p>使用和上个版本没有任何区别，大家就看文章对应的示例代码吧</p>
+
+<h2 id="如何选择">如何选择</h2>
+
+<p>两种模式各有特点，注解版适合简单快速的模式，其实像现在流行的这种微服务模式，一个微服务就会对应一个自已的数据库，多表连接查询的需求会大大的降低，会越来越适合这种模式。</p>
+
+<p>老传统模式比适合大型项目，可以灵活的动态生成 Sql ，方便调整 Sql ，也有痛痛快快，洋洋洒洒的写 Sql 的感觉。</p>
+
+<blockquote>
+  <p>文章内容已经升级到 Spring Boot 2.x</p>
+</blockquote>
+
+<p><strong><a href="https://github.com/ityouknow/spring-boot-examples/tree/master/spring-boot-mybatis">示例代码-github</a></strong></p>
+
+<p><strong><a href="https://gitee.com/ityouknow/spring-boot-examples/tree/master/spring-boot-mybatis">示例代码-码云</a></strong></p>
+:ET

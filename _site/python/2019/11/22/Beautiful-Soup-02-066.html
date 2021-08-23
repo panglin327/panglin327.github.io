@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第66天：爬虫利器 Beautiful Soup 之搜索文档 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 豆豆&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/11/22/Beautiful-Soup-02-066.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第66天：爬虫利器 Beautiful Soup 之搜索文档">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第66天：爬虫利器 Beautiful Soup 之搜索文档</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/22
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 豆豆</p>
+
+<h2 id="beautiful-soup-简介">Beautiful Soup 简介</h2>
+
+<p>Beautiful Soup 是一个可以从 HTML 或 XML 文件中提取数据的 Python 库，它提供了一些简单的操作方式来帮助你处理文档导航，查找，修改文档等繁琐的工作。因为使用简单，所以 Beautiful Soup 会帮你节省不少的工作时间。</p>
+
+<p>上一篇文章我们介绍了如何使用 Beautiful Soup 来遍历文档中的节点，这片文章我们继续血学习如何使用 Beautiful Soup 指定文档中搜索到你想要的内容。</p>
+
+<!--more-->
+
+<h2 id="beautiful-soup-搜索文档">Beautiful Soup 搜索文档</h2>
+
+<p>同样为了故事的顺利发展，我们继续使用之前的 HTML 文本，下文的所有例子都是基于这段文本的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">html_doc</span> <span class="o">=</span> <span class="s">"""
+&lt;html&gt;&lt;head&gt;&lt;title&gt;index&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class="title"&gt;&lt;b&gt;首页&lt;/b&gt;&lt;/p&gt;
+&lt;p class="main"&gt;我常用的网站
+&lt;a href="https://www.google.com" class="website" id="google"&gt;Google&lt;/a&gt;
+&lt;a href="https://www.baidu.com" class="website" id="baidu"&gt;Baidu&lt;/a&gt;
+&lt;a href="https://cn.bing.com" class="website" id="bing"&gt;Bing&lt;/a&gt;
+&lt;/p&gt;
+&lt;div&gt;&lt;!--这是注释内容--&gt;&lt;/div&gt;
+&lt;p class="content1"&gt;...&lt;/p&gt;
+&lt;p class="content2"&gt;...&lt;/p&gt;
+&lt;/body&gt;
+"""</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_doc</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="过滤器">过滤器</h3>
+
+<p>正式讲解搜索文档之前，我们有必要了解下 Beautiful Soup 的过滤器，这些过滤器在整个搜索的 API 中都有所体现，他们可以被用在 TAG 的 name 中，属性中，字符串中或他们的混合中。听起来有点绕是么，看几个例子就懂了。</p>
+
+<p>1、根据 TAG 的 name 来查找标签，下面的例子会查找文档中的所有 b 标签。同时要注意统一传入 Unicode 编码以避免 Beautiful Soup 解析编码出错。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 1
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+<p>2、如果传入正则表达式作为参数，那么 Beautiful Soup 会通过正则表达式的 match() 来匹配内容。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 2
+</span><span class="kn">import</span> <span class="nn">re</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"^b"</span><span class="p">)):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="n">body</span>
+<span class="n">b</span>
+</code></pre></div></div>
+<p>3、如果传入列表参数，那么 Beautiful Soup 会将与列表中任一一个元素匹配的内容返回。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 3
+</span><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">([</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">]):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">首页</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</code></pre></div></div>
+<p>4、True 可以匹配任何值，下面的例子是查找所有的 TAG 但不会返回字符串。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 4
+</span><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">', '</span><span class="p">)</span>
+ 
+<span class="c1">#输出结果
+</span><span class="n">html</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">div</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> 
+</code></pre></div></div>
+
+<p>5、方法。我们可以定义一个方法，该方法只接受一个参数，若该方法返回 True 则表示当前元素匹配并且被找到，返回 False 意味着没找到。下面的例子展示了查找所有同时包含 class 属性和 id 属性的节点。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 5
+</span><span class="k">def</span> <span class="nf">has_id_class</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tag</span><span class="p">.</span><span class="n">has_attr</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tag</span><span class="p">.</span><span class="n">has_attr</span><span class="p">(</span><span class="s">'class'</span><span class="p">)</span>
+
+<span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">has_id_class</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+	
+<span class="c1">#输出结果
+</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</code></pre></div></div>
+<p>大部分情况字符串过滤器就可以满足我们的需求，外加这个神奇的方法过滤器，我们就可以实现各种自定义需求了。</p>
+
+<h3 id="find_all-函数">find_all() 函数</h3>
+
+<p>该函数搜索当前节点下的所有子节点，其签名如下<code class="highlighter-rouge">find_all( name , attrs , recursive , text , **kwargs )</code>。我们可以传入指定 TAG 的 name 来查找节点，上面已经举过例子了，这里不在赘述。我们来看几个其他的用法。</p>
+
+<p>1、如果我们传入 find_all() 函数不是搜索内置的参数名，那么搜索是就会将该参数对应到属性上去。下文的例子表示查找 id 为 google 的节点。</p>
+
+<p>搜索指定名字的属性时可以使用的参数值包括：字符串，正则表达式，列表，True。也就是我们上文介绍过的过滤器。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 6
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">'google'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">'href'</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span> <span class="c1"># 查找所有包含 id 属性的 TAG
+</span>	<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s">'href'</span><span class="p">])</span>
+
+<span class="c1">#输出结果
+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cn</span><span class="p">.</span><span class="n">bing</span><span class="p">.</span><span class="n">com</span>
+</code></pre></div></div>
+<p>2、按照 CSS 类名搜索，但是镖师 CSS 的关键字 class 在 Python 中是内置关键字，从 Beautiful Soup 4.1.1 版本开始，可以通过 <code class="highlighter-rouge">class_</code>  参数搜索有指定 CSS 类名的 TAG：</p>
+
+<p>class_ 参数同样接受不同类型的过滤器：字符串，正则表达式，方法，True。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 7
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">"website"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s">'href'</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">has_seven_characters</span><span class="p">(</span><span class="n">css_class</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">css_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">css_class</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="n">has_seven_characters</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s">'id'</span><span class="p">])</span>
+
+<span class="c1">#输出结果
+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cn</span><span class="p">.</span><span class="n">bing</span><span class="p">.</span><span class="n">com</span>
+<span class="n">google</span>
+<span class="n">baidu</span>
+<span class="n">bing</span>
+</code></pre></div></div>
+
+<p>同时，因为 CSS 可以有多个值，所以我们可以分别搜索 CSS 中的每个值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 8
+</span><span class="n">css_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="s">'&lt;p class="body strikeout"&gt;&lt;/p&gt;'</span><span class="p">,</span> <span class="s">'lxml'</span><span class="p">)</span>
+<span class="n">tags</span> <span class="o">=</span> <span class="n">css_soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"p"</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">"strikeout"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s">"body strikeout"</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>3、不仅可以按照标签和 CSS 来搜索整个文档，还可以使用 text 来按照内容来搜索。同时 text 还可以配合其他属性一起来完成搜索任务。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 9
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"Google"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"google : "</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+
+<span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="p">[</span><span class="s">"Baidu"</span><span class="p">,</span> <span class="s">"Bing"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"baidu &amp; bing : "</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+
+<span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Google"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"a[text=google] : "</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="n">google</span> <span class="p">:</span>  <span class="p">[</span><span class="s">'Google'</span><span class="p">]</span>
+<span class="n">baidu</span> <span class="o">&amp;</span> <span class="n">bing</span> <span class="p">:</span>  <span class="p">[</span><span class="s">'Baidu'</span><span class="p">,</span> <span class="s">'Bing'</span><span class="p">]</span>
+<span class="n">a</span><span class="p">[</span><span class="n">text</span><span class="o">=</span><span class="n">google</span><span class="p">]</span> <span class="p">:</span>  <span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>4、限制返回数量</p>
+
+<p>有时候文档树过于庞大，我们不想查查找整棵树，只想查找指定数量的节点，或者只想查找子节点，而不想查找孙子节点，指定 limit 或者 recursive 参数即可。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 10
+</span><span class="n">tag</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+<span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"p"</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="p">[]</span>
+</code></pre></div></div>
+<p>因为该对象的儿子节点没有 p 标签，所以返回的是空列表。</p>
+
+<h3 id="find-函数">find() 函数</h3>
+
+<p>该函数只会返回一个结果，与 find_all(some_args, limit=1) 是等价的，唯一的区别就是该函数直接返回结果，而 find_all() 函数返回包含一个结果的列表。另外 find_all() 方法没有找到目标是返回空列表, find() 方法找不到目标时,返回 None。除此之外使用上没有其他差别。</p>
+
+<h3 id="其他函数">其他函数</h3>
+
+<p>除了 find_all() 和 find() 外，Beautiful Soup 中还有 10 个用于搜索的 API，其中中五个用的是与 find_all() 相同的搜索参数，另外 5 个与 find() 方法的搜索参数类似，区别仅是它们搜索文档的范围不同。</p>
+
+<p>find_parents() 和 find_parent() 用来搜索当前节点的父节点。</p>
+
+<p>find_next_siblings() 和 find_next_sibling() 对在当前节点后面解析的所有兄弟节点进行迭代。</p>
+
+<p>find_previous_siblings() 和 find_previous_sibling() 对在当前节点前面解析的所有兄弟节点进行迭代。</p>
+
+<p>find_all_next() 和 find_next() 对当前节点之后的 TAG 和字符串进行迭代。</p>
+
+<p>find_all_previous() 和 find_previous() 对当前节点之前的 TAG 和字符串进行迭代。</p>
+
+<p>以上五组函数的区别仅仅是前者返回一个所有符合搜索条件的节点列表，而后者只返回第一个符合搜索条件的节点。</p>
+
+<p>因为这 10 个 API 的使用和 find_all() 与 find() 大同小异，所有i这里不在举例，读者可以自己探索。</p>
+
+<h3 id="css-选择器">CSS 选择器</h3>
+
+<p>在 Tag 或 BeautifulSoup 对象的 .select() 方法中传入字符串参数即可使用 CSS 选择器的语法找到 TAG。</p>
+
+<p>1、通过某个标签逐层查找。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 11
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"body a"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s">'href'</span><span class="p">])</span>
+
+<span class="c1">#输出结果
+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cn</span><span class="p">.</span><span class="n">bing</span><span class="p">.</span><span class="n">com</span>
+</code></pre></div></div>
+
+<p>2、查找某个标签下的直接子标签</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 12
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"p &gt; a"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"p &gt; #google"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.baidu.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"baidu"</span><span class="o">&gt;</span><span class="n">Baidu</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>3、通过 CSS 类名直接查找</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 13
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">".website"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">tag</span><span class="p">.</span><span class="n">string</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="n">Google</span>
+<span class="n">Baidu</span>
+<span class="n">Bing</span>
+</code></pre></div></div>
+
+<p>4、通过标签的 id 属性查找</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 14
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"#google"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://www.google.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"google"</span><span class="o">&gt;</span><span class="n">Google</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>5、通过属性的值来查找</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># demo 15
+</span><span class="n">tags</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">'a[href="https://cn.bing.com"]'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+<span class="c1">#输出结果
+</span><span class="p">[</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s">"website"</span> <span class="n">href</span><span class="o">=</span><span class="s">"https://cn.bing.com"</span> <span class="nb">id</span><span class="o">=</span><span class="s">"bing"</span><span class="o">&gt;</span><span class="n">Bing</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="beautiful-soup-总结">Beautiful Soup 总结</h2>
+
+<p>本章节介绍了 Beautiful Soup 关于文档搜索的相关操作，熟练掌握这些 API 的操作可以让我们更快更好找到我们想要定位的节点，不要看到这么多函数吓怕了，其实我们只需要熟练掌握 find_all() 和 find() 两个函数即可，其余 API 的使用都大同小异，稍加练习即可快速上手。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day/tree/master/day-066</p>
+</blockquote>
+
+<h2 id="参考内容">参考内容</h2>
+
+<p>https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html#</p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/11/22/Beautiful-Soup-02-066.html';
+        this.page.identifier = '/python/2019/11/22/Beautiful-Soup-02-066.html';
+        this.page.title = '第66天：爬虫利器 Beautiful Soup 之搜索文档';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/11/22/Beautiful-Soup-02-066.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

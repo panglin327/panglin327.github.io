@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第105天： Python 操作 Word - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 極光&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/31/python-word-105.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第105天： Python 操作 Word">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第105天： Python 操作 Word</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/31
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 極光</p>
+
+<p>上次给大家介绍了 Python 如何操作 Excel ，是不是感觉还挺有趣的，今天为大家再介绍下，用 Python 如何操作 Word ，这个可能跟数据处理关系不大，用的也不多，不过可以先了解下都能实现什么功能，以备不时之需。</p>
+
+<!--more-->
+
+<h2 id="安装-python-docx">安装 python-docx</h2>
+
+<p>处理 Word 需要用到 python-docx 库，目前版本为 <code class="highlighter-rouge">0.8.10</code> ，执行如下安装命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip3 <span class="nb">install </span>python-docx
+<span class="c">################# 运行结果 ################</span>
+Collecting python-docx
+  Downloading https://files.pythonhosted.org/packages/e4/83/c66a1934ed5ed8ab1dbb9931f1779079f8bca0f6bbc5793c06c4b5e7d671/python-docx-0.8.10.tar.gz <span class="o">(</span>5.5MB<span class="o">)</span>
+     |████████████████████████████████| 5.5MB 553kB/s
+Requirement already satisfied: lxml&gt;<span class="o">=</span>2.3.2 <span class="k">in</span> /usr/local/lib/python3.7/site-packages <span class="o">(</span>from python-docx<span class="o">)</span> <span class="o">(</span>4.4.1<span class="o">)</span>
+Building wheels <span class="k">for </span>collected packages: python-docx
+  Building wheel <span class="k">for </span>python-docx <span class="o">(</span>setup.py<span class="o">)</span> ... <span class="k">done
+  </span>Stored <span class="k">in </span>directory: /Users/mjg/Library/Caches/pip/wheels/18/0b/a0/1dd62ff812c857c9e487f27d80d53d2b40531bec1acecfa47b
+Successfully built python-docx
+Installing collected packages: python-docx
+Successfully installed python-docx-0.8.10
+</code></pre></div></div>
+
+<p>OK，如果提示以上信息则安装成功。</p>
+
+<h2 id="写入-word">写入 Word</h2>
+
+<p>平时我们在操作 Word 写文档的时候，一般分为几部分：标题、章节、段落、图片、表格、引用以及项目符号编号等。下面我们就按这几部分如何用 Python 操作来一一介绍。</p>
+
+<h3 id="标题">标题</h3>
+
+<p>文档标题创建比较简单，通过 <code class="highlighter-rouge">Document()</code> 创建出一个空白文档，只要调用 <code class="highlighter-rouge">add_heading</code> 方法就能创建标题。</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建空白文档
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="c1"># 新增文档标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'如何使用 Python 创建 Word'</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>这样就完成了创建文档和文章标题的操作，下面通过命令 <code class="highlighter-rouge">python word_1.py </code> 运行程序，会生成名为 <code class="highlighter-rouge">word1.docx</code> 的文档，打开文章显示如下图所示：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_01.png" alt="标题" /></p>
+
+<h3 id="章节与段落">章节与段落</h3>
+
+<p>有了文章标题，下面我们来看章节和段落是怎么操作的，在上面代码后面增加章节和段落操作的代码如下：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建空白文档
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="c1"># 新增文档标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'如何使用 Python 创建 Word'</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'我们平时使用 Word 用来做文章的处理，可能没想过它可以用 Python 生成，下面我们就介绍具体如何操作……'</span><span class="p">)</span>
+
+<span class="c1"># 创建一级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'安装 python-docx 库'</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'现在开始我们来介绍如何安装 python-docx 库，具体需要以下两步操作：'</span><span class="p">)</span>
+
+<span class="c1"># 创建二级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'第一步：安装 Python'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>上面我们说了 <code class="highlighter-rouge">add_heading</code> 方法用来增加文章标题，不过通过上面代码我们能知道，这个方法的第二上参数为数字，其实这个就是用来标示几级标题的，在我们平时就用来标示章节。<code class="highlighter-rouge">add_paragraph</code> 方法则是用来在文章中增加段落的，那我们现在就通过命令 <code class="highlighter-rouge">python word_1.py </code> 运行程序看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_02.png" alt="章节段落" /></p>
+
+<h3 id="字体和引用">字体和引用</h3>
+
+<p>前面我们通过 <code class="highlighter-rouge">add_paragraph</code> 方法增加了两个段落，现在我们就看下如何对段落中字体如何操作，以及引用段落的操作。继续修改以上代码，增加对文章字体字号、加粗、倾斜等操作，具体代码如下：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_1.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">RGBColor</span>
+
+<span class="c1"># 新建空白文档
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="c1"># 新增文档标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'如何使用 Python 创建 Word'</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'我们平时使用 Word 用来做文章的处理，可能没想过它可以用 Python 生成，下面我们就介绍具体如何操作……'</span><span class="p">)</span>
+
+<span class="c1"># 创建一级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'安装 python-docx 库'</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 创建段落描述
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'现在开始我们来介绍如何安装 python-docx 库，具体需要以下两步操作：'</span><span class="p">)</span>
+
+<span class="c1"># 创建二级标题
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'第一步：安装 Python'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 创建段落，添加文档内容
+</span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这是第一步的安装描述！'</span><span class="p">)</span>
+
+<span class="c1"># 段落中增加文字，并设置字体字号
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">paragraph</span><span class="p">.</span><span class="n">add_run</span><span class="p">(</span><span class="s">'(注意：这里设置了字号为20)'</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># 设置英文字体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这里设置英文字体：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'This Font is Times New Roman '</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Times New Roman'</span>
+
+<span class="c1"># 设置中文字体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这里设置中文字体：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'当前字体为黑体'</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="s">'黑体'</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">run</span><span class="p">.</span><span class="n">_element</span>
+<span class="n">r</span><span class="p">.</span><span class="n">rPr</span><span class="p">.</span><span class="n">rFonts</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">qn</span><span class="p">(</span><span class="s">'w:eastAsia'</span><span class="p">),</span> <span class="s">'黑体'</span><span class="p">)</span>
+
+<span class="c1"># 设置斜体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段设置：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'文字的是斜体 '</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">italic</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># 设置粗体
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段再设置：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'这里设置粗体'</span><span class="p">).</span><span class="n">bold</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># 设置字体带下划线
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段为下划线：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'这里设置带下划线'</span><span class="p">).</span><span class="n">underline</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c1"># 设置字体颜色
+</span><span class="n">run</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这段字体为红色：'</span><span class="p">).</span><span class="n">add_run</span><span class="p">(</span><span class="s">'这里设置字体为红色'</span><span class="p">)</span>
+<span class="n">run</span><span class="p">.</span><span class="n">font</span><span class="p">.</span><span class="n">color</span><span class="p">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">)</span>
+
+<span class="c1"># 增加引用
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'这里是我们引用的一段话：人生苦短，我用Python。'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'Intense Quote'</span><span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc1</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>上面代码主要是针对段落字体的各种设置，每段代码都标有注释应该比较容易理解，现在通过命令 <code class="highlighter-rouge">python word_1.py </code> 运行程序看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_03.png" alt="字体引用" /></p>
+
+<h3 id="项目列表">项目列表</h3>
+
+<p>我们平时在使用 Word 时，为了能展示更清晰，会用到项目符号和编号，将内容通过列表的方式展示出来，下面我们新建一个文件 <code class="highlighter-rouge">word_2.py</code> 并编写如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_2.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建文档
+</span><span class="n">doc2</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'哪个不是水果：'</span><span class="p">)</span>
+
+<span class="c1"># 增加无序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'苹果'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'香蕉'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'馄炖'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'2020年度计划：'</span><span class="p">)</span>
+<span class="c1"># 增加有序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'每周健身一天'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'学习50本书'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'减少加班时间'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word2.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>现在通过命令 <code class="highlighter-rouge">python word_2.py </code> 运行程序看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_05.png" alt="项目列表" /></p>
+
+<h3 id="图片和表格">图片和表格</h3>
+
+<p>我们平时编辑文章时，插入图片和表格也是经常使用到的，那用 Python 该如何操作插入图片和表格？首先我们随便找了个图片，我这用了 Python 安装时的一张截图，文件名为 <code class="highlighter-rouge">python_install.png</code>，然后在 <code class="highlighter-rouge">word_2.py</code> 文件中增加如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_2.py
+</span>
+<span class="c1"># 导入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Pt</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">docx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+
+<span class="c1"># 新建文档
+</span><span class="n">doc2</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'哪个不是水果：'</span><span class="p">)</span>
+
+<span class="c1"># 增加无序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'苹果'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'香蕉'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'馄炖'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Bullet'</span>
+<span class="p">)</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">'2020年度计划：'</span><span class="p">)</span>
+<span class="c1"># 增加有序列表
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'每周健身一天'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'学习50本书'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">'减少加班时间'</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">'List Number'</span>
+<span class="p">)</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'图片'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 增加图像
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_picture</span><span class="p">(</span><span class="s">'python_install.png'</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">Inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">))</span>
+
+<span class="n">doc2</span><span class="p">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">'表格'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 增加表格，这是表格头
+</span><span class="n">table</span> <span class="o">=</span> <span class="n">doc2</span><span class="p">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">hdr_cells</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">cells</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="s">'编号'</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="s">'姓名'</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="s">'职业'</span>
+
+<span class="c1"># 这是表格数据
+</span><span class="n">records</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'张三'</span><span class="p">,</span> <span class="s">'电工'</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'张五'</span><span class="p">,</span> <span class="s">'老板'</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">'马六'</span><span class="p">,</span> <span class="s">'IT'</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># 遍历数据并展示
+</span><span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">work</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+    <span class="n">row_cells</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">add_row</span><span class="p">().</span><span class="n">cells</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">text</span> <span class="o">=</span> <span class="n">work</span>
+
+<span class="c1"># 手动增加分页
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">add_page_break</span><span class="p">()</span>
+
+<span class="c1"># 保存文件
+</span><span class="n">doc2</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'word2.docx'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>OK，现在再来让我们再来看下效果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_06.png" alt="图片表格" /></p>
+
+<h2 id="读取-word-文件">读取 Word 文件</h2>
+
+<p>上面写了很多用 Python 创建空白 Word 文件格式化字体并保存到文件中，接下来我们再简单介绍下如何读取已有的 Word 文件，请看如下代码：</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># word_3.py
+</span>
+<span class="c1"># 引入库
+</span><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+
+<span class="c1"># 打开文档1
+</span><span class="n">doc1</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s">'word1.docx'</span><span class="p">)</span>
+
+<span class="c1"># 读取每段内容
+</span><span class="n">pl</span> <span class="o">=</span> <span class="p">[</span> <span class="n">paragraph</span><span class="p">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">doc1</span><span class="p">.</span><span class="n">paragraphs</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'###### 输出word1文章内容'</span><span class="p">)</span>
+<span class="c1"># 输出读取到的内容
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pl</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+
+<span class="c1"># 打开文档2
+</span><span class="n">doc2</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s">'word2.docx'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">###### 输出word2文章内容'</span><span class="p">)</span>
+
+<span class="n">pl2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">paragraph</span><span class="p">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">doc2</span><span class="p">.</span><span class="n">paragraphs</span><span class="p">]</span>
+
+<span class="c1"># 输出读取到的内容
+</span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pl2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="c1"># 读取表格材料，并输出结果
+</span><span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">table</span> <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">doc2</span><span class="p">.</span><span class="n">tables</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">.</span><span class="n">rows</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">.</span><span class="n">cells</span><span class="p">:</span>
+            <span class="k">print</span> <span class="p">(</span><span class="n">cell</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s">'  '</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>以上代码是将之前我们输出的两个文档内容都读取出来，当然这里只是打印到控制台，并没有做其他处理。现在我们来执行命令 <code class="highlighter-rouge">python word_3.py</code> 把代码执行看下结果：</p>
+
+<p><img src="http://www.justdopython.com/assets/images/2019/python/python_word_07.png" alt="读取并打印" /></p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文为大家介绍了 Python 中如何操作 Word 文档，其中写入文件时，我们常用各种标题段落字体设置等，会比较复杂，这里只是简单介绍了最常用的几种方法，如果想了解更多请参考文末官网介绍，之后会为大家介绍其他类型文件的操作方式，希望大家能多多关注。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>python-excel 官网：https://python-docx.readthedocs.io/en/latest/index.html</p>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day</p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/31/python-word-105.html';
+        this.page.identifier = '/python/2019/12/31/python-word-105.html';
+        this.page.title = '第105天： Python 操作 Word';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/31/python-word-105.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

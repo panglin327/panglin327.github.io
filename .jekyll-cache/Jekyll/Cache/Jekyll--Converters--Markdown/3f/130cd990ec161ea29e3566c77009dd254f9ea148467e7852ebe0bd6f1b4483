@@ -1,0 +1,64 @@
+I"�<p>收集 Spring Cloud 相关的学习资料</p>
+
+<blockquote>
+  <p>学习 Spring Cloud 首先需要了解 Spring Boot，不了解 Spring Boot 的同学戳这里<a href="http://www.ityouknow.com/springboot/2015/12/30/springboot-collect.html">Spring Boot学习资料汇总</a></p>
+</blockquote>
+
+<p><strong>重点推荐：<a href="http://springcloud.fun/">Spring Cloud 中文索引</a></strong></p>
+
+<h2 id="推荐博客">推荐博客</h2>
+
+<ul>
+  <li><a href="http://www.ityouknow.com/spring-cloud">纯洁的微笑 Spring Cloud 系列文章</a></li>
+  <li><a href="https://windmt.com/tags/Spring-Cloud/">windmt一spring cloud</a></li>
+  <li><a href="http://blog.csdn.net/column/details/15197.html">方志朋 Spring Cloud 专栏</a></li>
+  <li><a href="http://xujin.org/categories/%E8%B7%9F%E6%88%91%E5%AD%A6Spring-Cloud/">许进 跟我学 Spring Cloud</a></li>
+  <li><a href="http://blog.csdn.net/liaokailin/article/category/6212338">liaokailin的专栏 Spring Cloud</a></li>
+  <li><a href="http://cxytiandi.com/blog/detail/17470">猿天地尹吉欢 Spring Cloud</a></li>
+  <li><a href="https://blog.battcn.com/categories/SpringCloud/">唐亚峰 Battcn 起来学SpringCloud</a></li>
+  <li><a href="https://blog.csdn.net/column/details/24531.html">yjclsx spring cloud之路</a></li>
+  <li><a href="http://blueskykong.com/tags/Spring-Cloud">aoho spring cloud</a></li>
+  <li><a href="https://wangsong.blog.csdn.net/column/info/17373">江南一点雨 Spring Cloud </a></li>
+</ul>
+
+<h2 id="开源">开源</h2>
+
+<ul>
+  <li><a href="https://github.com/ityouknow/spring-cloud-examples">纯洁的微笑的 Spring Cloud 示例</a></li>
+  <li><a href="https://github.com/paascloud/paascloud-master">spring cloud + vue 全家桶实战，模拟商城，完整的购物流程</a></li>
+  <li><a href="https://github.com/sqshq/PiggyMetrics">PiggyMetrics-一个供个人处理财务的解决方案</a></li>
+  <li><a href="https://github.com/prontera/spring-cloud-rest-tcc">基于Spring Cloud Netflix的TCC柔性事务和EDA事件驱动示例</a></li>
+  <li><a href="https://github.com/forezp/SpringCloudLearning">方志朋 SpringCloudLearning</a></li>
+  <li><a href="https://github.com/OptionalDay/spring-cloud-vue">一套基于springcloud + mybatis + vue全家桶</a></li>
+  <li><a href="https://github.com/vangao1989/cloudE">cloudE 基于spring cloud的分布式系统架构</a></li>
+  <li><a href="https://github.com/lrwinx/shop">shop spring cloud最佳实践项目实例</a></li>
+  <li><a href="https://gitee.com/minull/ace-security">Cloud-Admin是国内首个基于Spring Cloud微服务化开发平台</a></li>
+  <li><a href="https://github.com/zhangxd1989/spring-boot-cloud">spring-boot-cloud综合练手项目</a></li>
+  <li><a href="https://gitee.com/wells2333/spring-cloud-online-exam">基于Spring Cloud的在线考试系统</a></li>
+  <li><a href="https://github.com/backkoms/simplemall">基于SpringCloud的微服务架构实战案例项目，以一个简单的购物流程为示例</a></li>
+  <li><a href="https://gitee.com/jmdhappy/xxpay-master">XxPay 使用Spring Cloud实现的聚合支付</a></li>
+  <li><a href="https://gitee.com/xfdm/FCat">FCat项目基于 Angular 4 + Spring Cloud 的企业级基础功能框架</a></li>
+  <li><a href="https://gitee.com/log4j/pig">基于Spring Cloud、oAuth2.0开发基于Vue前后分离的开发平台</a></li>
+</ul>
+
+<h2 id="网站">网站</h2>
+
+<ul>
+  <li><a href="http://projects.spring.io/spring-cloud/">Spring Cloud 官网</a></li>
+  <li><a href="http://springcloud.cn/">Spring Cloud 中国社区</a></li>
+  <li><a href="https://springcloud.cc/">Spring Cloud 中文网</a></li>
+  <li><a href="http://study.163.com/courses-search?keyword=Spring%20Cloud">网易云课堂 Spring Cloud 视频</a></li>
+  <li><a href="https://projects.spring.io/spring-cloud/spring-cloud.html">Spring Cloud 参考指南- 英文版</a></li>
+  <li><a href="https://github.com/Nepxion/Aquarius">Nepxion</a></li>
+</ul>
+
+<h2 id="其它">其它</h2>
+
+<ul>
+  <li><a href="https://github.com/ityouknow/awesome-spring-boot">Spring Boot 中文索引</a></li>
+  <li><a href="http://tooool.org/">程序员导航网站</a></li>
+  <li><a href="https://github.com/ityouknow/awesome-list">IT行业中文资源大全</a></li>
+</ul>
+
+<p><strong>欢迎大家推荐更多的资料</strong></p>
+:ET

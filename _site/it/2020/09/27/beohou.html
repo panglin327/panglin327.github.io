@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         华为鸿蒙背后：中国首个自己的开源基金会来了！ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="华为的一种涅槃重生！">
+
+    <link rel="canonical" href="http://localhost:4000/it/2020/09/27/beohou.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="华为鸿蒙背后：中国首个自己的开源基金会来了！">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>华为鸿蒙背后：中国首个自己的开源基金会来了！</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2020/09/27
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou01.jpg" alt="" /></p>
+
+<p>该来的，终究还是来了！</p>
+
+<h2 id="1开源基金会">1、开源基金会</h2>
+
+<p>在上一次华为宣布鸿蒙2.0发布的时候，我写过一篇文章<a href="https://mp.weixin.qq.com/s/9hdNHt4T_eGsGrDWsL16Dg">《华为鸿蒙，告别 PPT，代码全部开源！》</a>。</p>
+
+<p>文章中提到一个点，不知道大家有没有注意：华为余承东现场宣布，将把鸿蒙操作系统源代码捐赠给<strong>开放原子开源基金会。</strong></p>
+
+<p>当时我就对这个“开放原子开源基金会”很感兴趣，下来找了一下资料整理出来分享给大家，看看它到底是一个什么样的组织？</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou02.jpg" alt="" /></p>
+
+<p>首先给大家科普一下，什么是开源基金会？</p>
+
+<p>开源基金会用大白话来讲，就是一个独立的第三方开源组织，由企业赞助和个人捐赠资助，它通过为软件项目社区提供服务与支持实现价值，<strong>使命是为公众利益提供软件。</strong></p>
+
+<p>世界上最大的开源开源基金会是Apache Software Foundation（简称ASF），成立于1999年，这是一个专门为支持开源软件项目而办的一个非盈利性组织。</p>
+
+<p>比较著名的还有：Linux基金会、OpenStack基金会、Eclipse基金会、Cloud Foundry基金会等等。</p>
+
+<p>作为程序员，我相信大家对这些名字都很熟悉，那么华为捐献的“开放原子开源基金会”到底是什么鬼？</p>
+
+<h2 id="2中国首个开源基金会">2、中国首个开源基金会</h2>
+
+<p>大家看到以上的开源基金会，无疑都是来自美国，原因无它，世界上最好的开源环境在美国。</p>
+
+<p>随着中国互联网公司的加速崛起，对开源世界的贡献越来越大，特别是互联网一线大厂对开源贡献巨大。</p>
+
+<p>全球组织 star 综合排名：</p>
+
+<p>阿里巴巴全球组织<strong>排名12名</strong>；cocos2d 全球组织排名 88 名；Baidu EFE team 全球组织排名 77名；Bilibili 全球组织排名 107 ；Tencent全球组织排名219名。</p>
+
+<p>随着国际形式竞争加剧，很多开源项目或者组织受到政府的制约，前一段时间：<strong>Github禁封了朝鲜和伊朗的一万多个账号；华为被多个开源组织限制参与。</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou03.jpg" alt="" /></p>
+
+<p><strong>开源无国界已经事实上受到威胁。这就是为什么我们要组建自己的开源基金会。</strong></p>
+
+<p>另外，华为鸿蒙要发展起来必须又有强力的生态支撑，仅仅是华为一家很难打造整个生态，为了打消合作伙伴的顾虑，必须将鸿蒙放到第三方托管。</p>
+
+<p>于是<strong>中国首个开源基金会：</strong>开放原子开源基金会，在这样的背景下，在华为的力推下成立了！</p>
+
+<h2 id="3开放原子开源基金会">3、开放原子开源基金会</h2>
+
+<p><strong>据基金会官网介绍，</strong>开放原子开源基金会是一个致力于开源产业的全球性非营利公益机构，业务范围包括开源软件、开源硬件、开源芯片与开源内容等，为各类开源项目提供中立的知识产权托管服务，以及战略咨询、法务咨询、项目运营和品牌营销服务。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou04.jpg" alt="" /></p>
+
+<p>该基金会注册时间为2020年6月15日，主管单位显示为工信部。</p>
+
+<p>网站显示最新孵化的项目有 7 个，除了鸿蒙之外，百度超级链 XuperChain、360 的类 Redis 存储系统 Pika、腾讯的 Kubernetes 发行版 TKEStack 和物联网终端操作系统 TencentOS tiny 、浪潮的低代码开发平台 UBML，以及物联网嵌入式操作系统 AliOS Things 等项目。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou05.jpg" alt="" /></p>
+
+<p>开放原子开源基金会接受来自个人、机构或公司的捐赠。捐赠者分为白金捐赠人、金牌捐赠人、银牌捐赠人、一般捐赠人四个等级。</p>
+
+<p>其中，白金捐赠人的理事席位最多可达 17 个，而金牌和银牌分别享有 3 个及 2 个理事席位。所有等级的捐赠者均对项目有推荐权，推荐须经 TOC（技术监督委员会）评选通过。</p>
+
+<p>现阶段，该基金会的主要捐赠单位有七家，分别是：阿里巴巴、百度、华为、浪潮、腾讯、360 和招商银行。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou06.jpg" alt="" /></p>
+
+<h2 id="4最后">4、最后</h2>
+
+<p>今天刚看到一个新闻：</p>
+
+<blockquote>
+  <p>对于之前外界传闻的小米、OPPO、vivo等会推出鸿蒙系统手机的事情，华为方面重申，HMS、鸿蒙生态是开放的，他们欢迎厂商和开发者来这个生态，并且也积极与友商进行合作。</p>
+</blockquote>
+
+<p>华为目前非常重视和外部厂商的合作，因为鸿蒙是否能够真正成功，还是需要看整个生态能够有多大。</p>
+
+<p>而国内的小米OV，其实也会有动力会尝试鸿蒙系统，今天华为被美国制裁，悬在小米OV头上的那把刀，会不会落下来谁也不知道！</p>
+
+<p>多一个选择多一条生存的道路，企业的底线思维我相信这些大佬应该都懂，这个时候参与进来也可以拿到更大的话语权。</p>
+
+<p>当然，让小米OV放心使用鸿蒙，仅仅开源托管给开源基金会还是不够的，最好能让大家都能参与到整个系统中。</p>
+
+<p>从历史的进程来看，也许现在才是中国开源最好的时机，也是历史上国人最重视技术的时刻。</p>
+
+<p><strong>打不死我的终将使我更强大！从某种程度上来讲这也是：华为的一种涅槃重生！</strong></p>
+
+<blockquote>
+  <p>Ref：</p>
+
+  <p>《开源社区：开放原子开源基金会官网上线，已有七个项目加入孵化》</p>
+
+  <p>《七月在线：华为筹建中国开源基金：最快一两月内运营，会运作鸿蒙开源架构！》</p>
+</blockquote>
+
+<blockquote>
+  <p>&lt; 文末推荐 &gt;</p>
+</blockquote>
+
+<p>这两天有读者看到文末推荐开源项目，于是他推荐了他们团队的开源项目：<strong>Nebula Graph。</strong></p>
+
+<p><strong>我一看这个开源项目技术含量很高，</strong>目前在 Github 上已经有4.4K关注，并且中英文文档齐全，是一图数据库开源项目。</p>
+
+<p><strong>Nebula Graph 是一款开源的图数据库，擅长处理千亿个顶点和万亿条边的超大规模数据集。</strong></p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou07.jpg" alt="" /></p>
+
+<blockquote>
+  <p>项目整体架构图</p>
+</blockquote>
+
+<p>一个完整的 Nebula Graph 部署集群包含三个服务，即  Query Service，Storage Service 和 Meta Service。</p>
+
+<p>每个服务都有其各自的可执行二进制文件，这些二进制文件既可以部署在同一组节点上，也可以部署在不同的节点上。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou08.jpg" alt="" /></p>
+
+<blockquote>
+  <p>项目完整的说明文档</p>
+</blockquote>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/beihou/beihou09.jpg" alt="" /></p>
+
+<blockquote>
+  <p>官网展示很多大厂在使用</p>
+</blockquote>
+
+<p>说实话，这样质量的开源项目对我来讲是膜拜型的，看来读者中技术大神很多。个人能够做的就是多宣传了，并且 Star 关注一波。</p>
+
+<p>老规矩，感兴趣的朋友，获取开源项目地址，关注下方公号后回复<strong>【315】</strong></p>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/it/2020/09/27/beohou.html';
+        this.page.identifier = '/it/2020/09/27/beohou.html';
+        this.page.title = '华为鸿蒙背后：中国首个自己的开源基金会来了！';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/it/2020/09/27/beohou.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

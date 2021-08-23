@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         第89天：NumPy 排序和筛选函数 - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="&lt;p&gt;by 闲欢&lt;/p&gt;
+">
+
+    <link rel="canonical" href="http://localhost:4000/python/2019/12/15/python-numpy-sort-filter-089.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="第89天：NumPy 排序和筛选函数">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>第89天：NumPy 排序和筛选函数</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/12/15
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container " itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p>by 闲欢</p>
+
+<p>对于数据分析来说，排序和筛选数据是不可或缺的一部分内容。NumPy 也提供了多种排序和筛选函数，本文就来介绍一下 NumPy 常见的排序和筛选函数。
+<!--more--></p>
+
+<h2 id="排序函数">排序函数</h2>
+
+<p>NumPy 中提供了排序相关的函数。排序函数已经帮助我们实现了不同的排序算法，我们只需要拿来直接使用就行。每个排序算法的执行速度，时间复杂度，空间复杂度和算法的稳定性都不相同，我们来看看常见的几种排序算法的比较。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>排序算法</th>
+      <th>速度</th>
+      <th>时间复杂度</th>
+      <th>空间复杂度</th>
+      <th>稳定性</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">quicksort</code>（快速排序）</td>
+      <td>1</td>
+      <td><code class="highlighter-rouge">o(n^2)</code></td>
+      <td>0</td>
+      <td>否</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">mergesort</code>（归并排序）</td>
+      <td>2</td>
+      <td><code class="highlighter-rouge">O(n*log(n))</code></td>
+      <td>~n/2</td>
+      <td>是</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">heapsort</code>（堆排序）</td>
+      <td>3</td>
+      <td><code class="highlighter-rouge">O(n*log(n))</code></td>
+      <td>0</td>
+      <td>否</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="numpysorta-axis-kind-order">numpy.sort(a, axis, kind, order)</h3>
+
+<p>这个排序函数有4个参数，我们来看看参数的说明：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>参数</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a</td>
+      <td>要排序的数组</td>
+    </tr>
+    <tr>
+      <td>axis</td>
+      <td>排序数组的轴，如果没有数组会被展开，沿着最后的轴排序。axis=0 按列排序，axis=1 按行排序</td>
+    </tr>
+    <tr>
+      <td>kind</td>
+      <td>排序类型，有 <code class="highlighter-rouge">quicksort</code> 、<code class="highlighter-rouge">mergesort</code> 、<code class="highlighter-rouge">heapsort</code> 、<code class="highlighter-rouge">stable</code> 几种，默认为<code class="highlighter-rouge">quicksort</code>（快速排序）</td>
+    </tr>
+    <tr>
+      <td>order</td>
+      <td>排序的字段，针对包含字段的数组</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>我们来看看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+import time
+
+a = np.array([[3, 7, 12, 45], [9, 1, 0, 34]])
+print("初始数组：")
+print(a)
+print('\n')
+
+print(np.char.center('调用 sort() 函数，默认快速排序', 15, '*'))
+print(np.sort(a))
+print('\n')
+
+print(np.char.center('按列排序', 15, '*'))
+print(np.sort(a, axis=0))
+print('\n')
+
+b = np.random.randint(1, 1000, size=[10000, 10000])
+
+print(np.char.center('快速排序时间', 15, '*'))
+t1 = time.time()
+np.sort(b)
+t2 = time.time()
+print(t2 - t1)
+print('\n')
+
+print(np.char.center('堆排序时间', 15, '*'))
+t3 = time.time()
+np.sort(b, -1, 'heapsort')
+t4 = time.time()
+print(t4 - t3)
+print('\n')
+
+print(np.char.center('归并排序时间', 15, '*'))
+t5 = time.time()
+np.sort(b, -1, 'mergesort')
+t6 = time.time()
+print(t6 - t5)
+print('\n')
+
+# 根据字段排序
+dt = np.dtype([('name', 'S10'), ('age', int)])
+c = np.array([("raju", 21), ("anil", 25), ("ravi", 17), ("amar", 27)], dtype=dt)
+print(np.char.center('根据字段排序的数组', 15, '*'))
+print(c)
+print('\n')
+
+print(np.char.center('按 name 排序', 15, '*'))
+print(np.sort(c, order='name'))
+
+# 返回
+初始数组：
+[[ 3  7 12 45]
+ [ 9  1  0 34]]
+ 
+调用 sort() 函数，默认
+[[ 3  7 12 45]
+ [ 0  1  9 34]]
+ 
+******按列排序*****
+[[ 3  1  0 34]
+ [ 9  7 12 45]]
+ 
+*****快速排序时间****
+5.470074892044067
+
+*****堆排序时间*****
+6.988600015640259
+
+*****归并排序时间****
+5.784327983856201
+
+***根据字段排序的数组***
+[(b'raju', 21) (b'anil', 25) (b'ravi', 17) (b'amar', 27)]
+
+***按 name 排序***
+[(b'amar', 27) (b'anil', 25) (b'raju', 21) (b'ravi', 17)]
+</code></pre></div></div>
+
+<p>在例子中，我们首先使用了默认的按横轴的快速排序算法，可以看到每个数组都是横向排序的。</p>
+
+<p>接下来，我们多加了一个排序的参数，表示按纵轴排序，我们可以从结果中看到，两个数组中对应位置的元素都按照升序排列了。</p>
+
+<p>接着我们随机生成了一个数据量大的多维数组，然后使用三种排序方式，打印了它们排序的时间，从结果中我们可以看到快速排序最快，其次是归并排序，最后是堆排序。需要注意一点的是，有些排序算法不稳定，可能会导致每次运行的结果不一样。另外，数据量也可能会影响不同排序算法排序的效率。</p>
+
+<p>最后我们创建了一个带字段的数组，然后按照 <code class="highlighter-rouge">name</code> 字段排序。</p>
+
+<h3 id="numpyargsort">numpy.argsort()</h3>
+
+<blockquote>
+  <p>函数对输入数组沿给定轴执行间接排序，并使用指定排序类型返回数据的索引数组。 这个索引数组用于构造排序后的数组。</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([3, 4, 2])
+print("初始数组：")
+print(a)
+print('\n')
+
+print(np.char.center('调用 argsort() 函数', 15, '*'))
+b = np.argsort(a)
+print(b)
+print('\n')
+
+print(np.char.center('以排序后的顺序重构原数组', 15, '*'))
+print(a[b])
+print('\n')
+
+# 返回
+初始数组：
+[3 4 2]
+
+调用 argsort() 函数
+[2 0 1]
+
+**以排序后的顺序重构原数组*
+[2 3 4]
+</code></pre></div></div>
+
+<p>在上面例子中，我们调用 <code class="highlighter-rouge">argsort()</code> 函数后，返回了初始数组的排序后的索引。然后我们用排序后的索引数组重构原数组，得到排序后的数组。</p>
+
+<h3 id="numpylexsort">numpy.lexsort()</h3>
+
+<blockquote>
+  <p>函数使用键序列执行间接排序。 键可以看作是电子表格中的一列。 该函数返回一个索引数组，使用它可以获得排序数据。 注意，最后一个键恰好是 sort 的主键。</p>
+</blockquote>
+
+<p>对于这个函数，我们假设一种场景：现在有语文和数学考试成绩以及总成绩，我们需要对成绩做个排序，排序原则为总分优先，总分相同的语文高的排前面。</p>
+
+<p>实现的代码如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+print(np.char.center('lexsort() 函数', 15, '*'))
+# 录入了四位同学的成绩
+math = (10, 20, 50, 10)
+chinese = (30, 50, 40, 60)
+total = (40, 70, 90, 70)
+# 将优先级高的项放在后面
+ind = np.lexsort((math, chinese, total))
+
+for i in ind:
+    print(total[i], chinese[i], math[i])
+    
+# 返回
+**lexsort() 函数*
+40 30 10
+70 50 20
+70 60 10
+90 40 50
+</code></pre></div></div>
+
+<p>例子中我们将参数由优先级从低到高传入，优先级最高的放在最后。最后得到4个同学的成绩排序。</p>
+
+<h3 id="numpymsort">numpy.msort()</h3>
+
+<blockquote>
+  <p>数组按第一个轴排序，返回排序后的数组副本。</p>
+</blockquote>
+
+<p>这个排序相当于 numpy.sort(a, axis=0)。很好理解。我们直接来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+print(np.char.center('msort() 函数', 20, '*'))
+msa = np.array([[3, 7, 12, 45], [9, 1, 0, 34]])
+print(np.msort(msa))
+
+# 返回
+*****msort() 函数*****
+[[ 3  1  0 34]
+ [ 9  7 12 45]]
+</code></pre></div></div>
+
+<h3 id="numpypartition">numpy.partition()</h3>
+
+<blockquote>
+  <p>指定一个数，对数组进行分区。</p>
+</blockquote>
+
+<p>通俗点说，就是指定一个数，以这个数为中心，将其他数分别放在这个数的两边。</p>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+print(np.char.center('partition() 函数', 20, '*'))
+pta = np.array([3, 7, 12, 45, 15, 0])
+print(np.partition(pta, 2))
+print('\n')
+print(np.partition(pta, (2, 4)))
+print('\n')
+
+# 返回
+***partition() 函数***
+[ 0  3  7 45 15 12]
+[ 0  3  7 12 15 45]
+</code></pre></div></div>
+
+<p>在第一次排序时，我们选中了索引为2的数字7作为中心，将小于7的数放在左边，大于7的数放在右边。在第二次排序时，我们选择了索引为2的数字7和索引为4的数字45，将小于7的数放在左边，大于7小于45的数放在中间，大于45的数放在右边。</p>
+
+<h2 id="筛选函数">筛选函数</h2>
+
+<p>下面我们来看几个常见的筛选函数，这些函数用于在数组中查找特定条件的元素。</p>
+
+<h3 id="numpyargmax">numpy.argmax()</h3>
+
+<blockquote>
+  <p>返回沿给定轴的最大值索引。</p>
+</blockquote>
+
+<p>注意，索引的值是从0开始计算的。</p>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([[30, 40, 70], [80, 20, 10], [50, 90, 60]])
+print(np.char.center('初始数组', 20, '*'))
+print(a)
+print('\n')
+
+print(np.char.center('调用 argmax() 函数', 20, '*'))
+print(np.argmax(a))
+print('\n')
+
+print(np.char.center('展开数组', 20, '*'))
+print(a.flatten())
+print('\n')
+
+print(np.char.center('沿0轴的最大索引', 20, '*'))
+print(np.argmax(a, 0))
+print('\n')
+
+print(np.char.center('沿1轴的最大索引', 20, '*'))
+print(np.argmax(a, 1))
+print('\n')
+
+# 返回
+********初始数组********
+[[30 40 70]
+ [80 20 10]
+ [50 90 60]]
+***调用 argmax() 函数***
+7
+********展开数组********
+[30 40 70 80 20 10 50 90 60]
+******沿0轴的最大索引******
+[1 2 0]
+******沿1轴的最大索引******
+[2 0 1]
+</code></pre></div></div>
+
+<h3 id="numpyargmin">numpy.argmin()</h3>
+
+<blockquote>
+  <p>返回沿给定轴的最小值索引。</p>
+</blockquote>
+
+<p>注意，索引的值是从0开始计算的。</p>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+a = np.array([[30, 40, 70], [80, 20, 10], [50, 90, 60]])
+print(np.char.center('初始数组', 20, '*'))
+print(a)
+print('\n')
+
+print(np.char.center('调用 argmin() 函数', 20, '*'))
+print(np.argmin(a))
+print('\n')
+
+print(np.char.center('沿0轴的最小索引', 20, '*'))
+print(np.argmin(a, 0))
+print('\n')
+
+print(np.char.center('沿1轴的最小索引', 20, '*'))
+print(np.argmin(a, 1))
+print('\n')
+
+# 返回
+********初始数组********
+[[30 40 70]
+ [80 20 10]
+ [50 90 60]]
+***调用 argmin() 函数***
+5
+******沿0轴的最小索引******
+[0 1 1]
+******沿1轴的最小索引******
+[0 2 0]
+</code></pre></div></div>
+
+<h3 id="numpynonzero">numpy.nonzero()</h3>
+
+<blockquote>
+  <p>返回输入数组中非零元素的索引。</p>
+</blockquote>
+
+<ul>
+  <li>只有a中非零元素才会有索引值，那些零值元素没有索引值；</li>
+  <li>返回的索引值数组是一个2维tuple数组，该tuple数组中包含一维的array数组。其中，一维array向量的个数与a的维数是一致的。</li>
+  <li>索引值数组的每一个array均是从一个维度上来描述其索引值。比如，如果a是一个二维数组，则索引值数组有两个array，第一个array从行维度来描述索引值；第二个array从列维度来描述索引值。</li>
+  <li>该np.transpose(np.nonzero(x))
+函数能够描述出每一个非零元素在不同维度的索引值。</li>
+</ul>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+b = np.array([[30, 40, 0], [0, 20, 10], [50, 0, 60]])
+print(np.char.center('我们的数组是', 20, '*'))
+print(b)
+print(np.char.center('调用 nonzero() 函数', 20, '*'))
+c = np.nonzero(b)
+print(c)
+print(np.transpose(np.nonzero(b)))
+
+# 返回
+*******我们的数组是*******
+[[30 40  0]
+ [ 0 20 10]
+ [50  0 60]]
+**调用 nonzero() 函数***
+(array([0, 0, 1, 1, 2, 2]), array([0, 1, 1, 2, 0, 2]))
+[[0 0]
+ [0 1]
+ [1 1]
+ [1 2]
+ [2 0]
+ [2 2]]
+</code></pre></div></div>
+
+<p>我们通过 <code class="highlighter-rouge">np.transpose()</code> 方法转换后看起来比较直观，注意这里的索引是从0开始算的。</p>
+
+<h3 id="numpywhere">numpy.where()</h3>
+
+<blockquote>
+  <p>返回输入数组中满足给定条件的元素的索引。</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+b = np.array([[30, 40, 0], [0, 20, 10], [50, 0, 60]])
+
+print(np.char.center('调用 where() 函数', 20, '*'))
+print(np.where(b &gt; 20))
+print(np.transpose(np.where(b &gt; 20)))
+
+# 返回
+***调用 where() 函数****
+(array([0, 0, 2, 2]), array([0, 1, 0, 2]))
+[[0 0]
+ [0 1]
+ [2 0]
+ [2 2]]
+</code></pre></div></div>
+
+<p>这里面我们输入的条件是大于20，数组中大于20的数的索引都被查找出来了。</p>
+
+<h3 id="numpyextract">numpy.extract()</h3>
+
+<blockquote>
+  <p>根据某个条件从数组中抽取元素，返回满条件的元素。</p>
+</blockquote>
+
+<p>我们来看实例：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+x = np.arange(9.).reshape(3,  3)
+print(np.char.center('我们的数组是', 20, '*'))
+print(x)
+# 定义条件, 选择偶数元素
+condition = np.mod(x, 2) == 0
+print(np.char.center('按元素的条件值', 20, '*'))
+print(condition)
+print(np.char.center('使用条件提取元素', 20, '*'))
+print(np.extract(condition, x))
+
+# 返回
+*******我们的数组是*******
+[[0. 1. 2.]
+ [3. 4. 5.]
+ [6. 7. 8.]]
+******按元素的条件值*******
+[[ True False  True]
+ [False  True False]
+ [ True False  True]]
+******使用条件提取元素******
+[0. 2. 4. 6. 8.]
+</code></pre></div></div>
+
+<p>例子中，我们先定义了一个条件，就是选择偶数。然后我们可以打印这个数组每个元素是否满足条件。最后我们调用 <code class="highlighter-rouge">extract()</code> 方法返回满足条件的元素。注意这里返回的是元素，而不是元素的索引。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>本文向大家介绍了 NumPy 的排序与筛选函数，熟练掌握和运用这些函数可以很轻松地帮助我们达到特定的目标，而不用自己去重复造轮子。大家在后续的代码中遇到类似的情况应该要优先想到这些函数。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>https://numpy.org/devdocs/reference/routines.sort.html</p>
+
+<blockquote>
+  <p>文中示例代码：<a href="https://github.com/JustDoPython/python-100-day">python-100-days</a></p>
+</blockquote>
+
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注我的公众号   <br/>
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/python/2019/12/15/python-numpy-sort-filter-089.html';
+        this.page.identifier = '/python/2019/12/15/python-numpy-sort-filter-089.html';
+        this.page.title = '第89天：NumPy 排序和筛选函数';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/python/2019/12/15/python-numpy-sort-filter-089.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

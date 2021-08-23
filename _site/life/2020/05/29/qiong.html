@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <title>
+         穷！ - 纯洁的微笑博客 </title>
+    <meta name="keywords" content="ityouknow,纯洁的微笑,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm,Docker,生活故事,架构,大数据,一线,FastDFS,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,IT技术博客,Java,Python,">
+    <meta name="description"
+          content="生活不易">
+
+    <link rel="canonical" href="http://localhost:4000/life/2020/05/29/qiong.html">
+    <link rel="alternate" type="application/rss+xml" title="panglin" href="http://localhost:4000/feed.xml">
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.ityouknow.com/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="http://favorites.ren/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/syntax.css">
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/gitalk.css">
+
+
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="http://favorites.ren/assets/css/sidebar-post-nav.css">
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="http://favorites.ren/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://favorites.ren/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://www.ityouknow.com/assets/js/lock.js"></script>
+</head>
+
+
+    <body>
+<!--头部导航-->
+    <header class="site-header">
+    <div class="site-header-topbar">
+        <div class="container">
+            <!--头部导航-->
+            <div class="topbar-menu">
+                
+                <div class="item">
+                    <a href="http://itmooc.tech/"
+                       target="_blank"
+                       title="IDEA破解">
+                        IDEA破解
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/money.html"
+                       target="_self"
+                       title="挣钱">
+                        挣钱
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/it.html"
+                       target="_self"
+                       title="深度">
+                        深度
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/life.html"
+                       target="_self"
+                       title="故事">
+                        故事
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/arch.html"
+                       target="_self"
+                       title="架构">
+                        架构
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/link.html"
+                       target="_self"
+                       title="友链">
+                        友链
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <a href="/about.html"
+                       target="_self"
+                       title="关于">
+                        关于
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a id="site-header-brand" href="/" title="panglin">
+            <span class="octicon octicon-smiley"></span>
+            panglin
+        </a>
+        <!-- 悬浮导航栏-->
+        <nav class="site-header-nav" role="navigation">
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/"
+                   target=""
+                   title="Home">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://laughyouth.com/"
+                   target="_blank"
+                   title="Comics">
+                    Comics
+                </a>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/spring-boot.html"
+                   target="_self"
+                   title="Spring Boot">
+                    Spring Boot
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/spring-boot.html"
+                           target=""
+                     >Spring Boot</a></li>
+                    
+                    <li><a href="/spring-cloud.html"
+                           target=""
+                     >Spring Cloud</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="http://www.justdojava.com"
+                   target="_blank"
+                   title="Java">
+                    Java
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/java.html"
+                           target=""
+                     >Jvm 系列文章</a></li>
+                    
+                    <li><a href="http://www.justdojava.com"
+                           target="_blank"
+                     >Java 极客技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="数据库基础">
+                    数据库基础
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >数据库 1</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >数据库 2</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/python.html"
+                   target=""
+                   title="Python">
+                    Python
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li><a href="/python.html"
+                           target=""
+                     >Python 教程</a></li>
+                    
+                    <li><a href="http://www.justdopython.com"
+                           target="_blank"
+                     >Python 技术</a></li>
+                    
+                </ul>
+                
+            </div>
+            
+            <div class=" site-header-nav-item hvr-underline-from-center">
+                <a href="/archives.html"
+                   target="_self"
+                   title="Archives">
+                    Archives
+                </a>
+                
+            </div>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="穷！">
+    <div class="container">
+        <div id="jumbotron-meta-info">        
+            <h1>穷！</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2020/05/29
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container need" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-9 markdown-body">
+
+            <p><img src="http://favorites.ren/assets/images/2020/it/qiong01.jpg" alt="" /></p>
+
+<blockquote>
+  <p>这是一篇随笔，写的比较乱，大家见谅！</p>
+</blockquote>
+
+<h2 id="1孕妇">1、孕妇</h2>
+
+<p>2012年，那时候我在西安组织了一个户外组织，都是一群单身男女大家都刚毕业没几年，每月组织去爬山。</p>
+
+<p>在回来的路上，我们遇上了一个孕妇，挺着大大的肚子，手上还牵着一个小女孩，公交车非常挤但没有人给她让座。</p>
+
+<p>下山的路并不好走，公交车司机也是个猛人，车开得跟赛车一样，孕妇死死的抓住公交的扶手。</p>
+
+<p>北京五环外有个地铁叫做枣园，旁边都是居民小区，距离地铁越近的房子，房租越贵，最远的和最近的小区可以差2-3千。</p>
+
+<p>在北京上班的一对小夫妻，有的为了省钱就住在较远的地方，早上去地铁口的路上，就会看到男的骑着小电瓶车带着老婆匆匆赶向地铁。</p>
+
+<p>妻子脸色蜡黄面露烦躁之气，手上提着一个饭盒，一大早就像上班干了一天活的样子，上班就像上坟的感觉很强烈。</p>
+
+<p>碰到过很多次，夫妻之间几乎从不交流，到地铁口之后男的去停电瓶车，女的径直去坐地铁。</p>
+
+<p><strong>这个社会很残酷，每个人都拼劲了全力去生活！</strong></p>
+
+<h2 id="2离婚">2、离婚</h2>
+
+<p>最近知乎上有一个新闻，深圳离婚的人需要排队一个月。</p>
+
+<p>其实哪只是深圳，几乎全国的1-2线城市离婚都需要预约，只是深圳更显夸张一些，4月份离婚占比结婚达到了84%。</p>
+
+<p>知乎上一片热议，探讨是什么让原因，让离婚率这么高？但我思考的是另外一件事。</p>
+
+<p>离婚率的提高，从某种程度上来讲是社会的进步，一辈子很长，谁能保证一次就能选择对。</p>
+
+<p>现在之所以离婚率比较高，还有一方面的原因是女性可以完全独立生活的比率大大提高了。</p>
+
+<p>在我小的时候，隔壁有一家家暴，那可不是一般的家暴，感觉就是一个人要把另一个人活活打死的感觉。</p>
+
+<p>但在那个时候，农村的妇女几乎没有几个离婚的，一方面大家的思想还很保守，但更重要的是女性离婚就失去了生存保障。</p>
+
+<p>当然现在的社会反过来了，因为男女比例失调，特别是在很偏远的农村，别说离婚了，<strong>你连结婚的权利都没有！</strong></p>
+
+<h2 id="3工作">3、工作</h2>
+
+<p>2016年，我写过一篇文章<a href="https://mp.weixin.qq.com/s/Ann0usGnXftvZrxOHdySkQ">《你看那个人他像一条狗》</a>，文章中有一个中年男子的案例。</p>
+
+<p>当时大家都在骂一个中年男子不守规矩，为了逃票150元一个人翻墙进动物园，却被老虎给咬死了。</p>
+
+<p><img src="http://favorites.ren/assets/images/2020/it/qiong02.jpg" alt="" /></p>
+
+<p>甚至有人在网上说：</p>
+
+<p><strong>“不要大声责骂年轻人，他们会立刻辞职的，但是你可以往死里骂那些中年人，尤其是有车有房有娃的那些。”</strong></p>
+
+<p>犀利的语句，可以说是非常扎心！</p>
+
+<p>中年男人是最没有依靠的群体，上有父母需要赡养，下有子女需要教育，一男人基本上要顶起一个大家庭。</p>
+
+<p>年轻人可以选择逃避，但是中年人却没有退路！</p>
+
+<h2 id="4信用卡">4、信用卡</h2>
+
+<p>这次突发的疫情，暂停了很多人的生活。更重要的是暂停了很多人的收入，但是房贷、车贷并没有停。</p>
+
+<p>信用卡违约率直线上升。</p>
+
+<p>家庭底子稍微好点的，可以找亲戚朋友借一点渡过这段时间，本来资金就很紧张的朋友，信用卡也倒腾了好几遍后，只能违约了。</p>
+
+<p>当然国家也出台了一些政策：</p>
+
+<blockquote>
+  <p>1、违约金取代滞纳金：信用卡新规实施后，逾期所产生的滞纳金会被违约金取代。</p>
+
+  <p>2、信用卡量刑标准提高：信用卡逾期不还可能会被追究刑事责任，特别是恶意透支信用卡，构成信用卡诈骗，而信用卡逾期新规将这个量刑标准从以前的1万元提高到5万元。</p>
+
+  <p>3.以前信用卡每月的最低还款是10%，现在差别的银行尺度可能不同，也可能会低于10%。</p>
+
+  <p>4.信用卡取现将会计入最低还款额，以前信用卡取现并不要求一次性还清，但现在新规划定，当月取现金额会加入到最低还款额，所以必须一次性还清，否则会造成信用卡逾期，这点大家多加注意。</p>
+
+  <p>5.众所周知，以前信用卡的免息期基本上是20-56天，但新规实行后，部门银行的免息期可长发60天！</p>
+
+  <p>6、另外，对于信用卡已经逾期的朋友，另有个重大利好消息。银监会明确划定，有还款意愿但信用卡欠款金额超出还款能力的，可与银行协商告竣个性化分期还款协议。个性化分期还款协议的最恒久限是5年，也就是可以分60期，这将大大淘汰了欠债者的还款压力。</p>
+</blockquote>
+
+<p>希望可以帮到大家。</p>
+
+<h2 id="5最后">5、最后</h2>
+
+<p>我经常听到有人说，穷人没有远见，做事畏手畏脚，终究不能成就一番大事！</p>
+
+<p>但是你有没有想过，“钱”才是穷人的胆，只要有钱了，穷人也会慢慢改变，去做一些他们曾经没有做过的事情。</p>
+
+<p>因为冒险的前提是，家庭生活稳定。</p>
+
+<p>我们看到很多这样的新闻：男子逆行骑车被交警拦下大哭；男子为了阻挡台风刮走自己的小餐车，被餐车压死…</p>
+
+<p><strong>有人说，凡是能用钱摆平的事情都是小事。说这话的大多是有钱人。</strong></p>
+
+<p><strong>对穷人来说，凡是需要花钱解决的事，都是天大的事，为了钱可以用命去博！</strong></p>
+
+<p><strong>“钱”是穷人的胆！</strong></p>
+
+<p>只要有“钱”了，他们也会愿意去冒险、也会考虑未来，也会尝试高瞻远瞩畅想未来。</p>
+
+<p>不理解这话的人，应该没穷过。</p>
+
+<blockquote>
+  <p>作者简介：纯洁的微笑，<a href="http://www.ityouknow.com/life/2020/03/25/fengkou-10year.html">一个有故事的程序员</a>。曾在互联网金融，第三方支付公司工作，现为一名自由职业者，和你一起用技术的角度去看这个世界。我的微信号<strong>puresmilea</strong>，欢迎大家找我聊天，记录你我的故事。</p>
+</blockquote>
+
+
+            <div>
+   <p align="center">
+     	  
+         <img src="http://favorites.ren/assets/images/keeppuresmile.jpg" >
+         <br/>
+         微信扫描二维码，关注一个有故事的程序员
+        
+
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 11px;color: #cc0000;">
+       <strong>（关注后回复 555 <a href="http://www.ityouknow.com">获取程序员专属精华资料！</a>）</strong>
+   </p>
+   <p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="http://laughyouth.com/" target="_blank">点击了解：全网唯二以程序员为主题的漫画公众号</a></strong>
+   </p>
+</div>
+
+            <!-- Comments -->
+            <div class="comment">
+             
+
+  
+    <a href="#" class="show_disqus_comment" onclick="return false;">Show Disqus Comments</a>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/life/2020/05/29/qiong.html';
+        this.page.identifier = '/life/2020/05/29/qiong.html';
+        this.page.title = '穷！';
+    };
+    var disqus_loaded = false;
+    $(function() {
+        $('.show_disqus_comment').on('click', function() { // DON'T EDIT BELOW THIS LINE
+            $(this).html('加载中...');
+            var that = this;
+            if (!disqus_loaded) {
+                var d = document, s = d.createElement('script');
+
+                s.type = 'text/javascript';
+                s.async = true;
+                var shortname = 'ityouknow';
+
+                s.src = '//' + shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+
+                disqus_loaded = true;
+            }
+            $(that).remove();
+        })
+    })
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+  
+        <div id="gitalk-container"></div>
+        <script src="/assets/js/gitalk.min.js"></script>
+        <script>
+        var gitalk = new Gitalk({
+            id: '/life/2020/05/29/qiong.html',
+            clientID: '61bfc53d957e74e78f8f',
+            clientSecret: '31c61e66cdcc9ada8db2267ee779d0bdafac434c',
+            repo: 'blog-comments',
+            owner: 'ityouknow',
+            admin: ['ityouknow'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+        </script>
+  
+
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+    </div>
+     <div class="asb-post-01">
+        <div class="mask"></div>
+            <div class="info">
+                <div>扫码关注公众号：<span style="color: #E9405A; font-weight: bold;">纯洁的微笑</span></div>
+            <div>
+            <span>发送 </span><span class="token" style="color: #e9415a; font-weight: bold; font-size: 17px; margin-bottom: 45px;">290992</span>
+            <div>
+                即可<span style="color: #e9415a; font-weight: bold;">立即永久</span>解锁本站全部文章
+            </div>
+            <img class="code-img" style="width: 300px;display:unset" src="http://favorites.ren/assets/images/keeppuresmile.jpg">
+        </div>
+    </div>
+</article>
+
+        </div>
+
+    
+<footer class="container">
+    <div class="site-footer">
+       <!--  <div class="site-footer-icons">
+            <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+               知乎
+            </a>
+            <a target="_blank" href="http://weibo.com/ityouknow">
+               微博
+            </a>
+            <a target="_blank" href="https://github.com/ityouknow">
+                GitHub
+            </a>
+        </div> -->
+          <div class="card text-center">
+            <ul class="list-inline" style="margin-left: 0;">
+               <li>
+                <a target="_blank" href="https://github.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a target="_blank" href="https://www.zhihu.com/people/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa  fa-stack-1x fa-inverse">知</i>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                <a target="_blank" href="https://weibo.com/ityouknow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="site-footer-links mobile-hidden">
+            
+            <a href="/payment.html" title="Pay" target="_self">Pay</a>
+            
+            <a href="/fastdfs.html" title="FastDFS" target="_blank">FastDFS</a>
+            
+            <a href="/mongodb.html" title="MongoDB" target="_blank">MongoDB</a>
+            
+            <a href="/docker.html" title="Docker" target="_blank">Docker</a>
+            
+            <a href="/open-source.html" title="Code" target="_blank">Code</a>
+            
+            <a href="/gitchat.html" title="Chat" target="_blank">Chat</a>
+            
+            <a href="http://favorites.ren/stock.html" title="股票" target="_blank">股票</a>
+            
+        </div>
+        <div class="site-footer-icons">
+               <a href="http://beian.miit.gov.cn" >京ICP备15067287号</a>
+        </div>
+        <div class="scrolltop">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+        <div class="rss">
+            <a href="/feed.xml"><span class="octicon octicon-rss" style="color:orange;"></span></a>
+            Power by <a href="https://github.com/DONGChuan/Yummy-Jekyll">Yummy Jekyll</a>
+        </div>
+    </div>
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="http://favorites.ren/bower_components/geopattern/js/geopattern.min.js"></script>
+    <!-- My JS -->
+    <script type="text/javascript" src="http://favorites.ren/assets/js/script.js"></script>
+    
+    
+     <!-- Cnzz Analytics -->
+       <div style="display:none">
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260945749'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260945749' type='text/javascript'%3E%3C/script%3E"));</script>
+       </div>
+     <!-- Cnzz Analytics -->
+</footer>
+
+
+    </body>
+
+</html>

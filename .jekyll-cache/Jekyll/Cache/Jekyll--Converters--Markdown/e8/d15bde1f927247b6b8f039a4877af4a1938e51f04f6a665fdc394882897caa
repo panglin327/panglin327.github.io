@@ -1,0 +1,264 @@
+I"wz<p>by 豆豆</p>
+
+<h1 id="python-queue-入门">Python Queue 入门</h1>
+
+<h2 id="queue-简介">Queue 简介</h2>
+
+<p>Queue 叫队列，是数据结构中的一种，基本上所有成熟的编程语言都内置了对 Queue 的支持。</p>
+
+<p>Python 中的 Queue 模块实现了多生产者和多消费者模型，当需要在多线程编程中非常实用。而且该模块中的 Queue 类实现了锁原语，不需要再考虑多线程安全问题。</p>
+
+<p>该模块内置了三种类型的 Queue，分别是 <code class="highlighter-rouge">class queue.Queue(maxsize=0)</code>，<code class="highlighter-rouge">class queue.LifoQueue(maxsize=0)</code> 和 <code class="highlighter-rouge">class queue.PriorityQueue(maxsize=0)</code>。它们三个的区别仅仅是取出时的顺序不一致而已。</p>
+
+<!--more-->
+
+<p>Queue 是一个 FIFO 队列，任务按照添加的顺序被取出。</p>
+
+<p>LifoQueue 是一个 LIFO 队列，类似堆栈，后添加的任务先被取出。</p>
+
+<p>PriorityQueue 是一个优先级队列，队列里面的任务按照优先级排序，优先级高的先被取出。</p>
+
+<h2 id="queue-常用操作">Queue 常用操作</h2>
+
+<h3 id="类和异常">类和异常</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">queue</span><span class="p">.</span><span class="n">LifoQueue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">queue</span><span class="p">.</span><span class="n">PriorityQueue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>如你所见，就是上面所说的三种不同类型的内置队列，其中 maxsize 是个整数，用于设置可以放入队列中的任务数的上限。当达到这个大小的时候，插入操作将阻塞至队列中的任务被消费掉。如果 maxsize 小于等于零，则队列尺寸为无限大。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">exception</span> <span class="n">queue</span><span class="p">.</span><span class="n">Empty</span>
+<span class="c1"># 对空的 Queue 对象调用非阻塞的 get() (or get_nowait()) 时，会引发该异常。
+</span>
+<span class="n">exception</span> <span class="n">queue</span><span class="p">.</span><span class="n">Full</span>
+<span class="c1"># 对满的 Queue 对象调用非阻塞的 put() (or put_nowait()) 时，会引发该异常。
+</span></code></pre></div></div>
+
+<h3 id="常用操作">常用操作</h3>
+
+<h4 id="1添加任务">1、添加任务</h4>
+
+<p>向队列中添加任务，直接调用 <code class="highlighter-rouge">put()</code> 函数即可</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">put()</code> 函数完整的函数签名如下 <code class="highlighter-rouge">Queue.put(item, block=True, timeout=None)</code>，如你所见，该函数有两个可选参数。</p>
+
+<p>默认情况下，在队列满时，该函数会一直阻塞，直到队列中有空余的位置可以添加任务为止。如果 timeout 是正数，则最多阻塞 timeout 秒，如果这段时间内还没有空余的位置出来，则会引发 <code class="highlighter-rouge">Full</code> 异常。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s">"E:\Python37-32\lib\queue.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">147</span><span class="p">,</span> <span class="ow">in</span> <span class="n">put</span>
+    <span class="k">raise</span> <span class="n">Full</span>
+<span class="n">queue</span><span class="p">.</span><span class="n">Full</span> <span class="c1"># 创建一个容量为 1 的队列，2 秒内没有位置添加任务则引发 Full 异常
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># 该方法会一直阻塞
+</span></code></pre></div></div>
+
+<p>当 block 为 false 时，timeout 参数将失效。同时如果队列中没有空余的位置可添加任务则会引发 <code class="highlighter-rouge">Full</code> 异常，否则会直接把任务放入队列并返回，不会阻塞。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="bp">False</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s">"E:\Python37-32\lib\queue.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">136</span><span class="p">,</span> <span class="ow">in</span> <span class="n">put</span>
+    <span class="k">raise</span> <span class="n">Full</span>
+<span class="n">queue</span><span class="p">.</span><span class="n">Full</span>
+<span class="c1"># 创建一个容量为 1 的队列，在第二次放入任务时指定为非阻塞模式，则会立刻引发 Full 异常
+</span></code></pre></div></div>
+
+<p>另外，还可以通过 <code class="highlighter-rouge">Queue.put_nowait(item)</code> 来添加任务，相当于 <code class="highlighter-rouge">Queue.put(item, False)</code>，不再赘述。同样，在队列满时，该操作会引发 <code class="highlighter-rouge">Full</code> 异常。</p>
+
+<h4 id="2获取任务">2、获取任务</h4>
+
+<p>从队列中获取任务，直接调用 <code class="highlighter-rouge">get()</code> 函数即可。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+<span class="mi">100</span>
+</code></pre></div></div>
+
+<p>与 <code class="highlighter-rouge">put()</code> 函数一样，<code class="highlighter-rouge">get()</code> 函数也有两个可选参数，完整签名如下 <code class="highlighter-rouge">Queue.get(block=True, timeout=None)</code>。</p>
+
+<p>默认情况下，当队列空时调用该函数会一直阻塞，直到队列中有任务可获取为止。如果 timeout 是正数，则最多阻塞 timeout 秒，如果这段时间内还没有任务可获取，则会引发 <code class="highlighter-rouge">Empty</code> 异常。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+<span class="mi">100</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s">"E:\Python37-32\lib\queue.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">178</span><span class="p">,</span> <span class="ow">in</span> <span class="n">get</span>
+    <span class="k">raise</span> <span class="n">Empty</span>
+<span class="n">_queue</span><span class="p">.</span><span class="n">Empty</span> <span class="c1"># 2 秒钟内没有任务可获取则引发 Empty 异常
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="c1"># 该方法会一直阻塞
+</span></code></pre></div></div>
+
+<p>当 block 为 false 时，timeout 参数将失效。同时如果队列中没有任务可获取则会立刻引发 <code class="highlighter-rouge">Empty</code> 异常，否则会直接获取一个任务并返回，不会阻塞。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+<span class="mi">100</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s">"E:\Python37-32\lib\queue.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">167</span><span class="p">,</span> <span class="ow">in</span> <span class="n">get</span>
+    <span class="k">raise</span> <span class="n">Empty</span>
+<span class="n">_queue</span><span class="p">.</span><span class="n">Empty</span> 
+<span class="c1"># 指定为非阻塞模式，队列为空则立即引发 Empty 异常
+</span></code></pre></div></div>
+
+<p>另外，还可以通过 <code class="highlighter-rouge">Queue.get_nowait()</code> 来获取任务，相当于 <code class="highlighter-rouge">Queue.get(False)</code>，不再赘述。同样，在队列为空时，该操作会引发 <code class="highlighter-rouge">Empty</code> 异常。</p>
+
+<h3 id="其他常用方法">其他常用方法</h3>
+
+<h4 id="1获取队列大小">1、获取队列大小</h4>
+
+<p><code class="highlighter-rouge">Queue.qsize()</code> 函数返回队列的大小。注意这个大小不是精确的，qsize() &gt; 0 不保证后续的 get() 不被阻塞，同样 qsize() &lt; maxsize 也不保证 put() 不被阻塞。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">qsize</span><span class="p">()</span>
+<span class="mi">2</span>
+</code></pre></div></div>
+
+<h4 id="2判断队列是否空">2、判断队列是否空</h4>
+
+<p>如果队列为空，返回 <code class="highlighter-rouge">True</code> ，否则返回 <code class="highlighter-rouge">False</code> 。如果 empty() 返回 <code class="highlighter-rouge">True</code> ，不保证后续调用的 put() 不被阻塞。类似的，如果 empty() 返回 <code class="highlighter-rouge">False</code> ，也不保证后续调用的 get() 不被阻塞。</p>
+
+<h4 id="3判断队列是否满">3、判断队列是否满</h4>
+
+<p>如果队列是满的返回 <code class="highlighter-rouge">True</code> ，否则返回 <code class="highlighter-rouge">False</code> 。如果 full() 返回 <code class="highlighter-rouge">True</code> 不保证后续调用的 get() 不被阻塞。类似的，如果 full() 返回 <code class="highlighter-rouge">False</code> 也不保证后续调用的 put() 不被阻塞。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">queue</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">full</span><span class="p">()</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">q</span><span class="p">.</span><span class="n">full</span><span class="p">()</span>
+<span class="bp">True</span>
+</code></pre></div></div>
+
+<h2 id="队列对比">队列对比</h2>
+
+<h3 id="1fifo-队列">1、FIFO 队列</h3>
+
+<p><code class="highlighter-rouge">queue.Queue()</code> 是 FIFO 队列，出队顺序跟入队顺序是一致的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s">", "</span><span class="p">)</span>
+<span class="c1">## 输出结果如下
+</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> 
+</code></pre></div></div>
+
+<h3 id="2lifo-队列">2、LIFO 队列</h3>
+
+<p><code class="highlighter-rouge">queue.LifoQueue()</code> 是 LIFO 队列，出队顺序跟入队顺序是完全相反的，类似于栈。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">LifoQueue</span><span class="p">()</span> <span class="c1"># 创建一个 LIFO 队列
+</span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s">", "</span><span class="p">)</span>
+<span class="c1">## 输出结果如下
+</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> 
+</code></pre></div></div>
+
+<h3 id="3优先级队列">3、优先级队列</h3>
+
+<p>优先级队列中的任务顺序跟放入时的顺序是无关的，而是按照任务的大小来排序，最小值先被取出。那任务比较大小的规则是怎么样的呢。</p>
+
+<h4 id="31-如果是内置类型比如数值或者字符串则按照自然顺序来比较排序">3.1 如果是内置类型，比如数值或者字符串，则按照自然顺序来比较排序。</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">PriorityQueue</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s">", "</span><span class="p">)</span>
+<span class="c1">## 输出结果如下
+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> 
+</code></pre></div></div>
+
+<h4 id="32-如果是列表或者元祖则先比较第一个元素然后比较第二个以此类推直到比较出结果">3.2 如果是列表或者元祖，则先比较第一个元素，然后比较第二个，以此类推，直到比较出结果</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">PriorityQueue</span><span class="p">()</span>
+<span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">([</span><span class="s">"d"</span><span class="p">,</span><span class="s">"b"</span><span class="p">])</span>
+<span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">([</span><span class="s">"c"</span><span class="p">,</span><span class="s">"b"</span><span class="p">])</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s">", "</span><span class="p">)</span>
+<span class="c1">## 输出结果如下
+</span><span class="p">[</span><span class="s">'c'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">],</span> <span class="p">[</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">],</span> 
+</code></pre></div></div>
+
+<p>注意，因为列表的比较对规则是按照下标顺序来比较的，所以在没有比较出大小之前 ，队列中所有列表对应下标位置的元素类型要一致。</p>
+
+<p>好比 <code class="highlighter-rouge">[2,1]</code> 和 <code class="highlighter-rouge">["1","b"]</code> 因为第一个位置的元素类型不一样，所以是没有办法比较大小的，所以也就放入不了优先级队列。</p>
+
+<p>然而对于 <code class="highlighter-rouge">[2,1]</code> 和 <code class="highlighter-rouge">[1,"b"]</code> 来说即使第二个元素的类型不一致也是可以放入优先级队列的，因为只需要比较第一个位置元素的大小就可以比较出结果了，就不需要比较第二个位置元素的大小了。</p>
+
+<p>但是对于 <code class="highlighter-rouge">[2,1]</code> 和 1<code class="highlighter-rouge">[2,"b"]</code> 来说，则同样不可以放入优先级队列，因为需要比较第二个位置的元素才可以比较出结果，然而第二个位置的元素类型是不一致的，无法比较大小。</p>
+
+<p>综上，也就是说，<strong>直到在比较出结果之前，对应下标位置的元素类型都是需要一致的</strong>。</p>
+
+<h4 id="33-如果是自定义类型需要实现-__lt__-比较函数">3.3 如果是自定义类型，需要实现 <code class="highlighter-rouge">__lt__</code> 比较函数</h4>
+
+<p>下面我们自定义一个动物类型，希望按照年龄大小来做优先级排序。年龄越小优先级越高。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">queue</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">PriorityQueue</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># 实现 &lt; 操作
+</span>        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">age</span> <span class="o">&lt;</span> <span class="n">other</span><span class="p">.</span><span class="n">age</span> <span class="c1"># 如果将 &lt; 变成 &gt; 则相当于逆序
+</span>
+<span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">Animal</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s">"cat"</span><span class="p">))</span>
+<span class="n">q</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">Animal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">"dog"</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="n">animal</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">animal</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">animal</span><span class="p">.</span><span class="n">age</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">", "</span><span class="p">)</span>
+<span class="c1">## 输出结果如下
+</span><span class="n">dog</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cat</span> <span class="mi">3</span><span class="p">,</span> 
+</code></pre></div></div>
+
+<h2 id="queue-总结">Queue 总结</h2>
+<p>本章节介绍了队列以及其常用操作。因为队列默认实现了锁原语，因此在多线程编程中就不需要再考虑多线程安全问题了，对于程序员来说相当友好了。</p>
+
+<h2 id="代码地址">代码地址</h2>
+
+<blockquote>
+  <p>示例代码：https://github.com/JustDoPython/python-100-day/tree/master/day-051</p>
+</blockquote>
+:ET
