@@ -7,7 +7,7 @@
 
     <title>
         {% if page.titlebar %}
-        {{ page.titlebar | escape }} - 纯洁的微笑博客 {% elsif page.title %} {{ page.title | escape }} - 纯洁的微笑博客 {% else %}{{ site.title | escape }}{% endif %}</title>
+        {{ page.titlebar | escape }} - panglin的博客 {% elsif page.title %} {{ page.title | escape }} - 纯洁的微笑博客 {% else %}{{ site.title | escape }}{% endif %}</title>
     <meta name="keywords" content="{% if page.keywords %}{{ page.keywords | escape }}{% else %}{{ site.keywords }}{% endif %}">
     <meta name="description"
           content="{% if page.excerpt %}{{ page.excerpt | escape }}{% else %}{{ site.description }}{% endif %}">
@@ -16,12 +16,12 @@
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
     <!-- Third-Party CSS -->
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../bower_components/octicons/octicons/octicons.css">
-    <link rel="stylesheet" href="../bower_components/hover/css/hover-min.css">
-    <link rel="stylesheet" href="../bower_components/primer-markdown/dist/user-content.min.css">
-    <link rel="stylesheet" href="../assets/css/syntax.css">
-    <link rel="stylesheet" href="../assets/css/gitalk.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+    <link rel="stylesheet" href="/assets/css/gitalk.css">
 
 
 
