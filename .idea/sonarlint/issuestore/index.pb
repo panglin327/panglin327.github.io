@@ -14,5 +14,3 @@ N
 _drafts/python-web-form-045.md,6\d\6dd0cfd867c1ab3d5347aca92167a838a69023af
 P
  _drafts/python-web-jinjia-021.md,2\1\21e491cb1823937a394561316ef83d7419f78f1b
-;
-_config.yml,c\d\cd089ae45ce870c45e434019e8f1ed4f066cd425
